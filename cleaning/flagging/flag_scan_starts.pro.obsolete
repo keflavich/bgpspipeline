@@ -1,0 +1,39 @@
+
+; flag_scan_starts
+; originally developed to deal with the start-of-scan bad noise
+; NOT CURRENTLY USED!!  Has been replaced with expsub, the model-fit
+; exponential subtraction that seems to work a lot better
+function flag_scan_starts,timestream,scans_info=scans_info,flags=flags,start_fraction=start_fraction
+    if ~keyword_set(start_fraction) then start_fraction = .2
+    nscans = n_e(scans_info[0,*])
+    timelen = n_e(timestream[0,*])
+    timewid = n_e(timestream[*,0])
+    
+    for s=0,nscans-1 do begin
+        lb = scans_info[0,s]
+        ub = scans_info[1,s]
+        scanlen = ub-lb
+        mb = round(lb+start_fraction*scanlen) 
+        subarray = timestream[*,mb:ub]
+        sub_avg = total(subarray,2,/nan) / float(ub-mb)
+        first10 =  timestream[*,lb:mb]
+        first10avg = total(first10,2,/nan) / float(mb-lb)
+        bolo_std = sqrt(total((subarray - rebin(sub_avg,size(subarray,/dim),/sample))^2,2,/nan)/float(ub-mb))
+        bad_bolos = where((first10avg lt (sub_avg - bolo_std)) or (first10avg gt (sub_avg + bolo_std)) $
+            or total(finite(first10avg,/nan)) gt .5*n_e(first10avg))
+        if size(bad_bolos,/n_d) gt 0 then begin
+            if n_e(bad_bolos) gt .5 * timewid then begin
+                timestream[*,lb:mb] = !values.f_nan
+                if keyword_set(flags) then flags[*,lb:mb] = 1
+                scans_info[0,s] = mb
+            endif else begin
+                timestream[bad_bolos,lb:mb] = !values.f_nan
+                if keyword_set(flags) then flags[bad_bolos,lb:mb] = 1
+            endelse
+        endif
+    endfor
+
+    return,timestream
+end
+
+

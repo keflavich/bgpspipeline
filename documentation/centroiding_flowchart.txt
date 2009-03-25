@@ -1,0 +1,33 @@
+Centroiding flow chart:
+    1. put all filenames for all raw pointing observations into text files
+    within their directories 
+    [see, e.g., scripts/make_file_lists.bash]
+    
+    2. compile filelists into 'overall' or 'master' file lists for a given
+    pointing model (i.e. sort by date, but compile all observations)
+    [e.g. cat `find /scratch/sliced_polychrome/ -name "*0506*rawlist.txt"` >> all_0506_rawlist.txt]
+
+    3. pre-process ("downsample", except don't really downsample) all files
+    [AGidl_publish/wrappers/process_file_list.pro]
+
+    4. make new file list with the downsampled files in it
+    [e.g. cat all_0506_rawlist.txt | sed s/raw/raw_ds1/ > all_0506_ds1.txt]
+
+    5.a. process the downsampled files with output in
+    /scratch/adam_work/[directory_name]
+    [use wrappers/individual_obs.pro] 
+    [example in scripts/do_indiv.pro]
+
+    5.b. repeat 5.a. with pointing model correction applied 
+
+    6. make a file list of all of the maps from step 5 - must be done for each file
+    [e.g. find /scratch/adam_work/gl591 -name "pmm*ds1*_map0.fits" > /scratch/adam_work/gl591_pmm_ds1_maps.txt ]
+
+    7. run the centroider 
+    [pointing/centroid/centroid_file_list.pro]
+    [example in scripts/pcal_centroiding.pro]
+
+    8. plot?  using gnuplot?
+
+
+

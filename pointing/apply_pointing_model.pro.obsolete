@@ -1,0 +1,64 @@
+; 4 final parameters are for testing sign convention empirically
+; applies a correction to the fazo/fzao instrument specific model applied
+; at the telescope.  The pointing models are quadratic fits to the 
+; residual offset after the telescope pointing model has been used to 
+; point the telescope and the instrument specific model used at the time
+; has accounted for the misalignment between bolocam and the telescope
+; pointing axis
+; INPUTS:
+;   jd - julian date
+;   ra - right ascension array as reported in the NCDF files.  Correction for
+;        aberration/nutation and precession shouldn't matter much because they
+;        have a small effect on the alt
+;   dec - declination array
+;   lst - local sidereal time, used to convert ra/dec to alt/az
+;   fazo/fzao - the fixed azimuth/zenith angle offsets that were applied to correct
+;       for the instrument specific offset from the telescope pointing
+;   pm/mp/pp/mm - picks the signs.  This is only for debugging.  I THINK the correct signs
+;       are the default +fazo -fzao (because you're adding to the elevation, which is 
+;       the same as subtracting delta-zenith-angle), but there is some ambiguity and this
+;       code makes it easier to figure out how to resolve that
+pro apply_pointing_model,alt=alt,az=az,jd=jd,ra=ra,dec=dec,lst=lst,fazo=fazo,fzao=fzao,pm=pm,mp=mp,pp=pp,mm=mm,$
+        dont_correct_pointing=dont_correct_pointing,project_alt=project_alt
+;    latitude=19.82611111D0 
+;    oldmra = median(ra) & oldmdec = median(dec)
+;    getaltaz,dec,latitude,lst-ra/15.,alt,az
+    if keyword_set(project_alt) then cos_alt = cos(alt*!dtor) else cos_alt = 1.
+    if keyword_set(dont_correct_pointing) then begin
+        fazo /= 3600.
+        fzao /= 3600.
+    endif else begin
+        pointing_model,jd,alt,az,fzao=fzao,fazo=fazo,altoff_model=altoff_model,azoff_model=azoff_model
+    endelse
+    if keyword_set(mp) then begin
+        print,"SIGN SET TO MP"
+        alt -= fzao ; fazo/fzao in DEGREES
+        az  += fazo * cos_alt
+    endif else if keyword_set(pp) then begin
+        print,"SIGN SET TO PP"
+        alt += fzao ; fazo/fzao in DEGREES
+        az  += fazo * cos_alt
+    endif else if keyword_set(mm) then begin
+        print,"SIGN SET TO MM"
+        alt -= fzao ; fazo/fzao in DEGREES
+        az  -= fazo * cos_alt
+    endif else begin  ; keyword_set(pm)
+        print,"SIGN SET TO PM"
+        alt += fzao ; fazo/fzao in DEGREES
+        az  -= fazo * cos_alt
+    endelse
+
+    ; I think a better way to do this (because you can actually understand it):
+    ; alt += fzao  ; presumably fZAo was added to ZA earlier, so it's equiv. to subtract it from ALT
+    ; az  -= fazo * cos_alt
+    ; pointing_model,jd,alt,az,altoff_model=altoff_model,azoff_model=azoff_model
+    ; alt += altoff_model
+    ; az  += azoff_model * cos_alt
+
+
+;debug    getradec,alt,az,latitude,ha,dec
+;debug    ra = 15*(lst-ha)
+;debug    print,"median FAZO:",median(fazo),"    median FZAO:",median(fzao),"   median delta-RA:",median(ra)-oldmra,"   median delta-Dec:",median(dec)-oldmdec
+end
+
+
