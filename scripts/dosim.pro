@@ -1,9 +1,9 @@
 ; polysub tests
-mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o3',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=3
-mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o4',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=4
-mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o5',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=5
-mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o6',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=6
-mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o7',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=7
+mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o3',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=3,/deconvolve,deconv_fwhm=21.6
+mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o4',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=4,/deconvolve,deconv_fwhm=21.6
+mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o5',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=5,/deconvolve,deconv_fwhm=21.6
+mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o6',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=6,/deconvolve,deconv_fwhm=21.6
+mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o7',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=7,/deconvolve,deconv_fwhm=21.6
 
 
 mem_iter,'/usb/scratch1/l111/v1.0_l111_13pca_postiter.sav','/usb/scratch1/l111/v0.7_l111_13pca_deconv_uniform',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/uniformsim,fluxrange=[.005,.25]
