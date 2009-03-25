@@ -19,6 +19,7 @@
 ;     /fits_psd        - a fits file of 3 views of the psd_psd will be made as [prefix]_pca_[pca_type][i].fits
 pro clean_iter_struct,bgps,mapstr,niter=niter,$
     boloflat=boloflat,fits_timestream=fits_timestream,fits_nopca=fits_nopca,fits_psd=fits_psd,i=i,$
+    pca_atmo=pca_atmo,new_astro=new_astro,first_sky=first_sky,atmos_remainder=atmos_remainder,astrosignal_premap=astrosignal_premap,$
     minbaseline=minbaseline,median_sky=median_sky,fits_remainder=fits_remainder,$
     outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,_extra=_extra
 
@@ -77,6 +78,8 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
         writefits,outmap+"_psd_avescan"+string(i,format='(I2.2)')+".fits",total(psd_psd,2)/n_e(psd_psd[1,*]),hdr
         writefits,outmap+"_psd_3rddim"+string(i,format='(I2.2)')+".fits",total(psd_psd,3)/n_e(psd_psd[2,*]),hdr
     endif
+
+    astrosignal_premap = bgps.astrosignal
 
     map_iter,bgps,mapstr,fits_smooth=fits_smooth,i=i,niter=niter,_extra=_extra
     if niter[i] gt 0 then bgps.noise = nantozero( bgps.ac_bolos - first_sky - pca_atmo - bgps.astrosignal ) $ 

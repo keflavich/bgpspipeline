@@ -7,7 +7,7 @@ retall
 
 mem_iter,'/usb/scratch1/l351/l351.sav','/usb/scratch1/l351/v0.7_l351_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 mem_iter,'/usb/scratch1/l354/l354.sav','/usb/scratch1/l354/v0.7_l354_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
-mem_iter,'/usb/scratch1/l357/l357.sav','/usb/scratch1/l357/v0.7_l357_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
+mem_iter,'/usb/scratch1/l357/l357.sav','/usb/scratch1/l357/v0.7_l357_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,deconv_iter=5,deconv_fwhm=21.6
 ;mem_iter,'/usb/scratch1/l359/l359.sav','/usb/scratch1/l359/v0.7_l359_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 ;mem_iter,'/usb/scratch1/l000/l000.sav','/usb/scratch1/l000/v0.7_l000_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 ;mem_iter,'/usb/scratch1/l001/l001.sav','/usb/scratch1/l001/v0.7_l001_13pca_deconv',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
@@ -24,9 +24,9 @@ mem_iter,'/scratch/adam_work/l035/l035.sav','/scratch/adam_work/l035/v0.7_l035_1
 mem_iter,'/scratch/adam_work/l040/l040.sav','/scratch/adam_work/l040/v0.7_l040_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 mem_iter,'/scratch/adam_work/l045/l045.sav','/scratch/adam_work/l045/v0.7_l045_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 mem_iter,'/scratch/adam_work/l050/l050.sav','/scratch/adam_work/l050/v0.7_l050_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
-mem_iter,'/scratch/adam_work/l055/l055.sav','/scratch/adam_work/l055/v0.7_l055_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
+mem_iter,'/scratch/adam_work/l055/l055.sav','/scratch/adam_work/l055/v0.7_l055_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,deconv_iter=5,deconv_fwhm=21.6
 mem_iter,'/scratch/adam_work/l065/l065.sav','/scratch/adam_work/l065/v0.7_l065_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
-mem_iter,'/scratch/adam_work/l072/l072.sav','/scratch/adam_work/l072/v0.7_l072_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
+mem_iter,'/scratch/adam_work/l072/l072.sav','/scratch/adam_work/l072/v0.7_l072_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,deconv_iter=5,deconv_fwhm=21.6
 mem_iter,'/scratch/adam_work/l077/l077.sav','/scratch/adam_work/l077/v0.7_l077_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 mem_iter,'/scratch/adam_work/l082/l082.sav','/scratch/adam_work/l082/v0.7_l082_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13
 mem_iter,'/scratch/adam_work/l086/l086.sav','/scratch/adam_work/l086/v0.7_l086_13pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13

@@ -33,7 +33,8 @@ coalign_field,'l086','070719_o44',premap=0,deconvolve=0,prefix='v0.7_'          
 coalign_field,'l111','060602_o35',premap=0,deconvolve=0,prefix='v0.7_'                                               ,infile="l111_infile.txt",refim='/data/bgps/releases/v0.6/v0.6.2_l111_13pca_map09.fits'
 coalign_field,'l133','070730_o25',premap=0,deconvolve=0,prefix='v0.7_'                                               ,infile="l133_infile.txt",refim='/data/bgps/releases/v0.6/v0.6.2_l133_13pca_map09.fits'
 coalign_field,'w5',  '060906_o18',premap=0,deconvolve=0,prefix='v0.7_'                                               ,infile="w5_infile.txt"  ,refim='/data/bgps/releases/v0.6/v0.6.2_w5b_13pca_map09.fits'
-coalign_field,'ic1396','070911_o19',premap=1,deconvolve=0,prefix='v0.7_',scratchdir='/usb/scratch1'                  ,infile="ic1396_infile.txt" 
-coalign_field,'gemob1','070913_o27',premap=1,deconvolve=0,prefix='v0.7_'                                             ,infile="gemob1_infile.txt" 
+coalign_field,'ic1396','070911_o19',premap=0,deconvolve=0,prefix='v0.7_',scratchdir='/usb/scratch1'                  ,infile="ic1396_infile.txt" 
+coalign_field,'gemob1','070913_o27',premap=0,deconvolve=0,prefix='v0.7_'                                             ,infile="gemob1_infile.txt" 
+coalign_field,'super_gc','070719_o14',premap=0,deconvolve=0,prefix='v0.7_',scratchdir='/usb/scratch1'                ,infile="super_gc_infile.txt",refim='/data/bgps/releases/v0.6/l000_ref.fits'
 
 

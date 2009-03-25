@@ -1,7 +1,8 @@
 ; example: 
 ; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/','planet_dcfluxes.txt'
 ; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/BL','planet_dcfluxes_distcor.txt'
-pro dcfluxes,inlist,prefix,outfile,remap=remap
+pro dcfluxes,inlist,prefix,outfile,remap=remap,_extra=_extra
+    ; extras of interest: distcor
 
     readcol,inlist,filelist,format='(A80)',comment="#",/silent
 
@@ -10,7 +11,7 @@ pro dcfluxes,inlist,prefix,outfile,remap=remap
     printf,outf,"filename","planet","meandc","stddc","volts","err","ampl","volts/flux","err/flux","ampl/flux","flux","jd",format="('#',A80,11A20)"
     for i=0,n_e(filelist)-1 do begin
         if file_test(filelist[i]) then begin
-            vals = dcflux(filelist[i],prefix,remap=remap)
+            vals = dcflux(filelist[i],prefix,remap=remap,_extra=_extra)
             if stregex(filelist[i],'uranus') gt 0 then planet='uranus'
             if stregex(filelist[i],'mars') gt 0 then planet='mars'
             if stregex(filelist[i],'neptune') gt 0 then planet='neptune'

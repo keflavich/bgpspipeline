@@ -37,7 +37,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         fitmapcube = allmap*0
 
         nbolos = n_e(bolo_indices)
-        xy = fltarr(nbolos,2)
+        xy = fltarr(nbolos,2) ; will store measured x,y positions 
         invweight = fltarr(nbolos,2) + 1
         chi2arr = fltarr(n_e(bolo_indices))
 
@@ -60,7 +60,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
             xy[i,1] = ydist
 
             printf,fitparfile,bolo_indices[i],fitpars,format='(8F20)'
-            if keyword_set(doatv) then begin
+            if keyword_set(doatv) then begin ; plotting
                 atv,allmap[*,*,i]
                 atvxyouts,[fitpars[4]],[fitpars[5]],strc(bolo_indices[i]),charsize=4,color='red'
                 atv_plot1ellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250
@@ -85,6 +85,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
     p = [1.0,0.0,0.0,0.0,1.0,0.0] ; xscale,xoff,yoff,rotation,yscale,stretch_angle
 
+    ; set limits on parameters
     parinfo = replicate({fixed:0.,limited:[0.,0.],limits:[0.,0.]},6)
     if keyword_set(fixscale) then begin
         print,"USING FIXED SCALE"
@@ -112,12 +113,10 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
 ; after going through a slew of confusing and ineffective geometries, this finally seems to work...
     p2 = [1.,0.,0.,angle_guess,1.,0]
-    parinfo[1].fixed=1
-    parinfo[2].fixed=1
-    p2 = mpfitfun('hex_grid_fit_func',rtf,xy,invweight,p2,yfit=bestfit2,/quiet,parinfo=parinfo)
-    parinfo[1].fixed=0
-    parinfo[2].fixed=0
+    ; find improved guess by fitting fixed grid to measured data
+    p2 = mpfitfun('hex_grid_fit_func',rtf,xy,invweight,p2,yfit=bestfit2,/quiet,parinfo=parinfo) 
     p = p2
+    ; use improved guess to fit data to fixed grid
     p = mpfitfun('inv_hex_gff',xy,rtf,invweight,p,yfit=bestfit,/quiet,parinfo=parinfo)
     
     ;BEGIN FLAGGING BAD BOLOS
@@ -153,7 +152,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 if keyword_set(fixgrid) then begin
     print,"FITTING FIXED GRID"
     p3 = p
-    p3[1:3] = 0
+    p3[1:3] = 0 ; don't allow shift
     newxy = hex_grid_fit_func(rtf,p3)
     bestfit = inv_hex_gff(newxy,[1,0,0,0,1,0])
     if bad_th[0] ne -1 then bestfit[bad_th,*] = 0

@@ -29,7 +29,7 @@ coalign_field,'l006','070715_ob5',checkpointing=1
 coalign_field,'l009','070717_ob5',checkpointing=1
 coalign_field,'l012','070715_o10',checkpointing=1
 coalign_field,'l015','070714_o36',checkpointing=1
-coalign_field,'l023','070717_o15',ref_field='l024',sliced_dir='sliced_polychrome',checkpointing=1
+coalign_field,'l023','070717_o15',sliced_dir='sliced_polychrome',checkpointing=1
 coalign_field,'l026','070715_o20',ref_field='l027',checkpointing=1
 coalign_field,'l032','070718_ob5',ref_field='l033',sliced_dir='sliced_polychrome',checkpointing=1
 coalign_field,'l034','070718_ob5',ref_field='l033',sliced_dir='sliced_polychrome',checkpointing=1
@@ -112,7 +112,7 @@ coalign_field,'l002','070718_o16',ref_field='l003'
 coalign_field,'l004','070718_o16',ref_field='l003',/checkpointing
 coalign_field,'l018','070717_o10',checkpointing=1
 coalign_field,'l021','070715_o15',checkpointing=1
-coalign_field,'l024','070717_o15',checkpointing=1
+; don't do this: l023 includes all l024 ; coalign_field,'l024','070717_o15',checkpointing=1
 coalign_field,'l027','070715_o20',checkpointing=1
 coalign_field,'l030','070717_o20',checkpointing=1
 coalign_field,'l036','070715_o25',sliced_dir='sliced_polychrome',checkpointing=1

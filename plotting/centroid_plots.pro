@@ -197,8 +197,6 @@ pro centroid_plots,filename,date,nametype,interactive=interactive,nsig1=nsig1,ns
         g_ra = h_ra.fit_ampl*exp(-(x_g - h_ra.fit_mean)^2/h_ra.fit_rms^2)
         g_dec = h_dec.fit_ampl*exp(-(x_g - h_dec.fit_mean)^2/h_dec.fit_rms^2)
 
-        if keyword_set(dosave) then save,filename=homedir+'plots/'+nametype+"_"+date+".sav"
-
         ; PAGE 16
         !P.MULTI=[0, 2, 1, 0, 1]
         plot,h_alt.hb,h_alt.hc,psym=10,/xs,xtitle="Residual altoff",thick=2,ytitle="Number of observations"
@@ -207,6 +205,8 @@ pro centroid_plots,filename,date,nametype,interactive=interactive,nsig1=nsig1,ns
         oplot,x_g,g_az,color=250
 
         device,/close_file
+
+        if keyword_set(dosave) then save,filename=homedir+'plots/'+nametype+"_"+date+".sav"
 
         ;;; PAGE 1
         set_plot,'ps'

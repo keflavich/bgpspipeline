@@ -5,13 +5,13 @@ retall
 individual_obs,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0
 individual_obs,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/BL',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0,/distcor
 individual_obs,'/scratch/sliced_polychrome/uranus/uranus_infile.txt','/usb/scratch1/planets/',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0
-individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0,/mars
+individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0
 individual_obs,'/scratch/sliced_polychrome/uranus/uranus_infile.txt','/usb/scratch1/planets/BL',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0,/distcor
-individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/BL',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0,/mars,/distcor
+individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/BL',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0,/distcor
 individual_obs,'/scratch/sliced_polychrome/uranus/uranus_infile.txt','/usb/scratch1/planets/',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0
-individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0,/mars
+individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0
 individual_obs,'/scratch/sliced_polychrome/uranus/uranus_infile.txt','/usb/scratch1/planets/BL',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0,/distcor
-individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/BL',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0,/mars,/distcor
+individual_obs,'/scratch/sliced_polychrome/mars/mars_infile.txt','/usb/scratch1/planets/BL',npca=[13,13,13,13],mvperjy=[1,0,0],fits_timestream=0,/distcor
 
 individual_obs,'/scratch/sliced_polychrome/sgrb2/sgrb2_ds5list.txt','/usb/scratch1/sgrb2/',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0
 individual_obs,'/scratch/sliced_polychrome/sgrb2/sgrb2_ds5list.txt','/usb/scratch1/sgrb2/BL',npca=[0,0,0,0],mvperjy=[1,0,0],fits_timestream=0,/distcor

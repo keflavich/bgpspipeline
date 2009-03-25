@@ -83,7 +83,7 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
             time_s,"POLYSUB and BOLOFLAT ",t0
             bgps.ac_bolos = poly_sub_by_scans(bgps.ac_bolos,bgps.scans_info,flags=bgps.flags,_extra=_extra)
 ; removed 3/24/09            bgps.ac_bolos = bolo_flat(bgps.ac_bolos)
-            bgps.scale_coeffs = relsens_cal(bgps.ac_bolos,bgps.ac_bolos)
+; removed 3/24/09 - this is done entirely in map_iter            bgps.scale_coeffs = relsens_cal(bgps.ac_bolos,bgps.ac_bolos)
             time_e,t0
         endif
 

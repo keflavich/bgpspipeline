@@ -26,6 +26,7 @@ mem_iter,'/scratch/adam_work/l050/l050.sav','/scratch/adam_work/l050/v0.7_l050_3
 mem_iter,'/scratch/adam_work/l055/l055.sav','/scratch/adam_work/l055/v0.7_l055_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/scratch/adam_work/l065/l065.sav','/scratch/adam_work/l065/v0.7_l065_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/scratch/adam_work/l072/l072.sav','/scratch/adam_work/l072/v0.7_l072_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
+mem_iter,'/scratch/adam_work/l077/l077.sav','/scratch/adam_work/l077/v0.7_l077_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/scratch/adam_work/l082/l082.sav','/scratch/adam_work/l082/v0.7_l082_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/scratch/adam_work/l086/l086.sav','/scratch/adam_work/l086/v0.7_l086_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/scratch/adam_work/l111/l111.sav','/scratch/adam_work/l111/v0.7_l111_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
@@ -33,4 +34,16 @@ mem_iter,'/scratch/adam_work/l133/l133.sav','/scratch/adam_work/l133/v0.7_l133_3
 mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/usb/scratch1/ic1396/ic1396.sav','/usb/scratch1/ic1396/v0.7_ic1396_31pca',workingdir='/usb/scratch1',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
 mem_iter,'/usb/scratch1/super_gc/super_gc.sav','/usb/scratch1/super_gc/v0.7_super_gc_31pca',workingdir='/usb/scratch1',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
+mem_iter,'/scratch/adam_work/w5/w5.sav','/scratch/adam_work/w5/v0.7_w5_31pca',workingdir='/scratch/adam_work',deconvolve=0,/pointing_model,/fromsave,/dosave,fits_timestream=0,ts_map=0,niter=intarr(21)+31
+
+; GEM OB1 PCA tests
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_0pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+0
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_1pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+1
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_2pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+2
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_3pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+3
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_5pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+5
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_7pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+7
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_10pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+10
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_16pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+16
+mem_iter,'/scratch/adam_work/gemob1/gemob1.sav','/scratch/adam_work/gemob1/v0.7_gemob1_19pca_deconv',workingdir='/scratch/adam_work',deconvolve=1,/pointing_model,/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+19
 

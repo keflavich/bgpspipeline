@@ -6,10 +6,6 @@ function prepare_map_eachbolo,ra,dec,scans_info=scans_info,pixsize=pixsize,galac
     ts = prepare_map(ra,dec,pixsize=pixsize,blank_map=blank_map,hdr=hdr,/silent,_extra=_extra)
     for i=0,n_e(ra[*,0])-1 do begin
         
-;    phi   = ra[i,*]
-;    theta = dec[i,*]
-;    ts = prepare_map(phi,theta,pixsize=pixsize,blank_map=blank_map,hdr=hdr,/silent,_extra=_extra)
-
         if i gt 0 then begin
             all_ts = [[[all_ts]],[[ts[i,*]]]]
             all_blank_map = [[[all_blank_map]],[[size(blank_map,/dim)]]]

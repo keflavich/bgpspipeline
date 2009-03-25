@@ -13,7 +13,7 @@ coalign_field,'l012','070715_o10',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l015','070714_o36',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l019','070718_o19',ref_field='l018',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'w5b','060906_o18',premap=0,deconvolve=0,prefix='v0.6.2_'
-coalign_field,'l023','070717_o15',ref_field='l024',sliced_dir='sliced_polychrome',premap=0,deconvolve=0,prefix='v0.6.2_'
+coalign_field,'l023','070717_o15',sliced_dir='sliced_polychrome',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l026','070715_o20',ref_field='l027',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l032','070718_ob5',ref_field='l033',sliced_dir='sliced_polychrome',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l034','070718_ob5',ref_field='l033',sliced_dir='sliced_polychrome',premap=0,deconvolve=0,prefix='v0.6.2_'
@@ -73,8 +73,9 @@ coalign_field,'l135p1','060919_o12',ref='w3ohbolocam',sliced_dir='sliced_polychr
 
 
 coalign_field,'ic1396','070911_o19',premap=1,deconvolve=0,prefix='v0.6.2_',scratchdir='/usb/scratch1'
-coalign_field,'l189p5','070910_o24',premap=0,deconvolve=0,prefix='v0.6.2_'
-coalign_field,'l192','070909_o27',premap=0,deconvolve=0,prefix='v0.6.2_' 
+coalign_field,'l189p5','070912_o32',premap=0,deconvolve=0,prefix='v0.6.2_'
+coalign_field,'l192','070909_o26',premap=1,deconvolve=0,prefix='v0.6.2_' 
+coalign_field,'gemob1','070909_o26',premap=1,deconvolve=0,prefix='v0.6.2_'
 
 ;coalign_field,'l137','070907_o24' ; no infile
 
@@ -95,7 +96,7 @@ coalign_field,'l111','060602_o35',premap=0,deconvolve=0,prefix='v0.6.2_'   ; don
 coalign_field,'l004','070718_o16',ref_field='l003',premap=0,deconvolve=0,prefix='v0.6.2_',scratchdir='/usb/scratch1'
 coalign_field,'l018','070717_o10',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l021','070715_o15',premap=0,deconvolve=0,prefix='v0.6.2_'
-coalign_field,'l024','070717_o15',premap=0,deconvolve=0,prefix='v0.6.2_'
+; don't do l023 includes l024 ; coalign_field,'l024','070717_o15',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l027','070715_o20',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l030','070717_o20',premap=0,deconvolve=0,prefix='v0.6.2_'
 coalign_field,'l036','070715_o25',sliced_dir='sliced_polychrome',premap=0,deconvolve=0,prefix='v0.6.2_'

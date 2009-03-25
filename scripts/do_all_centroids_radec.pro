@@ -1,7 +1,7 @@
 @/home/milkyway/student/ginsbura/.idl_startup_publish
 .run centroid_file_list
 .run centroid_plots,homedir='/usb/scratch1'
-!EXCEPT=0
+;!EXCEPT=0
 workingdir = '/usb/scratch1'
 cd,workingdir
 time_s,"start",all_time
