@@ -5,7 +5,7 @@ pro plot_example,bgps,mapstr
 
     set_plot,'ps'
     loadct,39
-    device,filenam='example_plot.ps',/color
+    device,filename='example_plot.ps',/color,/encapsulated
 
     nscans = n_e(bgps.scans_info[0,*])
     midscan = nscans / 2
@@ -110,6 +110,26 @@ pro plot_example,bgps,mapstr
     endfor
 
     device,/close_file
+
+    device,filename='relsens_cal.ps',/color,/encapsulated
+    
+    !p.multi=[0,1,2]
+
+    lb=bgps.scans_info[0,0]
+    ub=bgps.scans_info[1,0]
+
+    yrange=[min(bgps.ac_bolos[0:2,lb:ub]),max(bgps.ac_bolos[0:2,lb:ub])]
+
+    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (.05 s)" ;bgps.ac_bolos[0,lb:ub]
+    oplot,bgps.ac_bolos[1,lb:ub],color=250
+    oplot,bgps.ac_bolos[2,lb:ub],color=150
+
+    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (.05 s)" ;bgps.ac_bolos[0,lb:ub]*bgps.scale_coeffs[0,0]
+    oplot,bgps.ac_bolos[1,lb:ub]*bgps.scale_coeffs[0,1],color=250
+    oplot,bgps.ac_bolos[2,lb:ub]*bgps.scale_coeffs[0,2],color=150
+
+    device,/close_file
+
     set_plot,'x'
 
 
