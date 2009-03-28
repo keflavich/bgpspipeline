@@ -3,7 +3,7 @@
 ; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt'
 ; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt',plotfile='~/paper_figures/fluxcal.ps'
 ; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt',/errbar,plotfile="~/paper_figures/fluxcal_errorbars.ps",charsize=1.5,charthick=2,xthick=2,ythick=2,linethick=3,symthick=3
-pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfile,errbar=errbar,_extra=_extra
+pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfile,errbar=errbar,beamsize=beamsize,_extra=_extra
 
     readcol,infile,filename,planet,meandc,stddc,volts,ampl,err,voltsDflux,errDflux,amplDflux,flux,jd,xwidth,ywidth,$
         format="(A80,A20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20)",comment="#",/silent
@@ -52,6 +52,9 @@ pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfi
     if keyword_set(plotfile) then begin
         device,/close_file
         set_plot,'x'
+    endif
+    if keyword_set(beamsize) then begin
+        print,"X (err),Y (err):",mean(xwidth[good]),stddev(xwidth[good])/sqrt(n_e(good)),mean(ywidth[good]),stddev(ywidth[good])/sqrt(n_e(good))
     endif
     if keyword_set(inter) then stop
 end
