@@ -13,7 +13,6 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=
     outmap = mapstr.outmap
 
     bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
-;    scalearr = (bgps.scale_coeffs#(fltarr(n_e(bgps.ac_bolos[0,*]))+1))
 
     mapstr.astromap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal*scalearr,$
         weight=bgps.weight/scalearr,scans_info=bgps.scans_info,wtmap=mapstr.wt_map,_extra=_extra)
