@@ -81,7 +81,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
 
     astrosignal_premap = bgps.astrosignal
 
-    map_iter,bgps,mapstr,fits_smooth=fits_smooth,i=i,niter=niter,_extra=_extra
+    map_iter,bgps,mapstr,fits_smooth=fits_smooth,i=i,niter=niter,dofits=dofits,_extra=_extra
     if niter[i] gt 0 then bgps.noise = nantozero( bgps.ac_bolos - first_sky - pca_atmo - bgps.astrosignal ) $ 
         else  bgps.noise = nantozero( bgps.ac_bolos - first_sky - bgps.astrosignal )
     if keyword_set(do_weight) then begin
@@ -89,7 +89,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
         bgps.wt2d=wt2d & bgps.var2d = var2d ; have to do this b/c passing structs to a function doesn't work
         if max(bgps.flags) gt 0 then bgps.weight[where(bgps.flags)] = 0
         mapstr.wt_map = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.weight,wtmap=1,weight=1) ; use a normal drizzle
-        writefits,outmap+"_weightmap"+string(i,format='(I2.2)')+".fits",mapstr.wt_map,hdr
+        if dofits then writefits,outmap+"_weightmap"+string(i,format='(I2.2)')+".fits",mapstr.wt_map,hdr
     endif else begin ; uniform weighting
         bgps.weight[*] = 1
         bgps.wt2d[*] = 1
