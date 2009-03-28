@@ -5,7 +5,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=
     if n_e(fits_smooth) eq 0 then fits_smooth=1
     if n_e(model_sig) eq 0 then model_sig=1
     if n_e(fits_out) eq 0 then fits_out=[0,1,n_e(niter)-1]
-    if total(fits_out eq i) eq 1 then dofits=1 else dofits=0
+    if total(fits_out eq i) ge 1 then dofits=1 else dofits=0
 
     hdr = mapstr.hdr
     fxaddpar,hdr,"iternum",i,"Iteration number"
