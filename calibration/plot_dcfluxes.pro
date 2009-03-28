@@ -2,11 +2,11 @@
 ; .r plot_dcfluxes   ; to compile quadratic
 ; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt'
 ; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt',plotfile='~/paper_figures/fluxcal.ps'
-; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt',/errbar,plotfile="~/paper_figures/fluxcal_errorbars.ps"
+; plot_dcfluxes,'/usb/scratch1/planets/planet_dcfluxes.txt',/errbar,plotfile="~/paper_figures/fluxcal_errorbars.ps",charsize=1.5,charthick=2,xthick=2,ythick=2,linethick=3,symthick=3
 pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfile,errbar=errbar,_extra=_extra
 
-    readcol,infile,filename,planet,meandc,stddc,volts,ampl,err,voltsDflux,errDflux,amplDflux,flux,jd,$
-        format="(A80,A20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20)",comment="#",/silent
+    readcol,infile,filename,planet,meandc,stddc,volts,ampl,err,voltsDflux,errDflux,amplDflux,flux,jd,xwidth,ywidth,$
+        format="(A80,A20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20)",comment="#",/silent
 
     if keyword_set(plotfile) then begin
         set_plot,'ps'
@@ -21,8 +21,8 @@ pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfi
     amplDfluxfit = [amplDflux[good],0]
     invweight    = [err[good],.0001]
     whnotmars = [whnotmars,n_e(good)]
-    stddcgood = [stddc[good],0]       / 10 ; errorbars are HUGE otherwise
-    errDfluxgood = [errDflux[good],0] / 10 ; errorbars are HUGE otherwise     
+    stddcgood = [stddc[good],0]       ; / 10 ; errorbars are HUGE otherwise
+    errDfluxgood = [errDflux[good],0] ; / 10 ; errorbars are HUGE otherwise     
 
     if keyword_set(overplot) then begin 
         oplot,meandcfit[whuranus],amplDfluxfit[whuranus],psym=1,_extra=_extra
@@ -31,10 +31,10 @@ pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfi
 ;        oplot,meandcfit[whneptune],amplDfluxfit[whneptune],psym=7,color=100,_extra=_extra 
     endif else begin
         if keyword_set(errbar) then begin
-            ploterror,meandcfit[whuranus],amplDfluxfit[whuranus],stddcgood[whuranus],errDfluxgood[whuranus],psym=1,xtitle="Mean DC voltage",ytitle="Volts/Jy",_extra=_extra
-            oploterror,meandcfit[whmars],amplDfluxfit[whmars],stddcgood[whmars],errDfluxgood[whmars],psym=1,errcolor=250,_extra=_extra
+            ploterror,[meandcfit[whuranus],0],[amplDfluxfit[whuranus],0],[stddcgood[whuranus],0],[errDfluxgood[whuranus],0],psym=3,xtitle="!6Mean DC voltage",ytitle="!6Volts/Jy",_extra=_extra
+            oploterror,meandcfit[whmars],amplDfluxfit[whmars],stddcgood[whmars],errDfluxgood[whmars],psym=3,errcolor=250,_extra=_extra
         endif else begin
-            plot,meandcfit[whuranus],amplDfluxfit[whuranus],psym=1,xtitle="Mean DC voltage",ytitle="Volts/Jy",_extra=_extra
+            plot,[meandcfit[whuranus],0],[amplDfluxfit[whuranus],0],psym=1,xtitle="!6Mean DC voltage",ytitle="!6Volts/Jy",_extra=_extra
     ;        plot,meandcfit[whnotmars],amplDfluxfit[whnotmars],psym=1,_extra=_extra 
             oplot,meandcfit[whmars],amplDfluxfit[whmars],psym=2,color=250,_extra=_extra 
     ;        oplot,meandcfit[whneptune],amplDfluxfit[whneptune],psym=7,color=100,_extra=_extra 

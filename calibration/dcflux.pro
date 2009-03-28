@@ -9,22 +9,28 @@ function dcflux,ncfile,prefix,remap=remap,_extra=_extra
     ncdf_varget_scale,ncfile,'bolo_params',boloparams
     goodbolos = where(boloparams[0,*])
     meandc = mean(dc_bolos[goodbolos,*])
-    stddc  = stddev(dc_bolos[goodbolos,*])
+    stddc  = stddev(dc_bolos[goodbolos,*]) / sqrt(n_e(dc_bolos[goodbolos,*]))
 
     outfits = prefix + strmid(ncfile,strpos(ncfile,'/',/reverse_search)+1,strlen(ncfile)) + "_indiv0pca"
     if keyword_set(remap) then mem_iter,ncfile,outfits,niter=[0],mvperjy=[1,0,0],do_weight=0,_extra=_extra 
 
     map = readfits(outfits+"_map03.fits",/silent)
-    p = centroid_map(map,fitmap=fitmap)
+    noisemap = readfits(outfits+"_noisemap03.fits",/silent)
+; background amplitude xwidth ywidth xcen ycen angle
+    p = centroid_map(map,fitmap=fitmap,perror=perror)
     nmap = map-fitmap
 
     r = shift(dist(n_e(map[*,0]),n_e(map[0,*])),p[4],p[5])
     d = sqrt(p[2]^2+p[3]^2)*sqrt(8*alog(2))  ; FWHM, not gaussian width
     sumregion = where(r lt d)
     flux = total(map[sumregion],/nan)
-    err  = total(nmap[sumregion],/nan)
+;    err  = total(nmap[sumregion],/nan)
     amp = p[1]
+;    err = perror[1]
+    err = stddev(nmap)
+    xwidth = p[2]
+    ywidth = p[3]
 
-    return,[meandc,stddc,flux,err,amp]
+    return,[meandc,stddc,flux,err,amp,xwidth,ywidth]
 
 end

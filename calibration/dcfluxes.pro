@@ -1,6 +1,7 @@
 ; example: 
-; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/','planet_dcfluxes.txt'
-; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/BL','planet_dcfluxes_distcor.txt'
+; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/','/usb/scratch1/planets/planet_dcfluxes.txt'
+; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/','/usb/scratch1/planets/planet_dcfluxes_fwhm.txt'
+; dcfluxes,'/usb/scratch1/texts/planetlist.txt','/usb/scratch1/planets/BL','/usb/scratch1/planets/planet_dcfluxes_distcor.txt'
 pro dcfluxes,inlist,prefix,outfile,remap=remap,_extra=_extra
     ; extras of interest: distcor
 
@@ -8,7 +9,7 @@ pro dcfluxes,inlist,prefix,outfile,remap=remap,_extra=_extra
 
     openw,outf,outfile,/get_lun
 
-    printf,outf,"filename","planet","meandc","stddc","volts","err","ampl","volts/flux","err/flux","ampl/flux","flux","jd",format="('#',A80,11A20)"
+    printf,outf,"filename","planet","meandc","stddc","volts","err","ampl","volts/flux","err/flux","ampl/flux","flux","jd","xwidth","ywidth",format="('#',A80,13A20)"
     for i=0,n_e(filelist)-1 do begin
         if file_test(filelist[i]) then begin
             vals = dcflux(filelist[i],prefix,remap=remap,_extra=_extra)
@@ -18,8 +19,8 @@ pro dcfluxes,inlist,prefix,outfile,remap=remap,_extra=_extra
             if stregex(filelist[i],'g34.3') gt 0 then planet='g34.3'
             ncdf_varget_scale,filelist[i],'jd',jd
             if n_e(planet) eq 0 then pflux=100 else pflux = planetflux(planet,median(jd))
-            printf,outf,filelist[i],planet,vals,vals[2:4]/pflux,pflux,median(jd),format="(A80,A20,9F20.8,I20)"
-            print,filelist[i],planet,vals,vals[2:4]/pflux,pflux,median(jd),format="(A80,A20,9F20.8,I20)"
+            printf,outf,filelist[i],planet,vals[0:4],vals[2:4]/pflux,pflux,median(jd),vals[5:6],format="(A80,A20,9F20.8,I20,F20,F20)"
+            print,filelist[i],planet,vals[0:4],vals[2:4]/pflux,pflux,median(jd),vals[5:6],format="(A80,A20,9F20.8,I20,F20,F20)"
         endif else print,"Couldn't find file ",filelist[i]
     endfor
 

@@ -10,7 +10,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     ysize = n_e(blank_map[0,*])
 
     if keyword_set(uniformsim) then begin
-        srcsize = 31.2/pixsize
+        srcsize = 31.2/pixsize/sqrt(8*alog(2))
         nx = floor(xsize / (srcsize * 10 ))
         ny = floor(ysize / (srcsize * 10 ))
         nsources = nx * ny
@@ -19,8 +19,9 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
         xwidth = fltarr(nsources)+srcsize
         ywidth = fltarr(nsources)+srcsize
         if keyword_set(fluxrange) then $
-            amplitudes=((findgen(nx)+1)*(fluxrange[1]-fluxrange[0])/nx) # (fltarr(ny)+1) $
+            amplitudes=((fltarr(nx)+1)) # ((findgen(ny)+1)*(fluxrange[1]-fluxrange[0])/nx) $
             else amplitudes = fltarr(nsources)+meanamp / !dpi
+;            amplitudes=((findgen(nx)+1)*(fluxrange[1]-fluxrange[0])/nx) # (fltarr(ny)+1) $
         angles = fltarr(nsources)
 
         if keyword_set(uniformrandom) then begin
