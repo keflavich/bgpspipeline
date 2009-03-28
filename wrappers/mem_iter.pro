@@ -18,6 +18,10 @@
 ;
 ;    I've added a lot more input parameters since then and I think the code has become cluttered; I'll try to clean it out
 ;    but it may be difficult because part of what I did was add additional FITS output options at each stage of the processing
+;
+;    dosave now has two options: 
+;    dosave = 1 - save preiter
+;    dosave = 2 - save preiter and postiter
 
 pro mem_iter,filelist,outmap,workingdir=workingdir,niter=niter,$
         pointing_model=pointing_model,$
@@ -65,7 +69,7 @@ pro mem_iter,filelist,outmap,workingdir=workingdir,niter=niter,$
     endfor
     if keyword_set(dosave) then begin
         iter0savename=outmap+"_postiter.sav" 
-        save,bgps,mapstr,i,filename=iter0savename
+        if dosave eq 2 then save,bgps,mapstr,i,filename=iter0savename
     endif
     if keyword_set(simulate_only) then save,mapcube,filename=outmap+"_sim_mapcube.sav"
     time_e,time_whole,prtmsg=outmap+" took "
