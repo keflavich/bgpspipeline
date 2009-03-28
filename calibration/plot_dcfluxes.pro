@@ -54,7 +54,7 @@ pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfi
         set_plot,'x'
     endif
     if keyword_set(beamsize) then begin
-        print,"X (err),Y (err):",mean(xwidth[good]),stddev(xwidth[good])/sqrt(n_e(good)),mean(ywidth[good]),stddev(ywidth[good])/sqrt(n_e(good))
+        print,"X (err),Y (err):",mean(xwidth[good])*7.2*2.35,stddev(xwidth[good])*7.2*2.35/sqrt(n_e(good)),mean(ywidth[good])*7.2*2.35,stddev(ywidth[good])*7.2*2.35/sqrt(n_e(good))
     endif
     if keyword_set(inter) then stop
 end
