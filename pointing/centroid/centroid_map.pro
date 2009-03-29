@@ -1,5 +1,5 @@
 
-function centroid_map,map,fitmap=fitmap,submap=submap,perror=perror,pixsize=pixsize
+function centroid_map,map,fitmap=fitmap,submap=submap,perror=perror,pixsize=pixsize,measure_errors=measure_errors
 
     if ~keyword_set(pixsize) then pixsize=7.2
     fwhm = 31.2/pixsize & hwhm = fwhm / 2.
@@ -25,13 +25,14 @@ function centroid_map,map,fitmap=fitmap,submap=submap,perror=perror,pixsize=pixs
     if keyword_set(dontconv) then csm = submap else csm = convolve(submap,psf)
     m = max(total(csm,2),xm)
     m = max(total(csm,1),ym)
+    if n_e(measure_errors) eq 0 then measure_errors = (csm*0)+1.0
 ;        cntrd,submap,xm,ym,xcen,ycen,3.        ; relic of old code
 ;        gcntrd,submap,xm,ym,xcen,ycen,fwhm     ; one step up...
-    zfit = mpfit2dpeak(csm,fitpars,/tilt,/gaussian,perror=perror,estimate=[median(csm),max(csm),hwhm,hwhm,xm,ym,0])
+    zfit = mpfit2dpeak(csm,fitpars,/tilt,/gaussian,perror=perror,estimate=[median(csm),max(csm),hwhm,hwhm,xm,ym,0],measure_errors=measure_errors)
 ;    fitmap=map*0
 ;    fitmap[xl:xh,yl:yh] = zfit
     fitmap = zfit
-
+    
 ;    fitpars[4]+=xl
 ;    fitpars[5]+=yl
     return,fitpars
