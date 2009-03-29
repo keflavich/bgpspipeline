@@ -1,5 +1,5 @@
 ; example:
-; restore,'/usb/scratch1/l357/v1.0.2_13pca_preiter.sav'
+; restore,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav'
 ; plot_example,bpgs,mapstr
 pro plot_example,bgps,mapstr
 
@@ -111,6 +111,7 @@ pro plot_example,bgps,mapstr
 
     device,/close_file
 
+    set_plot,'ps'
     device,filename='relsens_cal.ps',/color,/encapsulated
     
     !p.multi=[0,1,2]
@@ -122,11 +123,11 @@ pro plot_example,bgps,mapstr
 
     xax = findgen(ub-lb)*.05
 
-    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (s)" ;bgps.ac_bolos[0,lb:ub]
+    plot,xax,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (s)" ;bgps.ac_bolos[0,lb:ub]
     oplot,xax,bgps.ac_bolos[1,lb:ub],color=250
     oplot,xax,bgps.ac_bolos[2,lb:ub],color=150
 
-    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (s)" ;bgps.ac_bolos[0,lb:ub]*bgps.scale_coeffs[0,0]
+    plot,xax,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (s)" ;bgps.ac_bolos[0,lb:ub]*bgps.scale_coeffs[0,0]
     oplot,xax,bgps.ac_bolos[1,lb:ub]*bgps.scale_coeffs[0,1],color=250
     oplot,xax,bgps.ac_bolos[2,lb:ub]*bgps.scale_coeffs[0,2],color=150
 
