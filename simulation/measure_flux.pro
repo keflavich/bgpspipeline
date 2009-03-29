@@ -12,8 +12,8 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
     flux_recov = dblarr(numsrc)
 
     for i=0,numsrc-1 do begin
-        flux_recov[i] = measure_box(map,xcen[i],ycen[i],xwidth[i],ywidth[i])
-        flux_input[i] = measure_box(simmap,xcen[i],ycen[i],xwidth[i],ywidth[i])
+        flux_recov[i] = measure_box(map,xcen[i],ycen[i],xwidth[i],ywidth[i],/ellipse)
+        flux_input[i] = measure_box(simmap,xcen[i],ycen[i],xwidth[i],ywidth[i],/ellipse)
     endfor
 
     xsort = sort(xwidth)
