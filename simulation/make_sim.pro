@@ -48,7 +48,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
 
         print,"Filling map with a uniform set of ",nsources," sources"
     endif else if keyword_set(linearsim) then begin
-        maxsrc = 4*60/pixsize
+        maxsrc = 3*60/pixsize
         minsrc = 31.2/pixsize/2.35 
         separator = 5
         nx = floor(xsize / ((maxsrc+minsrc)/2 * separator ))
