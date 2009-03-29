@@ -1,10 +1,22 @@
-function measure_box,map,xcen,ycen,xsize,ysize
+function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse
     xl = floor(max([0,xcen-xsize]))
     xu = floor(min([n_e(map[*,0])-1,xcen+xsize]))
     yl = floor(max([0,ycen-ysize]))
     yu = floor(min([n_e(map[0,*])-1,ycen+ysize]))
-    
-    box = map[xl:xu,yl:yu]
+
+    if keyword_set(ellipse) then begin
+        mapsize = size(map,/dim)
+        distmap = dist(mapsize[0],mapsize[1])
+        xdist = shift(distmap[*,0],xcen) # (fltarr(mapsize[1])+1)
+        ydist = (fltarr(mapsize[0])+1) # shift(distmap[0,*],ycen) 
+        mask = ((xdist/xsize)^2+(ydist/ysize)^2) lt 1
+        box = map * mask
+    endif else begin
+        mask = map*0
+        mask[xl:xu,yl:yu] = 1
+        box = map * mask
+    endelse
+
     return,total(box,/nan)
 end
 
