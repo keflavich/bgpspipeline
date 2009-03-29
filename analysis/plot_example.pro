@@ -120,13 +120,15 @@ pro plot_example,bgps,mapstr
 
     yrange=[min(bgps.ac_bolos[0:2,lb:ub]),max(bgps.ac_bolos[0:2,lb:ub])]
 
-    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (.05 s)" ;bgps.ac_bolos[0,lb:ub]
-    oplot,bgps.ac_bolos[1,lb:ub],color=250
-    oplot,bgps.ac_bolos[2,lb:ub],color=150
+    xax = findgen(ub-lb)*.05
 
-    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (.05 s)" ;bgps.ac_bolos[0,lb:ub]*bgps.scale_coeffs[0,0]
-    oplot,bgps.ac_bolos[1,lb:ub]*bgps.scale_coeffs[0,1],color=250
-    oplot,bgps.ac_bolos[2,lb:ub]*bgps.scale_coeffs[0,2],color=150
+    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (s)" ;bgps.ac_bolos[0,lb:ub]
+    oplot,xax,bgps.ac_bolos[1,lb:ub],color=250
+    oplot,xax,bgps.ac_bolos[2,lb:ub],color=150
+
+    plot,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,ytitle="Amplitude (Jy)",xtitle="Time (s)" ;bgps.ac_bolos[0,lb:ub]*bgps.scale_coeffs[0,0]
+    oplot,xax,bgps.ac_bolos[1,lb:ub]*bgps.scale_coeffs[0,1],color=250
+    oplot,xax,bgps.ac_bolos[2,lb:ub]*bgps.scale_coeffs[0,2],color=150
 
     device,/close_file
 
