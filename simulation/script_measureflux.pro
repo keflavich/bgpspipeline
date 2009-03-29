@@ -19,3 +19,4 @@ measure_flux,'v0.7_l111_3pca_sim_sim_sources.sav','v0.7_l111_3pca_sim_map20.fits
 legend,['31','16','13','10','7','3'],psym=[1,1,1,1,1,1],color=[0,250,225,200,150,50],/right
 device,/close_file
 
+end
