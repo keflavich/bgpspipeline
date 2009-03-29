@@ -1,7 +1,8 @@
 ; measure flux recovery in known sources
 ; example:
 ; measure_flux,'v0.7_l111_13pca_deconv_21.6_sim_sim_sources.sav','v0.7_l111_13pca_deconv_21.6_sim_map20.fits','v0.7_l111_13pca_deconv_21.6_sim_initial.fits'
-pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=flux_input,doplot=doplot,overplot=overplot,dostop=dostop,_extra=_extra
+pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=flux_input,$
+    doplot=doplot,overplot=overplot,dostop=dostop,xax=xax,yax=yax,_extra=_extra
 
     map=readfits(fitsfile)
     simmap=readfits(simmapfile)
@@ -30,11 +31,14 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
         fluxinput_uniq[i] = (flux_input[ind])[wheremedian]
     endfor
 
+    xax=xwidth*7.2
+    yax=fluxrecov_uniq/fluxinput_uniq
+
     if keyword_set(doplot) then begin
         if keyword_set(overplot) then $
-            oplot,xwidth*7.2,fluxrecov_uniq/fluxinput_uniq,psym=1,_extra=_extra $
+            oplot,xax,yax,psym=1,_extra=_extra $
             else $
-            plot,xwidth*7.2,fluxrecov_uniq/fluxinput_uniq,psym=1,_extra=_extra
+            plot,xax,yax,psym=1,_extra=_extra
     endif
 
     if keyword_set(dostop) then stop
