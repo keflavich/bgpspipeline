@@ -5,8 +5,10 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
     writefits,mapstr.outmap+"_initial.fits",simmap,mapstr.hdr
 
     if keyword_set(blanksim) then simts = bgps.ac_bolos*0 $
-        else if total(bgps.atmosphere,/nan) ne 0 then simts=bgps.atmosphere $
-        else pca_subtract,bgps.ac_bolos,niter,corr_part=simts
+        else simts=bgps.ac_bolos-bgps.astrosignal
+        ; if I just use the atmosphere, the resulting noise level is way too low
+        ;pca_subtract,bgps.ac_bolos-bgps.astrosignal,niter,corr_part=simts
+        ;else if total(bgps.atmosphere,/nan) ne 0 then simts=bgps.atmosphere $
     simts += simmap[mapstr.ts]
 
     if n_e(noiselevel) eq 0 and keyword_set(blanksim) then noiselevel=.05 else noiselevel=0
