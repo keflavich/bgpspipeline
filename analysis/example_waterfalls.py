@@ -5,16 +5,15 @@ figure_path = '/home/milkyway/student/ginsbura/paper_figures/'
 
 f = pyflagger.Flagger('/usb/scratch1/super_gc/050703_o15_raw_ds5.nc_indiv13pca',mapnum='01',ncfilename='/scratch/sliced/l000/050703_o15_raw_ds5.nc')
 
-f.plotscan(12)
+f.plotscan(12,seconds=1)
 f.scannum = 12
 f.flags[f.scannum,:,:] -= (f.flags[f.scannum,:,:] > 0)
-ytitle()
 figure(1); savefig(figure_path+'flagger_withglitch.ps')
 
 f.flag_box(97,123,97,132,1)
 figure(1); savefig(figure_path+'flagger_glitchboxflagged.ps')
 
-f.plotscan(12)
+f.plotscan(12,seconds=1)
 figure(1); savefig(figure_path+'flagger_glitchgone.ps')
 
 figure(3)

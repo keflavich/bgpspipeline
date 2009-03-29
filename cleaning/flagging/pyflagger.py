@@ -193,7 +193,7 @@ class Flagger:
         self.flags = reshape(ft[:,self.bolo_indices],[self.nscans,self.scanlen,self.ngoodbolos])
 
 
-  def plotscan(self, scannum, fignum=1, button=1):
+  def plotscan(self, scannum, fignum=1, button=1, seconds=0):
     if self.connected:
         self.dcon()
     self.connected = 1
@@ -204,15 +204,25 @@ class Flagger:
     clf()
     #subplot(122)
     title("Flags for Scan "+str(self.scannum)+" in "+self.ncfilename);
-    xlabel('Bolometer number'); ylabel('Time (.02s)')
+    if seconds:
+        aspect_mult = 20
+        extent = [0,self.plane.shape[1],0,self.plane.shape[0]/20.]
+        my_ylabel='Time (s)'
+    else:
+        aspect_mult = 1
+        extent = [0,self.plane.shape[1],0,self.plane.shape[0]]
+        my_ylabel='Time (.02s)'
+    xlabel('Bolometer number'); ylabel(my_ylabel)
     imshow(self.flags[scannum,:,:],interpolation='nearest',
-            origin='lower',aspect=self.aspect)
+            origin='lower',aspect=self.aspect*aspect_mult,
+            extent=extent)
     colorbar()
     self.datafig = figure(fignum);clf(); #subplot(121)
     title("Scan "+str(self.scannum)+" in "+self.ncfilename);
-    xlabel('Bolometer number'); ylabel('Time (.02s)')
+    xlabel('Bolometer number'); ylabel(my_ylabel)
     imshow(self.plane,interpolation='nearest',
-            origin='lower',aspect=self.aspect)
+            origin='lower',aspect=self.aspect*aspect_mult,
+            extent=extent)
     colorbar()
     self.showrects()
     self.showlines()
