@@ -31,7 +31,7 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
         fluxinput_uniq[i] = (flux_input[ind])[wheremedian]
     endfor
 
-    xax=xwidth*7.2
+    xax=xwidth[0:n_e(fluxrecov_uniq)-1]*7.2
     yax=fluxrecov_uniq/fluxinput_uniq
 
     if keyword_set(doplot) then begin
