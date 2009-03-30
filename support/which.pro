@@ -21,7 +21,8 @@ function which, file_in
 ; SG 2000/07/25
 ;-
 
-common USER_COMMON
+; common USER_COMMON ; AG decided common blocks are stupid
+IDL_FILESEP=':'
 
 file_out = ''
 
