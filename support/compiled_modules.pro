@@ -15,7 +15,6 @@
 .run fxposit
 .run mrd_hread
 .run fxpar
-.run valid_num
 .run mrd_skip
 .run is_ieee_big
 .run ieee_to_host
@@ -59,11 +58,8 @@
 .run read_ra_dec_jd
 .run ncdf_varget_scale
 .run get_fixed_offsets_file
-.run read_rpc
-.run create_binary_template
 .run read_binary
 .run uniq
-.run where_arr
 .run do_the_pointing
 .run correct_eaz_eel
 .run my_eq2hor
@@ -76,14 +72,12 @@
 .run sunpos
 .run ct2lst
 .run hadec2altaz
-.run getaltaz
 .run apply_pointing_model
 .run pointing_model
 .run which
 .run str_sep
 .run my_hor2eq
 .run altaz2hadec
-.run getradec
 .run precess
 .run premat
 .run apply_distortion_map_radec
@@ -93,7 +87,6 @@
 .run reverse
 .run exponent_sub
 .run curvefit
-.run boloexp
 .run poly_sub_by_scans
 .run poly_sub
 .run stddev
