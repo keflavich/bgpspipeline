@@ -1,3 +1,13 @@
+% Figure list
+% 1) fig:Coverage
+% 2) fig:BGPSMontage
+% 3) fig:Bandpass
+% 4) fig:Array
+% 5) fig:CalibrationCurves
+% 6) fig:Flatfield
+% 7) fig:CygnusComparison
+% 8) fig:PointingCalibrators
+
 % calibration
 % you should look @ calibration/plot_dcfluxes.pro in my publish/ directory, and /usb/scratch1/planets/planet_dcfluxes.txt is the actual raw data
 %/home/milkyway/student/ginsbura/bgps_pipeline/calibration/plot_dcfluxes.pro?
@@ -15,6 +25,7 @@
 %{emulateapj}
 
 \usepackage{rotating}
+\usepackage{subfigure}
 
 \citestyle{aa}
 
@@ -59,6 +70,7 @@
 
 \newcommand{\epsi}{\varepsilon}
 
+\def\bgps{BGPS}
 \newcommand{\bgpsarea}{150}
 \newcommand{\bcamfwhm}{31.2\arcsec}
 \newcommand{\ncores}{$10^4$}
@@ -76,6 +88,16 @@
 \end{figure}
 }
 
+\def\FigureTwo#1#2#3#4#5{
+\begin{figure}[htb]
+\epsscale{#5}
+\plottwo{#1}{#2}
+\caption{#3}
+\label{#4}
+\end{figure}
+}
+
+
 \def\Table#1#2#3#4#5{
 \begin{deluxetable}{#1}
 \tablewidth{0pt}
@@ -90,10 +112,15 @@
 
 \newcommand{\penn}{1}
 \newcommand{\casa}{2}
-\newcommand{\cso}{3}
-\newcommand{\utexas}{4}
-\newcommand{\virginia}{5}
-\newcommand{\ubc}
+\newcommand{\utexas}{3}
+\newcommand{\virginia}{4}
+\newcommand{\ucf}{5}
+\newcommand{\wisc}{6}
+\newcommand{\jpl}{7}
+\newcommand{\ubc}{8}
+\newcommand{\hawaiihilo}{9}
+\newcommand{\hawaiimain}{10}
+\newcommand{\arizona}{11}
 
 	% End definitions
 
@@ -118,50 +145,86 @@ Reduction}
 \author{James Aguirre\altaffilmark{\penn},
         Adam Ginsburg\altaffilmark{\casa},
         Miranda Nordhaus\altaffilmark{\utexas},
-	Meredith Drosback\altaffilmark{4},
+	Meredith Drosback\altaffilmark{\virginia},
         John Bally\altaffilmark{\casa}, 
 	Cara Battersby\altaffilmark{\casa},
-	Eric Todd Bradley\altaffilmark{5},
+	Eric Todd Bradley\altaffilmark{\ucf},
 %        Richard Chamberlin\altaffilmark{\cso},
-	Claudia Cyganowski\altaffilmark{6},
-	Darren Dowell\altaffilmark{7}
+	Claudia Cyganowski\altaffilmark{\wisc},
+	Darren Dowell\altaffilmark{\jpl}
 	Neal J. Evans II\altaffilmark{\utexas},
         Jason Glenn\altaffilmark{\casa},
-        Paul Harvey\altaffilmark{1,7},
-        Erik Rosolowsky\altaffilmark{8},
+        Paul Harvey\altaffilmark{\utexas,\casa},
+        Erik Rosolowsky\altaffilmark{\ubc},
 %        Wayne Schlingman\altaffilmark{9},
 %        Yancy Shirley\altaffilmark{9},
         Guy S. Stringfellow\altaffilmark{\casa},
-        Josh Walawender\altaffilmark{10}, and 
-        Jonathan Williams\altaffilmark{11}
+        Josh Walawender\altaffilmark{\hawaiihilo}, and 
+        Jonathan Williams\altaffilmark{\hawaiimain}
 }
 
+\affil{{$^\penn$}{\it{Department of Physics and Astronomy, University of
+      Pennsylvania, Philadelphia, PA }}}
+\email{\tt jaguirre@sas.upenn.edu}
 
-%\author{James Aguirre\altaffilmark{\penn},
-%  Adam Ginsburg\altaffilmark{\casa},
-%  John Bally\altaffilmark{\casa},
-
-%  Meredith Drosback\altaffilmark{\virginia},
-%  Neal J. Evans\altaffilmark{\utexas},
-%  Jason Glenn\altaffilmark{\casa},
-%  Miranda Nordhaus\altaffilmark{\utexas},
-%  Erik Rosolowsky\altaffilmark{\ubc},
-%  Josh Walawender\altaffilmark{\virginia},
-%  Jonathan Williams\altaffilmark{\virginia}
-%}
+\affil{{$^\casa$}{\it{CASA, University of Colorado, CB 389, Boulder, CO 80309}}}
+%, \email{John.Bally@casa.colorado.edu}
+%      \email{adam.ginsburg@colorado.edu}
+%      \email{cara.battersby@colorado.edu}
+%      \email{Jason.Glenn@colorado.edu} \email{pmh@astro.as.utexas.edu}
+%      \email{Guy.Stringfellow@colorado.edu} }}
 
 
-\email{jaguirre@sas.upenn.edu}
+\affil{{$^\utexas$}{\it{Department of Astronomy, University of Texas,
+      1 University Station C1400, Austin, TX 78712}}}
+%,            
+%      \email{nje@astro.utexas.edu},
+%      \email{nordhaus@astro.utexas.edu}}}
 
-\altaffiltext{\penn}{University of Pennsylvania, Philadelphia, PA 19104}
-%Jansky Fellow, National Radio Astronomy Observatory} 
-\altaffiltext{\casa}{CASA, University of Colorado, CB 389, Boulder, CO 80309}
-\altaffiltext{\utexas}{Department of Astronomy, University of Texas, 
-       1 University Station C1400, Austin, TX 78712}
-\altaffiltext{4}{Caltech Submillimeter Observatory, Hilo, HI}
-\altaffiltext{5}{Institute for Astronomy (IfA), University of Hawaii
-640 N. Aohoku Pl., Hilo, HI 96720}
+\affil{{$^\virginia$}{\it{Department of Astronomy, University of
+Virginia, P.O. Box 400325, Charlottesville, VA 22904}}}
+%, 
+%    \email{meredith.drosback@origins.colorado.edu}}}
 
+\affil{{$^\ucf$}{\it{Department of Physics, University of Central
+Florida}}}
+%,           
+%                                              } ,   \email{tbradley@physics.ucf.edu}} }  
+
+\affil{{$^\wisc$}{\it{Department of Astronomy, University of Wisconsin,
+       Madison, WI 53706}}}
+% , \email{cyganow@astro.wisc.edu}}}
+
+\affil{{$^\jpl$}{\it{Jet Propulsion Laboratory, California Institute
+   of Technology, 4800 Oak Grove Dr., Pasadena, CA 91104}}}
+%,
+%       \email{cdd@submm.caltech.edu}}}
+
+\affil{{$^{\ubc}$}{\it{Department of Physics and Astronomy, University
+       of British Columbia, Okanagan }}}
+% ,               \email{erik.rosolowsky@ubc.ca}}} 
+
+%\affil{{$^{\arizona}$}{\it{ Steward Observatory, University of
+%Arizona, 933 North Cherry Avenue, Tucson, AZ 85721 }}}
+%%\email{yshirley@as.arizona.edu} \email{wschlingman@as.arizona.edu}}}
+
+\affil{{$^{\hawaiihilo}$}{\it{Institute for Astronomy, University of
+        Hawaii,640 N. Aohoku Pl., Hilo, HI 96720}}}
+%\email{joshw@ifa.hawaii.edu} }}
+
+\affil{{$^{\hawaiimain}$}{\it{Institute for Astronomy, University of
+Hawaii,680 Woodlawn Drive, Honolulu, HI 96822}}}
+%\email{jpw@ifa.hawaii.edu}}
+
+%\altaffiltext{\penn}{University of Pennsylvania, Philadelphia, PA 19104}
+%%Jansky Fellow, National Radio Astronomy Observatory} 
+%\altaffiltext{\casa}{CASA, University of Colorado, CB 389, Boulder, CO 80309}
+%\altaffiltext{\utexas}{Department of Astronomy, University of Texas, 
+%       1 University Station C1400, Austin, TX 78712}
+%\altaffiltext{4}{Caltech Submillimeter Observatory, Hilo, HI}
+%\altaffiltext{5}{Institute for Astronomy (IfA), University of Hawaii
+%640 N. Aohoku Pl., Hilo, HI 96720}
+%
 \begin{abstract}
 
 We present the Bolocam Galactic Plane Survey (BGPS), a 1.1 mm
@@ -208,20 +271,6 @@ provide essential ``ground truth'' required for the analysis of distant
 galaxies where where individual clouds and cores are not resolved and
 only galaxy-wide average quantities can be measured.
 
-The advent of focal plane arrays containing hundreds of individual
-bolometers sensitive to millimeter and sub-millimeter (sub-mm)
-radiation has enabled large-scale surveys of mm-wavelength continuum
-emission from Galactic interstellar dust.  The 144 element Bolocam
-focal plane array, mounted at the Cassegrain focus of the 10 meter
-diameter sub-mm telescope at the Caltech Sub-millimeter Observatory
-(CSO) was use to survey over \bgpsarea\ square degrees of the northern
-Galactic plane at a wavelength of 1.1 mm in the dust-continuum.  The
-Bolocam Galactic Plane Survey (BGPS) presented here has detected about
-\ncores\ cores in the surveyed fields, providing an unbiased sample of
-cores suitable for multi-wavelength and high-resolution studies with
-existing telescopes and future facilities.  The core catalog is
-described in a companion paper \citep{rosolowsky09}.
-
 Dust continuum emission near a wavelength of 1 mm is the best tracer
 of the material most directly associated with the formation of
 planetary systems, stars, and star clusters
@@ -249,12 +298,16 @@ densities, masses, and other physical properties of cloud cores very
 difficult.  The continuum emission from warm dust provides a more
 reliable tracer of the column densities and core masses.
 
-The great advantage of continuum observations at 1.1mm is that the
-mass column density does not depend strongly on the dust temperature
-$T_d$ (varying only linearly unless $T_d$ is less than about 10 K) and
-is independent of the gas volume density.  Using the same dust opacity
-as \citet{enoch06} and \citet{young06}, and assuming a gas-to-dust
-mass ratio $X$ of 100, the mass sensitivity can be written as
+The advent of focal plane arrays containing hundreds of individual
+bolometers sensitive to millimeter and sub-millimeter (sub-mm)
+radiation has enabled large-scale surveys of mm-wavelength continuum
+emission from Galactic interstellar dust.  The great advantage of
+continuum observations at 1.1mm is that the mass column density does
+not depend strongly on the dust temperature $T_d$ (varying only
+linearly unless $T_d$ is less than about 10 K) and is independent of
+the gas volume density.  Using the same dust opacity as
+\citet{enoch06} and \citet{young06}, and assuming a gas-to-dust mass
+ratio $X$ of 100, the mass sensitivity can be written as
 \begin{equation} 
 \label{eq:Mass}
 M_{gas}\approx
@@ -267,14 +320,26 @@ where $D_{kpc}$ is the distance to the source in kpc.  (At $S_\nu =
 wide area, relatively shallow 1.1~mm survey to provide an unmatched,
 uniform inventory of massive star-forming and starless condensations.
 
-A number of (sub)millimeter surveys of the Galactic Plane are ongoing
-or planned.  The BGPS is the first.
+
+This survey presents the results of one of the first wide-area,
+untargeted surveys of the Galactic Plane in the millimeter continuum.
+We have used the 144 element Bolocam focal plane array, mounted at the
+Cassegrain focus of the 10 meter diameter sub-mm telescope at the
+Caltech Sub-millimeter Observatory (CSO), to survey over \bgpsarea\
+square degrees of the northern Galactic plane at a wavelength of 1.1
+mm in the dust continuum.  Figure \ref{fig:Coverage} shows the
+coverage of the \bgps.  Maps of the entire BGPS are presented in
+Figure \ref{fig:BGPSMontage}.  We have detected \ncores\ cores in the
+surveyed fields, providing an unbiased sample of cores suitable for
+multi-wavelength and high-resolution studies with existing telescopes
+and future facilities.  The core catalog is described in a companion
+paper \citep{rosolowsky09}.
 
 The outline of the paper is as follows. Section \ref{sec:Observations}
 describes the instrument and the observations.  Section
 \ref{sec:FluxCalibration} describes the flux calibration and errors.
 Section \ref{sec:Astrometry} describes the construction of an absolute
-reference frame for the observations and verification against 
+reference frame for the observations and verification against
 
 %BGPS will identify regions of high-mass star and cluster formation
 %throughout the Galaxy and sites of low-mass star formation within a
@@ -313,7 +378,103 @@ greyscale is IRAS 100 \mum.
 %Major regions of Galactic star formation are labeled.  The coverage of
 %{\em Spitzer}-GLIMPSE \citep{benjamin03} and the FCRAO $^{13}$CO GRS
 %\citep{jackson06} are shown.
-}{fig:coverage}{1.0}
+}{fig:Coverage}{1.0}
+
+% TEST
+% Useful, but not here
+%\begin{figure}
+%  \subfigure[$l=-10.5$ to $l=19.5$ Units are Jy/Beam.  The brightest
+%	sources, e.g. Sgr B2, Sgr A, and sources near $l=10$ and
+%	$l=13$, appear to be saturated, but this is only a display
+%	artifact.  The noise is more pronounced from $l=-7$ to $l=-2$
+%	because this region was observed less.]{\label{fig:BGPSMontage-a}\includegraphics[scale=0.75]{fig1_pg1_bw_inv_bar_label}}\\
+%\pagebreak
+%\subfigure[$l=19.5$ to $l=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
+%	51, W 43, W 49, and M 17 appear to be saturated, but this is
+%	only a display artifact.]
+%{\label{fig:BGPSMontage-b}\includegraphics[scale=0.75]{fig1_pg2_bw_inv_bar_label}}
+%
+%\end{figure}
+%% --------------------------------
+%
+
+
+\newcounter{subfig}
+\setcounter{subfig}{1}
+\renewcommand{\thefigure}{\arabic{figure}\alph{subfig}}
+
+%\begin{sidewaysfigure}[h]
+\begin{figure}
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
+      \caption{$l=-10.5$ to $l=19.5$ Units are Jy/Beam.  The brightest
+	sources, e.g. Sgr B2, Sgr A, and sources near $l=10$ and
+	$l=13$, appear to be saturated, but this is only a display
+	artifact.  The noise is more pronounced from $l=-7$ to $l=-2$
+	because this region was observed less.}
+    \end{center}
+    \label{fig:BGPSMontage}
+  \end{minipage}
+\end{figure}
+  
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+\begin{figure}
+  \begin{minipage}{6.5in} 
+    \begin{center}
+      \includegraphics[scale=0.9]{fig1_pg2_bw_inv_bar_label} 
+      \caption{$l=19.5$ to $l=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
+	51, W 43, W 49, and M 17 appear to be saturated, but this is
+	only a display artifact}
+    \end{center}
+  \end{minipage}
+\end{figure}
+
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+\begin{figure}
+  \begin{minipage}{6.5in} 
+    \begin{center}
+      \includegraphics[scale=0.9]{fig1_pg3_bw_inv_bar_label}
+      \caption{$l=49.5$ to $l=74.5$.}
+    \end{center}
+  \end{minipage}
+\end{figure}
+
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+\begin{figure}
+  \hspace{-1in}
+  \includegraphics[scale=0.8]{fig1_pg5_bw_inv_bar_label} 
+  \caption{The Cygnus Arm.}
+\end{figure}
+%  \vspace{-4in}
+
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+\begin{figure}
+\hspace{-0.5in}
+  \includegraphics[scale=0.8]{fig1_pg4_bw_inv_bar_label} 
+  \caption{Cloud complexes centered at $l=111$ in the Perseus Arm.}
+\end{figure}
+
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+\begin{figure}
+  \hspace{-1in}
+  \includegraphics[scale=0.8]{fig1_pg6_bw_inv_bar_label} 
+  \caption{W3/4/5}
+\end{figure}
+
+\renewcommand{\thefigure}{\arabic{figure}}
+
+\clearpage
 
 %\include{bgps_methods_observations}
 \section{Observations}
@@ -327,7 +488,7 @@ dish of the Caltech Submillimeter Observatory (CSO) on the summit of
 Mauna Kea.  We used the filter configuration with a bandcenter of
 268~GHz (hereafter 1.1~mm) and fractional bandwidth $\Delta \nu/\nu =
 0.17$.  The passband is constructed to exclude the $^{12}\mathrm{CO}(2
-\to 1)$ emission line.  Figure \ref{fig:Passband} shows the passband.
+\to 1)$ emission line.  Figure \ref{fig:Bandpass} shows the passband.
 We compute color corrections for sources of varying spectral index in
 Appendix \ref{app:ColorCorrections}.
 
@@ -384,12 +545,12 @@ above scan pattern and the field rotator, is typically uniform to
 
 \Figure{bolocam_bandpass}{The Bolocam 1.1 mm bandpass.  Bright
 molecular emission lines are shown at their rest frequencies.  Note
-that the Bolocam passband rejects $>90\%$ of the $^{12}$CO flux, leaving our
-continuum measurements largely uncontaminated.  SO and CH3OH lines are probably
-the dominant contributors to line flux in the passband.  \citet{nummelin1998}
-found that 22\% of the  flux in one pointing towards Sgr B2 was from lines, and
-\citet{yoshida2005} reported >40\% in Orion A from line emission}
-{fig:Passband}{1.0}
+that the Bolocam passband rejects $>90\%$ of the $^{12}$CO flux,
+leaving our continuum measurements largely uncontaminated.  SO and
+CH3OH lines are probably the dominant contributors to line flux in the
+passband.  \citet{nummelin1998} found that 22\% of the flux in one
+pointing towards Sgr B2 was from lines, and \citet{yoshida2005}
+reported $>40\%$ in Orion A from line emission} {fig:Bandpass}{1.0}
 
 \Table
 {llll}
@@ -405,64 +566,23 @@ found that 22\% of the  flux in one pointing towards Sgr B2 was from lines, and
 2007 Sep 01 & 2007 Sep 09 & 5 & 0.1 \\
 }
 
-\Figure{scan_10deg}{The effect of field rotation on the coverage
-obtained via Bolocam raster scans.  (could also use this figure to
-show the distortion map)}{fig:Array}{1.0}
+\FigureTwo{bolosens050904_o32}{scan_10deg}{Left: the position,
+ellipticity and relative response of the detectors in the Bolocam
+focal plane as mapped to the sky.  Right: The effect of field rotation
+on the coverage obtained via Bolocam raster scans.}{fig:Array}{1.0}
 
-%\begin{sidewaysfigure}[h]
-\begin{center}
-  \begin{figure}[t]
-%    \includegraphics[width=6in,height=9.5in]{fig1_pg1_bw_inv_bar_label} 
-    \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
-    \caption{$l=-10.5$ to $l=19.5$ Units are Jy/Beam.  The brightest
-      sources, e.g. Sgr B2, Sgr A, and sources near $l=10$ and
-      $l=13$, appear to be saturated, but this is only a display
-      artifact.  The noise is more pronounced from $l=-7$ to $l=-2$
-      because this region was observed less.}
-    \label{fig:galplane_p1}
-  \end{figure}
-    %\end{sidewaysfigure}
-
-    %\begin{sidewaysfigure}[h]
-  \begin{figure} 
-%    \includegraphics[width=6in,height=9.5in]{fig1_pg2_bw_inv_bar_label} 
-    \includegraphics[scale=0.9]{fig1_pg2_bw_inv_bar_label} 
-    \caption{$l=19.5$ to $l=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
-      51, W 43, W 49, and M 17 appear to be saturated, but this is
-      only a display artifact}
-    \label{fig:galplane_p2}
-    %\end{sidewaysfigure}
-  \end{figure}
-\end{center}
-
-
-  
-
-%\begin{sidewaysfigure}[h]
-%\begin{center}
-%\includegraphics[scale=0.5]{bgps_montage}
-%\end{center}
-%\caption{ The coverage of the Bolocam Northern Galactic Plane Survey.
-%as of September 2007.  The negative greyscale is the IRAS 100 \mum\
-%survey.  Dashed lines indicate coverage between 15 and 100 mJy RMS;
-%solid lines indicate areas covered more deeply than 30 mJy RMS.}
-%\label{fig:coverage_sep06}
-%\end{sidewaysfigure}
-
-
-
-
-
-%\include{bgps_methods_flux_calibration}
 \section{Flux Density and Surface Brightness Calibration}
 
-The absolute flux calibration is obtained from observations of Mars,
-Uranus and Neptune (the ``primary calibrators'').  The millimeter-wave
-flux of these planets is known to $\sim 5\%$
-\citep{orton86,griffin93}.  Calibrations at (sub)millimeter
-wavelengths are strongly affected by atmospheric opacity corrections.
-Further, the detector responsivity of Bolocam's bolometers is a
-non-linear function of the mean atmospheric loading.
+The absolute flux calibration is obtained from observations of Mars
+and Uranus
+% no good observations, per AG
+%and Neptune 
+(the ``primary calibrators'').  The millimeter-wave flux of these
+planets is known to $\sim 5\%$ \citep{orton86,griffin93}.
+Calibrations at (sub)millimeter wavelengths are strongly affected by
+atmospheric opacity corrections.  Further, the detector responsivity
+of Bolocam's bolometers is a non-linear function of the mean
+atmospheric loading.
 
 To relate observations of the primary calibrators to observations of
 the BGPS fields, we make use of the following relation.  The
@@ -504,7 +624,7 @@ calibration was used for all data here.
 %between successive cooldowns of the instrument by $\sim10\%$ \Check\
 %but is generally stable over the period of order a month which
 %constitutes each of the observing epochs.  
-The calibration curve is shown in Figure \ref{fig:Calibration}.  The
+The calibration curve is shown in Figure \ref{fig:CalibrationCurves}.  The
 resulting error on the calibration curve fit is less than 
 %CHECK
 $5\%$ (statistical) over the observed range of $\tau$.  A tally of all
@@ -518,27 +638,26 @@ plane.  We do this by monitoring the response to the atmosphere
 emission in all bolometers.  Since the atmosphere is common to all
 detectors, any changes in response are due to the intrinsic properties
 of the detectors.  The change in relative response with loading for a
-typical detector is shown in Figure \ref{fig:Flatfield}.  The method
-is discussed further in Section \ref{sec:Mapping}
-
-
+typical detector is shown in Figure \ref{fig:CalibrationCurves}.  The
+actual application of the the method to the time series of the
+bolometer data is shown in Figure \ref{fig:Flatfield}, and is
+discussed further in Section \ref{sec:Mapping}.
 
 The instrument beam size (PSF) is measured using the planets Uranus
 and Neptune which are nearly point sources for Bolocam.
-% For 
-
-
 %The semi-diameter of
 %Mars over this period ranged from 2.3\arcsec\ to 2.9\arcsec, with
 %Neptune $\sim1.1\arcsec$.  Relative to the \bcamfwhm~FWHM Bolocam
 %beam, these may be regarded as point sources; the finite size of Mars
 %results in a $< 1.5\%$ correction of the observed flux.
-The beam area is that averaged over all detectors, and is ?$1.71\times10^{-6}$\TBD\ ($35.6$\farcs)
-steradians.  This allows conversion of the maps, calibrated in Jy
-beam$^{-1}$, into surface brightness (MJy sr$^{-1}$).  The uncertainty
-in the beam size is ?$.7\%$\TBD\  (number quoted is the uncertainty in the 
-mean beam size), leading to an uncertainty in the surface
-brightness calibration of \TBD.
+The maps of the planets, including all detectors, are fit to a
+Gaussian profile.  The beam area is that averaged over all detectors,
+and is ?$1.71\times10^{-6}$\TBD\ ($35.6$\farcs) steradians.  This
+allows conversion of the maps, calibrated in Jy beam$^{-1}$, into
+surface brightness (MJy sr$^{-1}$).  The uncertainty in the beam size
+is ?$.7\%$\TBD\ (number quoted is the uncertainty in the mean beam
+size), leading to an uncertainty in the surface brightness calibration
+of \TBD.
 
 \subsection{Comparison to Other Surveys}
 
@@ -546,20 +665,27 @@ Comparison of the accuracy of the Bolocam flux density calibration
 with the SCUBA 850 \mum\ results is complicated by the unknown effect
 of the dust spectral index.  However, there are several large-area
 surveys with the MAMBO instrument at 1.2 mm with which we can compare.
-For example, there is \citet{motte07}.
+Figure \ref{fig:CygnusComparison} shows the comparison of fluxes
+extracted from our map in the Cygnus Arm with those of
+\citet{motte07}.
 
-\Figure{fluxcal_errorbars}
+\FigureTwo{fluxcal_errorbars}{rel_flux_cal_050303_ob3_to_050405_o66}
 %{calibration_plot_2004}
-{Average calibration curve [V/Jy] versus the mean detector voltage, a
-proxy for atmospheric loading.}{fig:Calibration}{1.0}
-
-\Figure{rel_flux_cal_050303_ob3_to_050405_o66}{Scaling of the
+{Left: Average calibration curve [V/Jy] versus the mean detector
+voltage, a proxy for atmospheric loading.  Red points are observations
+of Mars and black of Uranus.  Right: Scaling of the
 relative calibration with atmospheric loading for bolocam
-143. {\em To be replaced with new figure}}{fig:Flatfield}{1.0}
+143. {\em To be replaced with new figure}}{fig:CalibrationCurves}{1.0}
 
-\Figure{relsens_cal}{Relative sensitivity calibration.  Black is the median over
-all bolometers, red and green are individual bolometers. a. before
-b. after}{fig:relsens_cal}{1.0}
+\Figure{relsens_cal}{An illustration of the relative sensitivity
+calibration using the atmosphere as a calibrator.  Black is the median
+over all bolometers (the atmosphere model), red and green are
+individual bolometers. a. before and b. after applying the relative
+calibration.  Note the improved agreement.}{fig:Flatfield}{1.0}
+
+\Figure{cygnus_flux_comparison}{A comparison of the fluxes extracted
+in the same aperture from the \citet{motte07} MAMBO map and the
+Bolocam map of this paper.}{fig:CygnusComparison}{1.0}
 
 \begin{deluxetable}{lc}
 \tablewidth{0pt}
@@ -584,9 +710,10 @@ Total & 7\% (random) + 5\% (systematic)
 \subsection{Absolute Reference Sources and Pointing Model}
 
 We constructed an absolute reference system for the BGPS by observing
-bright quasars and blazars near the Galactic Plane.
-
-The distribution of sources over the sky is shown in Figure \ref{fig:astrometry}
+bright quasars and blazars near the Galactic Plane.  The distribution
+of sources over the sky is shown in Figure
+\ref{fig:PointingCalibrators} and the list is given in Appendix
+\ref{app:PointingCalibrators}.
 
 Pointing observations were performed approximately once every two
 hours over the night.  These sources were then mapped in alt/az
@@ -653,23 +780,32 @@ The same cross-correlation procedure was used to compare to SCUBA maps where
 available.  The morphological correlation between SCUBA and BGPS sources is
 excellent, so cross-correlation maps could be used to test our pointing model.
 
+For the purposes of comparison with other surveys, we present in
+Appendix \ref{app:ReferenceSources} a selection 
+
 {\em Miranda's data here}
 
-\Figure{plane_astrometry}{The distribution of absolute reference
-sources (crosses) and in-plane millimeter sources (x's) in the
-Galactic Plane.}{fig:astrometry}{1.0}
+\FigureTwo{plane_astrometry}{pointing_model_skydist}{Left: The
+distribution of absolute reference sources (crosses) in the Galactic
+Plane (Appendix \ref{app:PointingCalibrators}).  Also shown (crosses)
+are the locations of bright, isolated, compact sources for comparison
+with other surveys, as given in Appendix \ref{app:ReferenceSources}.
+Right: The distribution of the pointing calibration sources across the
+local sky in Hawaii.  Notice the good sampling of the entire region
+used for the Survey.}{fig:PointingCalibrators}{1.0}
 
-\Figure{pointing_model}{The pointing model correction (left) and
-residuals (right) for Epoch V, from which the master reference images
-were derived for subsequent alignment. {\em To be replaced with newer
-figure?}}{fig:PointingModel}{1.0}
+\begin{figure}
+  \subfigure[The pointing model correction (left) and residuals
+(right) for Epoch V, from which the master reference images were
+derived for subsequent alignment. {\em To be replaced with newer
+figure?}]
+{\label{fig:PointingModel-a}\includegraphics[scale=1.0]{pointing_model}}\\
 
-\Figure{pointing_model_residuals}{The residuals of the pointing
-model.  Note the Gaussian distribution.}{fig:PointingModelResiduals}{1.0}
+  \subfigure[The residuals of the pointing model.  Note the Gaussian
+distribution.]{\label{fig:PointingModel-b}\includegraphics[scale=0.7]{pointing_model_residuals}}
 
-\Figure{pointing_model_skydist}{The distribution of the PCAL
-sources across the local sky in Hawaii.  Notice the good sampling of
-the entire region used for the Survey.}{fig:PCALSkydist}{1.0}
+\caption{Pointing model.}
+\end{figure}
 
 \section{Mapping Algorithm}
 \label{sec:Mapping}
@@ -722,8 +858,9 @@ detectors
 \begin{equation}
 \tilde{a}^{(n)}_i(t) = \frac{d_i(t) \cdot a(t)}{d_i(t)^2} a(t) = r_i a(t)
 \end{equation}
-The instrument errors, which are typically smaller than the
-atmosphere, are then estimated
+This is illustrated in Figure \ref{fig:Flatfield}.  The instrument
+errors, which are typically smaller than the atmosphere, are then
+estimated
 \begin{equation}
 \tilde{e}^{(n)}_i(t) = some models
 \end{equation}
@@ -801,12 +938,12 @@ subsequent maps.  The turnaround microphonics are modeled as decaying
 exponentials at the beginnings and ends of scans.
 
 \Figure{flagger_plots}{An illustration of a ``glitch'' in a single
-bolometer timestream due to a cosmic ray strike.  Note the acausal
-ringing due to the application of the downsampling filter.  The time
-series for a physically adjacent bolometer is shown in red.  The high
-level of correlation due to atmospheric fluctuations is readily
-apparent, as well as the lack of correlation due to the
-glitch.}{fig:CosmicRayGlitch}{1.0}
+bolometer timestream (red) due to a cosmic ray strike.  Note the
+acausal ringing due to the application of the downsampling filter.
+The time series for a physically adjacent bolometer is shown in blue,
+and a bolometer which does not pass over a source in green.  The PCA
+model has already been subtracted from the
+data.}{fig:CosmicRayGlitch}{1.0}
 
 \Figure{crs}{The distribution of glitch amplitudes flagged and
 removed from the data.  The expected contribution to the noise from
@@ -819,25 +956,30 @@ Due to the large volume of data generated by the survey, it was
 necessary to develop new tools to quickly visualize the data and
 ensure data quality.  We used a ``waterfall''
 
-\Figure{flagger_withglitch}{An illustration of the flagging process using the
-waterfall plot.  In this image, an anomaly which affects all
-bolometers for a brief period of time is evident near the top of the
-image.}{fig:Flag1}{1.0} 
+\Figure{flagger_withglitch}{An illustration of the flagging process
+using the waterfall plot. The glitch apparent at middle right is the
+same one whose time series is shown in Figure
+\ref{fig:CosmicRayGlitch}.  Because of the PCA subtraction, the effect
+of the glitch also propagates over the other bolometers, appearing as
+a horizontal stripe.}  {fig:Flag1}{1.0}
 
 \Figure{flagger_glitchboxflagged}{A box is drawn around the bad data and it is
 removed from subsequent analysis.}{fig:Flag2}{1.0} 
 
-\Figure{flagger_glitchgone}{A rescaled version of the data with the bad data
-removed.}{fig:Flag3}{1.0}
+\Figure{flagger_glitchgone}{A rescaled version of the data with the
+bad data removed.  The effect of the glitch on the other bolometers is
+now more apparent; this too is flagged out in subsequent
+analysis.}{fig:Flag3}{1.0}
 
 
-An automated flagger was also created that flags out outlier data on a per-pixel
-basis.  In order to make a robust measurement of the variance of the fluxes
-assigned to each pixel, we used the median average deviation over the data in
-the pixel and rejected high and low outliers at the 3-sigma level.  Pixels with
-too little data to compute a deviation, i.e. those with $<3$ data points, were
-also flagged out - these scan-edge pixels are the dominant contribution to the
-total number of flagged data points.
+An automated flagger was also created that flags out outlier data on a
+per-pixel basis.  In order to make a robust measurement of the
+variance of the fluxes assigned to each pixel, we used the median
+average deviation over the data in the pixel and rejected high and low
+outliers at the 3-sigma level.  Pixels with too little data to compute
+a deviation, i.e. those with $<3$ data points, were also flagged out -
+these scan-edge pixels are the dominant contribution to the total
+number of flagged data points.
 
 \subsection{Creation of the Astrophysical Model}
 
@@ -850,14 +992,14 @@ matching allows the map to be returned to a timestream in the same manner,
 but with the S/N improved by averaging over all hits on a given pixel.
 
 
-%\Figure{l001_deconvolutionkernelcompare}{The effect of
-%deconvolution on the iterative process can be seen in its effect on
-%the residuals. From left to right: map, noise, smoothmap, model. Top
-%to bottom kernel size: 14.4\arcsec, 21.6\arcsec, 31.2\arcsec,
-%7.2\arcsec. The final version of the pipeline uses 14.4\arcsec, which
-%has the result of leaving no flux in the residual at the location of
-%Sgr B2, and does not ``dig a hole'' in the residual map, as the
-%7.2\arcsec\ kernel does.}{fig:Deconvolution}{1.0}
+\Figure{l001_deconvolutionkernelcompare}{The effect of
+deconvolution on the iterative process can be seen in its effect on
+the residuals. From left to right: map, noise, smoothmap, model. Top
+to bottom kernel size: 14.4\arcsec, 21.6\arcsec, 31.2\arcsec,
+7.2\arcsec. The final version of the pipeline uses 14.4\arcsec, which
+has the result of leaving no flux in the residual at the location of
+Sgr B2, and does not ``dig a hole'' in the residual map, as the
+7.2\arcsec\ kernel does.}{fig:Deconvolution}{1.0}
 
 \section{Noise and Systematic Effects}
 \label{sec:Noise}
@@ -873,6 +1015,12 @@ bright sources in the error maps $E$.
 % which the astrophysical signal is made to exactly cancel.  This
 % provides an estimate of the noise-only RMS in the maps, to which
 % deviations from the ``ghosts'' may be compared.
+
+In some fields, flux from certain source spread out over the course of
+the iterative process using certain kernel sizes.  The cause of this
+artifact are not yet well-understood, but using a different kernel
+size was an effective workaround and did little to change the
+properties of the final map.
 
 The noise is correlated between adjacent pixels.  
 
@@ -988,6 +1136,75 @@ fortunate to conduct observations from this mountain.
 
 \appendix
 
+\section{Calculation of Color Corrections}
+\label{app:ColorCorrections}
+
+If an experiment has finite bandwidth ($t(\nu) \ne \delta(\nu -
+\nu_c)$), to report a source surface brightness at a single
+frequency, one must assume a source spectrum.  The power detected from
+that source is assumed to be
+\begin{equation}
+P_{in} = \eta \; A \Omega \; \int I_0(\nu) t(\nu) d \nu
+\end{equation}
+(Here $\eta$ and $A \Omega$ are the optical efficiency and throughput
+of the instrument, $I_0(\nu)$ is the nominal (assumed) surface
+brightness of the source, and $t(\nu)$ is the bandpass transmission
+normalized to $1.0$ at its peak.)  The effective band center $\nu_c$
+is usually chosen such that
+\begin{equation}
+I_0(\nu_c) \simeq \frac{\int I_0(\nu) t(\nu) d \nu}
+{\int t(\nu) d \nu} 
+\end{equation}
+The band centers for Bolocam are calculated assuming a Rayleigh-Jeans
+(RJ) source spectrum
+\begin{eqnarray}
+I_0(\nu_c) & = & I_{RJ}(\nu_c) \\
+\nonumber & = & \tau \; 2 k T \; \frac{\nu_c^2}{c^2},
+\end{eqnarray}
+where $\tau$ is the optical depth of the source and $k$ is Boltzmann's
+constant.  Since the detected power is assumed to be
+\begin{equation}
+P_{in} = \eta \; A \Omega \; \int \tau \; 2 k T \; \frac{\nu^2}{c^2}
+\; t(\nu) d \nu,
+\end{equation}
+we can write
+\begin{equation}
+I_0(\nu_c) = \frac{P_{in}}{\eta \; A \Omega \int \nu^2 \; t(\nu) d \nu} \; \nu_c^2
+\end{equation}
+Now if we assume a different source spectrum, for example a greybody
+with power-law emissivity, the assumed input power is
+\begin{eqnarray}
+P_{in} & = & \eta \; A \Omega \; \int I_{GB}(\nu) t(\nu) d \nu \\
+\nonumber & = & \eta \; A \Omega \; \int \tau(\nu_0) (\nu / \nu_0)^\alpha B_\nu(T) t(\nu) d \nu
+\end{eqnarray}
+and the source spectrum inferred from the detected power is
+\begin{eqnarray}
+I_{GB}(\nu_c) & = & \tau(\nu_0) (\nu_c / \nu_0)^\alpha B_{\nu_c}(T) \\
+\nonumber & = & \frac{P_{in}}{\eta \; A \Omega \int \nu^\alpha B_\nu(T) t(\nu) d \nu} \; \nu_c^\alpha B_{\nu_c}(T) \\
+\nonumber & = & \frac{\int \nu^2 t(\nu) d \nu}{\int \nu^\alpha B_\nu(T) t(\nu) d \nu} \; \nu_c^{\alpha-2} B_{\nu_c}(T) \; I_{RJ}(\nu_c) \\
+\nonumber & \equiv & \frac{I_{RJ}(\nu_c)}{K}.
+\end{eqnarray}
+This defines the color correction $K$ to apply to the reported Bolocam
+flux from a source if the source is assumed to have a greybody
+spectrum with power-law emissivity.
+
+%We make a similar calculation for DIRBE, for which the band centers are 
+%computed assuming a spectrum with $\nu I(\nu)$ constant.  In this case, 
+%the correction is given by 
+%\begin{eqnarray}
+%K &=& \frac{\nu_c^{-1}}{\int \nu^{-1} t(\nu) d \nu} \left[\frac{\tau(\nu_0) (\nu_c / \nu_0)^\alpha B_{\nu_c}(T)}{\int \tau(\nu_0) (\nu / \nu_0)^\alpha B_{\nu}(T) t(\nu) d \nu} \right]^{-1} \\
+%\nonumber &=& \frac{\int \nu^\alpha B_{\nu}(T) t(\nu) d \nu}{\int \nu^{-1} t(\nu) d \nu} \; \nu_c^{-(\alpha+1)} B_{\nu_c}(T)
+%\end{eqnarray}
+%
+We note that for an arbitrary experiment with bandpass $t(\nu)$ that
+reports its surface brightness measurements assuming a spectrum
+$I_0(\nu)$, the surface brightness assuming a different source
+spectrum $I_1(\nu)$ is given by
+\begin{eqnarray}
+I_1(\nu_c) &=& I_0(\nu_c) / K \\
+\nonumber &=& I_0(\nu_c) \frac{I_1(\nu_c)}{\int I_1(\nu) t(\nu) d \nu} \left[\frac{I_0(\nu_c)}{\int I_0(\nu) t(\nu) d \nu} \right]^{-1}
+\end{eqnarray}
+
 \section{Pointing Calculation}
 \label{sec:PointingCalculation}
 
@@ -1049,16 +1266,19 @@ the telescope.
 
 \end{enumerate}
 
-After this is done, the remaining 
+\section{Table of Absolute Pointing Sources}
+\label{app:PointingCalibrators}
 
-
-\section{Table of Absolute and In-Plane Pointing Sources}
+The absolute reference frame for the BGPS pointing model was chosen
+from a selection of bright quasars near the Galactic Plane.  Table
+\ref{tab:PointingCalibrators} gives the pointing sources used for this
+purpose.
 
 \Table
 {llrrrrc}
 {Absolute Pointing Calibrators}
 {Number & Alias & RA(J2000) & Dec(J2000) & l & b  & Flux (Jy)}
-{tab:PCAL}
+{tab:PointingCalibrators}
 {
          1 &   1622-253 & 16 25 46.9 & -25 27 38.3 & 352.14 &  16.32 &  0.18 \\
          2 & 16293-2422 & 16 32 22.9 & -24 28 35.6 & 353.94 &  15.84 &  8.40 \\
@@ -1092,6 +1312,11 @@ After this is done, the remaining
         30 &    NGC7027 & 21 07 01.6 &  42 14 10.2 &  84.93 &  -3.50 &  9.27 \\
         31 &   2201+315 & 22 03 15.0 &  31 45 38.4 &  85.96 & -18.78 &  0.35 \\
 }
+
+\clearpage
+
+\section{Table of Reference Sources}
+\label{app:ReferenceSources}
 
 \Table
 {llrrrrc}
@@ -1161,73 +1386,6 @@ l110.5npps &            & 23 05 10.7 &  60 14 50.6 & 110.11 &   0.05 &  -999.0 \
  l192pps-5 &            & 06 07 43.9 &  20 39 29.6 & 189.67 &   0.17 &  -999.0 \\
 }
 
-\section{Calculation of Color Corrections}
-\label{app:ColorCorrections}
-
-If an experiment has finite bandwidth ($t(\nu) \ne \delta(\nu -
-\nu_c)$), to report a source surface brightness at a single
-frequency, one must assume a source spectrum.  The power detected from
-that source is assumed to be
-\begin{equation}
-P_{in} = \eta \; A \Omega \; \int I_0(\nu) t(\nu) d \nu
-\end{equation}
-(Here $\eta$ and $A \Omega$ are the optical efficiency and throughput
-of the instrument, $I_0(\nu)$ is the nominal (assumed) surface
-brightness of the source, and $t(\nu)$ is the bandpass transmission
-normalized to $1.0$ at its peak.)  The effective band center $\nu_c$
-is usually chosen such that
-\begin{equation}
-I_0(\nu_c) \simeq \frac{\int I_0(\nu) t(\nu) d \nu}
-{\int t(\nu) d \nu} 
-\end{equation}
-The band centers for TopHat are calculated assuming a Rayleigh-Jeans
-(RJ) source spectrum
-\begin{eqnarray}
-I_0(\nu_c) & = & I_{RJ}(\nu_c) \\
-\nonumber & = & \tau \; 2 k T \; \frac{\nu_c^2}{c^2},
-\end{eqnarray}
-where $\tau$ is the optical depth of the source and $k$ is Boltzmann's
-constant.  Since the detected power is assumed to be
-\begin{equation}
-P_{in} = \eta \; A \Omega \; \int \tau \; 2 k T \; \frac{\nu^2}{c^2}
-\; t(\nu) d \nu,
-\end{equation}
-we can write
-\begin{equation}
-I_0(\nu_c) = \frac{P_{in}}{\eta \; A \Omega \int \nu^2 \; t(\nu) d \nu} \; \nu_c^2
-\end{equation}
-Now if we assume a different source spectrum, for example a greybody
-with power-law emissivity, the assumed input power is
-\begin{eqnarray}
-P_{in} & = & \eta \; A \Omega \; \int I_{GB}(\nu) t(\nu) d \nu \\
-\nonumber & = & \eta \; A \Omega \; \int \tau(\nu_0) (\nu / \nu_0)^\alpha B_\nu(T) t(\nu) d \nu
-\end{eqnarray}
-and the source spectrum inferred from the detected power is
-\begin{eqnarray}
-I_{GB}(\nu_c) & = & \tau(\nu_0) (\nu_c / \nu_0)^\alpha B_{\nu_c}(T) \\
-\nonumber & = & \frac{P_{in}}{\eta \; A \Omega \int \nu^\alpha B_\nu(T) t(\nu) d \nu} \; \nu_c^\alpha B_{\nu_c}(T) \\
-\nonumber & = & \frac{\int \nu^2 t(\nu) d \nu}{\int \nu^\alpha B_\nu(T) t(\nu) d \nu} \; \nu_c^{\alpha-2} B_{\nu_c}(T) \; I_{RJ}(\nu_c) \\
-\nonumber & \equiv & \frac{I_{RJ}(\nu_c)}{K}.
-\end{eqnarray}
-This defines the color correction $K$ to apply to the reported TopHat
-flux from a source if the source is assumed to have a greybody
-spectrum with power-law emissivity.
-
-We make a similar calculation for DIRBE, for which the band centers are 
-computed assuming a spectrum with $\nu I(\nu)$ constant.  In this case, 
-the correction is given by 
-\begin{eqnarray}
-K &=& \frac{\nu_c^{-1}}{\int \nu^{-1} t(\nu) d \nu} \left[\frac{\tau(\nu_0) (\nu_c / \nu_0)^\alpha B_{\nu_c}(T)}{\int \tau(\nu_0) (\nu / \nu_0)^\alpha B_{\nu}(T) t(\nu) d \nu} \right]^{-1} \\
-\nonumber &=& \frac{\int \nu^\alpha B_{\nu}(T) t(\nu) d \nu}{\int \nu^{-1} t(\nu) d \nu} \; \nu_c^{-(\alpha+1)} B_{\nu_c}(T)
-\end{eqnarray}
-For an arbitrary experiment with bandpass $t(\nu)$ that reports its
-surface brightness measurements assuming a spectrum $I_0(\nu)$, the
-surface brightness assuming a different source spectrum $I_1(\nu)$ is
-given by
-\begin{eqnarray}
-I_1(\nu_c) &=& I_0(\nu_c) / K \\
-\nonumber &=& I_0(\nu_c) \frac{I_1(\nu_c)}{\int I_1(\nu) t(\nu) d \nu} \left[\frac{I_0(\nu_c)}{\int I_0(\nu) t(\nu) d \nu} \right]^{-1}
-\end{eqnarray}
 
 \bibliography{milkyway}
 
