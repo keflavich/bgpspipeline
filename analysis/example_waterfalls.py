@@ -11,8 +11,17 @@ f.flags[f.scannum,:,:] -= (f.flags[f.scannum,:,:] > 0) * f.flags[f.scannum,:,:]
 f.plotscan(12,seconds=1)
 figure(1); savefig(figure_path+'flagger_withglitch.ps')
 
-f.flag_box(97,123,97,132,1)
+#f.flag_box(97,123,97,132,1)
+f.flag_time(123,'t')
+f.flag_time(124,'t')
+f.flag_time(125,'t')
+f.flag_time(126,'t')
+f.flag_time(127,'t')
 f.flag_time(128,'t')
+f.flag_time(129,'t')
+f.flag_time(130,'t')
+f.flag_time(131,'t')
+f.flag_time(132,'t')
 figure(1); savefig(figure_path+'flagger_glitchboxflagged.ps')
 
 f.plotscan(12,seconds=1)
