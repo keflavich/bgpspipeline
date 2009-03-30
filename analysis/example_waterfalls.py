@@ -12,6 +12,7 @@ f.plotscan(12,seconds=1)
 figure(1); savefig(figure_path+'flagger_withglitch.ps')
 
 f.flag_box(97,123,97,132,1)
+f.flag_time(,'t')
 figure(1); savefig(figure_path+'flagger_glitchboxflagged.ps')
 
 f.plotscan(12,seconds=1)
