@@ -135,3 +135,9 @@
 .run psd_weight
 .run nantozero
 .run variance
+.run relsens_cal
+.run max_likelihood
+.run positivity
+.run sim_wrapper
+.run make_sim
+.run add_source
