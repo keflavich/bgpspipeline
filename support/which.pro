@@ -22,7 +22,8 @@ function which, file_in
 ;-
 
 ; common USER_COMMON ; AG decided common blocks are stupid
-IDL_FILESEP=':'
+IDL_FILESEP='/'
+IDL_PATHSEP=':'
 
 file_out = ''
 
