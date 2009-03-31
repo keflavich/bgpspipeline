@@ -1,6 +1,7 @@
 ; measure flux recovery in known sources
 ; example:
 ; measure_flux,'v0.7_l111_13pca_deconv_21.6_sim_sim_sources.sav','v0.7_l111_13pca_deconv_21.6_sim_map20.fits','v0.7_l111_13pca_deconv_21.6_sim_initial.fits'
+; measure_flux,'v1.0.2_ic1396_13pca_deconv_sim_sim_sources.sav','v1.0.2_ic1396_13pca_deconv_sim_map20.fits','v1.0.2_ic1396_13pca_deconv_sim_initial.fits'
 pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=flux_input,$
     doplot=doplot,overplot=overplot,dostop=dostop,xax=xax,yax=yax,_extra=_extra
 
