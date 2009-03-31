@@ -35,7 +35,7 @@ pro bolocat2reg,bgps,regfile,asperpix=asperpix
     for i=0,n_e(bgps.filename)-1 do begin
         if finite(bgps[i].glon,/nan) or finite(bgps[i].posang,/nan) or finite(bgps[i].mommajpix,/nan) or finite(bgps[i].momminpix,/nan) then continue
         printf,outf,bgps[i].glon,bgps[i].glat,bgps[i].mommajpix*asperpix,bgps[i].momminpix*asperpix,bgps[i].posang/!dtor,bgps[i].name,$
-              format='("ellipse(",F10.6,1H,,F10.6,1H,,F9.5,2H",,F9.5,2H",,F8.4,1H) "\# text={"A"}")'
+              format='("ellipse(",F10.6,1H,,F10.6,1H,,F9.5,2H",,F9.5,2H",,F8.4,1H),"# text={",A,"}")'
           ; the nH formatting code is to output commas
           ; posang is assumed to be the angle from galactic coordinates
     endfor
