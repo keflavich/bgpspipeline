@@ -21,7 +21,7 @@ if keyword_set(smoothmap) and ~(whnfin[0] eq -1)  then begin
     map[whnfin] = smoothmap[whnfin]
 endif else if ~(whnfin[0] eq -1) then begin
     map[whnfin] = 0.
-    smoothmap = convolve(finite_astromap,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
+    smoothmap = convolve(map,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
     map[whnfin] = smoothmap[whnfin]
 endif
 
