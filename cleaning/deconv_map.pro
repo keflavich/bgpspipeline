@@ -17,12 +17,12 @@ map[0:mapsize[0]-1,0:mapsize[1]-1] = map_in
 ; First, get rid of nan's.
 whnfin = where(finite(map) eq 0)
 ; make NAN points average of their neighbors
-if keyword_set(smoothmap) and ~(whfin[0] eq -1)  then begin 
+if keyword_set(smoothmap) and ~(whnfin[0] eq -1)  then begin 
     map[whnfin] = smoothmap[whnfin]
-endif else if ~(whfin[0] eq -1) then begin
+endif else if ~(whnfin[0] eq -1) then begin
     map[whnfin] = 0.
     smoothmap = convolve(finite_astromap,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
-    map[whnfin] = smoothmap[whfin]
+    map[whnfin] = smoothmap[whnfin]
 endif
 
 ; Then, force the deconvolved map to be positive (for normalization purposes)
