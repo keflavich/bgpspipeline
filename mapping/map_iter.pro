@@ -25,7 +25,8 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=
         if dofits then writefits,outmap+'_smoothmap'+string(i,format='(I2.2)')+'.fits',convolved_map,hdr
     endif
     if keyword_set(deconvolve) then begin
-        mapstr.model = deconv_map(mapstr.astromap*(mapstr.astromap gt 0),_extra=_extra)
+        if n_e(convolved_map) eq n_e(mapstr.astromap) then mapstr.model = deconv_map(mapstr.astromap*(mapstr.astromap gt 0),smoothmap=convolved_map,_extra=_extra) $
+            else mapstr.model = deconv_map(mapstr.astromap*(mapstr.astromap gt 0),_extra=_extra)
         mapstr.model *=  total( (mapstr.model-mean(mapstr.model,/nan)) * (mapstr.astromap-mean(mapstr.astromap,/nan)) ,/nan) / total( (mapstr.model-mean(mapstr.model,/nan))^2 ,/nan)
         if keyword_set(fits_model) and dofits then writefits,outmap+'_model'+string(i,format='(I2.2)')+'.fits',mapstr.model,hdr
     endif else mapstr.model = mapstr.astromap * (mapstr.astromap gt model_sig*mad(mapstr.astromap))

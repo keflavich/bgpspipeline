@@ -1,5 +1,5 @@
 function deconv_map, map_in, pixsize=pixsize, covar = covar, deconv = deconv , deconv_fwhm = deconv_fwhm ,$
-    interactive=interactive,deconv_iter=deconv_iter
+    interactive=interactive,deconv_iter=deconv_iter,smoothmap=smoothmap
 
 ; Generate the PSF
 if ~keyword_set(deconv_fwhm) then fwhm = 14.4 else fwhm=deconv_fwhm ; 31.2 is the beam, deconvolve by HALF a beam
@@ -16,8 +16,13 @@ map[0:mapsize[0]-1,0:mapsize[1]-1] = map_in
 
 ; First, get rid of nan's.
 whnfin = where(finite(map) eq 0)
-if ~(whnfin[0] eq -1) then begin
+; make NAN points average of their neighbors
+if keyword_set(smoothmap) and ~(whfin[0] eq -1)  then begin 
+    map[whnfin] = smoothmap[whnfin]
+endif else if ~(whfin[0] eq -1) then begin
     map[whnfin] = 0.
+    smoothmap = convolve(finite_astromap,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
+    map[whnfin] = smoothmap[whfin]
 endif
 
 ; Then, force the deconvolved map to be positive (for normalization purposes)
