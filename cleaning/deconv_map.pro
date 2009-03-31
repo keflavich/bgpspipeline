@@ -55,15 +55,16 @@ for i=0,deconv_iter do begin
     time_e,t0
     print,"Residual: ",total(map-deconv)
     if keyword_set(interactive) then begin
-        atv,map
-        common atv_images, main_image, display_image, scaled_image, blink_image1, blink_image2, blink_image3, unblink_image, pan_image
-        blink_image1 = tvrd(true=1)
+;        atv,map
+;        common atv_images, main_image, display_image, scaled_image, blink_image1, blink_image2, blink_image3, unblink_image, pan_image
+;        blink_image1 = tvrd(true=1)
         atv,deconv
-        blink_image2 = tvrd(true=1)
-        atv,mult
-        blink_image3 = tvrd(true=1)
-        atv,map-deconv
-        atv_activate
+;        blink_image2 = tvrd(true=1)
+;        atv,mult
+;        blink_image3 = tvrd(true=1)
+;        atv,map-deconv
+;        atv_activate
+        stop
     endif
 ;    stop
 
