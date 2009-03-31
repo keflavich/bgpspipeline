@@ -1063,6 +1063,27 @@ Clearly, this complicates the definition of surface brightness, and
 also imposes a limit on the size of features for which photometry may
 be meaningfully performed.
 
+Figure \ref{fig:PCA_filter} shows the fraction of flux recovered in the map as a
+function of source size for a range of different PCA components subtracted in
+the cleaning.  These measurements were produced by inserting simulated gaussian
+sources at a range of peak flux densities and sizes spread out through the map
+and summing the flux in an ellipse on the final cleaned map.  The median
+fraction over all sources of a given size is plotted in the figure.
+
+Real data with the astrophysical source model removed were used as the
+background.  Because this is real data, at lower numbers of PCA components
+subtracted, the atmosphere still dominates the total measured flux, which is
+particularly evident for the largest sources.
+
+Figure \ref{fig:deconv_filter} shows the fraction of flux recovered in the maps
+as a function of the deconvolution kernel used to create the astrophysical model
+maps.  The differences at large source sizes are not yet well-understood
+(!!!!!!), but at the smallest source size, it is evident that a deconvolution
+kernel smaller than the source size does not fully recover the source flux.
+Therefore we chose a deconvolution kernel smaller than the beam but larger than
+the pixel size used. \ref{fig:Deconvolution} demonstrates the effects of using
+both too large and too small a kernel.
+
 \Figure{aper_phot_hpf_beam}{The effect of performing aperture
 photometry on a point source of unit flux observed with the effective
 Bolocam PSF $B$.  The black curve shows the area (measured in pixels)
