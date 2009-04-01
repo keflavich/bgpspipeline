@@ -42,7 +42,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         chi2arr = fltarr(n_e(bolo_indices))
 
         openw,fitparfile,outfile+"_bolofits.txt",/get_lun
-        printf,fitparfile,"Filename","Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
+        printf,fitparfile,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
 
         for i=0,n_e(allmap[0,0,*])-1 do begin
 
@@ -79,7 +79,10 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         save,filename=outfile+".sav"
     endelse
 
+    ; x,y nominal beam locations
     xybp = [[rtf[*,0]*cos(rtf[*,1])],[rtf[*,0]*sin(rtf[*,1])]]
+
+    ; x,y->r,th measured
     rth_meas = xy
     rth_meas[*,0] = sqrt(xy[*,0]^2+xy[*,1]^2)
     rth_meas[*,1] = atan(xy[*,1],xy[*,0])
@@ -148,17 +151,17 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     if bad_th[0] ne -1 then bestfit[bad_th,*] = 0
     if bad_r[0] ne -1 then bestfit[bad_r,*] = 0
 
-; Uncomment this code to fit a fixed array shape to the measured distortion.
-; Individual bolometers will not move from the fixed grid pattern.
-if keyword_set(fixgrid) then begin
-    print,"FITTING FIXED GRID"
-    p3 = p
-    p3[1:3] = 0 ; don't allow shift
-    newxy = hex_grid_fit_func(rtf,p3)
-    bestfit = inv_hex_gff(newxy,[1,0,0,0,1,0])
-    if bad_th[0] ne -1 then bestfit[bad_th,*] = 0
-    if bad_r[0] ne -1 then bestfit[bad_r,*] = 0
-endif
+    ; Uncomment this code to fit a fixed array shape to the measured distortion.
+    ; Individual bolometers will not move from the fixed grid pattern.
+    if keyword_set(fixgrid) then begin
+        print,"FITTING FIXED GRID"
+        p3 = p
+        p3[1:3] = 0 ; don't allow shift
+        newxy = hex_grid_fit_func(rtf,p3)
+        bestfit = inv_hex_gff(newxy,[1,0,0,0,1,0])
+        if bad_th[0] ne -1 then bestfit[bad_th,*] = 0
+        if bad_r[0] ne -1 then bestfit[bad_r,*] = 0
+    endif
 
     print,p,total(residual),total(residang)
 
