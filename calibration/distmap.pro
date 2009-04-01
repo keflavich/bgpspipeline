@@ -110,7 +110,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     xoff_guess = mean(xy[*,0]-xy2[*,0])
     yoff_guess = mean(xy[*,1]-xy2[*,1])
 
-    invweight *= rtf[*,0]^2
+    invweight *= (rtf[*,0]^2 # [1,1]) ; ARGH I HATE IDL WHY WOULD YOU TRUNCATE MY ARRAY?!
 
 ; after going through a slew of confusing and ineffective geometries, this finally seems to work...
     p2 = [1.,0.,0.,angle_guess,1.,0]
