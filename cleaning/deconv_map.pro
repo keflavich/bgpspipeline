@@ -19,8 +19,8 @@ whnfin = where(finite(map) eq 0)
 ; make NAN points average of their neighbors
 if keyword_set(smoothmap) then begin 
     map[whnfin] = smoothmap[whnfin]
-    whzero = where(map eq 0)
-    if ~(whzero[0] eq -1) then map[whzero] = smoothmap[whzero]
+;    whzero = where(map eq 0)
+;    if ~(whzero[0] eq -1) then map[whzero] = smoothmap[whzero]
 endif else if ~(whnfin[0] eq -1) then begin
     map[whnfin] = 0.
     smoothmap = convolve(map,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
