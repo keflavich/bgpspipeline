@@ -78,12 +78,17 @@ endif
 
 ; Reconvolve with the beam
 ;model = abs(convolve(model,psf))
-model = convolve(model,psf)
+;model = convolve(model,psf)
 
 
 ; Normalize the model to best match the actual map
 ;mnmodel = mean(model)
 ;mnmap = mean(map)
+;stdmap= stddev(map)
+;mnmod = mean(deconv)
+;stdmod= stddev(deconv)
+;whgood = where(map gt mnmap+5*stdmap and deconv gt mnmod+5*stdmod)
+;normfac = mean(map[whgood]/deconv[whgood])
 ;normfac = total( (model-mnmodel)*(map-mnmap) ) / $
 ;  total( (model-mnmodel)^2 )
 ;model *= normfac
