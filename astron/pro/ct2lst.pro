@@ -85,7 +85,7 @@ PRO CT2LST, lst, lng, tz, tme, day, mon, year
    jdcnv, year, mon, day, time, jd 
 
  ENDIF ELSE jd = double(tme)
-print,jd,f='(f19.10)'
+; this line is EXPLICITLY IN ERROR!  WHY?!?!?!?!?    print,jd,f='(f19.10)'
 ;
 ;                            Useful constants, see Meeus, p.84
 ;
