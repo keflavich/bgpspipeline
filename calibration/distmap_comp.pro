@@ -29,7 +29,7 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
 ;    print,"PEAK COMPARISON","BL:",max(BL,/nan),"noBL:",max(noBL,/nan),"defaultBL:",max(defaultBL,/nan),format="(A20,A8,F20,A8,F20,A12,F20)"
 ;    print,"FWHM","BL:",fpBL[2:3],"noBL:",fpnoBL[2:3],"defaultBL:",fpdefaultBL[2:3],format="(A20,A8,F10,F10,A8,F10,F10,A12,F10,F10)"
 ;    print,"GAUSSpeak","BL:",fpBL[1],"noBL:",fpnoBL[1],"defaultBL:",fpdefaultBL[1],format="(A20,A8,F20,A8,F20,A12,F20)"
-    openw,outtxtf,outtxt,/get_lun
+    openw,outtxtf,outtxt,/get_lun,/append
     printf,outtxtf,"TYPE","GAUSSPEAK","PEAK","FWHM X","FWHM Y",format='(A15,A15,A15,A15,A15)'
     printf,outtxtf,"BL",fpBL[1], max(BL,/nan), fpBL[2:3],format="(A15,F15,F15,F15,F15)"
     printf,outtxtf,"noBL",fpnoBL[1], max(noBL,/nan), fpnoBL[2:3],format="(A15,F15,F15,F15,F15)"

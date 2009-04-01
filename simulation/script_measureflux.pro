@@ -7,13 +7,14 @@ path = '/usb/scratch1/ic1396/'
 measure_flux,path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_initial.fits',/doplot,xtitle="!6Object size (arcsec)",ytitle="!6Fraction of flux recovered",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1
 measure_flux,path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_initial.fits',/doplot,/overplot,color=250,thick=3,xax=xax2,yax=yax2
 measure_flux,path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax3,yax=yax3
-measure_flux,path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_initial.fits',/doplot,/overplot,color=100,thick=3,xax=xax3,yax=yax3
+measure_flux,path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_initial.fits',/doplot,/overplot,color=100,thick=3,xax=xax4,yax=yax4
 legend,['7.2"','14.4"','21.6"','31.2"'],psym=[1,1,1,1],color=[100,0,250,150],/right,charsize=1.5,charthick=2,thick=3 ;,/right
 device,/close_file
 device,filename='/home/milkyway/student/ginsbura/sim_figures/deconvolution_comparison_nolegend_ic1396.ps',/encapsulated,bits=16,/color
 plot,xax1,yax1,xtitle="!6Object size (arcsec)",ytitle="!6Fraction of flux recovered",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
 oplot,xax2,yax2,thick=3,color=250
-oplot,xax3,yax3,thick=3,color=200
+oplot,xax3,yax3,thick=3,color=150
+oplot,xax4,yax4,thick=3,color=100
 device,/close_file
 
 device,filename='/home/milkyway/student/ginsbura/sim_figures/pca_comparison_ic1396.ps',/encapsulated,bits=16,/color
@@ -79,13 +80,14 @@ device,filename='/home/milkyway/student/ginsbura/sim_figures/deconvolution_compa
 measure_flux,path+'v1.0.2_l072_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l072_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l072_13pca_deconv_14.4_sim_initial.fits',/doplot,xtitle="!6Object size (arcsec)",ytitle="!6Fraction of flux recovered",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1
 measure_flux,path+'v1.0.2_l072_13pca_deconv_21.6_sim_sim_sources.sav',path+'v1.0.2_l072_13pca_deconv_21.6_sim_map20.fits',path+'v1.0.2_l072_13pca_deconv_21.6_sim_initial.fits',/doplot,/overplot,color=250,thick=3,xax=xax2,yax=yax2
 measure_flux,path+'v1.0.2_l072_13pca_deconv_31.2_sim_sim_sources.sav',path+'v1.0.2_l072_13pca_deconv_31.2_sim_map20.fits',path+'v1.0.2_l072_13pca_deconv_31.2_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax3,yax=yax3
-measure_flux,path+'v1.0.2_l072_13pca_deconv_7.2_sim_sim_sources.sav',path+'v1.0.2_l072_13pca_deconv_7.2_sim_map20.fits',path+'v1.0.2_l072_13pca_deconv_7.2_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax3,yax=yax3
+measure_flux,path+'v1.0.2_l072_13pca_deconv_7.2_sim_sim_sources.sav',path+'v1.0.2_l072_13pca_deconv_7.2_sim_map20.fits',path+'v1.0.2_l072_13pca_deconv_7.2_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax4,yax=yax4
 legend,['7.2"','14.4"','21.6"','31.2"'],psym=[1,1,1,1],color=[100,0,250,150],/right,charsize=1.5,charthick=2,thick=3 ;,/right
 device,/close_file
 device,filename='/home/milkyway/student/ginsbura/sim_figures/deconvolution_comparison_nolegend_l072.ps',/encapsulated,bits=16,/color
 plot,xax1,yax1,xtitle="!6Object size (arcsec)",ytitle="!6Fraction of flux recovered",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
 oplot,xax2,yax2,thick=3,color=250
-oplot,xax3,yax3,thick=3,color=200
+oplot,xax3,yax3,thick=3,color=150
+oplot,xax4,yax4,thick=3,color=100
 device,/close_file
 
 device,filename='/home/milkyway/student/ginsbura/sim_figures/pca_comparison_l072.ps',/encapsulated,bits=16,/color
