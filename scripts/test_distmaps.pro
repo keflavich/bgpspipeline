@@ -15,8 +15,8 @@ distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o33_raw_ds5.nc','/scratch
 distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o34_raw_ds5.nc','/scratch/adam_work/distmaps/uranus_050628_o34'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o19_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o19'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o20_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o20'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 $ls *_fixscale.txt > 0506_fixscalelist.txt
 average_beamloc,'0506_fixscalelist.txt','0506_fixscale_averagebeamloc.txt'
 
@@ -30,8 +30,8 @@ distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o33_raw_ds5.nc','/scratch
 distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o34_raw_ds5.nc','/scratch/adam_work/distmaps/uranus_050628_o34'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o19_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o19'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o20_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o20'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 $ls *_fixscalegrid.txt > 0506_fixscalegridlist.txt
 average_beamloc,'0506_fixscalegridlist.txt','0506_fixscalegrid_averagebeamloc.txt'
 
@@ -45,8 +45,8 @@ distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o33_raw_ds5.nc','/scratch
 distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o34_raw_ds5.nc','/scratch/adam_work/distmaps/uranus_050628_o34'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o19_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o19'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o20_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o20'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 $ls *_fixgrid.txt > 0506_fixgridlist.txt
 average_beamloc,'0506_fixgridlist.txt','0506_fixgrid_averagebeamloc.txt'
 
@@ -60,8 +60,8 @@ distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o33_raw_ds5.nc','/scratch
 distmap_comp,'/scratch/sliced_polychrome/uranus/050628_o34_raw_ds5.nc','/scratch/adam_work/distmaps/uranus_050628_o34'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o19_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o19'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 distmap_comp,'/scratch/sliced_polychrome/neptune/050626_o20_raw_ds5.nc','/scratch/adam_work/distmaps/neptune_050626_o20'+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
-distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars+outfile_suf,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o31_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o31'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
+distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/adam_work/distmaps/mars_050627_o32'+outfile_suf,/mars,doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,outtxt=outtxt
 $ls *_nofix.txt > 0506_nofixlist.txt
 average_beamloc,'0506_nofixlist.txt','0506_nofix_averagebeamloc.txt'
 
