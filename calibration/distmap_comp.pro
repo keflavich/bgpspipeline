@@ -1,10 +1,11 @@
 
 pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,doplot=doplot,mars=mars,$
-    coordsys=coordsys,projection=projection,blfile=blfile,_extra=_extra
+    coordsys=coordsys,projection=projection,blfile=blfile,outtxt=outtxt,_extra=_extra
 
     if n_e(nopointing) eq 0 then nopointing=1
     if n_e(coordsys) eq 0 then coordsys='radec'
     if n_e(projection) eq 0 then projection='TAN'
+    if n_e(outtxt) eq 0 then outtxt='/dev/tty'
     if keyword_set(blfile) then begin
         write_distmap,ncfile,blfile
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
@@ -28,10 +29,10 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
 ;    print,"PEAK COMPARISON","BL:",max(BL,/nan),"noBL:",max(noBL,/nan),"defaultBL:",max(defaultBL,/nan),format="(A20,A8,F20,A8,F20,A12,F20)"
 ;    print,"FWHM","BL:",fpBL[2:3],"noBL:",fpnoBL[2:3],"defaultBL:",fpdefaultBL[2:3],format="(A20,A8,F10,F10,A8,F10,F10,A12,F10,F10)"
 ;    print,"GAUSSpeak","BL:",fpBL[1],"noBL:",fpnoBL[1],"defaultBL:",fpdefaultBL[1],format="(A20,A8,F20,A8,F20,A12,F20)"
-    print,"TYPE","GAUSSPEAK","PEAK","FWHM X","FWHM Y",format='(A15,A15,A15,A15,A15)'
-    print,"BL",fpBL[1], max(BL,/nan), fpBL[2:3],format="(A15,F15,F15,F15,F15)"
-    print,"noBL",fpnoBL[1], max(noBL,/nan), fpnoBL[2:3],format="(A15,F15,F15,F15,F15)"
-    print,"defaultBL",fpdefaultBL[1], max(defaultBL,/nan), fpdefaultBL[2:3],format="(A15,F15,F15,F15,F15)"
+    printf,outtxt,"TYPE","GAUSSPEAK","PEAK","FWHM X","FWHM Y",format='(A15,A15,A15,A15,A15)'
+    printf,outtxt,"BL",fpBL[1], max(BL,/nan), fpBL[2:3],format="(A15,F15,F15,F15,F15)"
+    printf,outtxt,"noBL",fpnoBL[1], max(noBL,/nan), fpnoBL[2:3],format="(A15,F15,F15,F15,F15)"
+    printf,outtxt,"defaultBL",fpdefaultBL[1], max(defaultBL,/nan), fpdefaultBL[2:3],format="(A15,F15,F15,F15,F15)"
 
     if keyword_set(doplot) then atv,BL-noBL
     if keyword_set(check) then stop
