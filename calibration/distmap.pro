@@ -42,7 +42,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         chi2arr = fltarr(n_e(bolo_indices))
 
         openw,fitparfile,outfile+"_bolofits.txt",/get_lun
-        printf,"Filename","Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
+        printf,fitparfile,"Filename","Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
 
         for i=0,n_e(allmap[0,0,*])-1 do begin
 
