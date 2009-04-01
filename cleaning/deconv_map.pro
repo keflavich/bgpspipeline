@@ -13,18 +13,20 @@ xdim = best_fft_size(mapsize[0],2)
 ydim = best_fft_size(mapsize[1],2)
 map = fltarr(xdim,ydim)
 map[0:mapsize[0]-1,0:mapsize[1]-1] = map_in
+smoothmap_small = fltarr(xdim,ydim)
+smoothmap_small[0:mapsize[0]-1,0:mapsize[1]-1] = smoothmap
 
 ; First, get rid of nan's.
 whnfin = where(finite(map) eq 0)
 ; make NAN points average of their neighbors
-if keyword_set(smoothmap) then begin 
-    map[whnfin] = smoothmap[whnfin]
+if keyword_set(smoothmap_small) then begin 
+    map[whnfin] = smoothmap_small[whnfin]
 ;    whzero = where(map eq 0)
-;    if ~(whzero[0] eq -1) then map[whzero] = smoothmap[whzero]
+;    if ~(whzero[0] eq -1) then map[whzero] = smoothmap_small[whzero]
 endif else if ~(whnfin[0] eq -1) then begin
     map[whnfin] = 0.
-    smoothmap = convolve(map,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
-    map[whnfin] = smoothmap[whnfin]
+    smoothmap_small = convolve(map,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
+    map[whnfin] = smoothmap_small[whnfin]
 endif
 
 ; Then, force the deconvolved map to be positive (for normalization purposes)
