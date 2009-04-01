@@ -67,6 +67,14 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
                 atv_plot1ellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250
             endif
 
+            if keyword_set(doplot) and doplot gt 1 then begin
+                set_plot,'ps'
+                device,filename=outfile+"_boloplots.ps",/color
+                !p.multi=[0,5,5]
+                tvscl,reform(allmap[*,*,i])
+                tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250
+            endif
+
         endfor
 
         rtf = rtheta[bolo_indices,*]
