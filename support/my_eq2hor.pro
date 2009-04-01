@@ -185,7 +185,7 @@ ra_ = ra ; do this so we don't change ra, dec arrays.
 dec_ = dec
 
 if v then print, 'Latitude = ', adstring(lat), '   Longitude = ', adstring(lon)
-if v then print, 'Julian Date = ', jd[0], format='(A,f15.6)'
+if v then print, 'Julian Date = ', jd, format='(A,f15.6)'
 if keyword_set(B1950) then s_now='   (J1950)' else s_now='   (J2000)'
 if v then print, 'Ra, Dec: ', adstring(ra_,dec_), s_now
 
