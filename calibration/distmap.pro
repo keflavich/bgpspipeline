@@ -55,6 +55,15 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     ;BEGIN FLAGGING BAD BOLOS
     residual = (nominal.rth[*,0]-bestfit_rth[*,0])^2
     bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
+    
+    ; make angles all in the range -pi to pi
+    theta_pos = bestfit_rth[*,1]
+    if total(theta_pos lt -!dpi) gt 0 then theta_pos[where(theta_pos lt -!dpi)] = theta_pos[where(theta_pos lt -!dpi)]+2*!dpi
+;    theta_pos[where(sign(theta_pos) ne sign(nominal.rth[*,1]))] *= -1  ; I think this is a hack....
+
+    residang = (nominal.rth[*,1]-theta_pos)^2
+    bad_th = where(residang gt mean(residang) + 3*stddev(residang) or residang gt 1) ; stupid but gt 1 radian is HUGE and not OK
+
     if keyword_set(flagbolos) then begin
         if bad_r[0] ne -1 then begin
             bestfit_rth[bad_r,*] = 0
@@ -62,13 +71,6 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
             print,"Bad bolos: ",bolo_indices[bad_r]
         endif 
 
-        ; make angles all in the range -pi to pi
-        theta_pos = bestfit_rth[*,1]
-        if total(theta_pos lt -!dpi) gt 0 then theta_pos[where(theta_pos lt -!dpi)] = theta_pos[where(theta_pos lt -!dpi)]+2*!dpi
-    ;    theta_pos[where(sign(theta_pos) ne sign(nominal.rth[*,1]))] *= -1  ; I think this is a hack....
-
-        residang = (nominal.rth[*,1]-theta_pos)^2
-        bad_th = where(residang gt mean(residang) + 3*stddev(residang) or residang gt 1) ; stupid but gt 1 radian is HUGE and not OK
         if bad_th[0] ne -1 then begin
             bestfit_rth[bad_th,*] = 0
             invweight[bad_th] = 1e5
