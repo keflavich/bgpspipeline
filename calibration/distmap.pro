@@ -44,7 +44,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         if keyword_set(doplot) and doplot gt 1 then begin
             !p.multi=[0,5,5]
             set_plot,'ps'
-            device,filename=outfile+"_boloplots.ps",/color
+            device,filename=outfile+"_boloplots.ps",/color,bits_per_pixel=16
             loadct,0
         endif
 
