@@ -15,7 +15,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     nbolos = n_e(bolo_indices)
 
     ncdf_varget_scale,filename,'bolo_params',bolo_params
-    rtf = [[bolo_params[2,bolo_indices]],bolo_params[1,bolo_indices]*!dtor] 
+    rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
