@@ -103,7 +103,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     printf,outf,"# Array params (scaleX,scaleY,xoff,yoff,angle): ",strc(p[0:2]),strc(p[4]),strc(p[3]/!dtor),format="(A50,F13.4,F13.4,F13.4,F15.4,F15.4)"
     printf,outf,"# Bolometer r theta residual^2"
     j=0
-    for i=0,nbolos-1 do begin
+    for i=0,n_e(meas.angle)-1 do begin
         while j lt bolo_indices[i] do begin
             printf,outf,j,0,0,0
             j=j+1
