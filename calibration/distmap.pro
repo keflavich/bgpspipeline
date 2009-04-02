@@ -45,6 +45,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
             !p.multi=[0,5,5]
             set_plot,'ps'
             device,filename=outfile+"_boloplots.ps",/color
+            loadct,0
         endif
 
         openw,fitparfile,outfile+"_bolofits.txt",/get_lun
