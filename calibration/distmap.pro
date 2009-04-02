@@ -68,13 +68,13 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         if bad_r[0] ne -1 then begin
             bestfit_rth[bad_r,*] = 0
             invweight[bad_r] = 1e5
-            print,"Bad bolos: ",bolo_indices[bad_r]
+            print,"Bad bolos: ",meas.bolo_indices[bad_r]
         endif 
 
         if bad_th[0] ne -1 then begin
             bestfit_rth[bad_th,*] = 0
             invweight[bad_th] = 1e5
-            print," Angle: ",bolo_indices[bad_th]
+            print," Angle: ",meas.bolo_indices[bad_th]
         endif
         ; END FLAGGING BAD BOLOS
 
@@ -104,7 +104,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     printf,outf,"# Bolometer r theta residual^2"
     j=0
     for i=0,n_e(meas.angle)-1 do begin
-        while j lt bolo_indices[i] do begin
+        while j lt meas.bolo_indices[i] do begin
             printf,outf,j,0,0,0
             j=j+1
         endwhile
@@ -124,7 +124,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         openw,outf,outfile+"_bolofits_shifted.txt",/get_lun
         printf,outf,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
         for i=0,n_e(meas.xy)-1 do begin
-            printf,outf,bolo_indices[i],meas.backgr[i],meas.ampl[i],meas.xysize[i,*],bestfit_xy_2[i,*],meas.angle[i],format='(8F20)'
+            printf,outf,meas.bolo_indices[i],meas.backgr[i],meas.ampl[i],meas.xysize[i,*],bestfit_xy_2[i,*],meas.angle[i],format='(8F20)'
         endfor
         close,outf
         free_lun,outf
@@ -135,8 +135,8 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         loadct,39
         if total(bestfit_rth[*,0] eq 0) gt 0 then bestfit_rth[where(bestfit_rth[*,0] eq 0),0] = !values.f_nan
         plot,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),psym=7,xrange=[-7,7],yrange=[-7,7]
-        xyouts,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),strc(bolo_indices)
-        xyouts,bestfit_rth[*,0]*cos(bestfit_rth[*,1]),bestfit_rth[*,0]*sin(bestfit_rth[*,1]),strc(bolo_indices),color=250
+        xyouts,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),strc(meas.bolo_indices)
+        xyouts,bestfit_rth[*,0]*cos(bestfit_rth[*,1]),bestfit_rth[*,0]*sin(bestfit_rth[*,1]),strc(meas.bolo_indices),color=250
         oplot,[0,nominal.rth[0,0]*cos(nominal.rth[0,1])],[0,nominal.rth[0,0]*sin(nominal.rth[0,1])]
         oplot,[0,bestfit_rth[0,0]*cos(bestfit_rth[0,1])],[0,bestfit_rth[0,0]*sin(bestfit_rth[0,1])],color=250
     endif
@@ -146,11 +146,11 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 end
 
 
-;        xyouts,meas.rth[*,0]*cos(meas.rth[*,1]),meas.rth[*,0]*sin(meas.rth[*,1]),strc(bolo_indices)
+;        xyouts,meas.rth[*,0]*cos(meas.rth[*,1]),meas.rth[*,0]*sin(meas.rth[*,1]),strc(meas.bolo_indices)
     ;    oplot,bestfit_rth[*,0]*cos(bestfit_rth[*,1]),bestfit_rth[*,0]*sin(bestfit_rth[*,1]),psym=1,color=150
-;        xyouts,bestfit3[*,0]*cos(bestfit3[*,1]),bestfit3[*,0]*sin(bestfit3[*,1]),strc(bolo_indices),color=150
+;        xyouts,bestfit3[*,0]*cos(bestfit3[*,1]),bestfit3[*,0]*sin(bestfit3[*,1]),strc(meas.bolo_indices),color=150
 
-;        xyouts,meas.xy[*,0],meas.xy[*,1],strc(bolo_indices),color=100
+;        xyouts,meas.xy[*,0],meas.xy[*,1],strc(meas.bolo_indices),color=100
 
 ;        for i=0,nbolos-1 do oplot,[nominal.rth[i,0]*cos(nominal.rth[i,1]),bestfit_rth[i,0]*cos(bestfit_rth[i,1])],[nominal.rth[i,0]*sin(nominal.rth[i,1]),bestfit_rth[i,0]*sin(bestfit_rth[i,1])]
 ;        for i=0,143 do oplot,[nominal.rth[i,0]*cos(nominal.rth[i,1]),rtn[i,0]*cos(rtn[i,1])],[nominal.rth[i,0]*sin(nominal.rth[i,1]),rtn[i,0]*sin(rtn[i,1])],color=250
@@ -161,4 +161,4 @@ end
 ;
 ;    oplot,bf[*,0]*cos(bf[*,1]),bf[*,0]*sin(bf[*,1]),psym=1,color=150
 ;    xyouts,bf[*,0]*cos(bf[*,1]),bf[*,0]*sin(bf[*,1]),strc(indgen(total_bolos)),color=250
-;    xyouts,bestfit_xy[*,0],bestfit_xy[*,1],strc(bolo_indices),color=50
+;    xyouts,bestfit_xy[*,0],bestfit_xy[*,1],strc(meas.bolo_indices),color=50

@@ -24,14 +24,15 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     }
 
     meas = { $
-        rth : fltarr(nbolos,2)   ,$
-        xy  : fltarr(nbolos,2)   ,$
-        xysize: fltarr(nbolos,2) ,$
-        chi2: fltarr(nbolos)     ,$
-        err: fltarr(nbolos)      ,$
-        angle: fltarr(nbolos)    ,$
-        ampl: fltarr(nbolos)     ,$
-        backgr: fltarr(nbolos)    $
+        rth : fltarr(nbolos,2)    ,$
+        xy  : fltarr(nbolos,2)    ,$
+        xysize: fltarr(nbolos,2)  ,$
+        chi2: fltarr(nbolos)      ,$
+        err: fltarr(nbolos)       ,$
+        angle: fltarr(nbolos)     ,$
+        ampl: fltarr(nbolos)      ,$
+        backgr: fltarr(nbolos)    ,$
+        bolo_indices: bolo_indices $
     }
 
     ; some pca subtraction is necessary to clean up the image for fitting
