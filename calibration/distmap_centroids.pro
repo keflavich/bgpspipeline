@@ -1,5 +1,7 @@
 ; centroiding portion of distmap
-pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fitmap,allmap=allmap,_extra=_extra
+pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fitmap,allmap=allmap,pixsize=pixsize,_extra=_extra
+
+    if ~keyword_set(doplot) then doplot=0
 
     ncdf_varget_scale,filename,'bolo_params',bolo_params
     radius = reform(bolo_params[2,*])
@@ -7,7 +9,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
     rtheta = [[radius],[theta*!dtor]] ;fltarr(total_bolos,2)
 
     ; larger pixel size selected for mapping to reduce blank pixels
-    pixsize=10.0
+    if ~keyword_set(pixsize) then pixsize=10.0
 
     thefiles = [filename]
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
@@ -34,7 +36,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
     invweight = fltarr(nbolos,2) + 1
     chi2arr = fltarr(n_e(bolo_indices))
 
-    if keyword_set(doplot) and doplot gt 1 then begin
+    if doplot gt 1 then begin
         !p.multi=[0,5,5]
         set_plot,'ps'
         device,filename=outfile+"_boloplots.ps",/color,bits_per_pixel=16
@@ -67,7 +69,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
             atv_plot1ellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250
         endif
 
-        if keyword_set(doplot) and doplot gt 1 then begin
+        if doplot gt 1 then begin
             loadct,0,/silent
             imdisp,asinh(reform(allmap[*,*,i])),erase=0,/axis
             loadct,39,/silent
