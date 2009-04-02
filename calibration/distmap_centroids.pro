@@ -1,5 +1,6 @@
 ; centroiding portion of distmap
-pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fitmap,allmap=allmap,pixsize=pixsize,rtf=rtf,_extra=_extra
+pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fitmap,allmap=allmap,$
+    pixsize=pixsize,rtf=rtf,invweight=invweight,_extra=_extra
 
     if ~keyword_set(doplot) then doplot=0
 

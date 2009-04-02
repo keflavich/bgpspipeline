@@ -8,7 +8,8 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     total_bolos = 144 
 
     if keyword_set(fromsave) then restore,outfile+".sav" else begin
-        distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,allmap=allmap,fitmap=fitmap,rtf=rtf,_extra=_extra
+        distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,allmap=allmap,fitmap=fitmap,rtf=rtf,$
+            invweight=invweight,_extra=_extra
     endelse
 
     ; x,y nominal beam locations
@@ -56,32 +57,34 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     p = mpfitfun('inv_hex_gff',xy,rtf,invweight,p,yfit=bestfit,/quiet,parinfo=parinfo)
     
     ;BEGIN FLAGGING BAD BOLOS
-    residual = (rtf[*,0]-bestfit[*,0])^2
-    bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
-    if bad_r[0] ne -1 then begin
-        bestfit[bad_r,*] = 0
-        invweight[bad_r] = 1e5
-        print,"Bad bolos: ",bolo_indices[bad_r]
-    endif 
+    if keyword_set(flagbolos) then begin
+        residual = (rtf[*,0]-bestfit[*,0])^2
+        bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
+        if bad_r[0] ne -1 then begin
+            bestfit[bad_r,*] = 0
+            invweight[bad_r] = 1e5
+            print,"Bad bolos: ",bolo_indices[bad_r]
+        endif 
 
-    ; make angles all in the range -pi to pi
-    theta_pos = bestfit[*,1]
-    if total(theta_pos lt -!dpi) gt 0 then theta_pos[where(theta_pos lt -!dpi)] = theta_pos[where(theta_pos lt -!dpi)]+2*!dpi
-;    theta_pos[where(sign(theta_pos) ne sign(rtf[*,1]))] *= -1  ; I think this is a hack....
+        ; make angles all in the range -pi to pi
+        theta_pos = bestfit[*,1]
+        if total(theta_pos lt -!dpi) gt 0 then theta_pos[where(theta_pos lt -!dpi)] = theta_pos[where(theta_pos lt -!dpi)]+2*!dpi
+    ;    theta_pos[where(sign(theta_pos) ne sign(rtf[*,1]))] *= -1  ; I think this is a hack....
 
-    residang = (rtf[*,1]-theta_pos)^2
-    bad_th = where(residang gt mean(residang) + 3*stddev(residang) or residang gt 1) ; stupid but gt 1 radian is HUGE and not OK
-    if bad_th[0] ne -1 then begin
-        bestfit[bad_th,*] = 0
-        invweight[bad_th] = 1e5
-        print," Angle: ",bolo_indices[bad_th]
+        residang = (rtf[*,1]-theta_pos)^2
+        bad_th = where(residang gt mean(residang) + 3*stddev(residang) or residang gt 1) ; stupid but gt 1 radian is HUGE and not OK
+        if bad_th[0] ne -1 then begin
+            bestfit[bad_th,*] = 0
+            invweight[bad_th] = 1e5
+            print," Angle: ",bolo_indices[bad_th]
+        endif
+        ; END FLAGGING BAD BOLOS
+
+        ; REFIT with bad bolos flagged out
+        p = mpfitfun('inv_hex_gff',xy,rtf,invweight,p,yfit=bestfit,/quiet,parinfo=parinfo)
+        if bad_th[0] ne -1 then bestfit[bad_th,*] = 0
+        if bad_r[0] ne -1 then bestfit[bad_r,*] = 0
     endif
-    ; END FLAGGING BAD BOLOS
-
-    ; REFIT with bad bolos flagged out
-    p = mpfitfun('inv_hex_gff',xy,rtf,invweight,p,yfit=bestfit,/quiet,parinfo=parinfo)
-    if bad_th[0] ne -1 then bestfit[bad_th,*] = 0
-    if bad_r[0] ne -1 then bestfit[bad_r,*] = 0
 
     ; Uncomment this code to fit a fixed array shape to the measured distortion.
     ; Individual bolometers will not move from the fixed grid pattern.
@@ -118,6 +121,31 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
     close,outf
     free_lun,outf
+
+    if keyword_set(out_fits_shifted) then begin
+
+        openw,outf,outfile+"_bolofits_shifted.txt",/get_lun
+        printf,outf,"# Array params (scaleX,scaleY,xoff,yoff,angle): ",strc(p[0:2]),strc(p[4]),strc(p[3]/!dtor),format="(A50,F13.4,F13.4,F13.4,F15.4,F15.4)"
+        printf,outf,"# Bolometer r theta residual^2"
+        j=0
+        for i=0,nbolos-1 do begin
+            while j lt bolo_indices[i] do begin
+                printf,outf,j,0,0,0
+                j=j+1
+            endwhile
+            if residual[i,0] gt 1 or bestfit[i,0] eq 0 then printf,outf,j,0,0,0 $
+               else  printf,outf,j,bestfit[i,0],bestfit[i,1]/!dtor,residual[i,0]
+            j=j+1
+        endfor
+        while j lt total_bolos do begin
+            printf,outf,j,0,0,0
+            j=j+1
+        endwhile
+
+        close,outf
+        free_lun,outf
+    endif
+
 
     if keyword_set(doplot) then begin
         loadct,39
