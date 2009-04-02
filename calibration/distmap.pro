@@ -41,6 +41,8 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         invweight = fltarr(nbolos,2) + 1
         chi2arr = fltarr(n_e(bolo_indices))
 
+        if keyword_set(doplot) and doplot gt 1 then !p.multi=[0,5,5]
+
         openw,fitparfile,outfile+"_bolofits.txt",/get_lun
         printf,fitparfile,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
 
@@ -70,8 +72,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
             if keyword_set(doplot) and doplot gt 1 then begin
                 set_plot,'ps'
                 device,filename=outfile+"_boloplots.ps",/color
-                !p.multi=[0,5,5]
-                imdisp,reform(allmap[*,*,i])
+                imdisp,reform(allmap[*,*,i]),erase=0
                 tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250
             endif
 
