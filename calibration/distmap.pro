@@ -77,6 +77,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
             endif
 
         endfor
+        device,/close_file
 
         rtf = rtheta[bolo_indices,*]
 
