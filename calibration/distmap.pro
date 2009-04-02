@@ -125,7 +125,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     if keyword_set(out_fits_shifted) then begin
         openw,outf,outfile+"_bolofits_shifted.txt",/get_lun
         printf,outf,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
-        for i=0,n_e(meas.xy)-1 do begin
+        for i=0,n_e(meas.bolo_indices)-1 do begin
             printf,outf,meas.bolo_indices[i],meas.backgr[i],meas.ampl[i],meas.xysize[i,*],bestfit_xy_2[i,*],meas.angle[i],format='(8F20)'
         endfor
         close,outf
