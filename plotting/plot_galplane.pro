@@ -1,5 +1,5 @@
 
-pro plot_galplane,bw=bw,color=color,bar=bar,label=label
+pro plot_galplane,bw=bw,color=color,bar=bar,label=label,individual=individual
 
 ;    loadct,3
 ;    modct,3,gamma=-.5
