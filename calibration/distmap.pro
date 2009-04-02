@@ -50,7 +50,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     p = mpfitfun('inv_hex_gff',meas.xy,nominal.rth,invweight,p,yfit=bestfit_rth,/quiet,parinfo=parinfo)
 
     bestfit_xy_2 = [[bestfit_rth[*,0]*cos(bestfit_rth[*,1])] ,$
-        [bestfit_rth[*,0]*sin(bestfit_rth[*,1]]]
+        [bestfit_rth[*,0]*sin(bestfit_rth[*,1])] ]
     
     ;BEGIN FLAGGING BAD BOLOS
     if keyword_set(flagbolos) then begin
