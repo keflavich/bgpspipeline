@@ -71,8 +71,8 @@ pro plot_galplane,bw=bw,color=color,bar=bar,label=label,individual=individual
     yoff = 0
 
     if keyword_set(individual) then begin
-        xsize=20
-        ysize=6
+        xsize=22
+        ysize=8
         !p.multi=0
 
         for i=0,n_e(filelist)-1 do begin
