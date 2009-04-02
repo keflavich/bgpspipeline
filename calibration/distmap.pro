@@ -132,7 +132,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
 
     if keyword_set(doplot) then begin
-        loadct,39
+        loadct,39,/silent
         if total(bestfit_rth[*,0] eq 0) gt 0 then bestfit_rth[where(bestfit_rth[*,0] eq 0),0] = !values.f_nan
         plot,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),psym=7,xrange=[-7,7],yrange=[-7,7]
         xyouts,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),strc(meas.bolo_indices)

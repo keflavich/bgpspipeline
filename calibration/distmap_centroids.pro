@@ -94,6 +94,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     endfor
     device,/close_file
+    set_plot,'x'
+    !p.multi=0
 
     close,fitparfile
     free_lun,fitparfile 
