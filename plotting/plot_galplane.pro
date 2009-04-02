@@ -69,55 +69,73 @@ pro plot_galplane,bw=bw,color=color,bar=bar,label=label
     pgnum = 1
     xoff = 0
     yoff = 0
-    xsize=6
-    ysize=9.5
-    device,filename="fig1_pg1"+f+".ps",/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
-    if keyword_set(bar) then colorbar,/top,position=[.075,.96,.975,.98],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
 
-    nfigs = 6
-    !P.MULTI = [0,1,nfigs]
-;    !p.region = [0,0,1,1]
-    !p.region=0
-    !p.position=0
-;    !p.multi=0
+    if keyword_set(individual) then begin
+        xsize=6
+        ysize=9.5
+        !p.multi=0
 
-    for i=0,n_e(filelist)-1 do begin
-
-        filename = filelist[i]
-        ;filename_root = strmid(filename,0,strlen(filename)-5)
-
-        if i mod nfigs eq 0 and i lt n_e(filelist) then begin
+        for i=0,n_e(filelist)-1 do begin
+            filename=filelist[i]
+            outfilename = strmid(filename,0,strlen(filename)-4) + ".ps"
+            device,filename=outfilename,/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
+            if keyword_set(bar) then colorbar,/top,position=[.075,.96,.975,.98],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
+            display_with_wcs,filename,range=range,negative=negative,sourcename=sourcename,sourceL=sourceL,sourceB=sourceB
             device,/close_file
-            if pgnum lt 5 then pgnum = (i+1) mod 5
-            if pgnum ge 4 then begin
-                delta = .9
-                offset = .05
-                nfigs = 1
-                xoff = 0
-                yoff = 0
-                !P.MULTI = [0,1,nfigs]
-                device,filename="fig1_pg"+strc(pgnum)+f+".ps",/inches,xsize=ysize,ysize=xsize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color 
-                if keyword_set(bar) then colorbar,/top,position=[.1,.93,.9,.95],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
-                pgnum += 1
-            endif else if pgnum eq 7 then begin
-                delta = 0.5
-                offset = 0
-                nfigs = 2
-                !P.MULTI = [0,1,nfigs]
-                device,filename="fig1_pg"+strc(pgnum)+f+".ps",/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
-            endif else begin
-                device,filename="fig1_pg"+strc(pgnum)+f+".ps",/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
-                if keyword_set(bar) then colorbar,/top,position=[.075,.96,.975,.98],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
-            endelse
-        end
+        endfor
 
-        position = [.05,(nfigs-(i mod nfigs)-1)*delta+offset,1,(nfigs-(i mod nfigs))*delta+offset]
-        print,filename,position,"   i: ",i,i mod nfigs,delta,pgnum," negative: ",negative
+    endif else begin
 
-        display_with_wcs,filename,position=position,range=range,negative=negative,sourcename=sourcename,sourceL=sourceL,sourceB=sourceB
+        xsize=6
+        ysize=9.5
+        device,filename="fig1_pg1"+f+".ps",/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
+        if keyword_set(bar) then colorbar,/top,position=[.075,.96,.975,.98],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
 
-    endfor
-    device,/close_file
+        nfigs = 6
+        !P.MULTI = [0,1,nfigs]
+    ;    !p.region = [0,0,1,1]
+        !p.region=0
+        !p.position=0
+    ;    !p.multi=0
+
+        for i=0,n_e(filelist)-1 do begin
+
+            filename = filelist[i]
+            ;filename_root = strmid(filename,0,strlen(filename)-5)
+
+            if i mod nfigs eq 0 and i lt n_e(filelist) then begin
+                device,/close_file
+                if pgnum lt 5 then pgnum = (i+1) mod 5
+                if pgnum ge 4 then begin
+                    delta = .9
+                    offset = .05
+                    nfigs = 1
+                    xoff = 0
+                    yoff = 0
+                    !P.MULTI = [0,1,nfigs]
+                    device,filename="fig1_pg"+strc(pgnum)+f+".ps",/inches,xsize=ysize,ysize=xsize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color 
+                    if keyword_set(bar) then colorbar,/top,position=[.1,.93,.9,.95],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
+                    pgnum += 1
+                endif else if pgnum eq 7 then begin
+                    delta = 0.5
+                    offset = 0
+                    nfigs = 2
+                    !P.MULTI = [0,1,nfigs]
+                    device,filename="fig1_pg"+strc(pgnum)+f+".ps",/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
+                endif else begin
+                    device,filename="fig1_pg"+strc(pgnum)+f+".ps",/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
+                    if keyword_set(bar) then colorbar,/top,position=[.075,.96,.975,.98],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
+                endelse
+            end
+
+            position = [.05,(nfigs-(i mod nfigs)-1)*delta+offset,1,(nfigs-(i mod nfigs))*delta+offset]
+            print,filename,position,"   i: ",i,i mod nfigs,delta,pgnum," negative: ",negative
+
+            display_with_wcs,filename,position=position,range=range,negative=negative,sourcename=sourcename,sourceL=sourceL,sourceB=sourceB
+
+        endfor
+        device,/close_file
+    endelse
     set_plot,'x'
 
 end
