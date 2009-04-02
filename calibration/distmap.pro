@@ -8,7 +8,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     total_bolos = 144 
 
     if keyword_set(fromsave) then restore,outfile+".sav" else begin
-        distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,allmap=allmap,fitmap=fitmap,_extra=_extra
+        distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,allmap=allmap,fitmap=fitmap,rtf=rtf,_extra=_extra
     endelse
 
     ; x,y nominal beam locations
