@@ -14,7 +14,7 @@ pro display_with_wcs,filename,sourcename=sourcename,sourceL=sourceL,sourceB=sour
     if max(l) gt 360 then l-=360
     b = (y-crpix2)*cd2_2+crval2
 
-    imdisp,map[*,20:*],/axis,xrange=[max(l),min(l)],yrange=[min(b[20:*]),max(b[20:*])],range=[-.5,4],$
+    imdisp,map[*,20:*],/axis,xrange=[max(l),min(l)],yrange=[min(b[20:*]),max(b[20:*])],range=[-.25,1],$
         xtitle="Galactic Longitude",ytitle="Galactic Latitude",ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
 
     for i=0,n_e(sourcename)-1 do begin
