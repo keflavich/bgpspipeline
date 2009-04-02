@@ -3,7 +3,7 @@
 !except=0
 !more=0
 
-doplot=0
+doplot=2
 fixgrid=0
 fixscale=1
 
