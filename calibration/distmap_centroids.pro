@@ -1,13 +1,9 @@
 ; centroiding portion of distmap
-pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fitmap,allmap=allmap,$
-    pixsize=pixsize,rtf=rtf,invweight=invweight,_extra=_extra
+pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
+    pixsize=pixsize,meas=meas,nominal=nominal,_extra=_extra
 
     if ~keyword_set(doplot) then doplot=0
 
-    ncdf_varget_scale,filename,'bolo_params',bolo_params
-    radius = reform(bolo_params[2,*])
-    theta =  reform(bolo_params[1,*])
-    rtheta = [[radius],[theta*!dtor]] ;fltarr(total_bolos,2)
 
     ; larger pixel size selected for mapping to reduce blank pixels
     if ~keyword_set(pixsize) then pixsize=10.0
@@ -15,6 +11,28 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
     thefiles = [filename]
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
         pointing_model=0,/nobeamloc,_extra=_extra
+
+    nbolos = n_e(bolo_indices)
+
+    ncdf_varget_scale,filename,'bolo_params',bolo_params
+    rtf = [[bolo_params[2,bolo_indices]],bolo_params[1,bolo_indices]*!dtor] 
+    nominal = { $
+        radius : reform(bolo_params[2,*]) ,$
+        theta :  reform(bolo_params[1,*])*!dtor ,$
+        rtf : rtf ,$
+        xy : [[rtf[*,0]*cos(rtf[*,1])],[rtf[*,0]*sin(rtf[*,1])]] $
+    }
+
+    meas = { $
+        rtf : fltarr(nbolos,2)   ,$
+        xy  : fltarr(nbolos,2)   ,$
+        xysize: fltarr(nbolos,2) ,$
+        chi2: fltarr(nbolos)     ,$
+        err: fltarr(nbolos)      ,$
+        angle: fltarr(nbolos)    ,$
+        ampl: fltarr(nbolos)     ,$
+        backgr: fltarr(nbolos)    $
+    }
 
     ; some pca subtraction is necessary to clean up the image for fitting
     pca_subtract,bgps.ac_bolos,13,uncorr_part=new_astro
@@ -32,11 +50,6 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
 
     fitmapcube = allmap*0
 
-    nbolos = n_e(bolo_indices)
-    xy = fltarr(nbolos,2) ; will store measured x,y positions 
-    invweight = fltarr(nbolos,2) + 1
-    chi2arr = fltarr(n_e(bolo_indices))
-
     if doplot gt 1 then begin
         !p.multi=[0,5,5]
         set_plot,'ps'
@@ -52,18 +65,18 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
         fitpars = centroid_map(allmap[*,*,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
         fitmapcube[*,*,i] = fitmap
-        chi2arr[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
 
-        xdist = (fitpars[4]-xcen)*bolospacing
-        ydist = (fitpars[5]-ycen)*bolospacing
-        err = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        distance = sqrt(xdist^2+ydist^2)
-        angle = atan(ydist,xdist)
+        meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
+        meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
+        meas.xy[i,0] = (fitpars[4]-xcen)*bolospacing
+        meas.xy[i,1] = (fitpars[5]-ycen)*bolospacing
+        meas.angle[i] = fitpars[6]
+        meas.xysize[i,*] = fitpars[2:3]*bolospacing
+        meas.ampl[i] = fitpars[1]
+        meas.backgr[i] = fitpars[0]
 
-        xy[i,0] = xdist
-        xy[i,1] = ydist
+        printf,fitparfile,bolo_indices[i],fitpars[0:1],fitpars[2:5]*bolospacing,fitpars[6],format='(8F20)'
 
-        printf,fitparfile,bolo_indices[i],fitpars,format='(8F20)'
         if keyword_set(doatv) then begin ; plotting
             atv,allmap[*,*,i]
             atvxyouts,[fitpars[4]],[fitpars[5]],strc(bolo_indices[i]),charsize=4,color='red'
@@ -81,12 +94,13 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,xy=xy,fitmap=fi
     endfor
     device,/close_file
 
-    rtf = rtheta[bolo_indices,*]
+    close,fitparfile
+    free_lun,fitparfile 
 
     fitmap=fitmapcube
 
-    close,fitparfile
-    free_lun,fitparfile 
+    meas.rth[*,0] = sqrt(meas.xy[*,0]^2+meas.xy[*,1]^2)
+    meas.rth[*,1] = atan(meas.xy[*,1],meas.xy[*,0])
 
     save,filename=outfile+".sav"
 
