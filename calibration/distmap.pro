@@ -53,9 +53,9 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         [bestfit_rth[*,0]*sin(bestfit_rth[*,1])] ]
     
     ;BEGIN FLAGGING BAD BOLOS
+    residual = (nominal.rth[*,0]-bestfit_rth[*,0])^2
+    bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
     if keyword_set(flagbolos) then begin
-        residual = (nominal.rth[*,0]-bestfit_rth[*,0])^2
-        bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
         if bad_r[0] ne -1 then begin
             bestfit_rth[bad_r,*] = 0
             invweight[bad_r] = 1e5
