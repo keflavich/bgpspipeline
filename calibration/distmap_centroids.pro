@@ -19,12 +19,12 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
-        rtf : rtf ,$
+        rth : rtf ,$
         xy : [[rtf[*,0]*cos(rtf[*,1])],[rtf[*,0]*sin(rtf[*,1])]] $
     }
 
     meas = { $
-        rtf : fltarr(nbolos,2)   ,$
+        rth : fltarr(nbolos,2)   ,$
         xy  : fltarr(nbolos,2)   ,$
         xysize: fltarr(nbolos,2) ,$
         chi2: fltarr(nbolos)     ,$
