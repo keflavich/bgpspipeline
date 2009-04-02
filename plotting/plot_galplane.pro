@@ -71,13 +71,14 @@ pro plot_galplane,bw=bw,color=color,bar=bar,label=label,individual=individual
     yoff = 0
 
     if keyword_set(individual) then begin
-        xsize=24
         !p.multi=0
+        yoff=0.25
 
         for i=0,n_e(filelist)-1 do begin
             filename=filelist[i]
             x=readfits(filename)
-            ysize = xsize * n_e(x[0,*]) / n_e(x[*,0]) * 1.25
+            xsize = n_e(x[*,0]/500)
+            ysize = n_e(x[0,*]/500)
             outfilename = strmid(filename,0,strlen(filename)-5) + ".ps"
             device,filename=outfilename,/inches,xsize=xsize,ysize=ysize,xoffset=xoff,yoffset=yoff,/encapsulated,bits=16,color=color
             if keyword_set(bar) then colorbar,/top,position=[.075,.96,.975,.98],range=range,format='(F0.2)',invertcolors=invertcolors;ticknames=['-0.25','0.0','0.25','0.5','0.75','1.0']
