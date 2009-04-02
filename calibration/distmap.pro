@@ -3,7 +3,9 @@
 ; calculates the bolometer location
 ; you can get the map array back by passing the 'allmap' parameter
 pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fromsave,doplot=doplot,$
-    fixscale=fixscale,fixgrid=fixgrid,doatv=doatv,_extra=_extra
+    fixscale=fixscale,fixgrid=fixgrid,doatv=doatv,out_fits_shifted=out_fits_shifted,_extra=_extra
+
+    if n_e(out_fits_shifted) eq 0 then out_fits_shifted=1
 
     total_bolos = 144 
 
