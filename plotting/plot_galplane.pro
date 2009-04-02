@@ -71,7 +71,7 @@ pro plot_galplane,bw=bw,color=color,bar=bar,label=label,individual=individual
     yoff = 0
 
     if keyword_set(individual) then begin
-        xsize=9.5
+        xsize=15
         ysize=6
         !p.multi=0
 
