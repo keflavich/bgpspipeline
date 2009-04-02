@@ -71,7 +71,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
                 set_plot,'ps'
                 device,filename=outfile+"_boloplots.ps",/color
                 !p.multi=[0,5,5]
-                tvscl,reform(allmap[*,*,i])
+                imdisp,reform(allmap[*,*,i])
                 tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250
             endif
 
