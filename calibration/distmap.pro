@@ -76,10 +76,10 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
             if keyword_set(doplot) and doplot gt 1 then begin
                 loadct,0,/silent
-                imdisp,reform(allmap[*,*,i]),erase=0,/axis
+                imdisp,asinh(reform(allmap[*,*,i])),erase=0,/axis
                 loadct,39,/silent
-                tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250,/data
-                tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4],fitpars[5],fitpars[6],color=250,/data
+                tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250,/data,thick=.5
+                tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4],fitpars[5],fitpars[6],color=250,/data,thick=.5
             endif
 
         endfor
