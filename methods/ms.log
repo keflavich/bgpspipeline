@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2008.12.3)  31 MAR 2009 11:41
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2008.12.3)  2 APR 2009 11:31
 entering extended mode
 **ms.tex
 (./ms.tex
@@ -258,19 +258,19 @@ File: pointing_model_skydist.ps Graphic file (type eps)
  <pointing_model_skydist.ps>
 File: pointing_model.ps Graphic file (type eps)
  <pointing_model.ps>
-Overfull \hbox (36.13501pt too wide) in paragraph at lines 802--803
+Overfull \hbox (36.13501pt too wide) in paragraph at lines 803--804
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 802--803
+Underfull \hbox (badness 10000) in paragraph at lines 803--804
 
  []
 
 File: pointing_model_residuals.ps Graphic file (type eps)
 <pointing_model_residuals.ps>
 
-LaTeX Warning: Float too large for page by 95.77101pt on input line 808.
+LaTeX Warning: Float too large for page by 95.77101pt on input line 809.
 
 [18] [19] [20] [21]
 Plotone included the file flagger_plots
@@ -290,38 +290,39 @@ File: l001_deconvolutionkernelcompare.eps Graphic file (type eps)
 Plotone included the file survey_depth
 File: survey_depth.eps Graphic file (type eps)
 <survey_depth.eps> [23]
+
+LaTeX Warning: Reference `fig:deconv_filter' on page 24 undefined on input line
+ 1078.
+
 Plotone included the file aper_phot_hpf_beam
 File: aper_phot_hpf_beam.eps Graphic file (type eps)
 <aper_phot_hpf_beam.eps> [24] [25] [26] [27] [28] [29]
-Plotone included the file pca_comparison
-File: pca_comparison.ps Graphic file (type eps)
-<pca_comparison.ps> [30
+Plottwo included the files pca_comparison_l111 deconvolution_comparison_l111
+File: pca_comparison_l111.ps Graphic file (type eps)
+<pca_comparison_l111.ps>
+File: deconvolution_comparison_l111.ps Graphic file (type eps)
+ <deconvolution_comparison_l111.ps> [30
 
-]
-Plotone included the file deconvolution_comparison
-File: deconvolution_comparison.ps Graphic file (type eps)
-<deconvolution_comparison.ps> [31
-
-] [32] [33] [34]
+] [31] [32]
 Page 1 of table 4 has been set to width 408.73288pt with 34 lines per page 
-[35] [36]
+[33] [34]
 Page 2 of table 4 has been set to width 324.26015pt with 34 lines per page 
 
-Overfull \hbox (469.75499pt too wide) in paragraph at lines 1338--1338
+Overfull \hbox (469.75499pt too wide) in paragraph at lines 1343--1343
  [][][] 
  []
 
-[37]
+[35]
 Page 1 of table 5 has been set to width 384.7109pt with 34 lines per page 
-[38
+[36
 
 
-] [39]
+] [37]
 Page 2 of table 5 has been set to width 394.50247pt with 34 lines per page 
-[40] [41
+[38] [39
 
 
-] (./ms.bbl) [42
+] (./ms.bbl) [40
 
 ] (./ms.aux)
 
@@ -330,11 +331,11 @@ LaTeX Warning: There were undefined references.
  ) 
 Here is how much of TeX's memory you used:
  2115 strings out of 94501
- 24602 string characters out of 1176137
- 82244 words of memory out of 1500000
+ 24622 string characters out of 1176137
+ 84177 words of memory out of 1500000
  5242 multiletter control sequences out of 10000+50000
  14119 words of font info for 58 fonts, out of 1200000 for 2000
  580 hyphenation exceptions out of 8191
  32i,9n,31p,835b,328s stack positions out of 5000i,500n,6000p,200000b,5000s
 
-Output written on ms.dvi (42 pages, 70460 bytes).
+Output written on ms.dvi (40 pages, 70340 bytes).
