@@ -75,8 +75,12 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
       -0.0007926500, $
          0 $
       ]
+
+    polyparinfo = replicate({fixed:1.,limited:[0.,0.],limits:[0.,0.]},19)
+    polyparinfo[18].fixed=0
     
-    polypars_fit = mpfitfun('poly2d_fit_func',meas.xy,nominal.xy,invweight*0+1,polypars,yfit=polyfit_xy,/quiet)
+    polypars_fit = mpfitfun('poly2d_mar03',bestfit_xy_2,nominal.xy,invweight*0+1,polypars,yfit=polyfit_xy,/quiet,parinfo=polyparinfo)
+    polypars_fit = mpfitfun('poly2d_mar03',nominal.xy,bestfit_xy_2,invweight*0+1,polypars,yfit=polyfit_xy,/quiet,parinfo=polyparinfo)
 
     stop
 
