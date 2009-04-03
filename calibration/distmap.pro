@@ -53,6 +53,33 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
     bestfit_xy_2 = [[bestfit_rth[*,0]*cos(bestfit_rth[*,1])] ,$
         [bestfit_rth[*,0]*sin(bestfit_rth[*,1])] ]
+
+    polypars = [ $
+       2.964620E-21, $
+      -8.470330E-22, $
+      -8.470330E-22, $
+           1.001430, $
+        -0.03109840, $
+        0.002850950, $
+       5.929230E-21, $
+      -3.388130E-21, $
+      -8.470330E-21, $
+       0.0002646590, $
+           1.001540, $
+         0.01027270, $
+       2.117580E-21, $
+      -8.470330E-22, $
+       3.388130E-21, $
+         0.04126690, $
+        0.001837160, $
+      -0.0007926500, $
+         0 $
+      ]
+    
+    polypars_fit = mpfitfun('poly2d_fit_func',meas.xy,nominal.xy,invweight*0+1,polypars,yfit=polyfit_xy,/quiet)
+
+    stop
+
     
     ;BEGIN FLAGGING BAD BOLOS
     residual = (nominal.rth[*,0]-bestfit_rth[*,0])^2
