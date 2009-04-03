@@ -1,4 +1,4 @@
-function poly2d_fit_func,Xin,B
+function poly2d_mar03,Xin,B
 ; given set of x,y points s.t. X = [[x],[y]]
 ; 
 ; A: fit parameters; coefficients of:
