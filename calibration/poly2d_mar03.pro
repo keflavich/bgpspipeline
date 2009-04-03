@@ -40,8 +40,8 @@ a = [ $
     xd = a[0] + a[1]*x + a[2]*x^2 + a[3]*y + a[4]*x*y + a[5]*x^2*y + a[6]*y^2 + a[7]*x*y^2 + a[8]*x^2*y^2
     yd = a[9] + a[10]*x + a[11]*x^2 + a[12]*y + a[13]*x*y + a[14]*x^2*y + a[15]*y^2 + a[16]*x*y^2 + a[17]*x^2*y^2
 
-    x =  xd * cos(b) - yd * sin(b)
-    y =  xd * sin(b) + yd * cos(b)
+    x =  xd *  cos(b) + yd * sin(b)
+    y =  xd * -sin(b) + yd * cos(b)
 
     return,[[x],[y]]
 end
