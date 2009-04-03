@@ -43,6 +43,7 @@ a = [ $
     xn =  xd *      cos(b) + yd * sin(b)
     yn =  xd * (-1)*sin(b) + yd * cos(b)
 
+    stop
     return,[[xn],[yn]]
 end
 
