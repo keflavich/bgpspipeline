@@ -15,8 +15,7 @@ function read_rpc, filename, $
                    hdr_file = hdr_file
 
 ; Header file contains variables which are constant over an observation
-
-pipeline_root = '/home/milkyway/student/ginsbura/bgps_pipeline'
+pipeline_root = '/home/milkyway/students/ginsbura/bgps_pipeline' ;BOLOCAM_PIPELINE_ROOT
 
 if not(keyword_set(def_file)) then $
   def_file = PIPELINE_ROOT + '/support/rpc/rpc_def.txt'
