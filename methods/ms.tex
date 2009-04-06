@@ -12,8 +12,12 @@
 % 11) fig:IterativeMapping
 % 12) fig:Flagging
 % 13) fig:GlitchDistribution
-% 14) fig:PCA_Filter
+% 14) fig:PCA_Graphical
 % 15) fig:Deconvolution
+% 16) fig:Noise
+% 17) fig:NoiseVsLongitude
+% 18) fig:PCA_Filter
+% 19) fig:AperturePhotometry
 
 % calibration
 % you should look @ calibration/plot_dcfluxes.pro in my publish/ directory, and /usb/scratch1/planets/planet_dcfluxes.txt is the actual raw data
@@ -138,7 +142,7 @@
 
 \begin{document}
 
-\title{The NEVERENDING Bolocam Galactic Plane Survey: Survey Description and Data
+\title{The Bolocam Galactic Plane Survey: Survey Description and Data
 Reduction}
 
 %\newpage
@@ -677,13 +681,14 @@ Figure \ref{fig:CygnusComparison} shows the comparison of fluxes
 extracted from our map in the Cygnus Arm with those of
 \citet{motte07}.
 
-\FigureTwo{fluxcal_errorbars}{rel_flux_cal_050303_ob3_to_050405_o66}
+\FigureTwo{fluxcal_errorbars}{calib_vs_dc}
+%{rel_flux_cal_050303_ob3_to_050405_o66}
 %{calibration_plot_2004}
 {Left: Average calibration curve [V/Jy] versus the mean detector
 voltage, a proxy for atmospheric loading.  Red points are observations
-of Mars and black of Uranus.  Right: Scaling of the
-relative calibration with atmospheric loading for bolocam
-143. {\em To be replaced with new figure}}{fig:CalibrationCurves}{1.0}
+of Mars and black of Uranus.  Right: Scaling of the relative
+calibration with atmospheric loading for a single
+detector.}{fig:CalibrationCurves}{1.0}
 
 % 6
 \Figure{relsens_cal}{An illustration of the relative sensitivity
@@ -1122,6 +1127,33 @@ from the data.  The expected contribution to the noise from the
 unremoved glitches below the detection threshold is
 \TBD.}{fig:GlitchDistribution}{1.0}
 
+\begin{figure}
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.8]{eachpca}
+    \end{center}
+  \end{minipage}
+\vspace{0.25in}
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.8]{eachpca_20iters}
+    \end{center}
+  \end{minipage}
+  \caption{{\it Top}: a grid of maps of the first 20 PCA components
+displayed at the same scale.  It is clear that NCG 7538, the object
+imaged, has correlated emission in each component.  There are varying
+levels of correlated noise in each component, with the first through
+third being the most obvious atmospheric components.  Most of the
+other noise components are probably various bits of correlated
+detector noise. {\it Bottom}: The same figure, but after 20
+iterations.  The figure is the breakdown of the atmosphere remainder
+(i.e. the raw data minus the astrophysical model) into eigenfunctions.
+Very little astrophysical flux remains at any level of correlation,
+though there is some at large (few arcminute) scales.}
+\label{fig:PCA_Graphical}
+
+\end{figure}
+
 \Figure{l001_deconvolutionkernelcompare}{The effect of deconvolution
 on the iterative process can be seen in its effect on the
 residuals. From left to right: map, noise, smoothmap, model. Top to
@@ -1192,11 +1224,12 @@ Clearly, this complicates the definition of surface brightness, and
 also imposes a limit on the size of features for which photometry may
 be meaningfully performed.
 
-Figure \ref{fig:PCA_Filter}a shows the fraction of flux recovered in the map as a
-function of source size for a range of different PCA components subtracted in
-the cleaning.  These measurements were produced by inserting simulated gaussian
-sources at a range of peak flux densities and sizes spread out through the map
-and summing the flux in an ellipse on the final cleaned map.  
+Figure \ref{fig:PCA_Filter}a shows the fraction of flux recovered in
+the map as a function of source size for a range of different PCA
+components subtracted in the cleaning.  These measurements were
+produced by inserting simulated gaussian sources at a range of peak
+flux densities and sizes spread out through the map and summing the
+flux in an ellipse on the final cleaned map.
 
 Real data with the astrophysical source model removed were used as the
 background.  Because this is real data, at lower numbers of PCA components
@@ -1213,6 +1246,14 @@ deconvolution kernel smaller than the beam but larger than the pixel
 size used.  Figure \ref{fig:Deconvolution} demonstrates the effects of
 using both too large and too small a kernel.
 
+\FigureTwo{pca_comparison_l111}{deconvolution_comparison_l111}{The
+fractional flux recovered as a function of source size for
+well-separated Gaussian sources with the FWHM as indicated.
+\emph{Left}: 3 (blue),7 (green),10 (yellow) ,13 (orange),16 (red),21
+(teal),26 (lime),31 (black) PCA components subtracted.  \emph{Right}:
+7.2" (cyan), 14.4" (black), 21.6" (red), 31.2" (green) deconvolution
+kernel for 13 PCA components subtracted }{fig:PCA_Filter}{1.0}
+
 \Figure{aper_phot_hpf_beam}{The effect of performing aperture
 photometry on a point source of unit flux observed with the effective
 Bolocam PSF $B$.  The black curve shows the area (measured in pixels)
@@ -1228,13 +1269,6 @@ increased.  }{fig:ESF}{1.0}
 
 \clearpage 
 
-\FigureTwo{pca_comparison_l111}{deconvolution_comparison_l111}{The
-fractional flux recovered as a function of source size for
-well-separated Gaussian sources with the FWHM as indicated.
-\emph{Left}: 3 (blue),7 (green),10 (yellow) ,13 (orange),16 (red),21
-(teal),26 (lime),31 (black) PCA components subtracted.  \emph{Right}:
-7.2" (cyan), 14.4" (black), 21.6" (red), 31.2" (green) deconvolution
-kernel for 13 PCA components subtracted }{fig:PCA_Filter}{1.0}
 
 %\clearpage 
 %
@@ -1540,6 +1574,44 @@ l110.5npps &            & 23 05 10.7 &  60 14 50.6 & 110.11 &   0.05 &  -999.0 \
  l192pps-5 &            & 06 07 43.9 &  20 39 29.6 & 189.67 &   0.17 &  -999.0 \\
 }
 
+
+\section{FITS Header Information}
+\label{app:FITS_Header}
+
+\begin{verbatim}
+
+SIMPLE  =                    T / Written by IDL:  Sun Jan 18 01:21:05 2009      
+BITPIX  =                  -32 / Number of bits per data pixel                  
+NAXIS   =                    2 / Number of data axes                            
+NAXIS1  =                 3134 /                                                
+NAXIS2  =                  883 /                                                
+DATE    = '2009-01-18'         / Creation UTC (CCCC-MM-DD) date of FITS header  
+LONPOLE2=            180.00000 /lonpole                                         
+LATPOLE2=            0.0000000 /latpole                                         
+PPBEAM  =            21.276915 /pixels per beam                                 
+CALIB_0 =          -0.00333379 / 0th coefficient for flux cal                   
+CALIB_1 =             -2.92617 / 1st coefficient for flux cal                   
+CALIB_2 =              6.97269 / 2nd coefficient for flux cal                   
+ITERNUM =                    0 /Iteration number                                
+N_PCA   =                    0 /number of PCA components subtracted             
+COMMENT FITS (Flexible Image Transport System) format is defined in 'Astronomy  
+COMMENT and Astrophysics', volume 376, page 359; bibcode 2001A&A...376..359H    
+CTYPE1  = 'GLON-CAR'           / Coordinate Type                                
+CTYPE2  = 'GLAT-CAR'           / Coordinate Type                                
+EQUINOX =              2000.00 / Equinox of Ref. Coord.                         
+CD1_1   =    -0.00199999986216 / Degrees / Pixel                                
+CD2_1   =        0.00000000000 / Degrees / Pixel                                
+CD1_2   =       -0.00000000000 / Degrees / Pixel                                
+CD2_2   =     0.00199999986216 / Degrees / Pixel                                
+CRPIX1  =              1270.52 / Reference Pixel in X                           
+CRPIX2  =              366.367 / Reference Pixel in Y                           
+CRVAL1  =        191.092003456 / Galactic longitude of reference pixel          
+CRVAL2  =      0.0993870183708 / Galactic latitude of reference pixel           
+PV2_1   =        0.00000000000 /Projection parameter 1                          
+HISTORY PUTAST: Jan 18 01:10:42 2009 World Coordinate System parameters written 
+END                                                                             
+
+\end{verbatim}
 
 \bibliography{milkyway}
 
