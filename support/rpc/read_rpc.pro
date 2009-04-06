@@ -15,18 +15,17 @@ function read_rpc, filename, $
                    hdr_file = hdr_file
 
 ; Header file contains variables which are constant over an observation
-common BOLOCAM_COMMON
 
-pipeline_root = BOLOCAM_PIPELINE_ROOT
+pipeline_root = '/home/milkyway/student/ginsbura/bgps_pipeline'
 
 if not(keyword_set(def_file)) then $
-  def_file = PIPELINE_ROOT + '/utilities/rpc/rpc_def.txt'
+  def_file = PIPELINE_ROOT + '/support/rpc/rpc_def.txt'
 
 if not(keyword_set(use_file)) then $
-  use_file = PIPELINE_ROOT + '/utilities/rpc/rpc_use.txt'
+  use_file = PIPELINE_ROOT + '/support/rpc/rpc_use.txt'
 
 if not(keyword_set(hdr_file)) then $
-  hdr_file = PIPELINE_ROOT + '/utilities/rpc/rpc_hdr.txt'
+  hdr_file = PIPELINE_ROOT + '/support/rpc/rpc_hdr.txt'
 
 ; File containing the definition of the RPC frame
 readcol,def_file,comment=';',format='(A,I,A)',$
