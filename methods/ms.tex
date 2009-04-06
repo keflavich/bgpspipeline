@@ -7,6 +7,13 @@
 % 6) fig:Flatfield
 % 7) fig:CygnusComparison
 % 8) fig:PointingCalibrators
+% 9) fig:PointingModel
+% 10) fig:SCUBAPointingComparison
+% 11) fig:IterativeMapping
+% 12) fig:Flagging
+% 13) fig:GlitchDistribution
+% 14) fig:PCA_Filter
+% 15) fig:Deconvolution
 
 % calibration
 % you should look @ calibration/plot_dcfluxes.pro in my publish/ directory, and /usb/scratch1/planets/planet_dcfluxes.txt is the actual raw data
@@ -572,6 +579,7 @@ focal plane as mapped to the sky.  Right: The effect of field rotation
 on the coverage obtained via Bolocam raster scans.}{fig:Array}{1.0}
 
 \section{Flux Density and Surface Brightness Calibration}
+\label{sec:FluxCalibration}
 
 The absolute flux calibration is obtained from observations of Mars
 and Uranus
@@ -677,12 +685,14 @@ of Mars and black of Uranus.  Right: Scaling of the
 relative calibration with atmospheric loading for bolocam
 143. {\em To be replaced with new figure}}{fig:CalibrationCurves}{1.0}
 
+% 6
 \Figure{relsens_cal}{An illustration of the relative sensitivity
 calibration using the atmosphere as a calibrator.  Black is the median
 over all bolometers (the atmosphere model), red and green are
 individual bolometers. a. before and b. after applying the relative
 calibration.  Note the improved agreement.}{fig:Flatfield}{1.0}
 
+% 7
 \Figure{cygnus_flux_comparison}{A comparison of the fluxes extracted
 in the same aperture from the \citet{motte07} MAMBO map and the
 Bolocam map of this paper.}{fig:CygnusComparison}{1.0}
@@ -706,6 +716,7 @@ Total & 7\% (random) + 5\% (systematic)
 \end{deluxetable}
 
 \section{Astrometry}
+\label{sec:Astrometry}
 
 \subsection{Absolute Reference Sources and Pointing Model}
 
@@ -772,29 +783,41 @@ TBD: In low s/n fields, specifically l=65 to 75, there was not enough signal to
 acquire a pointing offset using cross-correlation.  In these fields the
 relative pointing offset is larger and the beam is slightly larger.
 
-{\em Show a cross-correlation map?}
+\subsection{Comparison to SCUBA Legacy Source Positions}
+\label{sec:SCUBAPointingComparison}
+%and SHARC-II Positions}
 
-\subsection{Comparison to SCUBA and SHARC-II Positions}
+The same cross-correlation procedure was used to compare to the SCUBA
+maps from the Legacy Catalog.  The morphological correlation between
+SCUBA and BGPS sources is excellent, so cross-correlation maps could
+be used to test our pointing model.
 
-The same cross-correlation procedure was used to compare to SCUBA maps where
-available.  The morphological correlation between SCUBA and BGPS sources is
-excellent, so cross-correlation maps could be used to test our pointing model.
+An example is shown in Figure \ref{fig:SCUBAPointingComparison}.
+
+{\it Do the negative bowls of either survey bunge up the
+cross-correlation?  If not, how do we deal with them?}
 
 For the purposes of comparison of both flux and pointing with other
 surveys, we present in Appendix \ref{app:ReferenceSources} a selection
 of bright, compact, relatively isolated sources.
 
-{\em Miranda's data here}
+%{\em Miranda's data here}
 
+% 8
+% -----------------------------------------------------------------------------
 \FigureTwo{plane_astrometry}{pointing_model_skydist}{Left: The
 distribution of absolute reference sources (crosses) in the Galactic
 Plane (Appendix \ref{app:PointingCalibrators}).  Also shown (crosses)
 are the locations of bright, isolated, compact sources for comparison
 with other surveys, as given in Appendix \ref{app:ReferenceSources}.
 Right: The distribution of the pointing calibration sources across the
-local sky in Hawaii.  Notice the good sampling of the entire region
-used for the Survey.}{fig:PointingCalibrators}{1.0}
+local sky in Hawaii during the July 2007 epoch when the pointing model
+was constructed.  Notice the good sampling of the entire region used
+for the Survey.}{fig:PointingCalibrators}{1.0}
+% -----------------------------------------------------------------------------
 
+% 9
+% -----------------------------------------------------------------------------
 \begin{figure}
   \subfigure[The pointing model correction (left) and residuals
 (right) for Epoch V, from which the master reference images were
@@ -803,10 +826,48 @@ figure?}]
 {\label{fig:PointingModel-a}\includegraphics[scale=1.0]{pointing_model}}\\
 
   \subfigure[The residuals of the pointing model.  Note the Gaussian
-distribution.]{\label{fig:PointingModel-b}\includegraphics[scale=0.7]{pointing_model_residuals}}
+distribution.]
+{\label{fig:PointingModel-b}\includegraphics[scale=0.5]{pointing_model_residuals}}
 
-\caption{Pointing model.}
+\caption{The Bolocam pointing model for Epoch V.}
+\label{fig:PointingModel}
 \end{figure}
+% -----------------------------------------------------------------------------
+
+
+% 10
+% -----------------------------------------------------------------------------
+\begin{figure}
+
+  \subfigure[{\it Left}: the Bolocam map in a portion of the $l=30$
+  field.  {\it Right}: the SLC maps in the same region.  The green
+  contours on the Bolocam map indicate the positions of the SLC
+  sources.]
+  {\label{fig:SCUBAPointingComparison-a}\includegraphics[scale=0.8]
+  {scuba_bolocam_l030}}
+
+  \begin{tabular}{cc}
+
+  \subfigure[The cross-correlation map of the BGPS and SLC maps in
+  Figure \ref{fig:SCUBAPointingComparison-a}. {\bf to be replaced with
+  correct map}]
+  {\label{fig:SCUBAPointingComparison-b}\includegraphics[scale=0.45]
+  {xcorr_standin}}
+
+  \subfigure[The measured offset between Bolocam and SCUBA Legacy
+sources \citep{difrancesco08}, using the method described in Setion
+\ref{sec:SCUBAPointingComparison}.  The circle indicates the $1\sigma$
+region, which is also consistent with the error derived from the
+internal Bolocam pointing model.]
+{\label{fig:SCUBAPointingComparison-c}\includegraphics[scale=0.45]
+{scuba_pointing_offsets}}
+
+\end{tabular}
+
+\caption{Comparing the Bolocam positions to those of the SCUBA Legacy Catalog.}
+\label{fig:SCUBAPointingComparison}
+\end{figure}
+% -----------------------------------------------------------------------------
 
 \section{Mapping Algorithm}
 \label{sec:Mapping}
@@ -888,9 +949,6 @@ N = M[d_i(t) - \tilde{s}^{(n)}_i(t) - \tilde{a}^{(n)}_i(t) -
 \end{equation}
 The process then begins again with Equation \ref{eq:FirstIterStep}.
 
-%\Figure{eachpca}{The effect of the number of iterations on
-%the reduction process.}{fig:Iter}{1.0}
-
 \subsection{Atmosphere Fluctuation Noise Model}
 
 The simplest model for the atmosphere fluctations makes use of the
@@ -938,43 +996,11 @@ source model, and the data there is excluded from inclusion in
 subsequent maps.  The turnaround microphonics are modeled as decaying
 exponentials at the beginnings and ends of scans.
 
-\Figure{flagger_plots}{An illustration of a ``glitch'' in a single
-bolometer timestream (red) due to a cosmic ray strike.  Note the
-acausal ringing due to the application of the downsampling filter.
-The time series for a physically adjacent bolometer is shown in blue,
-and a bolometer which does not pass over a source in green.  The PCA
-model has already been subtracted from the
-data.}{fig:CosmicRayGlitch}{1.0}
-
-\Figure{crs}{The distribution of glitch amplitudes flagged and
-removed from the data.  The expected contribution to the noise from
-the unremoved glitches below the detection threshold is
-\TBD.}{fig:GlitchDistribution}{1.0}
-
 \subsection{Data Flagging}
 
 Due to the large volume of data generated by the survey, it was
 necessary to develop new tools to quickly visualize the data and
 ensure data quality.  We used a ``waterfall''
-
-\FigureTwo{flagger_withglitch}{flagger_glitchgone}{An illustration of the
-flagging process using the waterfall plot. Left: The glitch apparent at middle
-right is the same one whose time series is shown in Figure
-\ref{fig:CosmicRayGlitch}.  Because of the PCA subtraction, the effect of the
-glitch also propagates over the other bolometers, appearing as a horizontal
-stripe. Right: The same data displayed with the time point including the glitch
-flagged out and rescaled}  {fig:Flag1}{1.0}
-
-%this figure failed to create automatically and wasn't really that useful
-%anyway
-% \Figure{flagger_glitchboxflagged}{A box is drawn around the bad data and it is
-% removed from subsequent analysis.}{fig:Flag2}{1.0} 
-
-% \Figure{flagger_glitchgone}{A rescaled version of the data with the
-% bad data removed.  The effect of the glitch on the other bolometers is
-% now more apparent; this too is flagged out in subsequent
-% analysis.}{fig:Flag3}{1.0}
-
 
 An automated flagger was also created that flags out outlier data on a
 per-pixel basis.  In order to make a robust measurement of the
@@ -995,15 +1021,117 @@ $7.2$\farcs pixels using a nearest-neighbor algorithm.  The nearest-neighbor
 matching allows the map to be returned to a timestream in the same manner, 
 but with the S/N improved by averaging over all hits on a given pixel.
 
+\setcounter{subfig}{1}
+\renewcommand{\thefigure}{\arabic{figure}\alph{subfig}}
 
-\Figure{l001_deconvolutionkernelcompare}{The effect of
-deconvolution on the iterative process can be seen in its effect on
-the residuals. From left to right: map, noise, smoothmap, model. Top
-to bottom kernel size: 14.4\arcsec, 21.6\arcsec, 31.2\arcsec,
+\begin{figure}
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.9]{iterative_mapping1}
+      \caption{An example of the change in the time series as
+      iterative mapping proceeds.}
+    \end{center}
+    \label{fig:IterativeMapping}
+  \end{minipage}
+\end{figure}
+
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+  
+\begin{figure}
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.9]{iterative_mapping2}
+      \caption{}
+    \end{center}
+    \label{fig:IterativeMapping-b}
+  \end{minipage}
+\end{figure}
+
+\addtocounter{figure}{-1}
+\addtocounter{subfig}{1}
+
+\begin{figure}
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.9]{iterative_mapping3}
+      \caption{}
+    \end{center}
+    \label{fig:IterativeMapping-c}
+  \end{minipage}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+\setcounter{subfig}{1}
+\begin{figure}
+  \begin{minipage}{3.25in}
+    \begin{center}
+      \includegraphics[scale=0.5]{flagger_withglitch}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{3.25in}
+    \begin{center}
+      \includegraphics[scale=0.5]{flagger_glitchgone}
+    \end{center}
+  \end{minipage}
+  \caption{An illustration of the flagging process using the waterfall
+plot. Left: The glitch apparent at middle right is the same one whose
+time series is shown in Figure \ref{fig:CosmicRayGlitch}.  Because of
+the PCA subtraction, the effect of the glitch also propagates over the
+other bolometers, appearing as a horizontal stripe. Right: The same
+data displayed with the time point including the glitch flagged out
+and rescaled}
+
+  \label{fig:Flagger}
+
+  \addtocounter{figure}{-1} 
+  \addtocounter{subfig}{1}
+  
+  \begin{minipage}{6.5in}
+    \begin{center}
+      \includegraphics[scale=0.5]{flagger_plots}
+      \caption{An illustration of a ``glitch'' in a single bolometer
+timestream (red) due to a cosmic ray strike.  Note the acausal ringing
+due to the application of the downsampling filter.  The time series
+for a physically adjacent bolometer is shown in blue, and a bolometer
+which does not pass over a source in green.  The PCA model has already
+been subtracted from the data.}
+    \end{center}
+  \end{minipage}
+
+\end{figure}
+
+% -----------------------------------------------------------------------------
+
+\renewcommand{\thefigure}{\arabic{figure}}
+
+
+
+%\FigureTwo{flagger_withglitch}{flagger_glitchgone}{An illustration of
+%the flagging process using the waterfall plot. Left: The glitch
+%apparent at middle right is the same one whose time series is shown in
+%Figure \ref{fig:CosmicRayGlitch}.  Because of the PCA subtraction, the
+%effect of the glitch also propagates over the other bolometers,
+%appearing as a horizontal stripe. Right: The same data displayed with
+%the time point including the glitch flagged out and rescaled}
+%{fig:Flaggin}{1.0}
+%
+\Figure{crs}{The distribution of glitch amplitudes flagged and removed
+from the data.  The expected contribution to the noise from the
+unremoved glitches below the detection threshold is
+\TBD.}{fig:GlitchDistribution}{1.0}
+
+\Figure{l001_deconvolutionkernelcompare}{The effect of deconvolution
+on the iterative process can be seen in its effect on the
+residuals. From left to right: map, noise, smoothmap, model. Top to
+bottom kernel size: 14.4\arcsec, 21.6\arcsec, 31.2\arcsec,
 7.2\arcsec. The final version of the pipeline uses 14.4\arcsec, which
 has the result of leaving no flux in the residual at the location of
 Sgr B2, and does not ``dig a hole'' in the residual map, as the
 7.2\arcsec\ kernel does.}{fig:Deconvolution}{1.0}
+
+\clearpage
 
 \section{Noise and Systematic Effects}
 \label{sec:Noise}
@@ -1064,7 +1192,7 @@ Clearly, this complicates the definition of surface brightness, and
 also imposes a limit on the size of features for which photometry may
 be meaningfully performed.
 
-Figure \ref{fig:PCA_filter}a shows the fraction of flux recovered in the map as a
+Figure \ref{fig:PCA_Filter}a shows the fraction of flux recovered in the map as a
 function of source size for a range of different PCA components subtracted in
 the cleaning.  These measurements were produced by inserting simulated gaussian
 sources at a range of peak flux densities and sizes spread out through the map
@@ -1075,14 +1203,15 @@ background.  Because this is real data, at lower numbers of PCA components
 subtracted, the atmosphere still dominates the total measured flux, which is
 particularly evident for the largest sources.
 
-Figure \ref{fig:deconv_filter}b shows the fraction of flux recovered in the maps
-as a function of the deconvolution kernel used to create the astrophysical model
-maps.  The differences at large source sizes are not yet well-understood
-(!!!!!!), but at the smallest source size, it is evident that a deconvolution
-kernel smaller than the source size does not reliably recover the source flux.
-Therefore we chose a deconvolution kernel smaller than the beam but larger than
-the pixel size used.  Figure \ref{fig:Deconvolution} demonstrates the effects of using
-both too large and too small a kernel.
+Figure \ref{fig:deconv_filter}b shows the fraction of flux recovered
+in the maps as a function of the deconvolution kernel used to create
+the astrophysical model maps.  The differences at large source sizes
+are not yet well-understood (!!!!!!), but at the smallest source size,
+it is evident that a deconvolution kernel smaller than the source size
+does not reliably recover the source flux.  Therefore we chose a
+deconvolution kernel smaller than the beam but larger than the pixel
+size used.  Figure \ref{fig:Deconvolution} demonstrates the effects of
+using both too large and too small a kernel.
 
 \Figure{aper_phot_hpf_beam}{The effect of performing aperture
 photometry on a point source of unit flux observed with the effective
@@ -1097,19 +1226,15 @@ source.  The actual Bolocam beam reaches its maximum effective area
 sooner, and then drops precipitously as the size of the aperture is
 increased.  }{fig:ESF}{1.0}
 
-%\Figure{esf}{The effective spatial filter applied to the Bolocam
-%maps due to atmospheric cleaning.}{fig:ESF}{1.0}
-
 \clearpage 
 
-\FigureTwo{pca_comparison_l111}{deconvolution_comparison_l111}{The fractional
-flux recovered as a function of source size for well-separated Gaussian sources with
-the FWHM as indicated.
-\emph{Left}: 3 (blue),7 (green),10 (yellow) ,13
-(orange),16 (red),21 (teal),26 (lime),31 (black) PCA components subtracted.
-\emph{Right}: 7.2" (cyan), 14.4" (black), 21.6" (red), 31.2" (green) deconvolution
-kernel for 13 PCA components subtracted
-}{fig:PCA_filter}{1.0}
+\FigureTwo{pca_comparison_l111}{deconvolution_comparison_l111}{The
+fractional flux recovered as a function of source size for
+well-separated Gaussian sources with the FWHM as indicated.
+\emph{Left}: 3 (blue),7 (green),10 (yellow) ,13 (orange),16 (red),21
+(teal),26 (lime),31 (black) PCA components subtracted.  \emph{Right}:
+7.2" (cyan), 14.4" (black), 21.6" (red), 31.2" (green) deconvolution
+kernel for 13 PCA components subtracted }{fig:PCA_Filter}{1.0}
 
 %\clearpage 
 %
