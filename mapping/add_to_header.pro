@@ -66,6 +66,7 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
     fxaddpar,hdr,"COMMENT","Made by the Bolocam Galactic Plane Survey (BGPS) pipeline"
     fxaddpar,hdr,"COMMENT","described in Aguirre et al 2009 (not yet published)"
     fxaddpar,hdr,"COMMENT","BGPS data was taken at the Caltech Submillimeter Observatory"
+    fxaddpar,hdr,"HISTORY","Dates and observation numbers included: "
     for i=0,n_e(filenames)-1 do begin
         fxaddpar,hdr,"HISTORY",strmid(filenames[i],stregex(filenames[i],'[0-9]{6}_o[b0-9][0-9]'),10)
     end
