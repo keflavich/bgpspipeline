@@ -67,6 +67,6 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
     fxaddpar,hdr,"COMMENT","described in Aguirre et al 2009 (not yet published)"
     fxaddpar,hdr,"COMMENT","BGPS data was taken at the Caltech Submillimeter Observatory"
     for i=0,n_e(filenames)-1 do begin
-        fxaddpar,hdr,"HISTORY",filenames[i]
+        fxaddpar,hdr,"HISTORY",stregex(filenames[i],'[0-9]{6}_o[b0-9][0-9]')
     end
 end 
