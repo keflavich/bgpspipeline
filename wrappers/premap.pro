@@ -126,7 +126,8 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
         ts = prepare_map(bgps.ra_map,bgps.dec_map,pixsize=pixsize,blank_map=blank_map,phi0=0,theta0=0,hdr=hdr,$
             smoothmap=smoothmap,lst=bgps.lst,jd=bgps.jd,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
         add_to_header,hdr,bgps.lst,bgps.fazo,bgps.fzao,bgps.jd,bgps.mvperjy,thefiles[0],pixsize,bgps.radec_offsets,$
-            pointing_model=pointing_model,singlefile=singlefile,meandc=mean(bgps.dc_bolos),stddc=stddev(bgps.dc_bolos)
+            pointing_model=pointing_model,singlefile=singlefile,meandc=mean(bgps.dc_bolos),stddc=stddev(bgps.dc_bolos),$
+            filenames=bgps.filenames
         blank_map_size = size(blank_map,/dim)
         wt_map   = blank_map
         wt_map[min(ts):max(ts)] = wt_map[min(ts):max(ts)] + histogram(ts)  ; this is a clever trick that adds 
