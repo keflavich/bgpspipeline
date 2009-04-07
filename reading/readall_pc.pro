@@ -38,7 +38,12 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             radec_offsets=radec_offsets,beam_loc=beam_loc,source_ra=source_ra,source_dec=source_dec
     
         if n_e(mvperjy_temp) eq 3 then mvperjy = mvperjy_temp ; allows keyword to be set to override read_ncdf_vars
-        if total(beam_loc[0,*]) gt 0 and keyword_set(distcor) then begin
+        if size(distcor,/type) eq 7 then begin ; if distcor is a string specifying a beam locations file...
+            readcol,distcor,bolonum,bolodist,boloang,err,comment="#;",format="(I, F, F, F)",/silent
+            bolo_params[1,*] = boloang
+            bolo_params[2,*] = bolodist
+            bolo_params[0,where(bolodist+boloang+err eq 0)] = 0
+        endif else if total(beam_loc[0,*]) gt 0 and keyword_set(distcor) then begin
             print,"Using distortion correction written to beam_locations"
             bolo_params[1,*] = beam_loc[1,*]
             bolo_params[2,*] = beam_loc[0,*]
