@@ -65,3 +65,13 @@ distmap_comp,'/scratch/sliced_polychrome/mars/050627_o32_raw_ds1.nc','/scratch/a
 $ls *_nofix.txt > 0506_nofixlist.txt
 average_beamloc,'0506_nofixlist.txt','0506_nofix_averagebeamloc.txt'
 
+
+
+; not really testing the distmapper but related....
+coalign_field,'l018','070717_o10',premap=0,deconvolve=1,prefix='defaultdistcor_v1.0.2_',scratchdir='/usb/scratch1',niter=[13],dosave=1,infile="l018_infile.txt",refim='/data/bgps/releases/v0.6/l018_ref.fits',mvperjy=[ -3.26472e-15,0.398740,3.32002],distcor='~/bgps_pipeline/bgps_params/beam_locations_default.txt'
+mem_iter,'/usb/scratch1/l018/defaultdistcor_v1.0.2_l018_13pca_preiter.sav','/usb/scratch1/l018/defaultdistcor_v1.0.2_l018_13pca',workingdir='/usb/scratch1',deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+13,fits_out=[0,1,10,20,30,40,50]
+
+
+
+
+
