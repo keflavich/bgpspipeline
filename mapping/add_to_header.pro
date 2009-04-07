@@ -5,7 +5,7 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
     mvperjy,filename,pixsize,radec_offsets,$
     pointing_model=pointing_model,singlefile=singlefile,$
     meandc=meandc,stddc=stddc,deconv_fwhm=deconv_fwhm,$
-    filenames=filenames,filename=filename
+    filenames=filenames
 
     if singlefile then begin
         if keyword_set(filename) then begin
