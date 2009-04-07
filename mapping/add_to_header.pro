@@ -53,10 +53,16 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
 
     if keyword_set(meandc) then fxaddpar,hdr,"meandc",meandc,"Mean DC level"
     if keyword_set(stddc) then fxaddpar,hdr,"stddc",stddc,"Std. dev. DC level"
-    fxaddpar,hdr,"ppbeam" ,2*!dpi*(31.2/2.35482)^2/pixsize^2,"pixels per beam" 
+    fxaddpar,hdr,"UNITS","Jy/Beam"
+    beamsize = 35.6  ; was 31.2
+    fxaddpar,hdr,"ppbeam" ,2*!dpi*(beamsize/2.35482)^2/pixsize^2,"pixels per beam" 
     fxaddpar,hdr,"calib_0",mvperjy[0]," 0th coefficient for flux cal"
     fxaddpar,hdr,"calib_1",mvperjy[1]," 1st coefficient for flux cal"
     fxaddpar,hdr,"calib_2",mvperjy[2]," 2nd coefficient for flux cal"
     fxaddpar,hdr,"iternum",0,"Iteration number"
     fxaddpar,hdr,"n_pca"  ,0,"number of PCA components subtracted"
+    fxaddpar,hdr,"WL",1.12,"mm (avoids CO 2-1)"
+    fxaddpar,hdr,"COMMENT","Made by the Bolocam Galactic Plane Survey (BGPS) pipeline"
+    fxaddpar,hdr,"COMMENT","described in Aguirre et al 2009 (not yet published)"
+    fxaddpar,hdr,"COMMENT","BGPS data was taken at the Caltech Submillimeter Observatory"
 end 

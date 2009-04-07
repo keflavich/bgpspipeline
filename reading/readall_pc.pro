@@ -107,6 +107,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_scans = scans_info_new
             if n_e(raw) eq n_e(ac_bolos) then all_raw = raw[*,wh_scan_full]
             si = sample_interval
+            filenames = filename
         endif else begin
             ts_length = n_e(all_acb[0,*])
             all_acb = [[all_acb],[ac_bolos[*,wh_scan_full]]]
@@ -118,6 +119,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
+            filenames = [[filenames],[filename]]
             if n_e(all_raw) gt 0 then all_raw = [[all_raw],[raw[*,wh_scan_full]]]
             if sample_interval ne si then message,"Input files have different sample intervals.  That's not cool."
         endelse
@@ -189,6 +191,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         scale_coeffs: fltarr(n_e(scans_info[0,*]),n_e(goodbolos)) + 1, $
         source_ra: source_ra[0],$
         source_dec: source_dec[0],$ 
+        filenames: filenames,$
         badscans: badscans $
         }
 
