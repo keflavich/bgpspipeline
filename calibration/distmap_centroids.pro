@@ -6,7 +6,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
 
     ; larger pixel size selected for mapping to reduce blank pixels
-    if ~keyword_set(pixsize) then pixsize=10.0
+    ; should be 11 pixels because that's how much the bolometers were moved
+    if ~keyword_set(pixsize) then pixsize=11.0
 
     if size(filename,/type) eq 7 then thefiles = [filename]
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
