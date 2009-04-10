@@ -94,8 +94,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         endif
 
     endfor
-    device,/close_file
-    set_plot,'x'
+    if doplot gt 1 then begin
+        device,/close_file
+        set_plot,'x'
+    endif
     !p.multi=0
 
     close,fitparfile
