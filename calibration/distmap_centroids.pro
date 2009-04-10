@@ -29,6 +29,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     meas = { $
         rth : fltarr(nbolos,2)    ,$
         xy  : fltarr(nbolos,2)    ,$
+        xyoffs  : fltarr(nbolos,2),$
         xysize: fltarr(nbolos,2)  ,$
         chi2: fltarr(nbolos)      ,$
         err: fltarr(nbolos)       ,$
@@ -83,8 +84,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xy[i,0] = -(fitpars[4]-xcen)*bolospacing + nominal.xy[i,0] + xmin
-        meas.xy[i,1] = -(fitpars[5]-ycen)*bolospacing + nominal.xy[i,1] + ymin
+        meas.xy[i,0] = -(fitpars[4]-xcen+xmin)*bolospacing + nominal.xy[i,0] 
+        meas.xy[i,1] = -(fitpars[5]-ycen+ymin)*bolospacing + nominal.xy[i,1] 
+        meas.xyoffs[i,0] = (fitpars[4]-xcen+xmin)*bolospacing 
+        meas.xyoffs[i,1] = (fitpars[5]-ycen+ymin)*bolospacing 
         meas.angle[i] = fitpars[6]
         meas.xysize[i,*] = fitpars[2:3]*bolospacing
         meas.ampl[i] = fitpars[1]
@@ -102,8 +105,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
             loadct,0,/silent
             imdisp,asinh(reform(allmap[*,*,i])),erase=0,/axis
             loadct,39,/silent
-            tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250,/data,thick=.5
-            tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4],fitpars[5],fitpars[6],color=250,/data,thick=.5
+            tvellipse,fitpars[2],fitpars[3],fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=.5
+            tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=.5
             oplot,[xcen],[ycen],psym=7,color=225,symsize=.25
 ; pretty sure this is wrong            oplot,[-nominal.xy[i,0]/bolospacing+xcen],[-nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
         endif
