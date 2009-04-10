@@ -99,7 +99,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
             loadct,39,/silent
             tvellipse,fitpars[2],fitpars[3],fitpars[4],fitpars[5],fitpars[6],color=250,/data,thick=.5
             tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4],fitpars[5],fitpars[6],color=250,/data,thick=.5
-            oplot,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
+            oplot,[-nominal.xy[i,0]/bolospacing+xcen],[-nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
         endif
 
     endfor

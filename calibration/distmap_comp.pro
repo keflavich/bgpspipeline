@@ -11,6 +11,7 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endif else begin
         distmap,ncfile,outfile,doplot=doplot,check=check,nopointing=nopointing,coordsys=coordsys,projection=projection,_extra=_extra  
+        print,""
         write_distmap,ncfile,outfile+".txt"
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endelse
