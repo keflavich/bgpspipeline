@@ -2,7 +2,7 @@
 pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,doplot=doplot,mars=mars,$
     coordsys=coordsys,projection=projection,blfile=blfile,outtxt=outtxt,_extra=_extra
 
-    if n_e(nopointing) eq 0 then nopointing=1
+;    if n_e(nopointing) eq 0 then nopointing=1
     if n_e(coordsys) eq 0 then coordsys='radec'
     if n_e(projection) eq 0 then projection='TAN'
     if n_e(outtxt) eq 0 then outtxt='/dev/tty'
