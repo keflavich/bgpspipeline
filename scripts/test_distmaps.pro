@@ -9,6 +9,7 @@ fixscale=1
 
 outtxt = '/scratch/adam_work/distmaps/distmaptest_nofit.txt'
 outfile_suf = '_nofit'
+;distmap_comp,['/scratch/sliced/uranus/050619_o23_raw_ds5.nc','/scratch/sliced/uranus/050619_o24_raw_ds5.nc'],'/scratch/distmaps/uranus_050619_o23-4'+outfile_suf,doplot=doplot,outtxt=outtxt
 distmap_comp,['/scratch/sliced_polychrome/uranus/050619_o23_raw_ds5.nc','/scratch/sliced_polychrome/uranus/050619_o24_raw_ds5.nc'],'/scratch/adam_work/distmaps/uranus_050619_o23-4'+outfile_suf,doplot=doplot,outtxt=outtxt
 distmap_comp,['/scratch/sliced_polychrome/uranus/050628_o33_raw_ds5.nc','/scratch/sliced_polychrome/uranus/050628_o34_raw_ds5.nc'],'/scratch/adam_work/distmaps/uranus_050628_o33-4'+outfile_suf,doplot=doplot,outtxt=outtxt
 distmap_comp,['/scratch/sliced_polychrome/neptune/050626_o19_raw_ds5.nc','/scratch/sliced_polychrome/neptune/050626_o20_raw_ds5.nc'],'/scratch/adam_work/distmaps/neptune_050626_o19-20'+outfile_suf,doplot=doplot,outtxt=outtxt

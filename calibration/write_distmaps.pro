@@ -6,7 +6,7 @@ pro write_distmaps,infile,fileroot=fileroot,blfile=blfile
         else if stregex(infile,'nc') gt 0 then files = [infile] $
         else if size(infile,/type) eq 7 then readcol,infile,files,format='(A80)',comment="#",/silent 
 
-    if ~keyword_set(fileroot) then fileroot='/home/milkyway/student/ginsbura/bgps_pipeline'
+    if ~keyword_set(fileroot) then fileroot=getenv('PIPELINE_ROOT') ;'/home/milkyway/student/ginsbura/bgps_pipeline'
 
     for i=0,n_e(files)-1 do begin 
 
