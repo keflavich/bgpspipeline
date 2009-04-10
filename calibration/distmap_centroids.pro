@@ -73,13 +73,17 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
-        fitpars = centroid_map(allmap[*,*,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
+        xmin = floor(xcen-10)
+        xmax = ceil(xcen+10)
+        ymin = floor(ycen-10)
+        ymax = ceil(ycen+10)
+        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
         fitmapcube[*,*,i] = fitmap
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xy[i,0] = -(fitpars[4]-xcen)*bolospacing + nominal.xy[i,0]
-        meas.xy[i,1] = -(fitpars[5]-ycen)*bolospacing + nominal.xy[i,1]
+        meas.xy[i,0] = -(fitpars[4]-xcen)*bolospacing + nominal.xy[i,0] + xmin
+        meas.xy[i,1] = -(fitpars[5]-ycen)*bolospacing + nominal.xy[i,1] + ymin
         meas.angle[i] = fitpars[6]
         meas.xysize[i,*] = fitpars[2:3]*bolospacing
         meas.ampl[i] = fitpars[1]
