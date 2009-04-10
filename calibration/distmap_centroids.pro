@@ -1,6 +1,6 @@
 ; centroiding portion of distmap
 pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
-    pixsize=pixsize,meas=meas,nominal=nominal,_extra=_extra
+    pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,_extra=_extra
 
     if ~keyword_set(doplot) then doplot=0
 
@@ -70,13 +70,14 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     openw,fitparfile,outfile+"_bolofits.txt",/get_lun
     printf,fitparfile,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
 
+    xmin = floor(xcen-10)
+    xmax = ceil(xcen+10)
+    ymin = floor(ycen-10)
+    ymax = ceil(ycen+10)
+
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
-        xmin = floor(xcen-10)
-        xmax = ceil(xcen+10)
-        ymin = floor(ycen-10)
-        ymax = ceil(ycen+10)
         fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
         fitmapcube[*,*,i] = fitmap
 
@@ -123,5 +124,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     meas.rth[*,1] = atan(meas.xy[*,1],meas.xy[*,0])
 
     save,filename=outfile+".sav"
+
+    if keyword_set(interactive) then stop
 
 end
