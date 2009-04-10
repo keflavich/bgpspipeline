@@ -8,7 +8,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ; larger pixel size selected for mapping to reduce blank pixels
     if ~keyword_set(pixsize) then pixsize=10.0
 
-    thefiles = [filename]
+    if size(filename,/type) eq 7 then thefiles = [filename]
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
         pointing_model=0,/nobeamloc,_extra=_extra
 
