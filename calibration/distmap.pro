@@ -9,6 +9,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     if n_e(out_fits_shifted) eq 0 then out_fits_shifted=1
     if n_e(fixscale) eq 0 then fixscale=1
     if n_e(nofit) eq 0 then nofit=1
+    if n_e(flagbolos) eq 0 then flagbolos=1
 
     total_bolos = 144 
 
