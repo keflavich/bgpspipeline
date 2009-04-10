@@ -11,7 +11,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
     if keyword_set(fromsave) then restore,outfile+".sav" else begin
         distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,allmap=allmap,fitmap=fitmap,$
-            meas=meas,nominal=nominal,_extra=_extra
+            meas=meas,nominal=nominal,coordsys='radec',projection='TAN',_extra=_extra
     endelse
 
     p = [1.0,0.0,0.0,0.0,1.0,0.0] ; xscale,xoff,yoff,rotation,yscale,stretch_angle
