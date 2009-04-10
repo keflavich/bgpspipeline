@@ -9,13 +9,13 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ; should be 11 pixels because that's how much the bolometers were moved
     if ~keyword_set(pixsize) then pixsize=11.0
 
-    if size(filename,/type) eq 7 then thefiles = [filename]
+    if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
         pointing_model=0,/nobeamloc,_extra=_extra
 
     nbolos = n_e(bolo_indices)
 
-    ncdf_varget_scale,filename,'bolo_params',bolo_params
+    ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
