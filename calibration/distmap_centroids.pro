@@ -11,7 +11,9 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
-        pointing_model=0,/nobeamloc,_extra=_extra
+        pointing_model=0,_extra=_extra
+    ; removed nobeamloc 4/10/09 - necessary in order to co-add images
+    ; also, should automatically account for rotation
 
     nbolos = n_e(bolo_indices)
 
@@ -46,8 +48,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
-    xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
-    ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
+    extast,hdr[*,0,0],astr
+    ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
+;    xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
+;    ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
                                 ; 3/20/09 - I'm pretty sure there's no such error
 
     fitmapcube = allmap*0
