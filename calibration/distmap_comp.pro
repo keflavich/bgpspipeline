@@ -12,10 +12,10 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
     endif else begin
         distmap,ncfile,outfile,doplot=doplot,check=check,nopointing=nopointing,coordsys=coordsys,projection=projection,_extra=_extra  
         print,""
-        write_distmap,ncfile,blfile=outfile+".txt"
+        write_distmaps,ncfile,blfile=outfile+".txt"
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endelse
-    write_distmap,ncfile,'/home/milkyway/student/ginsbura/bgps_pipeline/bgps_params/beam_locations_default.txt'
+    write_distmaps,ncfile,blfile='/home/milkyway/student/ginsbura/bgps_pipeline/bgps_params/beam_locations_default.txt'
     mem_iter,ncfile,outfile+"_defaultBL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     mem_iter,ncfile,outfile+"_noBL",pointing_model=0,niter=[0,0],mars=mars
 
