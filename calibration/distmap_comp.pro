@@ -7,12 +7,12 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
     if n_e(projection) eq 0 then projection='TAN'
     if n_e(outtxt) eq 0 then outtxt='/dev/tty'
     if keyword_set(blfile) then begin
-        write_distmap,ncfile,blfile
+        write_distmaps,ncfile,blfile=blfile
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endif else begin
         distmap,ncfile,outfile,doplot=doplot,check=check,nopointing=nopointing,coordsys=coordsys,projection=projection,_extra=_extra  
         print,""
-        write_distmap,ncfile,outfile+".txt"
+        write_distmap,ncfile,blfile=outfile+".txt"
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endelse
     write_distmap,ncfile,'/home/milkyway/student/ginsbura/bgps_pipeline/bgps_params/beam_locations_default.txt'
