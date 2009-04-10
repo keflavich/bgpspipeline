@@ -4,7 +4,7 @@
 ; you can get the map array back by passing the 'allmap' parameter
 pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fromsave,doplot=doplot,$
     fixscale=fixscale,fixgrid=fixgrid,doatv=doatv,out_fits_shifted=out_fits_shifted,flagbolos=flagbolos,$
-    _extra=_extra
+    nofit=nofit,_extra=_extra
 
     if n_e(out_fits_shifted) eq 0 then out_fits_shifted=1
     if n_e(fixscale) eq 0 then fixscale=1
@@ -45,13 +45,17 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     invweight = nominal.rth*0+1
     invweight *= (nominal.rth[*,0]^2 # [1,1]) ; weight by 1/(distance from center)^2
 
-; after going through a slew of confusing and ineffective geometries, this finally seems to work...
-    p2 = [1.,0.,0.,angle_guess,1.,0]
-    ; find improved guess by fitting fixed grid to measured data
-    p2 = mpfitfun('hex_grid_fit_func',nominal.rth,meas.xy,invweight,p2,yfit=bestfit_xy,/quiet,parinfo=parinfo) 
-    p = p2
-    ; use improved guess to fit data to fixed grid
-    p = mpfitfun('inv_hex_gff',meas.xy,nominal.rth,invweight,p,yfit=bestfit_rth,/quiet,parinfo=parinfo)
+    if keyword_set(nofit) then begin
+        bestfit_rth = meas.rth
+    endif else begin
+        ; after going through a slew of confusing and ineffective geometries, this finally seems to work...
+        p2 = [1.,0.,0.,angle_guess,1.,0]
+        ; find improved guess by fitting fixed grid to measured data
+        p2 = mpfitfun('hex_grid_fit_func',nominal.rth,meas.xy,invweight,p2,yfit=bestfit_xy,/quiet,parinfo=parinfo) 
+        p = p2
+        ; use improved guess to fit data to fixed grid
+        p = mpfitfun('inv_hex_gff',meas.xy,nominal.rth,invweight,p,yfit=bestfit_rth,/quiet,parinfo=parinfo)
+    endelse
 
     bestfit_xy_2 = [[bestfit_rth[*,0]*cos(bestfit_rth[*,1])] ,$
         [bestfit_rth[*,0]*sin(bestfit_rth[*,1])] ]
@@ -90,7 +94,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         ; END FLAGGING BAD BOLOS
 
         ; REFIT with bad bolos flagged out
-        p = mpfitfun('inv_hex_gff',meas.xy,nominal.rth,invweight,p,yfit=bestfit_rth,/quiet,parinfo=parinfo)
+        if ~keyword_set(nofit) then p = mpfitfun('inv_hex_gff',meas.xy,nominal.rth,invweight,p,yfit=bestfit_rth,/quiet,parinfo=parinfo)
         if bad_th[0] ne -1 then bestfit_rth[bad_th,*] = 0
         if bad_r[0] ne -1 then bestfit_rth[bad_r,*] = 0
     endif
