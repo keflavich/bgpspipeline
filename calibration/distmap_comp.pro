@@ -15,7 +15,7 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
         write_distmaps,ncfile,blfile=outfile+".txt"
         mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endelse
-    write_distmaps,ncfile,blfile='/home/milkyway/student/ginsbura/bgps_pipeline/bgps_params/beam_locations_default.txt'
+    write_distmaps,ncfile,blfile=getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_default.txt'
     mem_iter,ncfile,outfile+"_defaultBL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     mem_iter,ncfile,outfile+"_noBL",pointing_model=0,niter=[0,0],mars=mars
 

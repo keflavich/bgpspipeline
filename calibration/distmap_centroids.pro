@@ -14,7 +14,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
-        pointing_model=0,_extra=_extra
+        pointing_model=1,_extra=_extra
     ; removed nobeamloc 4/10/09 - necessary in order to co-add images
     ; also, should automatically account for rotation
 
@@ -116,6 +116,9 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     endfor
     if doplot gt 1 then begin
+        plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=1
+        plot,meas.xy[*,0],meas.xy[*,1],psym=1
+        oplot,nominal.xy[*,0],nominal.xy[*,1],psym=7,color=250
         device,/close_file
         set_plot,'x'
     endif

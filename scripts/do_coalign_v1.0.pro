@@ -98,6 +98,6 @@ mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_preiter.sav',getenv('WOR
 mem_iter,getenv('WORKINGDIR2')+'/l133/v1.0.2_l133_13pca_preiter.sav',getenv('WORKINGDIR2')+'/l133/v1.0.2_l133_31pca',workingdir=getenv('WORKINGDIR2'),deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+31
 mem_iter,getenv('WORKINGDIR')+'/gemob1/v1.0.2_gemob1_13pca_preiter.sav',getenv('WORKINGDIR')+'/gemob1/v1.0.2_gemob1_31pca',workingdir=getenv('WORKINGDIR'),deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+31
 mem_iter,getenv('WORKINGDIR2')+'/ic1396/v1.0.2_ic1396_13pca_preiter.sav',getenv('WORKINGDIR2')+'/ic1396/v1.0.2_ic1396_31pca',workingdir=getenv('WORKINGDIR2'),deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+31
-mem_iter,getenv('WORKINGDIR2')+'/super_gc/super_gc.sav',getenv('WORKINGDIR2')+'/super_gc/v1.0.2_super_gc_31pca',workingdir=getenv('WORKINGDIR2'),deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+31
+mem_iter,getenv('WORKINGDIR2')+'/super_gc/v1.0.2_super_gc_13pca_preiter.sav',getenv('WORKINGDIR2')+'/super_gc/v1.0.2_super_gc_31pca',workingdir=getenv('WORKINGDIR2'),deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+31
 mem_iter,getenv('WORKINGDIR2')+'/w5/v1.0.2_w5_13pca_preiter.sav',getenv('WORKINGDIR2')+'/w5/v1.0.2_w5_31pca',workingdir=getenv('WORKINGDIR2'),deconvolve=1,/pointing_model,/fromsave,dosave=1,fits_timestream=0,ts_map=0,niter=intarr(51)+31
 
