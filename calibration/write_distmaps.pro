@@ -2,8 +2,8 @@
 
 pro write_distmaps,infile,fileroot=fileroot,blfile=blfile
     
-    if stregex(infile,'nc') gt 0 then files = [infile] $
-        else if size(infile,/dim) gt 1 then files = infile $
+    if size(infile,/dim) gt 1 then files = infile $
+        else if stregex(infile,'nc') gt 0 then files = [infile] $
         else if size(infile,/type) eq 7 then readcol,infile,files,format='(A80)',comment="#",/silent 
 
     if ~keyword_set(fileroot) then fileroot='/home/milkyway/student/ginsbura/bgps_pipeline'
