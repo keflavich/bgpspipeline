@@ -2,7 +2,10 @@
 ; choose computer name (compy)
 pro set_env,compy=compy
     
-    if n_e(compy) eq 0 then compy='milkyway'  ;default
+    if n_e(compy) eq 0 then begin  ;default
+        spawn,'echo $HOSTNAME',hn
+        compy = strmid(hn,0,stregex(hn,"\."))
+    endif
     
     if compy eq 'milkyway' then begin
         ; milkyway defaults

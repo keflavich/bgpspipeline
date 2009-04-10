@@ -1,6 +1,6 @@
 @/home/milkyway/student/ginsbura/.idl_startup_publish
 @/home/milkyway/student/ginsbura/bgps_pipeline/support/compiled_modules.pro
-.run set_env.pro
+set_env
 ;; done:
 retall
 
