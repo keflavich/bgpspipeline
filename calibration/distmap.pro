@@ -6,6 +6,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     fixscale=fixscale,fixgrid=fixgrid,doatv=doatv,out_fits_shifted=out_fits_shifted,_extra=_extra
 
     if n_e(out_fits_shifted) eq 0 then out_fits_shifted=1
+    if n_e(fixscale) eq 0 then fixscale=1
 
     total_bolos = 144 
 
@@ -54,11 +55,11 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     bestfit_xy_2 = [[bestfit_rth[*,0]*cos(bestfit_rth[*,1])] ,$
         [bestfit_rth[*,0]*sin(bestfit_rth[*,1])] ]
 
-    polypars = [ 0 ]
-    polypars_fit = mpfitfun('poly2d_mar03',bestfit_xy_2,nominal.xy,invweight*0+1,polypars,yfit=polyfit_xy,/quiet)
-    polypars_fit = mpfitfun('poly2d_mar03',nominal.xy,bestfit_xy_2,invweight*0+1,polypars,yfit=polyfit_xy,/quiet)
-
-    stop
+;    polypars = [ 0 ]
+;    polypars_fit = mpfitfun('poly2d_mar03',bestfit_xy_2,nominal.xy,invweight*0+1,polypars,yfit=polyfit_xy,/quiet)
+;    polypars_fit = mpfitfun('poly2d_mar03',nominal.xy,bestfit_xy_2,invweight*0+1,polypars,yfit=polyfit_xy,/quiet)
+;
+;    stop
 
     
     ;BEGIN FLAGGING BAD BOLOS
