@@ -35,6 +35,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         angle: fltarr(nbolos)     ,$
         ampl: fltarr(nbolos)      ,$
         backgr: fltarr(nbolos)    ,$
+        xcen: 0.0 ,$
+        ycen: 0.0 ,$
         bolo_indices: bolo_indices $
     }
 
@@ -50,6 +52,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
     extast,hdr[*,0,0],astr
     ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
+    meas.xcen=xcen
+    meas.ycen=ycen
 ;    xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
 ;    ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
                                 ; 3/20/09 - I'm pretty sure there's no such error
@@ -81,7 +85,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         meas.ampl[i] = fitpars[1]
         meas.backgr[i] = fitpars[0]
 
-        printf,fitparfile,bolo_indices[i],fitpars[0:1],fitpars[2:5]*bolospacing,fitpars[6],format='(8F20)'
+        printf,fitparfile,bolo_indices[i],fitpars[0:1],meas.xysize[i,*],meas.xy[i,*],fitpars[6],format='(8F20)'
 
         if keyword_set(doatv) then begin ; plotting
             atv,allmap[*,*,i]
