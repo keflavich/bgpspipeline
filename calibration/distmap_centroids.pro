@@ -1,8 +1,11 @@
 ; centroiding portion of distmap
 pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
-    pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,_extra=_extra
+    pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,coordsys=coordsys,$
+    projection=projection,_extra=_extra
 
     if ~keyword_set(doplot) then doplot=0
+    if n_e(coordsys) eq 0 then coordsys='radec'
+    if n_e(projection) eq 0 then projection='TAN'
 
 
     ; larger pixel size selected for mapping to reduce blank pixels
@@ -47,7 +50,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     ; makes a data cube with one map for each bolometer
     allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,new_astro,bgps.scans_info,pixsize=pixsize,$
-        blank_map=blank_map,hdr=hdr,$
+        blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
