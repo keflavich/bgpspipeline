@@ -108,9 +108,9 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
             loadct,0,/silent
             imdisp,asinh(reform(allmap[*,*,i])),erase=0,title=strc(i),/axis
             loadct,39,/silent
-            tvellipse,fitpars[2],fitpars[3],fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=.5
-            tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=.5
-            oplot,[xcen],[ycen],psym=7,color=225,symsize=.25
+            tvellipse,fitpars[2],fitpars[3],fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=1
+            tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=1
+            oplot,[xcen],[ycen],psym=7,color=225,symsize=1
 ; pretty sure this is wrong            oplot,[-nominal.xy[i,0]/bolospacing+xcen],[-nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
         endif
 

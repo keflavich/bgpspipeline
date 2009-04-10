@@ -7,7 +7,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
         premap=premap,sliced_dir=sliced_dir,ref_field=ref_field,infile=infile,$
         checkpointing=checkpointing,npca=npca,prefix=prefix,refim=refim,$
         niter=niter,_extra=_extra
-    if ~keyword_set(scratchdir) then scratchdir = '/scratch/adam_work'
+    if ~keyword_set(scratchdir) then scratchdir = getenv('WORKINGDIR') ;'/scratch/adam_work'
     if n_e(premap) eq 0 then premap=1
     if n_e(checkpointing) eq 0 then checkpointing=0
     if ~keyword_set(sliced_dir) then sliced_dir='sliced'
