@@ -13,10 +13,12 @@
 ; i.hate.idl: ra, dec are ra_all,dec_all because otherwise they're ambiguous with radec_offsets.
 pro pointing_wrapper_wrapper,filename,beam_loc_file=beam_loc_file,ra_all=ra_all,dec_all=dec_all,badbolos=badbolos,bolo_params=bolo_params,$
     fazo=fazo,fzao=fzao,jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,radec_offsets=radec_offsets,$
-    altazmap=altazmap,nopointing=nopointing,_extra=_extra
+    altazmap=altazmap,nopointing=nopointing,posang=posang,rotang=rotang,arrang=arrang,_extra=_extra
     
     read_ra_dec_jd,filename,ra_all,dec_all,jd,source_epoch,lst,rotang,beam_loc,$
-        array_params,pa,fazo,fzao,el,az,eel,eaz,badscans
+        array_params,posang,fazo,fzao,el,az,eel,eaz,badscans
+
+    arrang = array_params[2]
 
     if keyword_set(altazmap) or keyword_set(nopointing) then begin
         print,"NO POINTING CORRECTIONS DONE AT ALL"
@@ -24,7 +26,7 @@ pro pointing_wrapper_wrapper,filename,beam_loc_file=beam_loc_file,ra_all=ra_all,
         dec_all= transpose(dec_all)
         radec_offsets=[0,0]
     endif else begin
-        do_the_pointing,ra_all,dec_all,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,fzao=fzao,$
+        do_the_pointing,ra_all,dec_all,jd,source_epoch,lst,rotang,array_params,posang,fazo=fazo,fzao=fzao,$
             beam_loc_file=beam_loc_file,badbolos=badbolos,bolo_params=bolo_params,            $
             el=el,az=az,eel=eel,eaz=eaz,radec_offsets=radec_offsets,pointing_model=pointing_model,$
             logfile=logfile,_extra=_extra

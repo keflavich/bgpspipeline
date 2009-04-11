@@ -21,11 +21,6 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
     if keyword_set(mvperjy) then mvperjy_temp=mvperjy else mvperjy_temp = 0
     if ~keyword_set(bolo_indices) then bolo_indices = indgen(144)
     if ~keyword_set(logfile) then begin OPENW, logfile, '/dev/tty', /GET_LUN, /MORE  & close_log=1 & endif else close_log=0
-;    median_ra = 0
-;    median_dec = 0
-    ; as per james' request, the hack has been reinstated 9/19/08. ARRR!
-    ;    Got rid of the damned hack! 10/24/08.  Ninjas win!
-;    beam_loc_file = '/home/milkyway/student/drosback/bolocam_cvs/pipeline/cleaning/parameters/beam_locations_jul05.txt' ; HACK!  Such a hack...
     for i=0,n_e(filelist)-1 do begin
         filename = filelist[i]
         print,"Reading file ",filename

@@ -37,6 +37,7 @@ pro apply_distortion_map_radec,ra,dec,rotang,array_params,pa,badbolos=badbolos,b
     ntime = n_e(ra)
 
     if keyword_set(seidel) then begin
+        print,"USING SEIDEL POLYNOMIAL"
         newba = bl_ang + fid_arr_ang - rotang
         x=(bl_dist * cos(!dtor*newba) )
         y=(bl_dist * sin(!dtor*newba) )
