@@ -15,11 +15,11 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
     if keyword_set(fromsave) then restore,outfile+".sav" else begin
         distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,allmap=allmap,fitmap=fitmap,$
-            meas=meas,nominal=nominal,coordsys='radec',projection='TAN',_extra=_extra
+            meas=meas,nominal=nominal,coordsys='radec',projection='TAN',distcor=0,_extra=_extra
     endelse
 
     ;BEGIN FLAGGING BAD BOLOS
-    residual = (nominal.xy-meas.xy)^2
+    residual = total((nominal.xy-meas.xy)^2,2)
     bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
     
     ; make angles all in the range -pi to pi

@@ -41,7 +41,6 @@ pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,
         ra  += radec_offsets[0] ;pointoff[0] / 3600.  / cos(dec*!dtor)
         dec += radec_offsets[1] ;pointoff[1] / 3600. 
     endif else begin
-        print,"NO OFFSETS APPLIED"
         printf,logfile,"NO OFFSETS APPLIED"
         radec_offsets=[0,0] ; want to make sure the rest of the code knows that no_offets means [0,0]
     endelse
