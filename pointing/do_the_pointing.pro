@@ -11,7 +11,7 @@
 ;               encoded in a length-2 vector
 ;    beam_loc_file - the name of a beam locations file / distortion map file
 pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,fzao=fzao,$
-    beam_loc_file=beam_loc_file,badbolos=badbolos,bolo_params=bolo_params,                $
+    badbolos=badbolos,bolo_params=bolo_params,                $
     el=el,az=az,eel=eel,eaz=eaz,noeeleaz=noeeleaz,nobeamloc=nobeamloc,                    $
     no_offsets=no_offsets,pointing_model=pointing_model,                      $
     nutate=nutate,aberration=aberration,precess=precess,radec_offsets=radec_offsets,      $
@@ -46,7 +46,7 @@ pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,
     endelse
 
     if ~keyword_set(nobeamloc) then $
-    apply_distortion_map_radec,ra,dec,rotang,array_params,pa,beam_loc_file=beam_loc_file,badbolos=badbolos,bolo_params=bolo_params,_extra=_extra $
+    apply_distortion_map_radec,ra,dec,rotang,array_params,pa,badbolos=badbolos,bolo_params=bolo_params,_extra=_extra $
     else begin
         print,"No distortion map applied."
         ra = ra##(intarr(n_e(bolo_params[1,*]))+1)
