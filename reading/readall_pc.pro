@@ -52,7 +52,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         ; for coadds, but I needed them for debugging single observations)
         pointing_wrapper_wrapper,filename,beam_loc_file=beam_loc_file,ra_all=ra_map,dec_all=dec_map,$
             badbolos=badbolos,bolo_params=bolo_params,fazo=fazo,fzao=fzao,radec_offsets=radec_offsets,$
-            jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,_extra=_extra
+            jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,$
+            posang=posang,rotang=rotang,arrang=arrang,_extra=_extra
 
         if total(badscans) gt 0 then begin
             printf,logfile,"Scans ",where(badscans)," flagged in file "+filename," because of rotation"
@@ -105,6 +106,9 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_ra = ra_map[*,wh_scan_full]
             all_dec = dec_map[*,wh_scan_full]
             all_scans = scans_info_new
+            all_posang = posang
+            all_rotang = rotang
+            all_arrang = arrang
             if n_e(raw) eq n_e(ac_bolos) then all_raw = raw[*,wh_scan_full]
             si = sample_interval
             filenames = filename
@@ -119,6 +123,9 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
+            all_posang = [[all_posang],[posang]]
+            all_rotang = [[all_rotang],[rotang]]
+            all_arrang = [[all_arrang],[arrang]]
             filenames = [[filenames],[filename]]
             if n_e(all_raw) gt 0 then all_raw = [[all_raw],[raw[*,wh_scan_full]]]
             if sample_interval ne si then message,"Input files have different sample intervals.  That's not cool."
@@ -192,6 +199,9 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         source_ra: source_ra[0],$
         source_dec: source_dec[0],$ 
         filenames: filenames,$
+        arrang: all_arrang,$
+        posang: all_posang,$
+        rotang: all_rotang,$
         badscans: badscans $
         }
 

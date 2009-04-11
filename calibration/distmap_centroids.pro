@@ -14,13 +14,13 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
-        pointing_model=0,rotang=rotang,posang=posang,arrang=arrang,_extra=_extra
+        pointing_model=0,_extra=_extra
     ; removed nobeamloc 4/10/09 - necessary in order to co-add images
     ; also, should automatically account for rotation
 
     nbolos = n_e(bolo_indices)
 
-    angle = median(bgps.rotang) - median(bgps.pa) + fid_arr_ang
+    angle = median(bgps.rotang) - median(bgps.posang) + bgps.arrang
 
     ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
