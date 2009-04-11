@@ -108,6 +108,10 @@
 \newcommand{\bgpsdepthlow}{20}
 \newcommand{\bgpsdepthhigh}{50}
 % -----------------------------------------------------------------------------
+% Missions
+\def\spitzer{{\em Spitzer}}
+% -----------------------------------------------------------------------------
+
 
 \newcommand{\TBD}{{\bf TBD}}
 
@@ -375,25 +379,6 @@ emission from Galactic interstellar dust.  The great advantage of
 continuum observations at 1.1mm is the low optical depth of the dust,
 permitting an estimate of the mass of the emitting region.  Further,
 the mass column density is independent of the gas volume density.
-
-Using the same dust opacity as \TBD\ ({\it put in original references})
-%\citet{enoch06} and \citet{young06},
-and assuming a gas-to-dust mass ratio $X$ of 100, the mass sensitivity
-can be written as
-\begin{equation} 
-\label{eq:Mass}
-M_{gas}\approx
-0.22\left( e^{12.9/T_d}-1 \right) \left({S_\nu\over 15\; {\rm mJy}} \right)
-D^{2}_{kpc} \msol 
-\end{equation}
-where $D_{kpc}$ is the distance to the source in kpc.  (At $S_\nu =
-15$~mJy this corresponds to an RMS extinction sensitivity of $A_V\sim
-1$ mag, with the same $T_d$ dependence).  For Bolocam, $h\nu/k \approx
-13$~K, so for $T_d > XXX$ the dependence is approximately linear.  At
-the coldest temperatures expected, the mass changes a factor of 2.9
-between 20 and 10 K.  Far more important is the accurate determination
-of the distance to the clump.
-
 Thus it is thus possible with a wide area, relatively shallow 1.1~mm
 survey to provide an unmatched, uniform inventory of massive
 star-forming and starless condensations.
@@ -409,22 +394,20 @@ coverage of the \bgps.  Maps of the entire BGPS are presented in
 Figure \ref{fig:BGPSMontage}.  We have detected \ncores\ clumps in the
 surveyed fields, providing an unbiased sample of clumps suitable for
 multi-wavelength and high-resolution studies with existing telescopes
-and future facilities.  The clump catalog is described in a companion
-paper \citep{rosolowsky09}.
-
-At the distances that we are observing these objects, we are likely
-observing aggregates of star forming cores found in a larger molecular
-cloud environment, which we will refer to as clumps
-\citep{williams00}.
-
+and future facilities.  At the distances that we are observing these
+objects, we are likely observing aggregates of star forming cores
+found in a larger molecular cloud environment, which we will refer to
+as clumps \citep{williams00}.  The clump catalog is described in a
+companion paper \citep{rosolowsky09}.
 
 The outline of the paper is as follows. Section \ref{sec:Observations}
 describes the instrument and the observations.  Section
-\ref{sec:FluxCalibration} describes the flux calibration and errors.
-Section \ref{sec:Astrometry} describes the construction of an absolute
-reference frame for the observations and verification against other
-(sub)millimeter catalogs.  Section \ref{sec:Mapping}, \ref{sec:Noise},
-\ref{sec:Photometry}, \ref{sec:FinalMaps}, \ref{sec:Discussion}.
+\ref{sec:Overview} briefly describes the data reduction process, while
+Sections \ref{sec:FluxCalibration} to \ref{sec:FinalMaps} provide
+greater detail on flux calibration, astrometry, the mapping algorithm,
+noise, photometry, and the public data release.  We conclude in
+Section \ref{sec:Discussion} with brief discussion of the immediate
+implications of the emission revealed by the BGPS.
 
 %BGPS will identify regions of high-mass star and cluster formation
 %throughout the Galaxy and sites of low-mass star formation within a
@@ -492,7 +475,7 @@ greyscale is IRAS 100 \mum.
 \begin{figure}
   \begin{minipage}{6.5in}
     \begin{center}
- %     \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
+      \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
       \caption{$l=-10.5$ to $l=19.5$ Units are Jy/Beam.  The brightest
 	sources, e.g. Sgr B2, Sgr A, and sources near $l=10$ and
 	$l=13$, appear to be saturated, but this is only a display
@@ -509,7 +492,7 @@ greyscale is IRAS 100 \mum.
 \begin{figure}
   \begin{minipage}{6.5in} 
     \begin{center}
- %     \includegraphics[scale=0.9]{fig1_pg2_bw_inv_bar_label} 
+      \includegraphics[scale=0.9]{fig1_pg2_bw_inv_bar_label} 
       \caption{$l=19.5$ to $l=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
 	51, W 43, W 49, and M 17 appear to be saturated, but this is
 	only a display artifact}
@@ -523,7 +506,7 @@ greyscale is IRAS 100 \mum.
 \begin{figure}
   \begin{minipage}{6.5in} 
     \begin{center}
-%      \includegraphics[scale=0.9]{fig1_pg3_bw_inv_bar_label}
+      \includegraphics[scale=0.9]{fig1_pg3_bw_inv_bar_label}
       \caption{$l=49.5$ to $l=74.5$.  \TBD\ Add annotations}
     \end{center}
   \end{minipage}
@@ -534,7 +517,7 @@ greyscale is IRAS 100 \mum.
 
 \begin{figure}
   \hspace{-1in}
-%  \includegraphics[scale=0.8]{fig1_pg5_bw_inv_bar_label} 
+  \includegraphics[scale=0.8]{fig1_pg5_bw_inv_bar_label} 
   \caption{The Cygnus Arm. \TBD\ Add annotations}
 \end{figure}
 %  \vspace{-4in}
@@ -544,7 +527,7 @@ greyscale is IRAS 100 \mum.
 
 \begin{figure}
 \hspace{-0.5in}
-%  \includegraphics[scale=0.8]{fig1_pg4_bw_inv_bar_label} 
+  \includegraphics[scale=0.8]{fig1_pg4_bw_inv_bar_label} 
   \caption{Cloud complexes centered at $l=111$ in the Perseus Arm. \TBD\ Add annotations}
 \end{figure}
 
@@ -553,7 +536,7 @@ greyscale is IRAS 100 \mum.
 
 \begin{figure}
   \hspace{-1in}
-%  \includegraphics[scale=0.8]{fig1_pg6_bw_inv_bar_label} 
+  \includegraphics[scale=0.8]{fig1_pg6_bw_inv_bar_label} 
   \caption{W3/4/5 \TBD\ Add annotations}
 \end{figure}
 
@@ -561,11 +544,8 @@ greyscale is IRAS 100 \mum.
 
 \clearpage
 
-%\include{bgps_methods_observations}
 \section{Observations}
 \label{sec:Observations}
-
-%\subsection{Instrument}
 
 Bolocam\footnote{{\tt http://www.cso.caltech.edu/bolocam}} is the
 facility 144-element bolometer array camera operating from the 10.4 m
@@ -668,7 +648,7 @@ on the coverage obtained via Bolocam raster scans.}{fig:Array}{1.0}
 \section{Overview of the Data Reduction}
 \label{sec:Overview}
 
-%{\it material from the Letter here}
+{\it just stole material from the Letter here - needs a bit of cleaning up}
 
 A number of different descriptions of the reduction of Bolocam data
 have been published \citep{laurent05,enoch06,sayers09}.  This work
@@ -679,14 +659,13 @@ of \citet{sayers09}, though the exquisite control of systematics and
 noise of that analysis is neither necessary nor possible here.
 
 The data were reduced with a custom pipeline written specifically for
-the galactic plane survey based on \citet{enoch06} and
-\citet{Laurent2006}.  A key element of the reduction is the iterative
-estimation of the atmospheric fluctuations and the astrophysical
-signal.  The atmospheric model is developed from a set of principal
-components of the bolometer signal time series under the assumption
-that the bulk of the correlated signal is atmospheric.  The iterative
-estimation process then helps to restore correlated flux due to
-astrophysical emission \citep[details in][]{Aguirre2009}.
+A key element of the reduction is the iterative estimation of the
+atmospheric fluctuations and the astrophysical signal.  The
+atmospheric model is developed from a set of principal components of
+the bolometer signal time series under the assumption that the bulk of
+the correlated signal is atmospheric.  The iterative estimation
+process then helps to restore correlated flux due to astrophysical
+emission (Section \ref{sec:Mapping}).
 
 The Bolocam observations are sensitive to structure between 31\arcsec\
 and about 400\arcsec\ (the array field of view).  An indicative
@@ -694,7 +673,7 @@ analysis of the spatial filter function of the iterative mapping
 scheme is given in \citet{enoch06}.  The data were sampled onto a
 uniform 7\farcs2 grid.  Flux density calibrations were performed using
 observations of Mars, Uranus, and Neptune, and they are accurate to
-$\sim$20\%.
+$\sim$20\%.  This is described in \ref{sec:FluxCalibration}.
 
 %A calibration scheme capable of
 %5\% systematic and $<$5\% statistical errors is being implemented as outlined in
@@ -710,18 +689,19 @@ $b=\pm.5$ portion of the plane.
 
 The absolute pointing accuracy of the survey has been measured to be
 $\sim$6\arcsec\ RMS.  A single $3^\circ \times 1^\circ$ observation of
-each region was registered to the pointing calibrators as a `master
-field,' and additional observations of that field were aligned to the
-master.
+each region was registered to the pointing calibrators as a ``master
+field'', and additional observations of that field were aligned to the
+master (Section \ref{sec:Astrometry}).
 
 Bright and large sources leave an impact on their surroundings when
 cleaned with a principal component subtraction.  \object{Sgr B2},
 \object{G 34.3+0.15}, and other sources with fluxes $\geq 10$ Jy are
 surrounded by substantial negative bowls.  Some flux is restored in
-these bowls using the iterative process described in
-\citet{Aguirre2009}, but around the brightest sources the impact of
-the source on the background estimation is too great to be fully
-recovered.
+these bowls using the iterative process 
+%described in \citet{Aguirre2009}
+, but around the brightest sources the impact of the source on the
+background estimation is too great to be fully recovered (Section
+\ref{sec:Photometry}).
 
 Instrument glitches and cosmic ray hits have been removed by a
 combination of outlier rejection in each spatial pixel and hand
@@ -729,7 +709,7 @@ flagging of the timestream data.  Streaking in the images results from
 incorrect determinations of the zero level across scans when a bright
 source is encountered.  Atmospheric noise in observations taken in
 poor weather may not be completely removed by the reduction
-procedures.
+procedures (Section \ref{sec:Noise}).
 %Particular bolometers may be noisy for a single observation and they may not
 %be adequately down-weighted. 
 
@@ -943,7 +923,7 @@ the highest ZA.  A separate model was constructed for each epoch.  The
 residuals are nearly Gaussian, with an RMS of $\sim6\arcsec$.  
 
 Further details of the pointing calculation are given in Appendix
-\ref{sec:PointingCalculation}.
+\ref{app:PointingCalculation}.
 
 \subsection{Pixel Positions in the FOV}
 
@@ -1169,6 +1149,7 @@ M[d_i(t) - \tilde{a}^{(n)}_i(t) - \tilde{e}^{(n)}_i(t)] = \tilde{m}^{(n)}
 The current best map $\tilde{m}^{(n)}$ is then deconvolved to provide
 a relatively low-noise, smooth map from which to generate a timestream
 \begin{equation}
+\label{eq:MapToTime}
 T[{\cal D}[\tilde{m}^{(n)}]] = \tilde{s}^{(n)}_i(t)
 \end{equation}
 where ${\cal D}$ represents the deconvolution operation.  At this
@@ -1271,11 +1252,23 @@ returned to a timestream in the same manner, but with the S/N improved
 by averaging over all hits on a given pixel.  It has the disadvantage
 that it accentuates the unevenness of the cross-scan sampling, since
 ech timestream point's value is assigned to an area much smaller than
-the beam.
+the beam.  In principle this can be addressed by various gridding
+algorithms, and may be a part of future reductions of the BGPS data.
 
 The resulting map is then subjected to a Hogbom-type CLEAN algorithm
-\citep{hogbom} using a specified kernel to produce a deconvolved
-image.  This has several advantages over the 
+\citep{hogbom} using a specified kernel to produce a deconvolved image
+which is the one actually mapped back into the timestream to be
+subtracted (Equation \ref{eq:MapToTime}.  This has several advantages
+over using the original map directly, including rejecting artefacts
+smaller than the beam and decreasing the noise of the resulting
+timestream.  It is also better than a ``threshold'' method, which
+tends to produce discontinuities.
+
+In some fields, flux from certain source spread out over the course of
+the iterative process using certain kernel sizes.  The cause of this
+artifact are not yet well-understood, but using a different kernel
+size was an effective workaround and did little to change the
+properties of the final map.
 
 \setcounter{subfig}{1}
 \renewcommand{\thefigure}{\arabic{figure}\alph{subfig}}
@@ -1362,8 +1355,6 @@ been subtracted from the data.}
 
 \renewcommand{\thefigure}{\arabic{figure}}
 
-
-
 %\FigureTwo{flagger_withglitch}{flagger_glitchgone}{An illustration of
 %the flagging process using the waterfall plot. Left: The glitch
 %apparent at middle right is the same one whose time series is shown in
@@ -1424,22 +1415,19 @@ of estimating the systematic error resulting from imperfect
 subtraction of bright sources.  This results in ``ghosts'' of the
 bright sources in the error maps $E$.  
 
-% this is not true.  I can't do jackknifing....
-% To estimate the size of this
-% residual error, we also construct jackknife maps for each field, in
-% which the astrophysical signal is made to exactly cancel.  This
-% provides an estimate of the noise-only RMS in the maps, to which
-% deviations from the ``ghosts'' may be compared.
+Noise maps are produced for each map, made from the residuals after
+removing the astrophysical signal model as well as the PCA component
+model.  These maps are useful for diagnosing the effect of the
+iterative process on bright sources and as a method of obtaining an
+estimate of the noise.
 
-In some fields, flux from certain source spread out over the course of
-the iterative process using certain kernel sizes.  The cause of this
-artifact are not yet well-understood, but using a different kernel
-size was an effective workaround and did little to change the
-properties of the final map.
+The noise is correlated between adjacent spatial pixels due to
+residual atmospheric noise correlated in time..  We have completed
+ignored this effect in our analysis.
 
-The noise is correlated between adjacent pixels.  
-
-The final per-pixel error estimate is given as ...
+The noise may be estimated either from the error maps, from the
+timestream PSDs of the detectors, or from the weight maps
+produced. The final per-pixel error estimate is given as \TBD.
 
 Because observing conditions varied widely during the survey, the RMS
 noise levels obtained in the various fields of the BGPS also varies.
@@ -1449,6 +1437,24 @@ variation of the depth as a function of Galactic longitude in Figure
 \ref{fig:NoiseVsLongitude}.  The depth can be converted into an
 estimate of mass via standard estimates, i.e., under the assumption of
 a temperature, opacity, and distance.
+
+Using the same dust opacity as \TBD\ ({\it put in original references})
+%\citet{enoch06} and \citet{young06},
+and assuming a gas-to-dust mass ratio $X$ of 100, the mass sensitivity
+can be written as
+\begin{equation} 
+\label{eq:Mass}
+M_{gas}\approx
+0.22\left( e^{12.9/T_d}-1 \right) \left({S_\nu\over 15\; {\rm mJy}} \right)
+D^{2}_{kpc} \msol 
+\end{equation}
+where $D_{kpc}$ is the distance to the source in kpc.  (At $S_\nu =
+15$~mJy this corresponds to an RMS extinction sensitivity of $A_V\sim
+1$ mag, with the same $T_d$ dependence).  For Bolocam, $h\nu/k \approx
+13$~K, so for $T_d > XXX$ the dependence is approximately linear.  At
+the coldest temperatures expected, the mass changes a factor of 2.9
+between 20 and 10 K.  Far more important is the accurate determination
+of the distance to the clump.
 
 \Figure{survey_depth}{The depth of the BGPS in the first quadrant as a
 function of Galactic longitude.  Black is the standard deviation of
@@ -1484,6 +1490,9 @@ Clearly, this complicates the definition of surface brightness, and
 also imposes a limit on the size of features for which photometry may
 be meaningfully performed.
 
+To assess the effect of the mapping algorithm, we performed a series
+of simulations.
+
 Figure \ref{fig:PCA_Filter}a shows the fraction of flux recovered in
 the map as a function of source size for a range of different PCA
 components subtracted in the cleaning.  These measurements were
@@ -1491,10 +1500,6 @@ produced by inserting simulated gaussian sources at a range of peak
 flux densities and sizes spread out through the map and summing the
 flux in an ellipse on the final cleaned map. Real data with the
 astrophysical source model removed were used as the background.
-
-
-
-
 
 The final reduction used 13 PCA components because this produced a
 reasonable compromise between attenuating extended structure and
@@ -1509,6 +1514,8 @@ does not reliably recover the source flux.  Therefore we chose a
 deconvolution kernel smaller than the beam but larger than the pixel
 size used.  Figure \ref{fig:Deconvolution} demonstrates the effects of
 using both too large and too small a kernel.
+
+% -----------------------------------------------------------------------------
 
 \FigureTwo{pca_comparison_l111}{deconvolution_comparison_l111}{The
 fractional flux recovered as a function of source size for
@@ -1541,23 +1548,32 @@ increased.  }{fig:ESF}{1.0}
 The final maps are produced by coadding all observations of a single
 square degree centered on a particular Galactic coordinate
 $(l_0,b_0)$.  The maps are made in Galactic coordinates using a plate
-carr\'{e} (FITS header CAR) projection.  As these maps are near the
-coordinate system equator, the difference between truly equiareal
-pixels and the pixels used is at most X\%.  The pixel size is
-7.2\arcsec, chosen to be much smaller than the Bolocam beam, and
-producing data squares 500 pixels on a side.
+carr\'{e} (FITS header CAR) projection.  (This is the same projection
+used by the \spitzer-GLIMPSE and BU-FCRAO GRS surveys.)  As these maps
+are near the coordinate system equator, the difference between truly
+equiareal pixels and the pixels used is at most X\%.  The pixel size
+is 7.2\arcsec, chosen to be much smaller than the Bolocam beam.
+%, and
+%producing data squares 500 pixels on a side.
+The maps are written to standard FITS files.  An example of the FITS
+header for the BGPS images is given in Appendix \ref{app:FITS_Header}.
 
-Noise maps are produced for each map, made from the residuals after
-removing the astrophysical signal model as well as the PCA component
-model.  These maps are useful for diagnosing the effect of the
-iterative process on bright sources and as a method of obtaining an
-estimate of the noise.
 
 %\section{Public Data Release}
 
 All processed maps are made available through
 IPAC\footnote{http://irsa.ipac.caltech.edu/Missions/bolocam.html}.
-IPAC provides a cutout service for the
+IPAC provides a cutout service for the images as well as a searchable
+version of the catalog provided in \citep{rosolowsky09}.  The full
+release inclues
+\begin{enumerate}
+\item Calibrated maps for all regions observed (MAP)
+\item The MAP smoothed by the Bolocam PSF, which is helpful in bringing out extended structure (SMOOTHMAP)
+\item The deconvolved MAP (DECONVMAP)
+\item Maps of integration time per pixel (NHITSMAP)
+\item Maps of noise per pixel (NOISEMAP)
+\item Maps of the mask obtained for various regions from the cataloging algorithm (MASKMAP)
+\end{enumerate}
 
 %\citet{moore07}
 %\citet{zinchenko97}
@@ -1569,17 +1585,15 @@ IPAC provides a cutout service for the
 The BGPS is the first (sub)millimeter survey of a substantial fraction
 of the Galactic Plane, providing an unbiased look at the high-density
 gas most intimately associated with the earliest phases of star
-formation.  Inspection of Figure \ref{fig:BGPSMontage} 
-
-Figures 1 and 2 show the results of the BGPS.  Our images show
-excellent correspondence with SCUBA maps of small sub-fields
-throughout the plane \citep{SCUBAlegacy}.  BGPS contours overlaid on
-the GLIMPSE survey \citep{benjamin03} show excellent correlation with
-8\mum\ infrared dark clouds (IRDCs).  However, many features in the
-BGPS maps do not appear in the Spitzer observations, which suggests
-that the 1.1 mm emission traces dense clumps without a background to
-absorb.  A study of IRDC correlation with BGPS emission is underway
-\citep{Battersby2009}.
+formation.  Inspection of Figure \ref{fig:BGPSMontage} shows excellent
+correspondence with SCUBA maps of small sub-fields throughout the
+plane \citep{difrancesco08}.  BGPS contours overlaid on the GLIMPSE
+survey \citep{benjamin03} show excellent correlation with 8\mum\
+infrared dark clouds (IRDCs).  However, many features in the BGPS maps
+do not appear in the Spitzer observations, which suggests that the 1.1
+mm emission traces dense clumps without a background to absorb.  A
+study of IRDC correlation with BGPS emission is underway
+\citep{battersby09}.
 
 % implies star forming....
 
@@ -1633,6 +1647,10 @@ known star forming regions.
 %detectors).  
 These associations suggest that other bright sources of millimeter
 emission will prove to be massive star or cluster forming regions.
+
+In conclusion, the BGPS is most awesome survey ever.
+
+\noindent---------------------------------
 
 \acknowledgments
 
@@ -1723,7 +1741,7 @@ I_1(\nu_c) &=& I_0(\nu_c) / K \\
 \end{eqnarray}
 
 \section{Pointing Calculation}
-\label{sec:PointingCalculation}
+\label{app:PointingCalculation}
 
 To calculate the position at which to point the telescope, the CSO
 antenna computer computes an alt/az derived from the RA/Dec J2000
