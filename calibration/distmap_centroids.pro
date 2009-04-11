@@ -20,7 +20,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     nbolos = n_e(bolo_indices)
 
-    angle = median(bgps.rotang) - median(bgps.posang) + bgps.arrang
+    angle = (median(bgps.rotang) - median(bgps.posang) + median(bgps.arrang)) * !dtor
 
     ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
@@ -28,7 +28,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
         rth : rtf ,$
-        xy : [[rtf[*,0]*cos(rtf[*,1])],[rtf[*,0]*sin(rtf[*,1])]] $
+        xy : [[rtf[*,0]*cos(rtf[*,1]-angle)],[rtf[*,0]*sin(rtf[*,1]-angle)]] $
     }
 
     meas = { $
@@ -132,7 +132,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     fitmap=fitmapcube
 
     meas.rth[*,0] = sqrt(meas.xy[*,0]^2+meas.xy[*,1]^2)
-    meas.rth[*,1] = atan(meas.xy[*,1],meas.xy[*,0])
+    meas.rth[*,1] = atan(meas.xy[*,1],meas.xy[*,0])-angle
 
     save,filename=outfile+".sav"
 
