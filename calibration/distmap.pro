@@ -19,7 +19,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
     endelse
 
     ;BEGIN FLAGGING BAD BOLOS
-    residual = total((nominal.xy-meas.xy)^2,2)
+    residual = sqrt(total((meas.xyoffs)^2,2))
     bad_r = where(residual gt mean(residual) + 3*stddev(residual) or residual gt 1) ; don't allow a full bolometer spacing movement
     
     ; make angles all in the range -pi to pi
