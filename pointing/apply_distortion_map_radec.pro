@@ -38,8 +38,8 @@ pro apply_distortion_map_radec,ra,dec,rotang,array_params,pa,badbolos=badbolos,b
 
     if keyword_set(seidel) then begin
         newba = bl_ang + fid_arr_ang - rotang
-        x=(bl_dist * cos(!dtor*newba)
-        y=(bl_dist * sin(!dtor*newba)
+        x=(bl_dist * cos(!dtor*newba) )
+        y=(bl_dist * sin(!dtor*newba) )
         
         S = [0.038426390, -0.0015285472, 0.0012222049, 0.95789015, 0.028520202]
         
