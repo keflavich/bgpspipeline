@@ -37,7 +37,7 @@ pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,
     if ~keyword_set(no_offsets) and n_e(radec_offsets) eq 2 then begin
 ;        printf,logfile,"APPLYING POINTING OFFSETS: ",pointoff[0] / 3600.  / cos(median(dec)*!dtor),pointoff[1] / 3600. 
         printf,logfile,"APPLYING POINTING OFFSETS: ",radec_offsets
-        print,"APPLYING POINTING OFFSETS: ",radec_offsets
+;        print,"APPLYING POINTING OFFSETS: ",radec_offsets
         ra  += radec_offsets[0] ;pointoff[0] / 3600.  / cos(dec*!dtor)
         dec += radec_offsets[1] ;pointoff[1] / 3600. 
     endif else begin
