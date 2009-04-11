@@ -123,9 +123,9 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
-            all_posang = [[all_posang],[posang]]
-            all_rotang = [[all_rotang],[rotang]]
-            all_arrang = [[all_arrang],[arrang]]
+            all_posang = [all_posang,posang]
+            all_rotang = [all_rotang,rotang]
+            all_arrang = [all_arrang,arrang]
             filenames = [[filenames],[filename]]
             if n_e(all_raw) gt 0 then all_raw = [[all_raw],[raw[*,wh_scan_full]]]
             if sample_interval ne si then message,"Input files have different sample intervals.  That's not cool."
