@@ -87,10 +87,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xy[i,0] = nominal.xy[i,0] - (fitpars[4]-xcen+xmin)*bolospacing  
-        meas.xy[i,1] = nominal.xy[i,1] - (fitpars[5]-ycen+ymin)*bolospacing  
-        meas.xyoffs[i,0] = (fitpars[4]-xcen+xmin)*bolospacing 
-        meas.xyoffs[i,1] = (fitpars[5]-ycen+ymin)*bolospacing 
+        meas.xy[i,0] = nominal.xy[i,0] - (fitpars[5]-xcen+xmin)*bolospacing  
+        meas.xy[i,1] = nominal.xy[i,1] - (fitpars[4]-ycen+ymin)*bolospacing  
+        meas.xyoffs[i,0] = (fitpars[5]-xcen+xmin)*bolospacing 
+        meas.xyoffs[i,1] = (fitpars[4]-ycen+ymin)*bolospacing 
         meas.angle[i] = fitpars[6]
         meas.xysize[i,*] = fitpars[2:3]*bolospacing
         meas.ampl[i] = fitpars[1]
