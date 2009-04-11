@@ -25,6 +25,10 @@
 % sec:FluxCalibration
 % sec:Astrometry
 % sec:Mapping
+% sec:Noise
+% sec:Photometry
+% sec:FinalMaps
+% sec:Discussion
 
 % calibration
 % you should look @ calibration/plot_dcfluxes.pro in my publish/ directory, and /usb/scratch1/planets/planet_dcfluxes.txt is the actual raw data
@@ -44,6 +48,13 @@
 
 \usepackage{rotating}
 \usepackage{subfigure}
+\usepackage{datetime}
+\usepackage{fmtcount}
+
+\newtimeformat{edttime}{\twodigit{\THEHOUR}:\twodigit{\THEMINUTE}~EDT}
+\settimeformat{edttime}
+\newdateformat{eurodate}{\dayofweekname{\THEDAY}{\THEMONTH}{\THEYEAR} \THEDAY \monthname[\THEMONTH] \THEYEAR}
+
 
 \citestyle{aa}
 
@@ -88,12 +99,15 @@
 
 \newcommand{\epsi}{\varepsilon}
 
+% -----------------------------------------------------------------------------
+% BGPS specific definitions
 \def\bgps{BGPS}
 \newcommand{\bgpsarea}{150}
 \newcommand{\bcamfwhm}{31.2\arcsec}
-\newcommand{\ncores}{$10^4$}
+\newcommand{\ncores}{7628}
 \newcommand{\bgpsdepthlow}{20}
 \newcommand{\bgpsdepthhigh}{50}
+% -----------------------------------------------------------------------------
 
 \newcommand{\TBD}{{\bf TBD}}
 
@@ -142,7 +156,7 @@
 
 	% End definitions
 
-\slugcomment{DRAFT: \today}
+\slugcomment{DRAFT: \currenttime\ \eurodate\today}
 
 \shorttitle{BGPS}
 \shortauthors{Aguirre et al.}
@@ -152,13 +166,15 @@
 \title{The Bolocam Galactic Plane Survey: Survey Description and Data
 Reduction}
 
-\newpage
-\pagebreak
+%\newpage
+%\pagebreak
+%
+%\tableofcontents
+%
+%\newpage
+%\pagebreak
+%
 
-\tableofcontents
-
-\newpage
-\pagebreak
 
 \author{James Aguirre\altaffilmark{\penn},
         Adam Ginsburg\altaffilmark{\casa},
@@ -248,15 +264,31 @@ Hawaii,680 Woodlawn Drive, Honolulu, HI 96822}}}
 We present the Bolocam Galactic Plane Survey (BGPS), a 1.1 mm
 continuum survey of \bgpsarea\ square degrees of the Galactic Plane in
 the 1st, 2nd, and 3rd quadrants.  The BGPS represents the first large
-area, systematic survey of the Galactic Plane in the (sub)millimeter
-continuum without pre-selected targets.  The survey has detected
-\ncores\ clumps to a limiting depth of between \bgpsdepthlow\ and
-\bgpsdepthhigh\ mJy RMS.  This paper details the survey observations
-and methods.  We treat carefully the comparison of the survey pointing
-and flux calibration and and serves as a companion to the public data
-release through NASA's Infrared Processing and Analysis Center (IPAC).
-We anticipate that the BGPS will be useful as a finder chart for ALMA
-and as a long-wavelength complement to {\em Herschel}-HiGAL.
+area, systematic survey of the Northern Galactic Plane in the
+(sub)millimeter continuum without pre-selected targets.  The survey
+has detected \ncores\ clumps to a limiting depth of between
+\bgpsdepthlow\ and \bgpsdepthhigh\ mJy RMS.  We include maps of 100
+contiguous square degrees from $l=-10.5$ to $l=86.5$ and $b=\pm0.5$
+with a resolution of 31\arcsec, as well as regions in IC1396, $l=111$
+(NGC7538), W3/4/5, and Gem OB1.  The most striking feature of the maps
+is the filamentary structure of cold dust throughout the Galaxy.
+
+This paper details the survey observations and methods.  We treat
+carefully the determination of pointing and flux calibration errors
+and compare our results to the literature.  Data processing algorithms
+that separate astronomical signals from time-variable atmospheric flux
+in the data time-stream are discussed.  The algorithms reproduce the
+structure of the astronomical sky on a limited range of angular scales
+and produce artifacts in the vicinity of bright sources. Specifically,
+extended emission smooth on scales larger than about 5\arcmin\ is not
+fully recovered in the images.  The spatial frequency response
+function of the Bolocam Galactic Plane Survey is discussed.
+
+This paper serves as a companion and guide to the public data release
+through NASA's Infrared Processing and Analysis Center (IPAC).  These
+images represent an important finder chart for future observations
+with ALMA and a long-wavelength spectral band complementary to
+imminent submillimeter surveys with SCUBA-2 and Herschel-SPIRE.
 
 \end{abstract}
 
@@ -292,13 +324,32 @@ only galaxy-wide average quantities can be measured.
 
 Dust continuum emission near a wavelength of 1 mm is the best tracer
 of the material most directly associated with the formation of
-planetary systems, stars, and star clusters
-\citep{johnstone06}.  Galactic dust continuum radiation at
-this wavelength is optically-thin almost everywhere, and at typical
-dust temperatures of order 10 K or more, is observed on the
-Rayleigh-Jeans tail of the Planck function.  Thus, the determination
-of column densities is relatively straight forward if the dust
-temperature is known.
+planetary systems, stars, and star clusters \citep{johnstone06}.
+Galactic dust continuum radiation at this wavelength is optically-thin
+almost everywhere, and at typical dust temperatures of order 10 K or
+more, is observed on the Rayleigh-Jeans tail of the Planck function.
+Thus, the determination of column densities is relatively straight
+forward if the dust temperature is known.
+
+Submillimeter observations of Galactic sources have been conducted by
+a variety of different groups focusing on small regions since
+bolometer technology was developed.  The Submillimeter Common-User
+Bolometer Array (SCUBA) on the 15 m James Clerk Maxwell Telescope
+mapped many significant regions in the galactic plane over its 8 year
+lifetime \citep{holland99,difrancesco08}, but never completed a
+contiguous survey of the galactic plane.  Bolocam and Mambo have
+previously been used to map large star forming regions at 1.1
+\citep{enoch06} and 1.2 mm \citep{motte07}, but again these were
+targeted observations.  A recent large area survey with the LABOCA
+instrument at 870 \mum\ has recently been reported \citep{schuller09}.
+
+Surveys of the galaxy in CO line emission \citep{dame01,FCRAO} have
+revealed much about galactic structure, but do not provide a complete
+picture of how star formation follows that structure.  Millimeter
+continuum more directly traces the cold dust associated with star
+formation.  Continuum data allows for accurate determinations of the
+mass of large, dense dust structures when combined with kinematic
+distances \citep[e.g.][]{RotationCurve}.
 
 A crucial step in the observational study of star and cluster
 formation is identification and characterization of the cloud clumps
@@ -361,18 +412,11 @@ multi-wavelength and high-resolution studies with existing telescopes
 and future facilities.  The clump catalog is described in a companion
 paper \citep{rosolowsky09}.
 
-%\section{Overview of the Analysis}
-%\label{sec:Overview}
+At the distances that we are observing these objects, we are likely
+observing aggregates of star forming cores found in a larger molecular
+cloud environment, which we will refer to as clumps
+\citep{williams00}.
 
-{\it material from the Letter here}
-
-A number of different descriptions of the reduction of Bolocam data
-have been published \citep{laurent05,enoch06,sayers09}.  This work
-addresses the issues specific to the BGPS, significantly improving the
-method of \citet{enoch06} for generating maps and characterizing their
-properties.  It incorporates also some of the technical developments
-of \citet{sayers09}, though the exquisite control of systematics and
-noise of that analysis is neither necessary nor possible here.
 
 The outline of the paper is as follows. Section \ref{sec:Observations}
 describes the instrument and the observations.  Section
@@ -620,6 +664,74 @@ VI  & 2007 Sep 01 & 2007 Sep 09 & 5 & 0.1 \\
 ellipticity and relative response of the detectors in the Bolocam
 focal plane as mapped to the sky.  Right: The effect of field rotation
 on the coverage obtained via Bolocam raster scans.}{fig:Array}{1.0}
+
+\section{Overview of the Data Reduction}
+\label{sec:Overview}
+
+%{\it material from the Letter here}
+
+A number of different descriptions of the reduction of Bolocam data
+have been published \citep{laurent05,enoch06,sayers09}.  This work
+addresses the issues specific to the BGPS, significantly improving the
+method of \citet{enoch06} for generating maps and characterizing their
+properties.  It incorporates also some of the technical developments
+of \citet{sayers09}, though the exquisite control of systematics and
+noise of that analysis is neither necessary nor possible here.
+
+The data were reduced with a custom pipeline written specifically for
+the galactic plane survey based on \citet{enoch06} and
+\citet{Laurent2006}.  A key element of the reduction is the iterative
+estimation of the atmospheric fluctuations and the astrophysical
+signal.  The atmospheric model is developed from a set of principal
+components of the bolometer signal time series under the assumption
+that the bulk of the correlated signal is atmospheric.  The iterative
+estimation process then helps to restore correlated flux due to
+astrophysical emission \citep[details in][]{Aguirre2009}.
+
+The Bolocam observations are sensitive to structure between 31\arcsec\
+and about 400\arcsec\ (the array field of view).  An indicative
+analysis of the spatial filter function of the iterative mapping
+scheme is given in \citet{enoch06}.  The data were sampled onto a
+uniform 7\farcs2 grid.  Flux density calibrations were performed using
+observations of Mars, Uranus, and Neptune, and they are accurate to
+$\sim$20\%.
+
+%A calibration scheme capable of
+%5\% systematic and $<$5\% statistical errors is being implemented as outlined in
+%\citet{Sayers2009}.
+%To account for offsets between the observations, each observation was mapped
+%individually and aligned to a `master' field that has been tied to
+%pointing calibrators. 
+Noise properties across the survey are not completely uniform, but the
+measured $1\sigma$ level is $\approx43\pm7$ mJy/beam within the
+$b=\pm.5$ portion of the plane.
+%After the pipeline mapping, the fields were combined using the COMBINE
+%command in IRAF with WCS offsets.
+
+The absolute pointing accuracy of the survey has been measured to be
+$\sim$6\arcsec\ RMS.  A single $3^\circ \times 1^\circ$ observation of
+each region was registered to the pointing calibrators as a `master
+field,' and additional observations of that field were aligned to the
+master.
+
+Bright and large sources leave an impact on their surroundings when
+cleaned with a principal component subtraction.  \object{Sgr B2},
+\object{G 34.3+0.15}, and other sources with fluxes $\geq 10$ Jy are
+surrounded by substantial negative bowls.  Some flux is restored in
+these bowls using the iterative process described in
+\citet{Aguirre2009}, but around the brightest sources the impact of
+the source on the background estimation is too great to be fully
+recovered.
+
+Instrument glitches and cosmic ray hits have been removed by a
+combination of outlier rejection in each spatial pixel and hand
+flagging of the timestream data.  Streaking in the images results from
+incorrect determinations of the zero level across scans when a bright
+source is encountered.  Atmospheric noise in observations taken in
+poor weather may not be completely removed by the reduction
+procedures.
+%Particular bolometers may be noisy for a single observation and they may not
+%be adequately down-weighted. 
 
 \section{Flux Density and Surface Brightness Calibration}
 \label{sec:FluxCalibration}
@@ -1445,6 +1557,7 @@ estimate of the noise.
 
 All processed maps are made available through
 IPAC\footnote{http://irsa.ipac.caltech.edu/Missions/bolocam.html}.
+IPAC provides a cutout service for the
 
 %\citet{moore07}
 %\citet{zinchenko97}
@@ -1456,7 +1569,70 @@ IPAC\footnote{http://irsa.ipac.caltech.edu/Missions/bolocam.html}.
 The BGPS is the first (sub)millimeter survey of a substantial fraction
 of the Galactic Plane, providing an unbiased look at the high-density
 gas most intimately associated with the earliest phases of star
-formation.
+formation.  Inspection of Figure \ref{fig:BGPSMontage} 
+
+Figures 1 and 2 show the results of the BGPS.  Our images show
+excellent correspondence with SCUBA maps of small sub-fields
+throughout the plane \citep{SCUBAlegacy}.  BGPS contours overlaid on
+the GLIMPSE survey \citep{benjamin03} show excellent correlation with
+8\mum\ infrared dark clouds (IRDCs).  However, many features in the
+BGPS maps do not appear in the Spitzer observations, which suggests
+that the 1.1 mm emission traces dense clumps without a background to
+absorb.  A study of IRDC correlation with BGPS emission is underway
+\citep{Battersby2009}.
+
+% implies star forming....
+
+Filamentary structures with aspect ratios $\geq 10$ are present
+throughout the galactic plane.  The most crowded fields consist of
+frothy and clumpy structure.  There are 5000-10000 distinct sources,
+the majority of which are at least moderately resolved
+\citep{rosolowsky09}.  We suspect that higher resolution observations
+will resolve BGPS clumps into clusters of protostellar objects, as has
+been seen in Serpens \citep{enoch08,Testi1998} and OMC 1
+\citep{Beuther2004,johnstone99} where bolometer observations at low
+resolution have been complemented by interferometer observations at
+high resolution.
+
+There are clear maxima in the emission filling factor in the Galactic
+Center and in the region from $l=23$ to $l=31$, the line of sight
+through the densest part of the molecular ring.  Additional areas of
+high source density are seen at $l=10$ and $l=13$.  The filling factor
+of 1.1 mm continuum emission at the 100 mJy level is $\sim 20$\% per
+square degree from $l=-10$ to $l=20$ and $\sim 10$\% from $l=20$ to
+$l=50$.
+%In the range
+%$l=50$ to $l=75$, the filling factor is below 1\% and very few sources have
+%been detected.  
+This result is in contrast to CO filling factors $\sim1$ in the inner galactic
+plane \citep{dame01,FCRAO}, confirming that 1.1 mm continuum emission traces
+denser material than CO.  
+%The small filling factor of the 1.1 mm emission
+%compared to CO emission  shows that the continuum is directly associated with
+%star forming material, whereas the CO also traces less dense material not
+%directly associated with star formation.
+
+In some cases, distance to BGPS clumps can be determined by matching
+Galactic Ring Survey $^{13}$CO and 1.1 mm continuum morphology
+\citep{IRDCdistance,FCRAO}.  However, in other cases the association
+between the CO and 1.1 mm data is not clear, either because of
+confusion or because the BGPS sources are too compact to identify in
+$^{13}$CO morphology.  Heterodyne follow-up observations using dense
+gas tracers (NH$_3$, N$_2$H$^+$, HCO$^+$, and CS) are being conducted
+to provide radial velocity, density, chemistry, and temperature
+measurements \citep{schlingman09, battersby09, nordhaus09}.
+
+BGPS clumps are associated with the densest portions of giant
+molecular clouds (GMCs) traced by CO surveys
+\citep[e.g.,][]{dame01,FCRAO}.  The brightest clumps visible in our
+maps, e.g. \object{Sgr B2}, \object{G34.3+0.15}, \object{W 51},
+\object{W 43}, \object{W 49}, and \object{M 17}, correspond to well
+known star forming regions.
+%(the saturation is only a display artifact; the astrophysical sources are
+%always much fainter than the atmosphere and therefore do not saturate the
+%detectors).  
+These associations suggest that other bright sources of millimeter
+emission will prove to be massive star or cluster forming regions.
 
 \acknowledgments
 
