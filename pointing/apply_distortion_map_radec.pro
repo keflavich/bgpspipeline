@@ -35,11 +35,30 @@ pro apply_distortion_map_radec,ra,dec,rotang,array_params,pa,badbolos=badbolos,b
     endelse
     nbolos = n_e(bl_ang)
     ntime = n_e(ra)
-    ; need to correct for parallactic angle because the fiducial angle is just the angle of the array with the telescope,
-    ; but there is a parallactic angle between the telescope and the sky.  The weird thing is that it doesn't change with
-    ; time: if you add the parallactic angle in timestream, it goes crazy!  August 2008: the previous statement is not true
-    angle = (bl_ang+fid_arr_ang) # replicate(1,ntime) + replicate(1,nbolos) # (pa-rotang)
-    bl_dist *= 5.*bolo_spacing/3600.   ; bolometer spacing on array is nominally 38 arcseconds
+
+    if keyword_set(seidel) then begin
+        newba = bl_ang + fid_arr_ang - rotang
+        x=(bl_dist * cos(!dtor*newba)
+        y=(bl_dist * sin(!dtor*newba)
+        
+        S = [0.038426390, -0.0015285472, 0.0012222049, 0.95789015, 0.028520202]
+        
+        xdistort = -(S[1]*(x*y^2+x^3) + S[2]*2*x*y + S[3]*x) 
+        ydistort = S[0] + S[1]*(y^3+y*x^2) + S[2]*(3*y^2 + x^2) + S[3]*y + S[4]*y 
+
+        bl_dist = sqrt(xdistort^2 + ydistort^2)
+        bl_ang  = atan(ydistort,xdistort)
+
+        angle = (bl_ang) # replicate(1,ntime) + replicate(1,nbolos) # (pa)
+        bl_dist *= 5.*bolo_spacing/3600.   ; bolometer spacing on array is nominally 38 arcseconds
+    endif else begin
+        ; need to correct for parallactic angle because the fiducial angle is just the angle of the array with the telescope,
+        ; but there is a parallactic angle between the telescope and the sky.  The weird thing is that it doesn't change with
+        ; time: if you add the parallactic angle in timestream, it goes crazy!  August 2008: the previous statement is not true
+        angle = (bl_ang+fid_arr_ang) # replicate(1,ntime) + replicate(1,nbolos) # (pa-rotang)
+        bl_dist *= 5.*bolo_spacing/3600.   ; bolometer spacing on array is nominally 38 arcseconds
+    endelse
+
 ;   so apparently ra + cos(angle), dec - sin(angle) works if angle = boloang + fid_arr_ang + pa[0]....
     new_ra  = replicate(1,nbolos) # ra   + bl_dist # replicate(1,ntime) * cos(angle*!dtor) / cos(replicate(1,nbolos)#dec*!dtor)
     new_dec = replicate(1,nbolos) # dec  - bl_dist # replicate(1,ntime) * sin(angle*!dtor)
