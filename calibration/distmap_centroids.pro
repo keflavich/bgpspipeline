@@ -14,7 +14,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
     readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
-        pointing_model=1,_extra=_extra
+        pointing_model=0,_extra=_extra
     ; removed nobeamloc 4/10/09 - necessary in order to co-add images
     ; also, should automatically account for rotation
 
@@ -74,10 +74,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     openw,fitparfile,outfile+"_bolofits.txt",/get_lun
     printf,fitparfile,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
 
-    xmin = floor(xcen-10)
-    xmax = ceil(xcen+10)
-    ymin = floor(ycen-10)
-    ymax = ceil(ycen+10)
+    xmin = 0                  ;floor(xcen-10)
+    xmax = n_e(allmap[*,0,0])-1 ;ceil(xcen+10)
+    ymin = 0                  ;floor(ycen-10)
+    ymax = n_e(allmap[0,*,0])-1 ;ceil(ycen+10)
 
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
@@ -106,7 +106,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
         if doplot gt 1 then begin
             loadct,0,/silent
-            imdisp,asinh(reform(allmap[*,*,i])),erase=0,title=strc(i),/axis
+            imdisp,asinh(reform(allmap[*,*,i])),erase=0,title=strc(bolo_indices[i]),/axis
             loadct,39,/silent
             tvellipse,fitpars[2],fitpars[3],fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=1
             tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=1
