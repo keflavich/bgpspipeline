@@ -20,7 +20,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     nbolos = n_e(bolo_indices)
 
-    angle = (median(bgps.rotang) - median(bgps.posang) + median(bgps.arrang)) * !dtor
+    angle = (-median(bgps.rotang) + median(bgps.posang) + median(bgps.arrang)) * !dtor
+    dec_conversion = cos(bgps.source_dec*!dtor)
 
     ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
@@ -28,8 +29,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
         rth : rtf ,$
-        xy : [[rtf[*,0]*cos(rtf[*,1]-angle)],[rtf[*,0]*sin(rtf[*,1]-angle)]] $
-    }
+        xy : -1.0 * [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],[rtf[*,0]*sin(rtf[*,1]+angle)]] $
+    } ; I don't yet understand why the xy sign is flipped, but it's necessary (see plots below - green X)
 
     meas = { $
         rth : fltarr(nbolos,2)    ,$
@@ -113,6 +114,14 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
             tvellipse,fitpars[2],fitpars[3],fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=1
             tvellipse,fitpars[2]*2.35,fitpars[3]*2.35,fitpars[4]+xmin,fitpars[5]+ymin,fitpars[6],color=250,/data,thick=1
             oplot,[xcen],[ycen],psym=7,color=225,symsize=1
+;            oplot,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=60
+;            oplot,[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=240
+;            arrow,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],/data,color=80,hsize=1
+            oplot,[nominal.xy[i,0]/bolospacing+xcen,meas.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen,meas.xy[i,1]/bolospacing+ycen],color=80
+
+            ad2xy,median(bgps.ra_map[i,*]),median(bgps.dec_map[i,*]),astr,pointx,pointy
+            oplot,[pointx],[pointy],psym=1,color=150,symsize=1
+
 ; pretty sure this is wrong            oplot,[-nominal.xy[i,0]/bolospacing+xcen],[-nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
         endif
 
@@ -131,8 +140,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     fitmap=fitmapcube
 
-    meas.rth[*,0] = sqrt(meas.xy[*,0]^2+meas.xy[*,1]^2)
-    meas.rth[*,1] = atan(meas.xy[*,1],meas.xy[*,0])-angle
+    ; convert back to the format used in the beam locations files (assumes no
+    ; projection and no rotation)
+    meas.rth[*,0] = sqrt((meas.xy[*,0]*dec_conversion)^2+meas.xy[*,1]^2)
+    meas.rth[*,1] = atan(-meas.xy[*,1],-meas.xy[*,0]*dec_conversion)-angle
 
     save,filename=outfile+".sav"
 
