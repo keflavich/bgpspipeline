@@ -5,22 +5,25 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
 ;    if n_e(nopointing) eq 0 then nopointing=1
     if n_e(coordsys) eq 0 then coordsys='radec'
     if n_e(projection) eq 0 then projection='TAN'
-    if n_e(outtxt) eq 0 then outtxt='/dev/tty'
+    if n_e(outtxt) eq 0 then begin
+        outtxt='/dev/tty'
+        append=0
+    endif
     if keyword_set(blfile) then begin
         write_distmaps,ncfile,blfile=blfile
-        mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
+        mem_iter,ncfile,outfile+"_distcor",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endif else begin
         distmap,ncfile,outfile,doplot=doplot,check=check,nopointing=nopointing,coordsys=coordsys,projection=projection,_extra=_extra  
         print,""
         write_distmaps,ncfile,blfile=outfile+".txt"
-        mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
+;        mem_iter,ncfile,outfile+"_BL",pointing_model=0,niter=[0,0],/distcor,mars=mars
     endelse
     write_distmaps,ncfile,blfile=getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_default.txt'
     mem_iter,ncfile,outfile+"_defaultBL",pointing_model=0,niter=[0,0],/distcor,mars=mars
-    mem_iter,ncfile,outfile+"_noBL",pointing_model=0,niter=[0,0],mars=mars
+    mem_iter,ncfile,outfile,pointing_model=0,niter=[0,0],mars=mars
 
-    BL = readfits(outfile+"_BL_map01.fits",hdBL)
-    noBL = readfits(outfile+"_noBL_map01.fits",hdnoBL)
+    BL = readfits(outfile+"_distcor_map01.fits",hdBL)
+    noBL = readfits(outfile+"_map01.fits",hdnoBL)
     defaultBL = readfits(outfile+"_defaultBL_map01.fits",hddefaultBL)
 
     hastrom,BL,hdBL,hdnoBL, missing = !values.f_nan
@@ -30,7 +33,7 @@ pro distmap_comp,ncfile,outfile,bl=bl,nobl=nobl,defaultbl=defaultbl,check=check,
 ;    print,"PEAK COMPARISON","BL:",max(BL,/nan),"noBL:",max(noBL,/nan),"defaultBL:",max(defaultBL,/nan),format="(A20,A8,F20,A8,F20,A12,F20)"
 ;    print,"FWHM","BL:",fpBL[2:3],"noBL:",fpnoBL[2:3],"defaultBL:",fpdefaultBL[2:3],format="(A20,A8,F10,F10,A8,F10,F10,A12,F10,F10)"
 ;    print,"GAUSSpeak","BL:",fpBL[1],"noBL:",fpnoBL[1],"defaultBL:",fpdefaultBL[1],format="(A20,A8,F20,A8,F20,A12,F20)"
-    openw,outtxtf,outtxt,/get_lun,/append
+    openw,outtxtf,outtxt,/get_lun,append=append
     printf,outtxtf,"TYPE","GAUSSPEAK","PEAK","FWHM X","FWHM Y",format='(A15,A15,A15,A15,A15)'
     printf,outtxtf,"BL",fpBL[1], max(BL,/nan), fpBL[2:3],format="(A15,F15,F15,F15,F15)"
     printf,outtxtf,"noBL",fpnoBL[1], max(noBL,/nan), fpnoBL[2:3],format="(A15,F15,F15,F15,F15)"

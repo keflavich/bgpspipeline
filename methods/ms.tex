@@ -1255,8 +1255,9 @@ ech timestream point's value is assigned to an area much smaller than
 the beam.  In principle this can be addressed by various gridding
 algorithms, and may be a part of future reductions of the BGPS data.
 
-The resulting map is then subjected to a Hogbom-type CLEAN algorithm
-\citep{hogbom} using a specified kernel to produce a deconvolved image
+The resulting map is then subjected to a maximum-entropy CLEAN algorithm
+%\citep{hogbom} 
+using a specified kernel to produce a deconvolved image
 which is the one actually mapped back into the timestream to be
 subtracted (Equation \ref{eq:MapToTime}.  This has several advantages
 over using the original map directly, including rejecting artefacts

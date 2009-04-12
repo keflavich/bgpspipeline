@@ -4,7 +4,7 @@
 ; you can get the map array back by passing the 'allmap' parameter
 pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fromsave,doplot=doplot,$
     fixscale=fixscale,fixgrid=fixgrid,doatv=doatv,out_fits_shifted=out_fits_shifted,flagbolos=flagbolos,$
-    nofit=nofit,_extra=_extra
+    nofit=nofit,fixcenter=fixcenter,_extra=_extra
 
     if n_e(out_fits_shifted) eq 0 then out_fits_shifted=1
     if n_e(fixscale) eq 0 then fixscale=1
@@ -29,6 +29,16 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         endif 
 
         if bad_r[0] ne -1 then meas.rth[bad_r,*] = 0
+    endif
+
+    ; assume pointing center is already correct (pointing models were calculated w/o beam locations)
+    if keyword_set(fixcenter) then begin
+        meas.xyoffs[*,0] -= median(meas.xyoffs[*,0])
+        meas.xyoffs[*,1] -= median(meas.xyoffs[*,1])
+        meas.xy[*,0] = nominal.xy[*,0] - meas.xyoffs[*,0]
+        meas.xy[*,1] = nominal.xy[*,1] - meas.xyoffs[*,1]
+        meas.rth[*,0] = sqrt((meas.xy[*,0]*nominal.dec_conversion)^2+meas.xy[*,1]^2)
+        meas.rth[*,1] = atan(-meas.xy[*,1],-meas.xy[*,0]*nominal.dec_conversion)-nominal.angle
     endif
 
     ; WRITE BOLOMETER POSITIONS TO TEXT FILE

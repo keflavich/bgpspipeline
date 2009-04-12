@@ -7,7 +7,7 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
     meandc=meandc,stddc=stddc,deconv_fwhm=deconv_fwhm,$
     filenames=filenames
 
-    if singlefile then begin
+    if keyword_set(singlefile) then begin
         if keyword_set(filename) then begin
             find_object_radec,filename,objra,objdec,source_name=source_name
             if finite(objra,/nan) gt 0 then begin

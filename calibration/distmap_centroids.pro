@@ -13,11 +13,16 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     if ~keyword_set(pixsize) then pixsize=11.0
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
-    readall_pc,thefiles,bgps_struct=bgps,bolo_indices=bolo_indices,bolo_params=bolo_params,$
-        pointing_model=0,_extra=_extra
+    premap,thefiles,outfile,bgps=bgps,mapstr=mapstr,/noflat,pointing_model=0,$
+        mvperjy=[1,0,0],fits_out=[5],_extra=_extra
     ; removed nobeamloc 4/10/09 - necessary in order to co-add images
     ; also, should automatically account for rotation
 
+    for i=0,5 do begin
+        clean_iter_struct,bgps,mapstr,niter=intarr(10)+13,i=i,deconvolve=0,_extra=_extra
+    endfor
+
+    bolo_indices = bgps.bolo_indices
     nbolos = n_e(bolo_indices)
 
     angle = (-median(bgps.rotang) + median(bgps.posang) + median(bgps.arrang)) * !dtor
@@ -28,6 +33,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
+        angle:angle,$
+        dec_conversion:dec_conversion,$
         rth : rtf ,$
         xy : -1.0 * [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],[rtf[*,0]*sin(rtf[*,1]+angle)]] $
     } ; I don't yet understand why the xy sign is flipped, but it's necessary (see plots below - green X)
@@ -48,11 +55,11 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     }
 
     ; some pca subtraction is necessary to clean up the image for fitting
-    pca_subtract,bgps.ac_bolos,21,uncorr_part=new_astro
-    if total(bgps.flags) gt 0 then new_astro[where(bgps.flags)] = 0
+;    pca_subtract,bgps.ac_bolos,21,uncorr_part=new_astro
+;    if total(bgps.flags) gt 0 then new_astro[where(bgps.flags)] = 0
 
     ; makes a data cube with one map for each bolometer
-    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,new_astro,bgps.scans_info,pixsize=pixsize,$
+    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
@@ -68,7 +75,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     fitmapcube = allmap*0
 
     if doplot gt 1 then begin
-        !p.multi=[0,4,4]
+        !p.multi=[0,3,3]
         set_plot,'ps'
         device,filename=outfile+"_boloplots.ps",/color,bits_per_pixel=16,xsize=16,ysize=16,/inches
         loadct,0
@@ -90,10 +97,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xy[i,0] = nominal.xy[i,0] - (fitpars[4]-xcen+xmin)*bolospacing  ; something is twisted
-        meas.xy[i,1] = nominal.xy[i,1] - (fitpars[5]-ycen+ymin)*bolospacing  
-        meas.xyoffs[i,0] = (fitpars[4]-xcen+xmin)*bolospacing 
-        meas.xyoffs[i,1] = (fitpars[5]-ycen+ymin)*bolospacing 
+        meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing 
+        meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
+        meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
+        meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
         meas.angle[i] = fitpars[6]
         meas.xysize[i,*] = fitpars[2:3]*bolospacing
         meas.ampl[i] = fitpars[1]
@@ -117,10 +124,11 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 ;            oplot,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=60
 ;            oplot,[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=240
 ;            arrow,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],/data,color=80,hsize=1
-            oplot,[nominal.xy[i,0]/bolospacing+xcen,meas.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen,meas.xy[i,1]/bolospacing+ycen],color=80
+            oplot,[nominal.xy[i,0]/bolospacing+xcen,meas.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen,meas.xy[i,1]/bolospacing+ycen],color=150
+            oplot,[fitpars[4]+xmin,xcen],[fitpars[5]+ymin,ycen],color=150
 
             ad2xy,median(bgps.ra_map[i,*]),median(bgps.dec_map[i,*]),astr,pointx,pointy
-            oplot,[pointx],[pointy],psym=1,color=150,symsize=1
+            oplot,[pointx],[pointy],psym=1,color=60,symsize=1,thick=.5
 
 ; pretty sure this is wrong            oplot,[-nominal.xy[i,0]/bolospacing+xcen],[-nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
         endif
@@ -128,6 +136,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     endfor
     if doplot gt 1 then begin
         plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=1
+        plot,meas.xyoffs[*,0]/bolospacing,meas.xyoffs[*,1]/bolospacing,psym=1
         plot,meas.xy[*,0],meas.xy[*,1],psym=1
         oplot,nominal.xy[*,0],nominal.xy[*,1],psym=7,color=250
         device,/close_file
@@ -139,6 +148,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     free_lun,fitparfile 
 
     fitmap=fitmapcube
+
 
     ; convert back to the format used in the beam locations files (assumes no
     ; projection and no rotation)
