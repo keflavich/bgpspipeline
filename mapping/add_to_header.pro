@@ -5,7 +5,7 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
     mvperjy,filename,pixsize,radec_offsets,$
     pointing_model=pointing_model,singlefile=singlefile,$
     meandc=meandc,stddc=stddc,deconv_fwhm=deconv_fwhm,$
-    filenames=filenames
+    filenames=filenames,version=version
 
     if keyword_set(singlefile) then begin
         if keyword_set(filename) then begin
@@ -54,18 +54,25 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
 
     if keyword_set(meandc) then fxaddpar,hdr,"meandc",meandc,"Mean DC level"
     if keyword_set(stddc) then fxaddpar,hdr,"stddc",stddc,"Std. dev. DC level"
-    fxaddpar,hdr,"UNITS","Jy/Beam"
+    fxaddpar,hdr,"BUNIT","Jy/Beam"
     beamsize = 35.6  ; was 31.2
+    fxaddpar,hdr,"BMAJ",beamsize/3600.
+    fxaddpar,hdr,"BMIN",beamsize/3600.
+    fxaddpar,hdr,"BPA",0
     fxaddpar,hdr,"ppbeam" ,2*!dpi*(beamsize/2.35482)^2/pixsize^2,"pixels per beam" 
-    fxaddpar,hdr,"calib_0",mvperjy[0]," 0th coefficient for flux cal"
+    fxaddpar,hdr,"calib_0",mvperjy[0]," 0th coefficient for flux cal (see methods paper)"
     fxaddpar,hdr,"calib_1",mvperjy[1]," 1st coefficient for flux cal"
     fxaddpar,hdr,"calib_2",mvperjy[2]," 2nd coefficient for flux cal"
-    fxaddpar,hdr,"iternum",0,"Iteration number"
-    fxaddpar,hdr,"n_pca"  ,0,"number of PCA components subtracted"
+    fxaddpar,hdr,"BGPSITER",0,"Iteration number"
+    fxaddpar,hdr,"bgpsnpca"  ,0,"number of PCA components subtracted"
+    if keyword_set(version) then fxaddpar,hdr,"BGPSVERS",strc(version),"BGPS Processing Version Number"
     fxaddpar,hdr,"WL",1.12,"mm (avoids CO 2-1)"
     fxaddpar,hdr,"COMMENT","Made by the Bolocam Galactic Plane Survey (BGPS) pipeline"
     fxaddpar,hdr,"COMMENT","described in Aguirre et al 2009 (not yet published)"
     fxaddpar,hdr,"COMMENT","BGPS data was taken at the Caltech Submillimeter Observatory"
+    fxaddpar,hdr,"COMMENT","Pixel coverage is in the nhitsmap file (each hit represents .1s dwell time)"
+    fxaddpar,hdr,"COMMENT","Pixel weighting is in the weightmap file"
+    fxaddpar,hdr,"COMMENT","Flag counts are in the flagmap file"
     fxaddpar,hdr,"HISTORY","Dates and observation numbers included: "
     for i=0,n_e(filenames)-1 do begin
         fxaddpar,hdr,"HISTORY",strmid(filenames[i],stregex(filenames[i],'[0-9]{6}_o[b0-9][0-9]'),10)
