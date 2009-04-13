@@ -63,6 +63,10 @@
 \newcommand{\vect}[1]{\mathbf{#1}}
 \newcommand{\xad}{\vect{x}}
 
+\newcommand{\ammonia}{\mbox{{\rm NH}$_3$}}
+\newcommand{\form}{H$_2$CO}
+\newcommand{\td}{\mbox{$T_D$}}
+\newcommand{\jj}[2]{\mbox{$J = #1\rightarrow#2$}}
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand{\myemail}{{\tt jaguirre@sas.upenn.edu}}
 \newcommand{\lsim}{{_{<}\atop^{\sim}}}
@@ -308,86 +312,112 @@ millimeter continuum
 \label{sec:Introduction}
 
 Millimeter-wavelength continuum surveys of the Galactic plane provide
-the best way to identify high-column density clumps and clumps where
-planets, stars, and star clusters form.  Such data can locate and lead
-to the measurement of the physical properties of clumps un-biased by
-selection effects such as the presence of embedded stars, star
-clusters, infrared sources, masers, or radio continuum emission.
+the most efficient way to find molecular clumps that are the likely sites of
+formation for massive stars and star clusters. The development of
+detector arrays have made blind surveys of large areas possible.
+Such surveys can remove the selection effects used in previous surveyes,
+such as the presence of embedded stars or star clusters, infrared sources,
+masers, or radio continuum emission. In particular, they can locate
+molecular clumps before stars form, providing vital information on
+the initial conditions.  The surveys can also provide valuable constraints
+on the physical properties of the clumps, especially masses and mean densities.
+
 Galaxy-wide surveys are essential for measuring the impacts of the
-environment on clump properties and star formation activity.  Do clump
-properties vary with location in or out of spiral arms?  Do clump
-properties vary with Galactocentric distance?  Do they depend on the
-level of nearby star formation activity?  Galactic plane surveys of
-mm-wavelength dust continuum emission provide the most efficient tool
-for the identification of potential or active sites of star formation,
-including the rare objects where the most massive stars and cluster
-are, or soon will be, forming.  Dust continuum surveys of the Galaxy
-provide essential ``ground truth'' required for the analysis of distant
+environment on clump properties and star formation activity.
+Do clump properties vary with Galactocentric distance, or
+with location with respect to spiral arms?  Do they depend on the
+level of nearby star formation activity?
+Answering these questions in our Galaxy will provide the
+essential ``ground truth'' required for the analysis of distant
 galaxies where where individual clouds and clumps are not resolved and
 only galaxy-wide average quantities can be measured.
 
-Dust continuum emission near a wavelength of 1 mm is the best tracer
-of the material most directly associated with the formation of
-planetary systems, stars, and star clusters \citep{johnstone06}.
-Galactic dust continuum radiation at this wavelength is optically-thin
-almost everywhere, and at typical dust temperatures of order 10 K or
-more, is observed on the Rayleigh-Jeans tail of the Planck function.
-Thus, the determination of column densities is relatively straight
-forward if the dust temperature is known.
+Surveys of the galaxy in CO line emission \citep{dame01,FCRAO} have
+identified the locations of large molecular clouds and traced
+the transition from atomic to molecular gas as distance from the
+center of the galaxy decreases. Together with kinematic distances
+\citep[e.g.][]{RotationCurve} and, more recently, accurate distances
+from VLBI (add ref to Reid et al. work), these surveys have begun to
+reveal the spiral structure of the Milky Way. As this picture comes into
+sharper focus, we can begin to address the old question of the relationship
+between spiral density waves and star formation.
+
+To pursue this question, we need tracers of higher density material.
+Studies of nearby clouds have demonstrated that star formation is far
+from uniform over molecular clouds, but is concentrated in unusually dense
+regions called clumps or cores, which fill a small fraction of the area
+of most clouds [refs. E. Lada et al. Evans et al., Enoch et al.]
+Following \citet{williams00} and McKee-Ostriker (ARAA), we
+use the term core to refer to a very dense region destined to form an
+individual star or small multiple star systems and the term clump to
+refer to a
+region likely to form a group or cluster of stars. While clumps forming
+massive clusters may be denser than cores forming low mass stars
+[ref Mueller?],
+in general, clumps are larger and less dense. Clumps can be traced
+with line emission from molecules such as \ammonia, \form, CS, HCN, etc.
+Spectral lines also provide excellent diagnostics of
+line-of-sight motions, temperatures, and densities.
+However, the interpretation of these gas tracers is complicated by
+variations in tracer abundances caused by depletions and complex
+chemical processing, uncertainties in optical depths and excitation
+conditions, and the impacts of radiation fields and shocks. These
+complications make the derivation of column densities, masses, and
+other physical properties of star-forming clumps very difficult.
+A further limitation of spectral line studies is that the tracers of
+denser gas tend to be weak and multi-element receiver arrays have
+only a modest number of elements, making blind surveys very time-consuming.
+
+In contrast, focal-plane arrays containing hundreds of individual
+bolometers sensitive to millimeter and sub-millimeter (sub-mm)
+radiation are now available. This advance in technology enables
+blind surveys of the Galactic plane, providing a uniform inventory of massive
+star-forming and starless clumps.  Catalogs resulting
+from such surveys will provide the data base for subsequent observations
+in tracers such as hard-to-excite molecular lines and higher resolution
+studies with instruments like CARMA and ALMA.
+A further advantage of continuum observations of dust at long wavelengths
+is the low optical depth of the dust \citep{johnstone06},
+permitting a straight-forward estimate of the mass of the emitting region.
 
 Submillimeter observations of Galactic sources have been conducted by
 a variety of different groups focusing on small regions since
 bolometer technology was developed.  The Submillimeter Common-User
-Bolometer Array (SCUBA) on the 15 m James Clerk Maxwell Telescope
+Bolometer Array (SCUBA) on the 15-m James Clerk Maxwell Telescope
 mapped many significant regions in the galactic plane over its 8 year
 lifetime \citep{holland99,difrancesco08}, but never completed a
-contiguous survey of the galactic plane.  Bolocam and Mambo have
-previously been used to map large star forming regions at 1.1
-\citep{enoch06} and 1.2 mm \citep{motte07}, but again these were
-targeted observations.  A recent large area survey with the LABOCA
-instrument at 870 \mum\ has recently been reported \citep{schuller09}.
+contiguous survey of the galactic plane.  The Bolocam instrument has been
+used on the 10.4-m Caltech Submiliimeter Observatory (CSO) to map nearby large
+molecular clouds at 1.1 mm and identify hundreds of cores \citep{enoch06}.
+Others have used MAMBO on the 30-m IRAM telescope at 1.2 mm to map
+more distant regions of more massive star formation \citep{motte07}.
+None of these surveys covered a significant fraction of the Galactic plane.
 
-Surveys of the galaxy in CO line emission \citep{dame01,FCRAO} have
-revealed much about galactic structure, but do not provide a complete
-picture of how star formation follows that structure.  Millimeter
-continuum more directly traces the cold dust associated with star
-formation.  Continuum data allows for accurate determinations of the
-mass of large, dense dust structures when combined with kinematic
-distances \citep[e.g.][]{RotationCurve}.
+Two large surveys of the Galactic plane are in progress.
+The ATLASGAL survey, using the LABOCA instrument at 870 \micron\
+on the APEX telescope in Chile, will cover the southern Galactic plane
+and extend somewhat into the north. Initial results from this survey
+have been reported by \citet{schuller09}. [say more]
 
-A crucial step in the observational study of star and cluster
-formation is identification and characterization of the cloud clumps
-which will soon form or are actively forming stars.  Massive stars and
-clusters form from high-density cloud clumps with very large column
-densities and extinctions $A_V > $ 100.  Thus, such cloud clumps are
-best investigated at millimeter and sub-millimeter wavelengths.
-However, the interpretation of various gas tracers that produce
-emission lines in this portion of the spectrum is very difficult.
-Although in principle, spectral lines provide excellent diagnostics of
-line-of-sight motions, temperatures, and densities in a cloud,
-variations in tracer abundances caused by depletions and complex
-chemical processing, uncertainties in excitation conditions, and the
-impacts of radiation fields and shocks make the derivation of column
-densities, masses, and other physical properties of cloud clumps very
-difficult.  The continuum emission from warm dust provides a more
-reliable tracer of the column densities and clump masses.
+This paper presents the results of the Bolocam Galactic Plane Survey
+(BGPS).  (Give longitude and latitude coverage.)
+It is complementary to the survey by \citet{schuller09} in that
+it targets the part of the plane visible from the northern
+hemisphere and uses a somewhat longer wavelength, allowing
+comparison of properties in the region of overlap with the survey of
+\citet{schuller09}.
+At 870 \micron, $h\nu/k = 16.5$ K, compared to 13.1 K at 1.1 mm.
+Because starless clumps may be quite cold ($\td \approx 10$ K),
+the uncertainty in mass caused by uncertain temperature is less at 1.1 mm.
+For example, the mass estimate if the actual $\td = 20$ K, rather
+than 10 K, would decrease by a factor of 3.3 at 870 \micron\
+versus a factor of 2.9 at 1.1 mm. In addition, the Bolocam bandpass
+excludes the CO \jj{21} line, which can be a significant contaminant
+on top of the dust continuum emission.
 
-The advent of focal plane arrays containing hundreds of individual
-bolometers sensitive to millimeter and sub-millimeter (sub-mm)
-radiation has enabled large-scale surveys of mm-wavelength continuum
-emission from Galactic interstellar dust.  The great advantage of
-continuum observations at 1.1mm is the low optical depth of the dust,
-permitting an estimate of the mass of the emitting region.  Further,
-the mass column density is independent of the gas volume density.
-Thus it is thus possible with a wide area, relatively shallow 1.1~mm
-survey to provide an unmatched, uniform inventory of massive
-star-forming and starless condensations.
 
-This survey presents the results of one of the first wide-area,
-untargeted surveys of the Galactic Plane in the millimeter continuum.
-We have used the 144 element Bolocam focal plane array, mounted at the
-Cassegrain focus of the 10 meter diameter sub-mm telescope at the
-Caltech Sub-millimeter Observatory (CSO), to survey over \bgpsarea\
+We have used the 144-element Bolocam focal plane array, mounted at the
+Cassegrain focus of the CSO, to survey over \bgpsarea\
 square degrees of the northern Galactic plane at a wavelength of 1.1
 mm in the dust continuum.  Figure \ref{fig:Coverage} shows the
 coverage of the \bgps.  Maps of the entire BGPS are presented in
@@ -408,6 +438,7 @@ greater detail on flux calibration, astrometry, the mapping algorithm,
 noise, photometry, and the public data release.  We conclude in
 Section \ref{sec:Discussion} with brief discussion of the immediate
 implications of the emission revealed by the BGPS.
+
 
 %BGPS will identify regions of high-mass star and cluster formation
 %throughout the Galaxy and sites of low-mass star formation within a
@@ -828,33 +859,52 @@ beams used.  For example, the the brightest source in the Cyg-X region
 is DR 21.  While M07 quote a peak flux density per beam of
 4.2 Jy/beam for the brightest feature in the DR 21 complex (their peak
 N46) and 17.9 Jy/beam in a 0.19 x 0.14 pc box, BGPS measures a peak
-flux of 15.5 Jy/beam (the beam being roughly 31\arcsec\ in diameter).
+flux of 17.5 Jy/beam (the beam being roughly 35\arcsec\ in diameter).
 Fluxes are best compared using sources compact as observed with the
 beam of the IRAM 30 meter telescope.
 
 We have convolved the fits files\footnote{{\tt
 ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a
 Gaussian kernel that generates an approximately 35\arcsec\ beam,
-matched to our images (mapped without application of the distortion
-correction).  The results are shown in Figure
+matched to our images.  The results are shown in Figure
 \ref{fig:CygnusComparison}.
 
 
 \Table
-{lll}
-{Flux density comparison with \citet{motte07}.}
+{llllll}
+{Note:  The \citet{motte07} integration box is given in terms of pc. 
+The assumed distance must be about 1.7 kpc \citep{schneider2006}  }
 {
-Source  &   BGPS           &  Motte \\
-        &   peak mJy/beam  &  mJy in box (see Motte+ Table 1)
+%Source  &   BGPS           &  Motte \\
+%        &   peak mJy/beam  &  mJy in box (see Motte+ Table 1)
+Motte Source Number &  Motte Table 1 integrated flux &  Motte scaled Jy/bm  & BGPS Jy/Bm &    Comments \\
 }
 {tab:CygnusComparison}
 {
- N11    &   350 - 550      &  340 \\
- N12    &   1660-2200      &  1630 \\
- N16    &   613            &  550 \\
- N18    &   618            &  430 \\
- N26    &   314            &  340 \\
- N46    &   15500          &  17930  (DR21 S)
+3  &    1.59 [0.11x0.09] & 2.61      &  2.30  &  DR 17                               \\
+11 &    0.34 [0.11x0.06] & 0.48      &  0.50  &  West SW of DR21                     \\
+12 &    1.63 [0.11x0.09] & 2.60      &  2.20  &    "                                 \\
+16 &    0.55 [0.12x0.12] & 0.82      &  0.72  &    "                                 \\
+26 &    0.34 [0.20x0.10] & 0.48      &  0.44  &    "                                 \\
+29 &    0.54 [0.25x0.13] & 1.10      &  0.62  &    "                                 \\
+30 &   10.54 [0.15x0.10] &13.5       &  9.80  &  W75(N)                              \\
+44 &    8.43 [0.14x0.11] &14.5       & 12.7   &  DR21 (OH)                           \\
+46 &   17.90 [0.08x0.03] &18.4       & 15.8   &  DR21 f-f, maser (H2O)               \\
+48 &    3.72 [0.17x0.11] & 9.4       &  7.8   &  DR21 (OH)-S                         \\
+51 &    2.37 [0.24x0.03] & 5.5       &  4.1   &  DR21 FIR2                           \\
+53 &    1.60 [0.14x0.09] & 4.3       &  2.7   &  North of DR21  FIR3                 \\
+56 &    0.60 [0.12x0.08] & 0.81      &  0.75  &  SE of DR21 47                       \\
+58 &    2.73 [0.23x0.19] & 2.40      &  1.64  &  IRAS 20375+4109                     \\
+59 &    0.37 [0.12x0.05] & 1.3       &  0.93  &  East of IRAS 20375+4109             \\
+60 &    0.56 [0.16x0.13] & 1.00      &  0.78  &  East of IRAS 20375+4109             \\
+61 &    0.23 [0.12x0.09] & 0.60      &  0.49  &  MSX 81.5168+0.01926                 \\
+62 &    0.50 [0.18x0.12] & 1.23      &  0.80  &  between 63 \& IRAS 20375+4109       \\
+63 &    1.09 [0.08x0.05] & 1.60      &  1.50  &  DR22                                \\
+65 &    0.78 [0.16x0.12] & 1.15      &  1.10  &                                      \\
+66 &    0.25 [0.15x0.06] & 0.63      &  0.76  &                                      \\
+68 &    0.84 [0.10x0.10] & 1.01      &  0.94  &                                      \\
+69 &    1.28 [0.47x0.18] & 1.12      &  1.20  &                                      \\
+72 &    0.54 [0.28x0.13] & 0.58      &  0.47  &                                      \\
 }
 
 \FigureTwo{fluxcal_errorbars}{calib_vs_dc}
@@ -932,7 +982,17 @@ empirically determine actual projected pattern of the array on the
 sky, and measure the offset angle between the focal plane and the sky
 coordinate system.  This is done by making observations which track
 all detectors across a bright source (a planet) and making maps from each
-bolometer individually.
+bolometer individually. 
+
+In our first release, these positions are made using the nominal positions
+without correction for optical distortion.  This results in a slightly blurred
+beam (35.6\farcs instead of 31.2\farcs).  Because this distortion is
+asymmetric, it can also result in a small pointing offset at the field edges
+where only bolometers with large offsets record data.  However, this effect is
+strongly mitigated by the low number of hits at field edges - this data is
+generally flagged out.  The residual offset is within the overall pointing
+model error, but caution should be used when measuring locations at the field
+edges.
 
 A mean focus offset for the secondary is determined once per observing
 run.  An elevation-dependent correction is applied via a
