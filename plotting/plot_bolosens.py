@@ -14,7 +14,7 @@ for obsdate in uranus:
 
     d_angle = open('/scratch/adam_work/distmaps/uranus_'+obsdate+'.txt','r').readline().split().pop()
 
-    bolonum,base,amp,xwid,ywid,xcen,ycen,angle = readcol('/scratch/adam_work/distmaps/uranus_'+obsdate+'_bolofits.txt',twod=False,skiplines=1)
+    bolonum,base,amp,xwid,ywid,xcen,ycen,angle = readcol('/scratch/adam_work/distmaps/uranus_'+obsdate+'_bolofits.txt',twod=False,skipline=1)
 
     good = ((amp > (median(amp)-3*std(amp))) * (amp < (median(amp)+3*std(amp))))
 
