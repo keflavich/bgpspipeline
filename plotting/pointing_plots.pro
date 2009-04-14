@@ -52,7 +52,7 @@ pro pointing_plots,filename,date
 
     device,filename=getenv('HOME')+'/paper_figures/paper_gaussian_'+date+'.ps',/color
 
-    !p.multi=[0,1,2]
+    !p.multi=[0,2,1]
     ;;HISTOGRAMS
     h_alt = hist_wrapper(pmsub_altoff,1.,-20,20,/gauss_fit,/noverbose)
     h_az = hist_wrapper(pmsub_azoff,1.,-20,20,/gauss_fit,/noverbose)
