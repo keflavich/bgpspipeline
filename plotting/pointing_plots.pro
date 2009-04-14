@@ -28,6 +28,7 @@ pro pointing_plots,filename,date
     my_azoff_model2 = poly_fit(alt[good_both],azoff_dist[good_both],2)
 
     set_plot,'ps'
+    loadct,39
     device,filename=getenv('HOME')+'/paper_figures/paper_models_'+date+'.ps',/color
     !P.MULTI=[0, 2, 2, 0, 1]
     altoff_min=min(altoff[goodvals]) & azoff_min=min(azoff_dist[goodvals])
