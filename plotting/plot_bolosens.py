@@ -6,9 +6,8 @@ import matplotlib
 
 uranus=[
 '050619_o23-4_nofit' ,
-'050628_o33-4_nofit' ,
-'050904_o31-2_nofit' 
-]
+'050628_o33-4_nofit' ]
+#'050904_o31-2_nofit' 
 
 for obsdate in uranus:
 
