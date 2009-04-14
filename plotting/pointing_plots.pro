@@ -10,6 +10,7 @@ pro pointing_plots,filename,date
 
     goodvals = where(xpix ne -1 and objalt gt 20 and altoff lt mean(altoff,/nan)+70 and altoff gt mean(altoff,/nan)-70)
     latitude=19.82611111D0 
+    my_eq2hor,ra,dec,jd,alt,az,lat=latitude,alt=4072,lon=-155.473366,refract=0,aberration=aberration,nutate=nutate,precess=precess,lst=lst
 
     azoff_dist = azoff*cos(!dtor*alt)
 
