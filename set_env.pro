@@ -14,12 +14,14 @@ pro set_env,compy=compy
         setenv,'WORKINGDIR2=/usb/scratch1'
         setenv,'SLICED=/scratch/sliced'
         setenv,'SLICED_POLY=/scratch/sliced_polychrome'
+        setenv,'REFDIR=/data/bgps/releases/v0.6'
     endif else if compy eq 'eta' then begin
         setenv,'PIPELINE_ROOT=/Users/adam/work/bolocam/AGidl/bgps_pipeline'
-        setenv,'WORKINGDIR=/scratch/adam_work'
-        setenv,'WORKINGDIR2=/scratch/adam_work'
-        setenv,'SLICED=/scratch/sliced'
-        setenv,'SLICED_POLY=/scratch/sliced'
+        setenv,'WORKINGDIR=/Volumes/milkyway/adam_work'
+        setenv,'WORKINGDIR2=/Volumes/milkyway/adam_work'
+        setenv,'SLICED=/Volumes/milkyway/sliced'
+        setenv,'SLICED_POLY=/Volumes/milkyway/sliced_polychrome'
+        setenv,'REFDIR=/Volumes/milkyway/ref_fields'
     endif
 
 end

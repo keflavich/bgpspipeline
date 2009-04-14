@@ -7,7 +7,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
         premap=premap,sliced_dir=sliced_dir,ref_field=ref_field,infile=infile,$
         checkpointing=checkpointing,npca=npca,prefix=prefix,refim=refim,$
         niter=niter,version=version,_extra=_extra
-    if ~keyword_set(scratchdir) then scratchdir = getenv('WORKINGDIR') ;'/scratch/adam_work'
+    if ~keyword_set(scratchdir) then scratchdir = getenv('WORKINGDIR') 
     if n_e(premap) eq 0 then premap=1
     if n_e(checkpointing) eq 0 then checkpointing=0
     if ~keyword_set(sliced_dir) then sliced_dir='sliced'
@@ -16,8 +16,8 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
     if ~keyword_set(niter) then niter=intarr(10)+13
     if keyword_set(version) and ~keyword_set(prefix) then prefix="v"+strc(version)+"_"
     if ~keyword_set(prefix) then prefix=""
-    if ~keyword_set(infile) then infile='/scratch/'+sliced_dir+'/'+field_name+'/'+field_name+'_infile.txt' $
-        else infile='/scratch/sliced/INFILES/'+infile
+    if ~keyword_set(infile) then infile=getenv('SLICED')+'/'+field_name+'/'+field_name+'_infile.txt' $
+        else infile=getenv('SLICED')+'/INFILES/'+infile
     print,"Reading files from ",infile
 
     pca_label = strc(npca[0])
@@ -43,10 +43,10 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
             field_dir+"/"+field_name+'_align_to_'+ref_map+'.txt',$
             _extra=_extra
         write_imshifts,field_dir+'/'+field_name+'_align_to_'+ref_map+'.txt'
-        ref_file = '/scratch/sliced/'+ref_field+'/'+ref_map+'_raw_ds5.nc'
+        ref_file = getenv('SLICED')+ref_field+'/'+ref_map+'_raw_ds5.nc'
         if file_test(ref_file) then ncdf_varput_scale,ref_file,'radec_offsets',[0,0] $
             else begin
-                ref_file = '/scratch/sliced_polychrome/'+ref_field+'/'+ref_map+'_raw_ds5.nc'
+                ref_file = getenv('SLICED_POLY')+ref_field+'/'+ref_map+'_raw_ds5.nc'
                 if file_test(ref_file) then ncdf_varput_scale,ref_file,'radec_offsets',[0,0] 
             endelse
     endif
@@ -64,7 +64,6 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
             fits_timestream=0,ts_map=0,_extra=_extra
         ; iter0savename=scratchdir+'/'+field_name+'/'+field_name+".sav",  ; 2/20/09 removed this line because I want to distinguish versions
 ;    mem_iter_pc,'/scratch/'+sliced_dir+'/'+field_name+'/'+field_name+'_infile.txt',$
-;        '/scratch/adam_work/'+field_name+'/'+field_name+'_13pca_nooffs',$
 ;        workingdir=scratchdir,niter=intarr(10)+13,/deconvolve,/fits_smooth,/pointing_model,/no_offsets
 
     print,"FIELD "+prefix+field_name+" COMPLETED at "+systime()+".  Took "+strc(systime(/sec)-start_time)+" seconds"
