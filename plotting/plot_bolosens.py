@@ -5,14 +5,9 @@ from matplotlib.collections import PatchCollection
 import matplotlib
 
 uranus=[
-'050619_o23' ,
-'050619_o24' ,
-'050628_o33' ,
-'050628_o34' ,
-'050904_o31' ,
-'050904_o32' ,
-'050911_ob8' ,
-'070702_o41' 
+'050619_o23-4' ,
+'050628_o33-4' ,
+'050904_o31-2' 
 ]
 
 for obsdate in uranus:
