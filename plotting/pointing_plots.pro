@@ -29,28 +29,31 @@ pro pointing_plots,filename,date
 
     set_plot,'ps'
     loadct,39
-    device,filename=getenv('HOME')+'/paper_figures/paper_models_'+date+'.ps',/color
+    device,filename=getenv('HOME')+'/paper_figures/paper_models_'+date+'.ps',/color,/encapsulated
     !P.MULTI=[0, 2, 2, 0, 1]
+    !p.thick = 2
+    !p.charthick = 2
+    !p.charsize = 1.5
     altoff_min=min(altoff[goodvals]) & azoff_min=min(azoff_dist[goodvals])
     altoff_max=max(altoff[goodvals]) & azoff_max=max(azoff_dist[goodvals])
-    plot,alt[goodvals],altoff[goodvals],psym=1,xtitle="Alt",ytitle="Altoff",$
-        title='RMS: '+string(stddev(altoff[good_both]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[altoff_min,altoff_max]
+    plot,alt[goodvals],altoff[goodvals],psym=1,xtitle="!6Alt",ytitle="!6Altoff",$
+        title='!6RMS: '+string(stddev(altoff[good_both]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[altoff_min,altoff_max]
     oplot,allalt,allaltoff_model*3600.,color=254   
-    plot,alt[goodvals],azoff_dist[goodvals],psym=1 ,xtitle="Alt",ytitle="Azoff (distance)"  ,$
-        title='RMS: '+string(stddev(azoff_dist[goodvals]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[azoff_min,azoff_max]
+    plot,alt[goodvals],azoff_dist[goodvals],psym=1 ,xtitle="!6Alt",ytitle="!6Azoff (distance)"  ,$
+        title='!6RMS: '+string(stddev(azoff_dist[goodvals]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[azoff_min,azoff_max]
     oplot,allalt,allazoff_model*3600.,color=254   
     pmsub_altoff = altoff - poly(alt,my_altoff_model2)
     pmsub_azoff  = azoff_dist  - poly(alt,my_azoff_model2)
     mpmsub_altoff = altoff - altoff_model*3600
     mpmsub_azoff  = azoff_dist  - azoff_model*3600
-    plot,alt[good_both],mpmsub_altoff[good_both],psym=1,xtitle="Alt",ytitle="Altoff",$
+    plot,alt[good_both],mpmsub_altoff[good_both],psym=1,xtitle="!6Alt",ytitle="!6Altoff",$
         title="RMS: "+string(stddev(mpmsub_altoff[good_both]),format='(F5.2)')
-    plot,alt[good_both],mpmsub_azoff[good_both],psym=1,xtitle="Alt",ytitle="Azoff (distance)",$
+    plot,alt[good_both],mpmsub_azoff[good_both],psym=1,xtitle="!6Alt",ytitle="!6Azoff (distance)",$
         title="RMS: "+string(stddev(mpmsub_azoff[good_both]),format='(F5.2)') 
 
     device,/close_file
 
-    device,filename=getenv('HOME')+'/paper_figures/paper_gaussian_'+date+'.ps',/color
+    device,filename=getenv('HOME')+'/paper_figures/paper_gaussian_'+date+'.ps',/color,/encapsulated
 
     !p.multi=[0,2,1]
     ;;HISTOGRAMS
@@ -60,9 +63,9 @@ pro pointing_plots,filename,date
     g_alt = h_alt.fit_ampl*exp(-(x_g - h_alt.fit_mean)^2/h_alt.fit_rms^2)
     g_az = h_az.fit_ampl*exp(-(x_g - h_az.fit_mean)^2/h_az.fit_rms^2)
 
-        plot,h_alt.hb,h_alt.hc,psym=10,/xs,xtitle="Residual altoff",thick=2,ytitle="Number of observations"
+        plot,h_alt.hb,h_alt.hc,psym=10,/xs,xtitle="!6Residual altoff",thick=2,ytitle="!6Number of observations"
         oplot,x_g,g_alt,color=250
-        plot,h_az.hb,h_az.hc,psym=10,/xs,xtitle="Residual azoff",thick=2,ytitle="Number of observations"
+        plot,h_az.hb,h_az.hc,psym=10,/xs,xtitle="!6Residual azoff",thick=2,ytitle="!6Number of observations"
         oplot,x_g,g_az,color=250
 
     device,/close_file
