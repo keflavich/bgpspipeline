@@ -29,7 +29,7 @@ pro pointing_plots,filename,date
 
     set_plot,'ps'
     loadct,39
-    device,filename=getenv('HOME')+'/paper_figures/paper_models_'+date+'.ps',/color,/encapsulated
+    device,filename=getenv('HOME')+'/paper_figures/paper_models_'+date+'.ps',/color,/encapsulated,xsize=7, ysize=6,/inches
     !P.MULTI=[0, 2, 2, 0, 1]
     !p.thick = 2
     !p.charthick = 2
@@ -53,7 +53,7 @@ pro pointing_plots,filename,date
 
     device,/close_file
 
-    device,filename=getenv('HOME')+'/paper_figures/paper_gaussian_'+date+'.ps',/color,/encapsulated
+    device,filename=getenv('HOME')+'/paper_figures/paper_gaussian_'+date+'.ps',/color,/encapsulated,xsize=7,ysize=4,/inches
 
     !p.multi=[0,2,1]
     ;;HISTOGRAMS
