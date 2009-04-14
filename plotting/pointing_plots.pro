@@ -47,17 +47,21 @@ pro pointing_plots,filename,date
     plot,alt[good_both],mpmsub_azoff[good_both],psym=1,xtitle="Alt",ytitle="Azoff (distance)",$
         title="RMS: "+string(stddev(mpmsub_azoff[good_both]),format='(F5.2)') 
 
-        faltoff_min=min(altoffmfzao[goodvals]) & fazoff_min=min(azoffpfazo[goodvals])
-        faltoff_max=max(altoffmfzao[goodvals]) & fazoff_max=max(azoffpfazo[goodvals])
 
-        plot,az[goodvals],altoff[goodvals],psym=1,xtitle="Az",ytitle="Altoff",title='RMS: '+string(stddev(altoff[good_both]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[altoff_min,altoff_max]
-        oplot,az[good_both],altoff[good_both],psym=1
-        plot,az[goodvals],azoff_dist[goodvals],psym=1 ,xtitle="Az",ytitle="Azoff (distance)"  ,title='RMS: '+string(stddev(azoff_dist[goodvals]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys ,yrange=[azoff_min,azoff_max]
-        oplot,az[good_both],azoff_dist[good_both],psym=1
-        pmsub_altoff = altoff - poly(alt,my_altoff_model2)
-        pmsub_azoff  = azoff_dist  - poly(alt,my_azoff_model2)
-        plot,az[good_both],pmsub_altoff[good_both],psym=1,xtitle="Az",ytitle="Altoff",title="RMS: "+string(stddev(pmsub_altoff[good_both]),format='(F5.2)')+" mean: "+string(mean(pmsub_altoff[good_both]),format='(F5.2)'),/ys
-        plot,az[good_both],pmsub_azoff[good_both],psym=1,xtitle="Az",ytitle="Azoff (distance)",title="RMS: "+string(stddev(pmsub_azoff[good_both]),format='(F5.2)')+" mean: "+string(mean(pmsub_azoff[good_both]),format='(F5.2)'),/ys
+    altoffmfzao = altoff-fzao
+    azoffpfazo = azoff_dist+fazo
+
+    faltoff_min=min(altoffmfzao[goodvals]) & fazoff_min=min(azoffpfazo[goodvals])
+    faltoff_max=max(altoffmfzao[goodvals]) & fazoff_max=max(azoffpfazo[goodvals])
+
+    plot,az[goodvals],altoff[goodvals],psym=1,xtitle="Az",ytitle="Altoff",title='RMS: '+string(stddev(altoff[good_both]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[altoff_min,altoff_max]
+    oplot,az[good_both],altoff[good_both],psym=1
+    plot,az[goodvals],azoff_dist[goodvals],psym=1 ,xtitle="Az",ytitle="Azoff (distance)"  ,title='RMS: '+string(stddev(azoff_dist[goodvals]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys ,yrange=[azoff_min,azoff_max]
+    oplot,az[good_both],azoff_dist[good_both],psym=1
+    pmsub_altoff = altoff - poly(alt,my_altoff_model2)
+    pmsub_azoff  = azoff_dist  - poly(alt,my_azoff_model2)
+    plot,az[good_both],pmsub_altoff[good_both],psym=1,xtitle="Az",ytitle="Altoff",title="RMS: "+string(stddev(pmsub_altoff[good_both]),format='(F5.2)')+" mean: "+string(mean(pmsub_altoff[good_both]),format='(F5.2)'),/ys
+    plot,az[good_both],pmsub_azoff[good_both],psym=1,xtitle="Az",ytitle="Azoff (distance)",title="RMS: "+string(stddev(pmsub_azoff[good_both]),format='(F5.2)')+" mean: "+string(mean(pmsub_azoff[good_both]),format='(F5.2)'),/ys
 
     device,/close_file
     set_plot,'x'
