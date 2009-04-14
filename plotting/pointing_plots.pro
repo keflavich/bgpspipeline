@@ -60,6 +60,11 @@ pro pointing_plots,filename,date
     g_alt = h_alt.fit_ampl*exp(-(x_g - h_alt.fit_mean)^2/h_alt.fit_rms^2)
     g_az = h_az.fit_ampl*exp(-(x_g - h_az.fit_mean)^2/h_az.fit_rms^2)
 
+        plot,h_alt.hb,h_alt.hc,psym=10,/xs,xtitle="Residual altoff",thick=2,ytitle="Number of observations"
+        oplot,x_g,g_alt,color=250
+        plot,h_az.hb,h_az.hc,psym=10,/xs,xtitle="Residual azoff",thick=2,ytitle="Number of observations"
+        oplot,x_g,g_az,color=250
+
     device,/close_file
     set_plot,'x'
 
