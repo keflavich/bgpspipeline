@@ -26,20 +26,20 @@ maxy=miny+100
 minz = -.1
 maxz = .85
 
-lplot=l[minx:maxx]
-bplot=b[miny:maxy]
+lplot=(l[minx:maxx]-mean(l[minx:maxx]))*60
+bplot=(b[miny:maxy]-mean(b[miny:maxy]))*60
 
 set_plot,'ps'
 device,filename=getenv('HOME')+'/paper_figures/image_types.ps',/encapsulated,xsize=7,ysize=7,/inches
 !p.multi=[0,2,2]
-imdisp,map[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.1,$
-    xtitle="Galactic Longitude",ytitle="Galactic Latitude",ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
-imdisp,noisemap[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.1,$
-    xtitle="Galactic Longitude",ytitle="Galactic Latitude",ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
-imdisp,model[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.1,$
-    xtitle="Galactic Longitude",ytitle="Galactic Latitude",ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
-imdisp,weightmap[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],margin=.1,$
-    xtitle="Galactic Longitude",ytitle="Galactic Latitude",ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
+imdisp,map[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.05,$
+    ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
+imdisp,noisemap[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.05,$
+    ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
+imdisp,model[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.05,$
+    ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
+imdisp,weightmap[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],margin=.05,$
+    ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
 device,/close_file
 set_plot,'x'
 
