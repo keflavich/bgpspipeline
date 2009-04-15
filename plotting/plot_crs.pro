@@ -3,7 +3,7 @@
 
 
 ; plot_crs,'/usb/scratch1/l111/v1.0.2_l111_13pca_postiter.sav'
-pro plot_crs,savefile
+pro plot_crs,savefile,field_name
 
     restore,savefile
 
@@ -20,7 +20,7 @@ pro plot_crs,savefile
     dhcr=histogram(dcrs,location=dlcr,binsize=.05)
 
     set_plot,'ps'
-    device,filename=getenv('HOME')+'/paper_figures/glitch_histogram.eps',/encapsulated
+    device,filename=getenv('HOME')+'/paper_figures/glitch_histogram'+field_name+'.eps',/encapsulated
 
     awhpos = where(alcr ge 0)
     plot,alcr[awhpos],ahcr[awhpos],psym=10,yrange=[0,100],xtitle='Amplitude (Jy)',$
