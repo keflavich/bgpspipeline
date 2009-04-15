@@ -1442,21 +1442,23 @@ unremoved glitches below the detection threshold is
 \begin{figure}
   \begin{minipage}{6.5in}
     \begin{center}
-      \includegraphics[scale=0.8]{eachpca}
+      \includegraphics[angle=90,scale=0.6]{eachpca}
     \end{center}
   \end{minipage}
 \vspace{0.25in}
   \begin{minipage}{6.5in}
     \begin{center}
-      \includegraphics[scale=0.8]{eachpca_20iters}
+      \includegraphics[angle=90,scale=0.6]{eachpca_20iters}
     \end{center}
   \end{minipage}
-  \caption{{\it Top}: a grid of maps of the first 20 PCA components
+  \caption{Selected images to illustrate the PCA process.  The displays are in
+  Galactic coordinates with a color range from -.1 to 1.0 Jy/beam.
+  {\it Top}: a grid of maps of the first 20 PCA components
 displayed at the same scale.  It is clear that NCG 7538, the object
 imaged, has correlated emission in each component.  There are varying
 levels of correlated noise in each component, with the first through
 third being the most obvious atmospheric components.  Most of the
-other noise components are probably various bits of correlated
+other noise components are probably varieties of correlated
 detector noise. {\it Bottom}: The same figure, but after 20
 iterations.  The figure is the breakdown of the atmosphere remainder
 (i.e. the raw data minus the astrophysical model) into eigenfunctions.
@@ -1628,6 +1630,21 @@ is 7.2\arcsec, chosen to be much smaller than the Bolocam beam.
 The maps are written to standard FITS files.  An example of the FITS
 header for the BGPS images is given in Appendix \ref{app:FITS_Header}.
 
+Five image types will be released, each covering the same regions.  The maps
+are standard astrophysical maps subject to the caveats previously mentioned,
+the most important being the spatial filtering function (section \ref{sec:}).
+The model maps are deconvolved using the maximum-entropy method with kernels
+specified in the header.  The residual map is the map of the model timestream
+subtracted from the data timestream; it is close to but not identical to the
+map minus the model.  The weightmap shows the inverse-variance weighting of
+each pixel.  The nhitsmap shows how many recorded data points from the
+timestream have been assigned to each pixel; it is proportional to the dwell
+time per pixel (each 'hit' is .1s).  Examples of each (except the nhitsmap)
+are given in figure \ref{fig:sampleimages}.
+
+\Figure{image_types}{Examples of four of the image types being released.  Top
+left: MAP.  Top right: Residual.  Bottom left: Deconvolved.  Bottom right:
+Weight}{fig:sampleimages}{1.0}
 
 %\section{Public Data Release}
 
@@ -1652,7 +1669,7 @@ release inclues
 \label{sec:Discussion}
 
 % first millimeter....
-The BGPS is the first (sub)millimeter survey of a substantial fraction
+The BGPS is the first millimeter survey of a substantial fraction
 of the Galactic Plane, providing an unbiased look at the high-density
 gas most intimately associated with the earliest phases of star
 formation.  Inspection of Figure \ref{fig:BGPSMontage} shows excellent
