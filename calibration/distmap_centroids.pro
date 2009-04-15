@@ -68,9 +68,13 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
     meas.xcen=xcen
     meas.ycen=ycen
-;    xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
-;    ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
+
+    ; HACK
+    if xcen gt n_e(allmap[*,0,0]) or ycen gt n_e(allmap[0,*,0]) then begin
+        xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
+        ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
                                 ; 3/20/09 - I'm pretty sure there's no such error
+    endif
 
     fitmapcube = allmap*0
 
