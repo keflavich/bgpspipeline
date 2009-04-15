@@ -18,6 +18,7 @@
 % 17) fig:NoiseVsLongitude
 % 18) fig:PCA_Filter
 % 19) fig:AperturePhotometry
+% 19) fig:sampleimages
 
 % Major Sections
 % sec:Introduction
@@ -44,7 +45,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[12pt,preprint]{aastex}
-%{emulateapj}
+%\documentclass{emulateapj}
 
 \usepackage{rotating}
 \usepackage{subfigure}
@@ -277,8 +278,8 @@ the first large area, systematic survey of the Northern Galactic Plane in the
 millimeter continuum without pre-selected targets.  The survey has detected
 \ncores\ clumps to a limiting depth of between \bgpsdepthlow\ and
 \bgpsdepthhigh\ mJy RMS.  We include maps of 100 contiguous square degrees from
-$l=-10.5$ to $l=86.5$ and $b=\pm0.5$ with a resolution of $\sim$35\arcsec, as
-well as regions in IC1396, $l=111$ (NGC7538), W3/4/5, and Gem OB1.  The most
+$\lon=-10.5$ to $\lon=86.5$ and $b=\pm0.5$ with a resolution of $\sim$35\arcsec, as
+well as regions in IC1396, $\lon=111$ (NGC7538), W3/4/5, and Gem OB1.  The most
 striking feature of the maps is the filamentary structure of cold dust
 throughout the Galaxy.
 
@@ -312,16 +313,16 @@ millimeter continuum
 \section{Introduction}
 \label{sec:Introduction}
 
-Millimeter-wavelength continuum surveys of the Galactic plane provide
-the most efficient way to find molecular clumps that are the likely sites of
-formation for massive stars and star clusters. The development of
-detector arrays have made blind surveys of large areas possible.
-Such surveys can remove the selection effects used in previous surveyes,
-such as the presence of embedded stars or star clusters, infrared sources,
-masers, or radio continuum emission. In particular, they can locate
-molecular clumps before stars form, providing vital information on
-the initial conditions.  The surveys can also provide valuable constraints
-on the physical properties of the clumps, especially masses and mean densities.
+Millimeter-wavelength continuum surveys of the Galactic plane provide the most
+efficient way to find molecular clumps that are the likely sites of formation
+for massive stars and star clusters. The development of detector arrays have
+made blind surveys of large areas possible.  Such surveys bypass the need for
+selection based on the presence of embedded stars or star clusters, infrared
+sources, masers, or radio continuum emission. In particular, they can locate
+molecular clumps before stars form, providing vital information on the initial
+conditions of star formation.  These surveys can also provide valuable
+constraints on the physical properties of the clumps, especially masses and
+mean densities.
 
 Galaxy-wide surveys are essential for measuring the impacts of the
 environment on clump properties and star formation activity.
@@ -338,7 +339,7 @@ identified the locations of large molecular clouds and traced
 the transition from atomic to molecular gas as distance from the
 center of the galaxy decreases. Together with kinematic distances
 \citep[e.g.][]{RotationCurve} and, more recently, accurate distances
-from VLBI (add ref to Reid et al. work), these surveys have begun to
+from VLBI \citep{reid09}, these surveys have begun to
 reveal the spiral structure of the Milky Way. As this picture comes into
 sharper focus, we can begin to address the old question of the relationship
 between spiral density waves and star formation.
@@ -349,8 +350,8 @@ from uniform over molecular clouds, but is concentrated in unusually dense
 regions called clumps or cores, which fill a small fraction of the area
 of most clouds [refs. E. Lada et al. Evans et al., Enoch et al.]
 Following \citet{williams00} and McKee-Ostriker (ARAA), we
-use the term core to refer to a very dense region destined to form an
-individual star or small multiple star systems and the term clump to
+use the term `core' to refer to a very dense region destined to form an
+individual star or small multiple star systems and the term `clump' to
 refer to a
 region likely to form a group or cluster of stars. While clumps forming
 massive clusters may be denser than cores forming low mass stars
@@ -369,14 +370,16 @@ A further limitation of spectral line studies is that the tracers of
 denser gas tend to be weak and multi-element receiver arrays have
 only a modest number of elements, making blind surveys very time-consuming.
 
-In contrast, focal-plane arrays containing hundreds of individual
-bolometers sensitive to millimeter and sub-millimeter (sub-mm)
-radiation are now available. This advance in technology enables
-blind surveys of the Galactic plane, providing a uniform inventory of massive
-star-forming and starless clumps.  Catalogs resulting
-from such surveys will provide the data base for subsequent observations
-in tracers such as hard-to-excite molecular lines and higher resolution
-studies with instruments like CARMA and ALMA.
+% redundant:
+% In contrast, focal-plane arrays containing hundreds of individual
+% bolometers sensitive to millimeter and sub-millimeter (sub-mm)
+% radiation are now available. This advance in technology enables
+% blind surveys of the Galactic plane, providing a uniform inventory of massive
+% star-forming and starless clumps.  Catalogs resulting
+% from such surveys will provide the data base for subsequent observations
+% in tracers such as hard-to-excite molecular lines and higher resolution
+% studies with instruments like CARMA and ALMA.
+(this line belongs somewhere)
 A further advantage of continuum observations of dust at long wavelengths
 is the low optical depth of the dust \citep{johnstone06},
 permitting a straight-forward estimate of the mass of the emitting region.
@@ -398,23 +401,23 @@ Two large surveys of the Galactic plane are in progress.
 The ATLASGAL survey, using the LABOCA instrument at 870 \micron\
 on the APEX telescope in Chile, will cover the southern Galactic plane
 and extend somewhat into the north. Initial results from this survey
-have been reported by \citet{schuller09}. [say more]
+have been reported by \citet{schuller09}. [say more - overlap region?
+]
 
-This paper presents the results of the Bolocam Galactic Plane Survey
-(BGPS).  (Give longitude and latitude coverage.)
-It is complementary to the survey by \citet{schuller09} in that
-it targets the part of the plane visible from the northern
-hemisphere and uses a somewhat longer wavelength, allowing
-comparison of properties in the region of overlap with the survey of
-\citet{schuller09}.
-At 870 \micron, $h\nu/k = 16.5$ K, compared to 13.1 K at 1.1 mm.
-Because starless clumps may be quite cold ($\td \approx 10$ K),
-the uncertainty in mass caused by uncertain temperature is less at 1.1 mm.
-For example, the mass estimate if the actual $\td = 20$ K, rather
-than 10 K, would decrease by a factor of 3.3 at 870 \micron\
-versus a factor of 2.9 at 1.1 mm. In addition, the Bolocam bandpass
-excludes the CO \jj{21} line, which can be a significant contaminant
-on top of the dust continuum emission.
+This paper presents the results of the Bolocam Galactic Plane Survey (BGPS).
+The survey covers the contiguous range $-10.5 < \lon < 86.5, -.5 < b < .5$ with
+additional coverage to higher $|b|$ in the range $77 < \lon < 86.5$ and in the
+$\lon=111$, W3/4/5, Gem OB1, and IC 1396 regions.  It is complementary to the
+survey by \citet{schuller09} in that it targets the part of the plane visible
+from the northern hemisphere and uses a somewhat longer wavelength, allowing
+comparison of properties in the region of overlap with the ATLASGAL survey.
+At 870 \micron, $h\nu/k = 16.5$ K, compared to 13.1 K at 1.1 mm.  Because
+starless clumps may be quite cold ($\td \approx 10$ K), the uncertainty in mass
+caused by uncertain temperature is slightly less at 1.1 mm.  For example, the
+mass estimate if the actual $\td = 20$ K, rather than 10 K, would decrease by a
+factor of 3.3 at 870 \micron\ versus a factor of 2.9 at 1.1 mm. In addition,
+the Bolocam bandpass excludes the CO \jj{2}{1} line, which can be a significant
+contaminant on top of the dust continuum emission.
 
 
 We have used the 144-element Bolocam focal plane array, mounted at the
@@ -483,13 +486,13 @@ greyscale is IRAS 100 \mum.
 % TEST
 % Useful, but not here
 %\begin{figure}
-%  \subfigure[$l=-10.5$ to $l=19.5$ Units are Jy/Beam.  The brightest
-%	sources, e.g. Sgr B2, Sgr A, and sources near $l=10$ and
-%	$l=13$, appear to be saturated, but this is only a display
-%	artifact.  The noise is more pronounced from $l=-7$ to $l=-2$
+%  \subfigure[$\lon=-10.5$ to $\lon=19.5$ Units are Jy/Beam.  The brightest
+%	sources, e.g. Sgr B2, Sgr A, and sources near $\lon=10$ and
+%	$\lon=13$, appear to be saturated, but this is only a display
+%	artifact.  The noise is more pronounced from $\lon=-7$ to $\lon=-2$
 %	because this region was observed less.]{\label{fig:BGPSMontage-a}\includegraphics[scale=0.75]{fig1_pg1_bw_inv_bar_label}}\\
 %\pagebreak
-%\subfigure[$l=19.5$ to $l=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
+%\subfigure[$\lon=19.5$ to $\lon=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
 %	51, W 43, W 49, and M 17 appear to be saturated, but this is
 %	only a display artifact.]
 %{\label{fig:BGPSMontage-b}\includegraphics[scale=0.75]{fig1_pg2_bw_inv_bar_label}}
@@ -508,10 +511,10 @@ greyscale is IRAS 100 \mum.
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
-      \caption{$l=-10.5$ to $l=19.5$ Units are Jy/Beam.  The brightest
-	sources, e.g. Sgr B2, Sgr A, and sources near $l=10$ and
-	$l=13$, appear to be saturated, but this is only a display
-	artifact.  The noise is more pronounced from $l=-7$ to $l=-2$
+      \caption{$\lon=-10.5$ to $\lon=19.5$ Units are Jy/Beam.  The brightest
+	sources, e.g. Sgr B2, Sgr A, and sources near $\lon=10$ and
+	$\lon=13$, appear to be saturated, but this is only a display
+	artifact.  The noise is more pronounced from $\lon=-7$ to $\lon=-2$
 	because this region was observed less.}
     \end{center}
     \label{fig:BGPSMontage}
@@ -525,7 +528,7 @@ greyscale is IRAS 100 \mum.
   \begin{minipage}{6.5in} 
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg2_bw_inv_bar_label} 
-      \caption{$l=19.5$ to $l=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
+      \caption{$\lon=19.5$ to $\lon=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
 	51, W 43, W 49, and M 17 appear to be saturated, but this is
 	only a display artifact.  The $20 < \ell < 40$ region through the
         4-8 kpc molecular ring and approximately the termination of the galactic
@@ -541,7 +544,7 @@ greyscale is IRAS 100 \mum.
   \begin{minipage}{6.5in} 
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg3_bw_inv_bar_label}
-      \caption{$l=49.5$ to $l=74.5$.  In comparison to the inner galaxy, the $65
+      \caption{$\lon=49.5$ to $\lon=74.5$.  In comparison to the inner galaxy, the $65
       < \ell < 75$ has a very sparse population of clumps}
     \end{center}
   \end{minipage}
@@ -554,7 +557,7 @@ greyscale is IRAS 100 \mum.
   \hspace{-1in}
   \includegraphics[scale=0.8]{fig1_pg5_bw_inv_bar_label} 
   \caption{The Cygnus Arm. Note that coverage in \emph{b} is extended to $\pm
-  1.5\deg$. The large scale 'peanut' shape including DR21 is suggestive of a
+  1.5\deg$. The large scale `peanut' shape including DR21 is suggestive of a
   large wind-blown bubble, although.... [someone else must have commented on
   this in the past?].  See section \ref{sec:motte} for a comparison with the
   \citet{motte07} IRAM study of this region. }
@@ -567,7 +570,7 @@ greyscale is IRAS 100 \mum.
 \begin{figure}
 \hspace{-0.5in}
   \includegraphics[scale=0.8]{fig1_pg4_bw_inv_bar_label} 
-  \caption{Cloud complexes centered at $l=111$ in the Perseus Arm. \TBD\ Add annotations}
+  \caption{Cloud complexes centered at $\lon=111$ in the Perseus Arm. \TBD\ Add annotations}
 \end{figure}
 
 \addtocounter{figure}{-1}
@@ -696,7 +699,7 @@ A number of different descriptions of the reduction of Bolocam data
 have been published \citep{laurent05,enoch06,sayers09}.  This work
 addresses the issues specific to the BGPS, significantly improving the
 method of \citet{enoch06} for generating maps and characterizing their
-properties.  It incorporates also some of the technical developments
+properties.  It incorporates some of the technical developments
 of \citet{sayers09}, though the exquisite control of systematics and
 noise of that analysis is neither necessary nor possible here.
 
@@ -884,8 +887,11 @@ matched to our images.  The results are shown in Figure
 
 \Table
 {llllll}
-{Note:  The \citet{motte07} integration box is given in terms of pc. 
-The assumed distance must be about 1.7 kpc \citep{schneider2006}  }
+{Comparison of \citet{motte07} IRAM measurements to BGPS measurements
+in the Cygnus X region
+%Note:  The \citet{motte07} integration box is given in terms of pc. 
+%The assumed distance must be about 1.7 kpc \citep{schneider2006}    % no, it's 1.7kpc stated explicitly
+}
 {
 %Source  &   BGPS           &  Motte \\
 %        &   peak mJy/beam  &  mJy in box (see Motte+ Table 1)
@@ -1039,7 +1045,7 @@ coadded with tthe 6\arcsec\ RMS uncertainty of the model.  The
 relative alignment using the correlation maps is typically accurate to
 \TBD\ $<1\arcsec$.
 
-TBD: In low s/n fields, specifically l=65 to 75, there was not enough signal to
+TBD: In low s/n fields, specifically \lon=65 to 75, there was not enough signal to
 acquire a pointing offset using cross-correlation.  In these fields the
 relative pointing offset is larger and the beam is slightly larger.
 
@@ -1112,7 +1118,7 @@ distribution. ($\sigma = 5.94,2.92$)]
 % -----------------------------------------------------------------------------
 \begin{figure}
 
-  \subfigure[{\it Left}: the Bolocam map in a portion of the $l=30$
+  \subfigure[{\it Left}: the Bolocam map in a portion of the $\lon=30$
   field.  {\it Right}: the SLC maps in the same region.  The green
   contours on the Bolocam map indicate the positions of the SLC
   sources.  \TBD\ {\it Do the negative bowls of either survey bunge up
@@ -1460,40 +1466,42 @@ contribute to the overall noise signal.}{fig:GlitchDistribution}{1.0}
 \begin{figure}
   \begin{minipage}{6.5in}
     \begin{center}
-      \includegraphics[angle=90,scale=0.6]{eachpca}
+      \includegraphics[angle=270,scale=0.6]{eachpca}
     \end{center}
   \end{minipage}
 \vspace{0.25in}
   \begin{minipage}{6.5in}
     \begin{center}
-      \includegraphics[angle=90,scale=0.6]{eachpca_20iters}
+      \includegraphics[angle=270,scale=0.6]{eachpca_20iters}
     \end{center}
   \end{minipage}
   \caption{Selected images to illustrate the PCA process.  The displays are in
   Galactic coordinates with a color range from -.1 to 1.0 Jy/beam.
-  {\it Top}: a grid of maps of the first 20 PCA components
-displayed at the same scale.  It is clear that NCG 7538, the object
-imaged, has correlated emission in each component.  There are varying
-levels of correlated noise in each component, with the first through
-third being the most obvious atmospheric components.  Most of the
-other noise components are probably varieties of correlated
-detector noise. {\it Bottom}: The same figure, but after 20
-iterations.  The figure is the breakdown of the atmosphere remainder
-(i.e. the raw data minus the astrophysical model) into eigenfunctions.
-Very little astrophysical flux remains at any level of correlation,
-though there is some at large (few arcminute) scales.}
+  {\it Top 4 rows}: a grid of maps of each of the first 20 PCA components displayed at
+  the same scale.  It is clear that NCG 7538, the object imaged, has emission
+  in each component.  There are varying levels of noise in each component, with
+  the first and second being the most obvious atmospheric components.  Most of
+  the other noise components are probably detector noise correlated among a
+  subset of the bolometers.  The streaks are residuals of the scan-turnaround
+  noise that was not removed by the exponential model fit.  {\it Bottom 4
+  rows}: The same figure, but after 20 iterations.  The figure is the breakdown
+  of the atmosphere remainder (i.e.  the raw data minus the astrophysical
+  model) into eigenfunctions.  Very little astrophysical flux remains at any
+  level of correlation, though there is some at large (few arcminute) scales.}
 \label{fig:PCA_Graphical}
 
 \end{figure}
 
 \Figure{l001_deconvolutionkernelcompare}{The effect of deconvolution
 on the iterative process can be seen in its effect on the
-residuals. From left to right: map, noise, smoothmap, model. Top to
+residuals. From left to right: map, noise, model. Top to
 bottom kernel size: 14.4\arcsec, 21.6\arcsec, 31.2\arcsec,
 7.2\arcsec. The final version of the pipeline uses 14.4\arcsec, which
 has the result of leaving no flux in the residual at the location of
 Sgr B2, and does not ``dig a hole'' in the residual map, as the
-7.2\arcsec\ kernel does.}{fig:Deconvolution}{1.0}
+7.2\arcsec\ kernel does.  The 7.2\arcsec\ kernel also lacks the
+noise-rejection features of the larger kernels, as can be seen in the
+last panel.}{fig:Deconvolution}{1.0}
 
 \clearpage
 
@@ -1595,27 +1603,35 @@ The final reduction used 13 PCA components because this produced a
 reasonable compromise between attenuating extended structure and
 attaining high S/N on compact faint objects.
 
-Figure \ref{fig:deconv_filter}b shows the fraction of flux recovered
-in the maps as a function of the deconvolution kernel used to create
-the astrophysical model maps.  The differences at large source sizes
-are not yet well-understood (!!!!!!), but at the smallest source size,
-it is evident that a deconvolution kernel smaller than the source size
-does not reliably recover the source flux.  Therefore we chose a
-deconvolution kernel smaller than the beam but larger than the pixel
-size used.  Figure \ref{fig:Deconvolution} demonstrates the effects of
-using both too large and too small a kernel.
+Figure \ref{fig:deconv_filter}b shows the fraction of flux recovered in the
+maps as a function of the deconvolution kernel used to create the astrophysical
+model maps.  The differences at large source sizes are not well-understood
+(these size scales may be dominated by atmosphere), but at the smallest source
+size, it is evident that a deconvolution kernel smaller than the source size
+does not reliably recover the source flux.  Therefore we chose a deconvolution
+kernel smaller than the beam but larger than the pixel size used.  Figure
+\ref{fig:Deconvolution} demonstrates the effects of using both too large and
+too small a kernel.
 
 % -----------------------------------------------------------------------------
 
-\FigureTwo{pca_comparison_l111}{deconvolution_comparison_l111}{The
+\FigureTwo{pca_comparison_nolegend_l111}{deconvolution_comparison_nolegend_l111}{The
 fractional flux recovered as a function of source size for
 well-separated Gaussian sources with the FWHM as indicated.
-\emph{Left}: 3 (blue),7 (green),10 (yellow) ,13 (orange),16 (red),21
-(teal),26 (lime),31 (black) PCA components subtracted.  \emph{Right}:
-7.2" (cyan), 14.4" (black), 21.6" (red), 31.2" (green) deconvolution
-kernel for 13 PCA components subtracted. \TBD\ {\it Remove sources
-with sizes smaller than the beam.  Are the sizes FWHM or something
-else?} }{fig:PCA_Filter}{1.0}
+\emph{Left}: 3 (blue), 7 (green), 10 (yellow), 13 (orange), 16 (red), 21
+(teal), 26 (lime), 31 (black) PCA components subtracted.  
+Note that flux recovery drops to 50\% at 120\arcsec for the 13 PCA
+component cleaning used in the released data.  The 3 and 7 PCA cases
+show bumps because atmospheric noise is still present at large scales.
+The $>$100\% recovery for sources smaller than the deconvolution kernel is a
+side-effect; since the deconvolution kernel is smaller than the beam, no real
+source should ever be smaller than the kernel.
+\emph{Right}:
+7.2\arcsec (cyan), 14.4\arcsec (black), 21.6\arcsec (red), 31.2\arcsec (green)
+deconvolution kernel for 13 PCA components subtracted.  It is clear that the
+larger deconvolution kernels generate spurious signal at smaller scales, but
+the flux recovery is very close to 1 at the beam size
+(35\arcsec)}{fig:PCA_Filter}{1.0}
 
 \Figure{aper_phot_hpf_beam}{The effect of performing aperture
 photometry on a point source of unit flux observed with the effective
@@ -1714,14 +1730,14 @@ resolution have been complemented by interferometer observations at
 high resolution.
 
 There are clear maxima in the emission filling factor in the Galactic
-Center and in the region from $l=23$ to $l=31$, the line of sight
+Center and in the region from $\lon=23$ to $\lon=31$, the line of sight
 through the densest part of the molecular ring.  Additional areas of
-high source density are seen at $l=10$ and $l=13$.  The filling factor
+high source density are seen at $\lon=10$ and $\lon=13$.  The filling factor
 of 1.1 mm continuum emission at the 100 mJy level is $\sim 20$\% per
-square degree from $l=-10$ to $l=20$ and $\sim 10$\% from $l=20$ to
-$l=50$.
+square degree from $\lon=-10$ to $\lon=20$ and $\sim 10$\% from $\lon=20$ to
+$\lon=50$.
 %In the range
-%$l=50$ to $l=75$, the filling factor is below 1\% and very few sources have
+%$\lon=50$ to $\lon=75$, the filling factor is below 1\% and very few sources have
 %been detected.  
 This result is in contrast to CO filling factors $\sim1$ in the inner galactic
 plane \citep{dame01,FCRAO}, confirming that 1.1 mm continuum emission traces
