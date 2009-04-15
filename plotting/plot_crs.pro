@@ -2,29 +2,31 @@
 ; i.e. raw value of hits flagged out
 
 
-restore,'/usb/scratch1/l111/v1.0.2_l111_13pca_postiter.sav'
+; plot_crs,'/usb/scratch1/l111/v1.0.2_l111_13pca_postiter.sav'
+pro plot_crs,savefile
 
-whflag = where(bgps.flags,complement=whnotflag)
-whflag = where(bgps.glitchloc,complement=whnotflag)
-rcrs = bgps.raw[whflag]
-acrs = bgps.ac_bolos[whflag]
-astrcrs = bgps.astrosignal[whflag]
-dcrs = bgps.dc_bolos[whflag]
+    restore,savefile
 
-rhcr=histogram(rcrs,location=rlcr,binsize=2)
-ahcr=histogram(acrs,location=alcr,binsize=2)
-astrhcr=histogram(astrcrs,location=astrlcr,nbins=100)
-dhcr=histogram(dcrs,location=dlcr,binsize=.05)
+    whflag = where(bgps.flags,complement=whnotflag)
+    whflag = where(bgps.glitchloc,complement=whnotflag)
+    rcrs = bgps.raw[whflag]
+    acrs = bgps.ac_bolos[whflag]
+    astrcrs = bgps.astrosignal[whflag]
+    dcrs = bgps.dc_bolos[whflag]
 
-set_plot,'ps'
-device,filename=getenv('HOME')+'/paper_figures/glitch_histogram.eps',/encapsulated
+    rhcr=histogram(rcrs,location=rlcr,binsize=2)
+    ahcr=histogram(acrs,location=alcr,binsize=2)
+    astrhcr=histogram(astrcrs,location=astrlcr,nbins=100)
+    dhcr=histogram(dcrs,location=dlcr,binsize=.05)
 
-awhpos = where(alcr ge 0)
-plot,alcr[awhpos],ahcr[awhpos],psym=10,yrange=[0,100],xtitle='Amplitude (Jy)',$
-    ytitle='Number of Points'
-device,/close_file
-set_plot,'x'
+    set_plot,'ps'
+    device,filename=getenv('HOME')+'/paper_figures/glitch_histogram.eps',/encapsulated
 
+    awhpos = where(alcr ge 0)
+    plot,alcr[awhpos],ahcr[awhpos],psym=10,yrange=[0,100],xtitle='Amplitude (Jy)',$
+        ytitle='Number of Points'
+    device,/close_file
+    set_plot,'x'
 
 end
 
