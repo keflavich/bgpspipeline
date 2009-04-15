@@ -1,5 +1,7 @@
 ; streamlined version of centroid_plots
 ; i.e. it only plots the stuff we actually want in the paper
+; made April 14th
+; pointing_plots,'/usb/scratch1/texts/0707_rawcsoptg_radec_centroids.txt','0707'
 
 pro pointing_plots,filename,date
     readcol,filename,name,source_name,xpix,ypix,ra,dec,raoff,decoff,objra,objdec,objalt,objaz,altoff,azoff,$
@@ -59,14 +61,17 @@ pro pointing_plots,filename,date
     ;;HISTOGRAMS
     h_alt = hist_wrapper(pmsub_altoff,1.,-20,20,/gauss_fit,/noverbose)
     h_az = hist_wrapper(pmsub_azoff,1.,-20,20,/gauss_fit,/noverbose)
-    x_g = findgen(1000)/25.-20.
-    g_alt = h_alt.fit_ampl*exp(-(x_g - h_alt.fit_mean)^2/h_alt.fit_rms^2)
-    g_az = h_az.fit_ampl*exp(-(x_g - h_az.fit_mean)^2/h_az.fit_rms^2)
 
-        plot,h_alt.hb,h_alt.hc,psym=10,/xs,xtitle="!6Residual altoff",thick=2,ytitle="!6Number of observations"
-        oplot,x_g,g_alt,color=250
-        plot,h_az.hb,h_az.hc,psym=10,/xs,xtitle="!6Residual azoff",thick=2,ytitle="!6Number of observations"
-        oplot,x_g,g_az,color=250
+    x_g = findgen(1000)/25.-20.
+    p_alt=mpfitfun('gauss_mpfit_func',h_alt.hb,h_alt.hc,0*h_alt.hc+1,[0.0,1.0,1.0,0.0])
+    p_az=mpfitfun('gauss_mpfit_func',h_az.hb,h_az.hc,0*h_az.hc+1,[0.0,1.0,1.0,0.0])
+    g_alt = gauss_mpfit_func(x_g,p_alt)
+    g_az = gauss_mpfit_func(x_g,p_az)
+
+    plot,h_alt.hb,h_alt.hc,psym=10,/xs,xtitle="!6Residual altoff",thick=2,ytitle="!6Number of observations"
+    oplot,x_g,g_alt,color=250
+    plot,h_az.hb,h_az.hc,psym=10,/xs,xtitle="!6Residual azoff",thick=2,ytitle="!6Number of observations"
+    oplot,x_g,g_az,color=250
 
     device,/close_file
     set_plot,'x'

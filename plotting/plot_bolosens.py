@@ -9,11 +9,18 @@ uranus=[
 '050628_o33-4_nofit' ]
 #'050904_o31-2_nofit' 
 
-for obsdate in uranus:
+obs = [ { 'uranus':'050619_o23-4_nofit' } ,
+        { 'uranus':'050628_o33-4_nofit' } ,
+        { '3c279' :'050703_ob1-2' } ]
 
-    d_angle = open('/scratch/adam_work/distmaps/uranus_'+obsdate+'.txt','r').readline().split().pop()
+for o in obs:
 
-    bolonum,base,amp,xwid,ywid,xcen,ycen,angle = readcol('/scratch/adam_work/distmaps/uranus_'+obsdate+'_bolofits.txt',twod=False,skipline=1)
+    object = o.keys()[0]
+    obsdate = o[object]
+    
+    d_angle = open('/scratch/adam_work/distmaps/'+object+'_'+obsdate+'.txt','r').readline().split().pop()
+
+    bolonum,base,amp,xwid,ywid,xcen,ycen,angle = readcol('/scratch/adam_work/distmaps/'+object+'_'+obsdate+'_bolofits.txt',twod=False,skipline=1)
 
     good = ((amp > (median(amp)-3*std(amp))) * (amp < (median(amp)+3*std(amp))))
 

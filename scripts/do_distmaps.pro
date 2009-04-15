@@ -6,13 +6,12 @@ doplot=2
 fixgrid=0
 fixscale=1
 
-outtxt = getenv('WORKINGDIR')+'/distmaps/distmaptest_nofit.txt'
-outfile_suf = '_nofit'
-distmap,[getenv('SLICED_POLY')+'/uranus/050619_o23_raw_ds5.nc',getenv('SLICED_POLY')+'/uranus/050619_o24_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050619_o23-4'+outfile_suf,doplot=doplot,outtxt=outtxt
-distmap,[getenv('SLICED_POLY')+'/uranus/050628_o33_raw_ds5.nc',getenv('SLICED_POLY')+'/uranus/050628_o34_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050628_o33-4'+outfile_suf,doplot=doplot,outtxt=outtxt
+outtxt='/dev/tty'
+distmap,[getenv('SLICED_POLY')+'/uranus/050619_o23_raw_ds5.nc',getenv('SLICED_POLY')+'/uranus/050619_o24_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050619_o23-4',doplot=doplot,outtxt=outtxt,/fixcenter
+distmap,[getenv('SLICED_POLY')+'/uranus/050628_o33_raw_ds5.nc',getenv('SLICED_POLY')+'/uranus/050628_o34_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050628_o33-4',doplot=doplot,outtxt=outtxt,/fixcenter
 ;distmap_centroids,[getenv('SLICED_POLY')+'/uranus/050619_o23_raw_ds5.nc',getenv('SLICED_POLY')+'/uranus/050619_o24_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050619_o23-4'+outfile_suf+"_distcor",doplot=doplot,outtxt=outtxt,distcor=getenv('WORKINGDIR')+'/distmaps/uranus_050619_o23-4'+outfile_suf+".txt"
 ;distmap_centroids,[getenv('SLICED_POLY')+'/uranus/050628_o33_raw_ds5.nc',getenv('SLICED_POLY')+'/uranus/050628_o34_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050628_o33-4'+outfile_suf+"_distcor",doplot=doplot,outtxt=outtxt,distcor=getenv('WORKINGDIR')+'/distmaps/uranus_050628_o33-4'+outfile_suf+".txt"
-distmap,[getenv('SLICED_POLY')+'/neptune/050626_o19_raw_ds5.nc',getenv('SLICED_POLY')+'/neptune/050626_o20_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/neptune_050626_o19-20'+outfile_suf,doplot=doplot,outtxt=outtxt
+distmap,[getenv('SLICED_POLY')+'/neptune/050626_o19_raw_ds5.nc',getenv('SLICED_POLY')+'/neptune/050626_o20_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/neptune_050626_o19-20',doplot=doplot,outtxt=outtxt
 distmap,[getenv('SLICED_POLY')+'/mars/050627_o31_raw_ds1.nc',getenv('SLICED_POLY')+'/mars/050627_o32_raw_ds1.nc'],getenv('WORKINGDIR')+'/distmaps/mars_050627_o31-2'+outfile_suf,/mars,doplot=doplot,outtxt=outtxt
 $ls *_nofit.txt > 0506_nofitlist.txt
 average_beamloc,'0506_nofitlist.txt','0506_nofit_averagebeamloc.txt'
@@ -21,7 +20,7 @@ average_beamloc,'0506_nofitlist.txt','0506_nofit_averagebeamloc.txt'
 distmap,[getenv('SLICED_POLY')+'/uranus/050904_o31_raw_ds1.nc',getenv('SLICED_POLY')+'/uranus/050904_o32_raw_ds1.nc'],getenv('WORKINGDIR')+'/distmaps/uranus_050904_o31-2',doplot=doplot,fixgrid=fixgrid,fixscale=fixscale
 ;distmap_comp,getenv('SLICED_POLY')+'/uranus/050911_ob8_raw_ds1.nc',getenv('WORKINGDIR')+'/distmaps/uranus_050911_ob8',doplot=doplot,fixgrid=fixgrid,fixscale=fixscale
 
-distmap,[getenv('SLICED_POLY')+'/3c279/050703_ob1_raw_ds5.nc',getenv('SLICED_POLY')+'/3c279/050703_ob2_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/3c279_050703_ob1-2',doplot=doplot,fixgrid=fixgrid,fixscale=fixscale
+distmap,[getenv('SLICED_POLY')+'/3c279/050703_ob1_raw_ds5.nc',getenv('SLICED_POLY')+'/3c279/050703_ob2_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/3c279_050703_ob1-2',doplot=doplot,fixgrid=fixgrid,fixscale=fixscale,/fixcenter
 
 
 distmap,[getenv('SLICED')+'/neptune/060602_o30_raw_ds5.nc',getenv('SLICED')+'/neptune/060602_o31_raw_ds5.nc'],getenv('WORKINGDIR')+'/distmaps/neptune_060602_o30-1',doplot=doplot,fixgrid=fixgrid,fixscale=fixscale

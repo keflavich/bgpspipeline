@@ -653,6 +653,7 @@ is reduced to $\sim40\%$.
 
 % FIGURES AND TABLES
 
+% Figure 3
 \Figure{bolocam_bandpass}{The Bolocam 1.1 mm bandpass.  Bright
 molecular emission lines are shown at their rest frequencies.  Note
 that the Bolocam passband rejects $>90\%$ of the $^{12}$CO flux,
@@ -679,10 +680,12 @@ V   & 2007 Jul 01 & 2007 Jul 13 & 5 & 0.1 \\
 VI  & 2007 Sep 01 & 2007 Sep 09 & 5 & 0.1 \\
 }
 
-\FigureTwo{bolosens050904_o32}{scan_10deg}{Left: the position,
-ellipticity and relative response of the detectors in the Bolocam
-focal plane as mapped to the sky.  Right: The effect of field rotation
-on the coverage obtained via Bolocam raster scans.}{fig:Array}{1.0}
+% Figure 4
+\FigureTwo{bolosens050904_o32}{scan_10deg}{Left: the position, ellipticity and
+relative response of the detectors in the Bolocam focal plane as mapped to the
+sky.  Right: The effect of field rotation on the coverage obtained via Bolocam
+raster scans.  The array is held fixed during a scan, but is rotated such that
+the sampling is most uniform.}{fig:Array}{1.0}
 
 \section{Overview of the Data Reduction}
 \label{sec:Overview}
@@ -919,23 +922,24 @@ Motte Source Number &  Motte Table 1 integrated flux &  Motte scaled Jy/bm  & BG
 \FigureTwo{fluxcal_errorbars}{calib_vs_dc}
 %{rel_flux_cal_050303_ob3_to_050405_o66}
 %{calibration_plot_2004}
-{Left: Average calibration curve [V/Jy] versus the mean detector
-voltage, a proxy for atmospheric loading.  Red points are observations
-of Mars and black of Uranus.  Right: Scaling of the relative
-calibration with atmospheric loading for a single
-detector.}{fig:CalibrationCurves}{1.0}
+{Left: Average calibration curve [V/Jy] versus the mean detector voltage, a
+proxy for atmospheric loading.  Red points are observations of Mars and black
+of Uranus.  The black line is a 2nd-order fit with 0,0 (no response if no
+measurable potential difference) forced.  Right: Scaling of the relative
+response to the atmosphere for a single detector compared to the array
+median.}{fig:CalibrationCurves}{1.0}
 
 % 6
 \Figure{relsens_cal}{An illustration of the relative sensitivity
 calibration using the atmosphere as a calibrator.  Black is the median
-over all bolometers (the atmosphere model), red and green are
+over all bolometers (the 1st-order atmosphere model), red and green are
 individual bolometers. a. before and b. after applying the relative
 calibration.  Note the improved agreement.}{fig:Flatfield}{1.0}
 
 % 7
 \Figure{cygnus_flux_comparison}{A comparison of the fluxes extracted
-in the same aperture from the \citet{motte07} MAMBO map and the
-Bolocam map of this paper.}{fig:CygnusComparison}{1.0}
+in the same aperture from the \citet{motte07} MAMBO map and the Bolocam map of
+this paper. THIS FIGURE IS A PLACEHOLDER}{fig:CygnusComparison}{1.0}
 
 \begin{deluxetable}{lc}
 \tablewidth{0pt}
