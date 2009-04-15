@@ -1099,7 +1099,7 @@ model. ]
 {\label{fig:PointingModel-a}\includegraphics[scale=0.9]{paper_models_0707}}\\
 
   \subfigure[The residuals of the pointing model.  Note the Gaussian
-distribution.]
+distribution. ($\sigma = 5.94,2.92$)]
 {\label{fig:PointingModel-b}\includegraphics[scale=0.9]{paper_gaussian_0707}}
 
 \caption{The Bolocam pointing model for Epoch V.}
@@ -1352,7 +1352,10 @@ properties of the final map.
     \begin{center}
       \includegraphics[scale=0.9]{iterative_mapping1}
       \caption{An example of the change in the time series as
-      iterative mapping proceeds.}
+      iterative mapping proceeds.  1. Raw time series 2. After removal
+      of residual 60Hz signal 3. Exponential decay function at scan
+      turnarounds subtracted 4. A polynomial (with astrophysical source
+      rejection) is fit to remove large-scale variations across the scan. }
     \end{center}
     \label{fig:IterativeMapping}
   \end{minipage}
@@ -1366,7 +1369,13 @@ properties of the final map.
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.9]{iterative_mapping2}
-      \caption{}
+      \caption{Panel 1 is the same as panel 4 in the previous figure.
+      Before the first cleaning, the raw data (black) and remainder data (green)
+      are equal because there is no model.  
+      Panel 2 shows the median-atmosphere subtraction, which is the first-
+      order correction.
+      Panel 3 shows the astrophysical signal left over from the PCA selection.
+      Panel 4 shows the total atmosphere model from PCA and median estimation}
     \end{center}
     \label{fig:IterativeMapping-b}
   \end{minipage}
@@ -1379,7 +1388,14 @@ properties of the final map.
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.9]{iterative_mapping3}
-      \caption{}
+      \caption{Same as previous figure, except after 20 iterations.
+      Panel 1 - The deconvolved astrophysical map is returned to a timestream (red)
+      and subtracted from the 'raw' data (black). 
+      Panel 2 - The median of the remainder (green) is subtracted as the first
+      atmosphere estimation
+      Panel 3 - The cumulative astrophysical model (red) and the additional astrophysical
+      signal from iteration 20 (black)
+      Panel 4 - The atmosphere signal after 20 iterations}
     \end{center}
     \label{fig:IterativeMapping-c}
   \end{minipage}
@@ -1398,13 +1414,12 @@ properties of the final map.
       \includegraphics[scale=0.5]{flagger_glitchgone}
     \end{center}
   \end{minipage}
-  \caption{An illustration of the flagging process using the waterfall
-plot. Left: The glitch apparent at middle right is the same one whose
-time series is shown in Figure \ref{fig:CosmicRayGlitch}.  Because of
-the PCA subtraction, the effect of the glitch also propagates over the
-other bolometers, appearing as a horizontal stripe. Right: The same
-data displayed with the time point including the glitch flagged out
-and rescaled}
+  \caption{An illustration of the flagging process using the waterfall plot.
+  Left: The glitch apparent at middle right (bolometer 98, around 6.2s) is the
+  same one whose time series is shown in Figure \ref{fig:Flagger}b.  Because of
+  the PCA subtraction, the effect of the glitch also propagates over the other
+  bolometers, appearing as a horizontal stripe. Right: The same data displayed
+  with the time point including the glitch flagged out and rescaled}
 
   \label{fig:Flagger}
 
@@ -1414,12 +1429,12 @@ and rescaled}
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.5]{flagger_plots}
-      \caption{An illustration of a ``glitch'' in a single bolometer
-timestream (red) due to a cosmic ray strike.  Note the acausal ringing
-due to the application of the downsampling filter.  The time series
-for a physically adjacent bolometer is shown in blue, and a bolometer
-which does not pass over a source in green.  The PCA model has already
-been subtracted from the data.}
+      \caption{An illustration of a ``glitch'' in a single bolometer timestream
+      (red) due to a cosmic ray strike.  Note the acausal ringing due to the
+      application of the downsampling filter.  The time series for a physically
+      adjacent bolometer is shown in blue, and a bolometer which does not pass
+      over the source in green.  The PCA atmosphere estimation has already been
+      subtracted from the data.}
     \end{center}
   \end{minipage}
 
