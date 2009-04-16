@@ -662,7 +662,7 @@ molecular emission lines are shown at their rest frequencies.  Note
 that the Bolocam passband rejects $>90\%$ of the $^{12}$CO flux,
 leaving our continuum measurements largely uncontaminated.  SO and
 CH$_3$OH lines are probably the dominant contributors to line flux in
-the passband.  \citet{nummelin1998} found that 22\% of the flux in one
+the passband.  \citet{nummelin1998} found that 22\% of the flux density in one
 pointing towards Sgr B2 was from lines, and \citet{yoshida2005}
 reported $>40\%$ in Orion A from line emission over the 260-328 GHz band. \TBD\ Other lines
 lying in the Bolocam passband include CS($5\to4$) and ($6\to5$) (245
@@ -874,24 +874,26 @@ BGPS measures a peak flux of 17.5 Jy/beam (the beam being roughly 35\arcsec\ in
 diameter).  Fluxes are best compared using sources that appear compact as
 observed with the beam of the IRAM 30 meter telescope.
 
-We have convolved the fits files\footnote{{\tt
-ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a
-Gaussian kernel that generates an approximately 35\arcsec\ beam,
-matched to our images.  The results are shown in Figure
+We have convolved the \citet{motte07} fits files\footnote{{\tt
+ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a Gaussian
+kernel that generates an approximately 35\arcsec\ beam, and compared the
+measured fluxes with those from the BGPS.  The results are shown in Figure
 \ref{fig:CygnusComparison}.
 
 
 \Table
 {llllll}
 {Comparison of \citet{motte07} IRAM measurements to BGPS measurements
-in the Cygnus X region
+in the Cygnus X region.  The IRAM data has been convolved to the BGPS beam
+to make the flux density measurements.
 %Note:  The \citet{motte07} integration box is given in terms of pc. 
 %The assumed distance must be about 1.7 kpc \citep{schneider2006}    % no, it's 1.7kpc stated explicitly
 }
 {
 %Source  &   BGPS           &  Motte \\
 %        &   peak mJy/beam  &  mJy in box (see Motte+ Table 1)
-Motte Source Number &  Motte Table 1 integrated flux &  Motte scaled Jy/bm  & BGPS Jy/Bm &    Comments \\
+Motte Source &  Motte Table 1   &  Motte scaled  & BGPS  &  Comments \\
+      Number &  integrated flux &  Jy/bm         & Jy/bm &           \\
 }
 {tab:CygnusComparison}
 {
@@ -926,8 +928,8 @@ Motte Source Number &  Motte Table 1 integrated flux &  Motte scaled Jy/bm  & BG
 %{calibration_plot_2004}
 {Left: Average calibration curve [V/Jy] versus the mean detector voltage, a
 proxy for atmospheric loading.  Red points are observations of Mars and black
-of Uranus.  The black line is a 2nd-order fit with 0,0 (no response if no
-measurable potential difference) forced.  Right: Scaling of the relative
+of Uranus.  The black line is a 2nd-order fit with 0,0 forced (no response if no
+measurable potential difference) .  Right: Scaling of the relative
 response to the atmosphere for a single detector compared to the array
 median.}{fig:CalibrationCurves}{1.0}
 
@@ -973,8 +975,7 @@ of sources over the sky is shown in Figure
 \ref{app:PointingCalibrators}.
 
 Pointing observations were performed approximately once every two
-hours over the night.  These sources were then mapped in alt/az
-coordinates relative to the nominal telescope boresight.  The
+hours over the night.   The
 elevation offsets showed a deviation from zero which was empirically
 well-modeled by a quadratic function of elevation and a linear
 function of azimuth.  No systematic deviation was observed for the
@@ -983,9 +984,10 @@ azimuth offsets.
 Because the Galactic Plane appears over much of the sky, the pointing
 model necessarily encompasses a large range of elevation and azimuth.
 Nevertheless, an RMS scatter of $\sim 6\arcsec$ for the model over the
-entire observed range was achieved, with the scatter somewhat worse at
-the highest ZA.  A separate model was constructed for each epoch.  The
-residuals are nearly Gaussian, with an RMS of $\sim6\arcsec$.  
+entire observed range was achieved, with the scatter somewhat worse at the
+highest ZA.  A separate model was constructed for each epoch, but epoch V was
+used as the primary pointing calibration and is shown in figure
+\ref{fig:PointingModel}.
 
 Further details of the pointing calculation are given in Appendix
 \ref{app:PointingCalculation}.
@@ -996,7 +998,7 @@ In addition to the model for the pointing center, it is necessary to
 empirically determine actual projected pattern of the array on the
 sky, and measure the offset angle between the focal plane and the sky
 coordinate system.  This is done by making observations which track
-all detectors across a bright source (a planet) and making maps from each
+all detectors across a bright source (e.g. a planet) and making maps from each
 bolometer individually. 
 
 In our first release, these positions are made using the nominal positions
@@ -1011,7 +1013,7 @@ edges.
 
 A mean focus offset for the secondary is determined once per observing
 run.  An elevation-dependent correction is applied via a
-CSO-determined look-up table between raster scans.  We do not see any
+CSO-determined look-up table between raster scans.  We did not see any
 evidence that more frequent focus checks improve the quality of the
 PSF.
 
@@ -1039,9 +1041,9 @@ flux density which would result if the the maps were coadded using the
 pointing model alone, where each individual observation would be
 coadded with tthe 6\arcsec\ RMS uncertainty of the model.  The
 relative alignment using the correlation maps is typically accurate to
-\TBD\ $<1\arcsec$.
+ $<1\arcsec$.
 
-TBD: In low s/n fields, specifically \lon=65 to 75, there was not enough signal to
+In low s/n fields, specifically \lon=65 to 75, there was not enough signal to
 acquire a pointing offset using cross-correlation.  In these fields the
 relative pointing offset is larger and the beam is slightly larger.
 
@@ -1051,7 +1053,7 @@ relative pointing offset is larger and the beam is slightly larger.
 
 All of the SCUBA 850 and 450 \mum\ data has been re-processed in a
 uniform manner and made publicly available as the SCUBA Legacy Catalog
-(hereafter SLC).  These maps provide an excellent cross-check on the
+\citep[][hereafter SLC]{difrancesco08}.  These maps provide an excellent cross-check on the
 accuracy of the BGPS pointing model.  We have used the same
 cross-correlation procedure as that used to obtain the relative
 alignment of Bolocam observations to compare to the SLC.  A number of
@@ -1063,7 +1065,7 @@ extended cloud for the SLC.  The cross-correlation technique actually
 mitigates these effects, since it does not require the establishment
 of a single position for an object (which may differ due to the change
 in wavlength between the surveys or due to the observing strategy) but
-rather makes use of all the information available.  In the event, the
+rather makes use of all the information available.  The
 morphological correlation between SCUBA and BGPS sources is generally
 excellent, giving a high degree of confidence to the comparison and to
 the results obtained from the pointing model.  An example is shown in
