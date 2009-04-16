@@ -1,4 +1,6 @@
-pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,fits_out=fits_out,dofits=dofits,_extra=_extra
+pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
+    deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,$
+    fits_out=fits_out,dofits=dofits,_extra=_extra
 
     if n_e(deconvolve) eq 0 then deconvolve=0
     if n_e(fits_model) eq 0 then fits_model=1
@@ -13,6 +15,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=
     outmap = mapstr.outmap
 
     bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
+    bgps.scalearr = scalearr
 
     mapstr.astromap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal*scalearr,$
         weight=bgps.weight/scalearr,scans_info=bgps.scans_info,wtmap=mapstr.wt_map,_extra=_extra)

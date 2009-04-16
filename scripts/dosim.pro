@@ -11,6 +11,7 @@ mem_iter,'/usb/scratch1/l012/v1.0.2_l012_13pca_preiter.sav','/usb/scratch1/l012/
 mem_iter,'/usb/scratch1/l012/v1.0.2_l012_13pca_preiter.sav','/usb/scratch1/l012/forcepos_l012_13pca',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/force_pos,/deconvolve
 mem_iter,'/usb/scratch1/l012/v1.0.2_l012_13pca_preiter.sav','/usb/scratch1/l012/boloflat_l012_13pca',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/boloflat,/deconvolve
 mem_iter,'/usb/scratch1/l012/v1.0.2_l012_13pca_preiter.sav','/usb/scratch1/l012/no_polysub_l012_13pca',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/no_polysub,/deconvolve
+mem_iter,'/usb/scratch1/l012/v1.0.2_l012_13pca_preiter.sav','/usb/scratch1/l012/aggrsigrej_l012_13pca',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,nsigmareject=2,/deconvolve
 coalign_field,'l012','070715_o10',premap=0,deconvolve=1,version='noflat',scratchdir=getenv('WORKINGDIR2')                    ,niter=intarr(51)+13,dosave=1,infile="l012_infile.txt",refim=getenv('REFDIR')+'/v0.6.2_l012_13pca_map09.fits',mvperjy=[ -3.26472e-15,0.398740,3.32002],/noflat,/no_polysub
 
 mem_iter,'/usb/scratch1/ic1396/v1.0.2_ic1396_13pca_postiter.sav','/usb/scratch1/ic1396/v1.0.2_ic1396_13pca_deconv_uniform',workingdir='/usb/scratch1',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/uniformsim,fluxrange=[.001,.1],/deconvolve

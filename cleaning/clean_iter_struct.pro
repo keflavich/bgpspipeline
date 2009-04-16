@@ -20,7 +20,7 @@
 pro clean_iter_struct,bgps,mapstr,niter=niter,$
     boloflat=boloflat,fits_timestream=fits_timestream,fits_nopca=fits_nopca,fits_psd=fits_psd,i=i,$
     pca_atmo=pca_atmo,new_astro=new_astro,first_sky=first_sky,atmos_remainder=atmos_remainder,astrosignal_premap=astrosignal_premap,$
-    minbaseline=minbaseline,median_sky=median_sky,fits_remainder=fits_remainder,$
+    minbaseline=minbaseline,median_sky=median_sky,fits_remainder=fits_remainder,scale_acb=scale_acb,$
     force_pos=force_pos,outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,_extra=_extra
 
     if n_e(do_weight) eq 0 then do_weight=1
@@ -32,7 +32,8 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
     hdr = mapstr.hdr
     outmap = mapstr.outmap
 
-    bgps.atmosphere = bgps.ac_bolos - bgps.astrosignal 
+    if keyword_set(scale_acb) then bgps.atmosphere = bgps.ac_bolos*bgps.scalearr - bgps.astrosignal $
+        else bgps.atmosphere = bgps.ac_bolos - bgps.astrosignal 
     if total(bgps.flags) gt 0 then bgps.atmosphere[where(bgps.flags)] = !values.f_nan
 
     ; atmos_remainder is what is left over after the 'atmosphere' is median subtracted
@@ -64,7 +65,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
         writefits,outmap+"_remainder"+string(i,format='(I2.2)')+".fits",atrem_map,hdr
     endif
 
-    if keyword_set(boloflat) then new_astro = bolo_flat(new_astro)
+; NEVER do this, the results are terrible    if keyword_set(boloflat) then new_astro = bolo_flat(new_astro)
 
     if keyword_set(force_pos) then new_astro[where(new_astro lt 0)] = 0
     bgps.astrosignal += new_astro

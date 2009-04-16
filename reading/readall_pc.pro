@@ -196,6 +196,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         weight: ac_bolos*0+1,$
         n_obs: n_e(filelist), $
         scale_coeffs: fltarr(n_e(scans_info[0,*]),n_e(goodbolos)) + 1, $
+        scalearr: ac_bolos*0+1,$
         source_ra: source_ra[0],$
         source_dec: source_dec[0],$ 
         filenames: filenames,$
