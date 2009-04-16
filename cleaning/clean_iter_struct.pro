@@ -66,7 +66,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
 
     if keyword_set(boloflat) then new_astro = bolo_flat(new_astro)
 
-    if keyword_set(forcepos) then new_astro[where(new_astro lt 0)] = 0
+    if keyword_set(force_pos) then new_astro[where(new_astro lt 0)] = 0
     bgps.astrosignal += new_astro
     if keyword_set(fits_timestream) and i eq 0 then begin
         nan_arr = fltarr(size(bgps.flags,/dim))
