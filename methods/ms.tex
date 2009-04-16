@@ -109,7 +109,7 @@
 % BGPS specific definitions
 \def\bgps{BGPS}
 \newcommand{\bgpsarea}{150}
-\newcommand{\bcamfwhm}{31.2\arcsec}
+\newcommand{\bcamfwhm}{35.6\arcsec}
 \newcommand{\ncores}{7628}
 \newcommand{\bgpsdepthlow}{20}
 \newcommand{\bgpsdepthhigh}{50}
@@ -703,7 +703,7 @@ properties.  It incorporates some of the technical developments
 of \citet{sayers09}, though the exquisite control of systematics and
 noise of that analysis is neither necessary nor possible here.
 
-The data were reduced with a custom pipeline written specifically for
+The data were reduced with a custom pipeline written specifically for the BGPS.
 A key element of the reduction is the iterative estimation of the
 atmospheric fluctuations and the astrophysical signal.  The
 atmospheric model is developed from a set of principal components of
@@ -712,13 +712,13 @@ the correlated signal is atmospheric.  The iterative estimation
 process then helps to restore correlated flux due to astrophysical
 emission (Section \ref{sec:Mapping}).
 
-The Bolocam observations are sensitive to structure between 31\arcsec\
-and about 400\arcsec\ (the array field of view).  An indicative
-analysis of the spatial filter function of the iterative mapping
-scheme is given in \citet{enoch06}.  The data were sampled onto a
-uniform 7\farcs2 grid.  Flux density calibrations were performed using
-observations of Mars, Uranus, and Neptune, and they are accurate to
-$\sim$20\%.  This is described in \ref{sec:FluxCalibration}.
+The Bolocam observations are sensitive to structure between 35\arcsec\ and
+about 200\arcsec\ (half the array field of view, see figure
+\ref{fig:PCA_filter}).  An indicative analysis of the spatial filter function
+of the iterative mapping scheme is given in \citet{enoch06}.  The data were
+sampled onto a uniform 7\farcs2 grid.  Flux density calibrations were performed
+using observations of Mars, Uranus, and Neptune, and they are accurate to
+$\sim$20\%.  The flux calibration is described in section \ref{sec:FluxCalibration}.
 
 %A calibration scheme capable of
 %5\% systematic and $<$5\% statistical errors is being implemented as outlined in
@@ -728,35 +728,33 @@ $\sim$20\%.  This is described in \ref{sec:FluxCalibration}.
 %pointing calibrators. 
 Noise properties across the survey are not completely uniform, but the
 measured $1\sigma$ level is $\approx43\pm7$ mJy/beam within the
-$b=\pm.5$ portion of the plane.
+$b=\pm.5$ portion of the plane in the 1st quadrant.
 %After the pipeline mapping, the fields were combined using the COMBINE
 %command in IRAF with WCS offsets.
 
 The absolute pointing accuracy of the survey has been measured to be
-$\sim$6\arcsec\ RMS.  A single $3^\circ \times 1^\circ$ observation of
-each region was registered to the pointing calibrators as a ``master
-field'', and additional observations of that field were aligned to the
-master (Section \ref{sec:Astrometry}).
+$\sim$6\arcsec\ RMS (figure \ref{fig:PointingModel}.  A single $3^\circ \times
+1^\circ$ observation of each region was registered to the pointing calibrators
+as a ``master field'', and additional observations of that field were aligned
+to the master (Section \ref{sec:Astrometry}).
 
 Bright and large sources leave an impact on their surroundings when
 cleaned with a principal component subtraction.  \object{Sgr B2},
 \object{G 34.3+0.15}, and other sources with fluxes $\geq 10$ Jy are
 surrounded by substantial negative bowls.  Some flux is restored in
-these bowls using the iterative process 
-%described in \citet{Aguirre2009}
-, but around the brightest sources the impact of the source on the
+these bowls using the iterative process, 
+ but around the brightest sources the impact of the source on the
 background estimation is too great to be fully recovered (Section
 \ref{sec:Photometry}).
 
-Instrument glitches and cosmic ray hits have been removed by a
-combination of outlier rejection in each spatial pixel and hand
-flagging of the timestream data.  Streaking in the images results from
-incorrect determinations of the zero level across scans when a bright
-source is encountered.  Atmospheric noise in observations taken in
-poor weather may not be completely removed by the reduction
-procedures (Section \ref{sec:Noise}).
-%Particular bolometers may be noisy for a single observation and they may not
-%be adequately down-weighted. 
+Instrument glitches and cosmic ray hits have been removed by a combination of
+outlier rejection in each spatial pixel and hand flagging of the timestream
+data.  Streaking in the images results from incorrect determinations of the
+zero level across scans when a bright source is encountered and variable noise
+in each strip from variable dwell time.  Atmospheric noise in observations
+taken in poor weather may not be completely removed by the reduction procedures
+because the atmospheric opacity can vary over timescales comparable to the time
+to scan astrophysical sources (Section \ref{sec:Noise}).
 
 \section{Flux Density and Surface Brightness Calibration}
 \label{sec:FluxCalibration}
@@ -774,7 +772,7 @@ atmospheric loading.
 
 To relate observations of the primary calibrators to observations of
 the BGPS fields, we make use of the following relation.  The
-calibration ${\cal S}$, referred to the detectors, is given by
+calibration ${\cal S}$, referenced to the detectors, is given by
 \begin{equation}
 \label{eq:Calibration}
 {\cal S} \, \left[\mathrm{\frac{V}{Jy}}\right] = 
@@ -790,7 +788,7 @@ function of $\tau$.  We have used the mean bolometer resistance as a
 proxy for $\tau$, since the bolometer resistance is a single-valued
 function of loading.  {\it This quantity is monitored continuously for
 all observations.}  Note that this calibration curve folds in both the
-effects of changing atmospheric transmission, as well as changes in
+effects of changing atmospheric transmission and the changes in
 the detector response with optical loading.
 
 %Multiple observations of secondary calibrators suffice to give the
@@ -807,7 +805,7 @@ A fit to the observed values for the primary calibrators was performed
 for the each epoch separately.
 %CHECK
 The agreement between epochs was good, so a single combined
-calibration was used for all data here.
+calibration was used for all data.
 %We have found that the calibration can differ
 %between successive cooldowns of the instrument by $\sim10\%$ \Check\
 %but is generally stable over the period of order a month which
@@ -840,11 +838,10 @@ and Neptune which are nearly point sources for Bolocam.
 %results in a $< 1.5\%$ correction of the observed flux.
 The maps of the planets, including all detectors, are fit to a
 Gaussian profile.  The beam area is that averaged over all detectors,
-and is ?$1.71\times10^{-6}$\TBD\ ($35.6$\farcs) steradians.  This
+and is $1.71\times10^{-6}$ steradians ($35.6$\farcs).  This
 allows conversion of the maps, calibrated in Jy beam$^{-1}$, into
-surface brightness (MJy sr$^{-1}$).  The uncertainty in the beam size
-is ?$.7\%$\TBD\ (number quoted is the uncertainty in the mean beam
-size), leading to an uncertainty in the surface brightness calibration
+surface brightness (MJy sr$^{-1}$).  The uncertainty in the mean beam size
+is $.7\%$, leading to an uncertainty in the surface brightness calibration
 of \TBD.
 
 \subsection{Comparison to Other Surveys}
@@ -858,25 +855,24 @@ Figure \ref{fig:CygnusComparison} shows the comparison of fluxes
 extracted from our map in the Cygnus Arm with those of
 \citet{motte07} (M07).
 
-The figures of the Cygnus-X region presented by M07
-%Motte et al. (2009)
-, obtained at a central wavelength of 1.2 mm using the 30 meter IRAM
-telescope, appear nearly identical to the 1.1 mm Bolocam images.  The
-BGPS mapping strategy, larger beam, and field of view provides better
-recovery of the large scale structure of the dust continuum emission,
-but inferior angular resolution.  Nevertheless, there is excellent
-agreement between the structure revealed by the two data sets.
+The figures of the Cygnus-X region presented by \citet{motte07}, obtained at a
+central wavelength of 1.2 mm using the 30 meter IRAM telescope, appear nearly
+identical to the 1.1 mm Bolocam images.  The BGPS mapping strategy, larger
+beam, and field of view provides better recovery of the large scale structure
+of the dust continuum emission, but inferior angular resolution.  The MAMBO
+filter is wider than the Bolocam filter and includes the CO 2-1 line.
+Nevertheless, there is excellent agreement between the structure revealed by
+the two data sets.
 
-The Bolocam and M07 data sets have flux calibration consistent within
-about 20\%.  However, direct comparison with the fluxes listed in M07
-is difficult due to the factor of three difference in the size of the
-beams used.  For example, the the brightest source in the Cyg-X region
-is DR 21.  While M07 quote a peak flux density per beam of
-4.2 Jy/beam for the brightest feature in the DR 21 complex (their peak
-N46) and 17.9 Jy/beam in a 0.19 x 0.14 pc box, BGPS measures a peak
-flux of 17.5 Jy/beam (the beam being roughly 35\arcsec\ in diameter).
-Fluxes are best compared using sources compact as observed with the
-beam of the IRAM 30 meter telescope.
+The Bolocam and M07 data sets have flux calibration consistent within about
+20\%.  However, direct comparison with the fluxes listed in M07 is difficult
+due to the factor of three difference in the size of the beams used.  For
+example, the the brightest source in the Cyg-X region is DR 21.  While M07
+quote a peak flux density per beam of 4.2 Jy/beam for the brightest feature in
+the DR 21 complex (their peak N46) and 17.9 Jy/beam in a 0.19 x 0.14 pc box,
+BGPS measures a peak flux of 17.5 Jy/beam (the beam being roughly 35\arcsec\ in
+diameter).  Fluxes are best compared using sources that appear compact as
+observed with the beam of the IRAM 30 meter telescope.
 
 We have convolved the fits files\footnote{{\tt
 ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a
@@ -945,7 +941,7 @@ calibration.  Note the improved agreement.}{fig:Flatfield}{1.0}
 % 7
 \Figure{cygnus_flux_comparison}{A comparison of the fluxes extracted
 in the same aperture from the \citet{motte07} MAMBO map and the Bolocam map of
-this paper. THIS FIGURE IS A PLACEHOLDER}{fig:CygnusComparison}{1.0}
+this paper. }{fig:CygnusComparison}{1.0}
 
 \begin{deluxetable}{lc}
 \tablewidth{0pt}
