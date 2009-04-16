@@ -21,7 +21,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
     boloflat=boloflat,fits_timestream=fits_timestream,fits_nopca=fits_nopca,fits_psd=fits_psd,i=i,$
     pca_atmo=pca_atmo,new_astro=new_astro,first_sky=first_sky,atmos_remainder=atmos_remainder,astrosignal_premap=astrosignal_premap,$
     minbaseline=minbaseline,median_sky=median_sky,fits_remainder=fits_remainder,$
-    outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,_extra=_extra
+    force_pos=force_pos,outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,_extra=_extra
 
     if n_e(do_weight) eq 0 then do_weight=1
     if n_e(fits_timestream) eq 0 and bgps.n_obs eq 1 then fits_timestream=1 else fits_timestream=0
@@ -66,6 +66,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
 
     if keyword_set(boloflat) then new_astro = bolo_flat(new_astro)
 
+    if keyword_set(forcepos) then new_astro[where(new_astro lt 0)] = 0
     bgps.astrosignal += new_astro
     if keyword_set(fits_timestream) and i eq 0 then begin
         nan_arr = fltarr(size(bgps.flags,/dim))
