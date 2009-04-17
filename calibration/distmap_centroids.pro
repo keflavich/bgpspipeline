@@ -42,11 +42,11 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         rth : rtf ,$
         xyrot : xy_boloframe # $
                  rot_mat, $
-        xy : [[rtf[*,0]*cos(rtf[*,1])/dec_conversion],$
-              [-1.0 * rtf[*,0]*sin(rtf[*,1])]],$
+        xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],$
+              [-1.0 * rtf[*,0]*sin(rtf[*,1]+angle)]],$
         xy2: xy_boloframe # $
                  rot_mat * $
-                 [1/dec_conversion,1], $
+                 [1/dec_conversion,1] ## (fltarr(nbolos)+1), $
         xynom : xy_boloframe $
     } ; to match ra/dec, ra increases to left... signs all flipped (See apply_distortion_map_radec)
 
