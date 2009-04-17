@@ -114,8 +114,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
-        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
-        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
+;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
+;        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
         meas.angle[i] = fitpars[6]
         meas.xysize[i,*] = fitpars[2:3]*bolospacing
         meas.ampl[i] = fitpars[1]

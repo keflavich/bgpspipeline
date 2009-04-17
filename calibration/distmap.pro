@@ -38,7 +38,7 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         meas.xy[*,0] = nominal.xy[*,0] - meas.xyoffs[*,0]
         meas.xy[*,1] = nominal.xy[*,1] - meas.xyoffs[*,1]
         meas.rth[*,0] = sqrt((meas.xy[*,0]*nominal.dec_conversion)^2+meas.xy[*,1]^2)
-        meas.rth[*,1] = atan(-meas.xy[*,1],-meas.xy[*,0]*nominal.dec_conversion)-nominal.angle
+        meas.rth[*,1] = atan(-meas.xy[*,1],meas.xy[*,0]*nominal.dec_conversion)-nominal.angle
     endif
 
     ; WRITE BOLOMETER POSITIONS TO TEXT FILE
