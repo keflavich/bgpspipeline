@@ -737,10 +737,15 @@ $b=\pm.5$ portion of the plane in the 1st quadrant.
 %command in IRAF with WCS offsets.
 
 The absolute pointing accuracy of the survey has been measured to be
-$\sim$6\arcsec\ RMS (figure \ref{fig:PointingModel}.  A single $3^\circ \times
-1^\circ$ observation of each region was registered to the pointing calibrators
-as a ``master field'', and additional observations of that field were aligned
-to the master (Section \ref{sec:Astrometry}).
+$\sim$6\arcsec\ RMS (figure \ref{fig:PointingModel}.  The Epoch V pointing model
+was used to make pointing reference fields which were then median combined
+using IRAF to make a higher S/N reference field with somewhat reduced pointing
+errors (Section \ref{sec:Astrometry}).
+
+% A single $3^\circ \times
+% 1^\circ$ observation of each region was registered to the pointing calibrators
+% as a ``master field'', and additional observations of that field were aligned
+% to the master (Section \ref{sec:Astrometry}).
 
 Bright and large sources leave an impact on their surroundings when
 cleaned with a principal component subtraction.  \object{Sgr B2},

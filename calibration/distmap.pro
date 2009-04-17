@@ -70,6 +70,8 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
         if total(meas.rth[*,0] eq 0) gt 0 then meas.rth[where(meas.rth[*,0] eq 0),0] = !values.f_nan
         plot,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),psym=7,xrange=[-7,7],yrange=[-7,7]
         xyouts,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),strc(meas.bolo_indices)
+        xyouts,nominal.xy[*,0],nominal.xy[*,1],strc(meas.bolo_indices)
+; ...        xyouts,-3600/38.5*(bgps.ra_map[*,0]-median(bgps.ra_map[*,0])),(bgps.dec_map[*,0]-median(bgps.dec_map[*,0]))*3600/38.5,strc(meas.bolo_indices)
         xyouts,meas.rth[*,0]*cos(meas.rth[*,1]),meas.rth[*,0]*sin(meas.rth[*,1]),strc(meas.bolo_indices),color=250
         oplot,[0,nominal.rth[0,0]*cos(nominal.rth[0,1])],[0,nominal.rth[0,0]*sin(nominal.rth[0,1])]
         oplot,[0,meas.rth[0,0]*cos(meas.rth[0,1])],[0,meas.rth[0,0]*sin(meas.rth[0,1])],color=250

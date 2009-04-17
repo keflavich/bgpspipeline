@@ -36,8 +36,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         angle:angle,$
         dec_conversion:dec_conversion,$
         rth : rtf ,$
-        xy : -1.0 * [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],[rtf[*,0]*sin(rtf[*,1]+angle)]] $
-    } ; I don't yet understand why the xy sign is flipped, but it's necessary (see plots below - green X)
+        xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],-1.0 * [rtf[*,0]*sin(rtf[*,1]+angle)]] $
+    } ; to match ra/dec, ra increases to left signs all flipped (See apply_distortion_map_radec)
 
     meas = { $
         rth : fltarr(nbolos,2)    ,$
