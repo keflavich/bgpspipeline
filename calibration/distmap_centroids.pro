@@ -36,7 +36,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         angle:angle,$
         dec_conversion:dec_conversion,$
         rth : rtf ,$
-        xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],-1.0 * [rtf[*,0]*sin(rtf[*,1]+angle)]] $
+        xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],[-1.0 * rtf[*,0]*sin(rtf[*,1]+angle)]] $
     } ; to match ra/dec, ra increases to left signs all flipped (See apply_distortion_map_radec)
 
     meas = { $
