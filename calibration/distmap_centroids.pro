@@ -30,15 +30,25 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
+    xy_boloframe = [[rtf[*,0]*cos(rtf[*,1])],$
+                    [rtf[*,0]*sin(rtf[*,1])]]
+    rot_mat = [[cos(angle),sin(angle)],$
+               [-sin(angle),cos(angle)]]
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
         angle:angle,$
         dec_conversion:dec_conversion,$
         rth : rtf ,$
-        xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],[-1.0 * rtf[*,0]*sin(rtf[*,1]+angle)]] $
-    } ; to match ra/dec, ra increases to left signs all flipped (See apply_distortion_map_radec)
-      ; nominal.xy is in ROTATED FRAME
+        xyrot : xy_boloframe # $
+                 rot_mat, $
+        xy : [[rtf[*,0]*cos(rtf[*,1])/dec_conversion],$
+              [-1.0 * rtf[*,0]*sin(rtf[*,1])]],$
+        xy2: xy_boloframe # $
+                 rot_mat * $
+                 [1/dec_conversion,1], $
+        xynom : xy_boloframe $
+    } ; to match ra/dec, ra increases to left... signs all flipped (See apply_distortion_map_radec)
 
     meas = { $
         rth : fltarr(nbolos,2)    ,$
@@ -158,7 +168,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ; convert back to the format used in the beam locations files (assumes no
     ; projection and no rotation)
     meas.rth[*,0] = sqrt((meas.xy[*,0]*dec_conversion)^2+meas.xy[*,1]^2)
-    meas.rth[*,1] = atan(-meas.xy[*,1],-meas.xy[*,0]*dec_conversion)-angle
+    meas.rth[*,1] = atan(-meas.xy[*,1],meas.xy[*,0]*dec_conversion)-angle
 
     save,filename=outfile+".sav"
 
