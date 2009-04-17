@@ -114,6 +114,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
+        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
+        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
         meas.angle[i] = fitpars[6]
         meas.xysize[i,*] = fitpars[2:3]*bolospacing
         meas.ampl[i] = fitpars[1]
@@ -154,9 +156,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     meas.rth[*,1] = atan(-meas.xy[*,1],meas.xy[*,0]*dec_conversion)-angle
 
     if doplot gt 1 then begin
-        plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=1
-        plot,meas.xyoffs[*,0]/bolospacing,meas.xyoffs[*,1]/bolospacing,psym=1
-        plot,meas.xy[*,0],meas.xy[*,1],psym=1
+        plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=1,title='offsets - bolodist'
+        plot,meas.xyoffs[*,0]/bolospacing,meas.xyoffs[*,1]/bolospacing,psym=1,title='offsets - pixels'
+        plot,meas.xyoffs[*,0]/bolospacing*pixsize,meas.xyoffs[*,1]/bolospacing*pixsize,psym=1,title='offsets - arcseconds'
+        plot,meas.xy[*,0],meas.xy[*,1],psym=1,title='beam locations'
         oplot,nominal.xy[*,0],nominal.xy[*,1],psym=7,color=250
         if keyword_set(distcor) then begin
             readcol,distcor,corr_bolonum,corr_dist,corr_angle,corr_rms,/silent
