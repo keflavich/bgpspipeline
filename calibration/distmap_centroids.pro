@@ -1,7 +1,7 @@
 ; centroiding portion of distmap
 pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
     pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,coordsys=coordsys,$
-    projection=projection,_extra=_extra
+    projection=projection,distcor=distcor,_extra=_extra
 
     if ~keyword_set(doplot) then doplot=0
     if n_e(coordsys) eq 0 then coordsys='radec'
@@ -13,7 +13,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     if ~keyword_set(pixsize) then pixsize=11.0
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
-    premap,thefiles,outfile,bgps=bgps,mapstr=mapstr,/noflat,pointing_model=0,$
+    premap,thefiles,outfile,bgps=bgps,mapstr=mapstr,/noflat,pointing_model=0,distcor=distcor,$
         mvperjy=[1,0,0],fits_out=[5],projection=projection,coordsys=coordsys,_extra=_extra
     ; removed nobeamloc 4/10/09 - necessary in order to co-add images
     ; also, should automatically account for rotation
@@ -34,6 +34,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
                     [rtf[*,0]*sin(rtf[*,1])]]
     rot_mat = [[cos(angle),sin(angle)],$
                [-sin(angle),cos(angle)]]
+    xysky = (xy_boloframe # rot_mat) * [1/dec_conversion,1] ## (fltarr(nbolos)+1)
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
@@ -44,9 +45,6 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
                  rot_mat, $
         xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],$
               [-1.0 * rtf[*,0]*sin(rtf[*,1]+angle)]],$
-        xy2: xy_boloframe # $
-                 rot_mat * $
-                 [1/dec_conversion,1] ## (fltarr(nbolos)+1), $
         xynom : xy_boloframe $
     } ; to match ra/dec, ra increases to left... signs all flipped (See apply_distortion_map_radec)
 
@@ -156,6 +154,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         oplot,nominal.xy[*,0],nominal.xy[*,1],psym=7,color=250
         device,/close_file
         set_plot,'x'
+    endif
+    if keyword_set(distcor) then begin
+        readcol,distcor,corr_bolonum,corr_dist,corr_angle,corr_rms,/silent
+        plot,meas.xy[*,0]-corr_dist*cos(corr_angle*!dtor),meas.xy[*,1]-corr_dist*sin(corr_angle*!dtor),psym=1,title='offset from corrected'
     endif
     !p.multi=0
 
