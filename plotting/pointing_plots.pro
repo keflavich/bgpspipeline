@@ -1,6 +1,6 @@
 ; streamlined version of centroid_plots
 ; i.e. it only plots the stuff we actually want in the paper
-; made April 14th
+; made April 14th 2009
 ; pointing_plots,'/usb/scratch1/texts/0707_rawcsoptg_radec_centroids.txt','0707'
 
 pro pointing_plots,filename,date
@@ -38,20 +38,20 @@ pro pointing_plots,filename,date
     !p.charsize = 1.5
     altoff_min=min(altoff[goodvals]) & azoff_min=min(azoff_dist[goodvals])
     altoff_max=max(altoff[goodvals]) & azoff_max=max(azoff_dist[goodvals])
-    plot,alt[goodvals],altoff[goodvals],psym=1,xtitle="!6Alt",ytitle="!6Altoff",$
-        title='!6RMS: '+string(stddev(altoff[good_both]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[altoff_min,altoff_max]
+    plot,alt[goodvals],altoff[goodvals],psym=1,xtitle="!6Alt",ytitle="!6Altoff",/ys,yrange=[altoff_min,altoff_max];,$
+;        title='!6RMS: '+string(stddev(altoff[good_both]),format='(F5.2)')+" n: "+strc(n_e(good_both)),
     oplot,allalt,allaltoff_model*3600.,color=254   
-    plot,alt[goodvals],azoff_dist[goodvals],psym=1 ,xtitle="!6Alt",ytitle="!6Azoff (distance)"  ,$
-        title='!6RMS: '+string(stddev(azoff_dist[goodvals]),format='(F5.2)')+" n: "+strc(n_e(good_both)),/ys,yrange=[azoff_min,azoff_max]
+    plot,alt[goodvals],azoff_dist[goodvals],psym=1 ,xtitle="!6Alt",ytitle="!6Azoff (distance)",/ys,yrange=[azoff_min,azoff_max] ; ,$
+;        title='!6RMS: '+string(stddev(azoff_dist[goodvals]),format='(F5.2)')+" n: "+strc(n_e(good_both))
     oplot,allalt,allazoff_model*3600.,color=254   
     pmsub_altoff = altoff - poly(alt,my_altoff_model2)
     pmsub_azoff  = azoff_dist  - poly(alt,my_azoff_model2)
     mpmsub_altoff = altoff - altoff_model*3600
     mpmsub_azoff  = azoff_dist  - azoff_model*3600
-    plot,alt[good_both],mpmsub_altoff[good_both],psym=1,xtitle="!6Alt",ytitle="!6Altoff",$
-        title="RMS: "+string(stddev(mpmsub_altoff[good_both]),format='(F5.2)')
-    plot,alt[good_both],mpmsub_azoff[good_both],psym=1,xtitle="!6Alt",ytitle="!6Azoff (distance)",$
-        title="RMS: "+string(stddev(mpmsub_azoff[good_both]),format='(F5.2)') 
+    plot,alt[good_both],mpmsub_altoff[good_both],psym=1,xtitle="!6Alt",ytitle="!6Altoff" ;,$
+ ;        title="RMS: "+string(stddev(mpmsub_altoff[good_both]),format='(F5.2)')
+    plot,alt[good_both],mpmsub_azoff[good_both],psym=1,xtitle="!6Alt",ytitle="!6Azoff (distance)" ;,$
+  ;       title="RMS: "+string(stddev(mpmsub_azoff[good_both]),format='(F5.2)') 
 
     device,/close_file
 
