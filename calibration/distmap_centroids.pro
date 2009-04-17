@@ -147,17 +147,24 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         endif
 
     endfor
+    
+    ; convert back to the format used in the beam locations files (assumes no
+    ; projection and no rotation)
+    meas.rth[*,0] = sqrt((meas.xy[*,0]*dec_conversion)^2+meas.xy[*,1]^2)
+    meas.rth[*,1] = atan(-meas.xy[*,1],meas.xy[*,0]*dec_conversion)-angle
+
     if doplot gt 1 then begin
         plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=1
         plot,meas.xyoffs[*,0]/bolospacing,meas.xyoffs[*,1]/bolospacing,psym=1
         plot,meas.xy[*,0],meas.xy[*,1],psym=1
         oplot,nominal.xy[*,0],nominal.xy[*,1],psym=7,color=250
+        if keyword_set(distcor) then begin
+            readcol,distcor,corr_bolonum,corr_dist,corr_angle,corr_rms,/silent
+            plot,meas.rth[*,0]*cos(meas.rth[*,1])-(corr_dist*cos(corr_angle*!dtor))[bolo_indices],$
+                 meas.rth[*,0]*sin(meas.rth[*,1])-(corr_dist*sin(corr_angle*!dtor))[bolo_indices],psym=1,title='offset from corrected'
+        endif
         device,/close_file
         set_plot,'x'
-    endif
-    if keyword_set(distcor) then begin
-        readcol,distcor,corr_bolonum,corr_dist,corr_angle,corr_rms,/silent
-        plot,meas.xy[*,0]-corr_dist*cos(corr_angle*!dtor),meas.xy[*,1]-corr_dist*sin(corr_angle*!dtor),psym=1,title='offset from corrected'
     endif
     !p.multi=0
 
@@ -165,12 +172,6 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     free_lun,fitparfile 
 
     fitmap=fitmapcube
-
-
-    ; convert back to the format used in the beam locations files (assumes no
-    ; projection and no rotation)
-    meas.rth[*,0] = sqrt((meas.xy[*,0]*dec_conversion)^2+meas.xy[*,1]^2)
-    meas.rth[*,1] = atan(-meas.xy[*,1],meas.xy[*,0]*dec_conversion)-angle
 
     save,filename=outfile+".sav"
 

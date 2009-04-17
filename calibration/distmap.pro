@@ -33,8 +33,8 @@ pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fr
 
     ; assume pointing center is already correct (pointing models were calculated w/o beam locations)
     if keyword_set(fixcenter) then begin
-        meas.xyoffs[*,0] -= median(meas.xyoffs[*,0])
-        meas.xyoffs[*,1] -= median(meas.xyoffs[*,1])
+        meas.xyoffs[*,0] -= (meas.xyoffs[0,0])
+        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
         meas.xy[*,0] = nominal.xy[*,0] - meas.xyoffs[*,0]
         meas.xy[*,1] = nominal.xy[*,1] - meas.xyoffs[*,1]
         meas.rth[*,0] = sqrt((meas.xy[*,0]*nominal.dec_conversion)^2+meas.xy[*,1]^2)
