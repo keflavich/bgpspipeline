@@ -83,7 +83,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
 
     astrosignal_premap = bgps.astrosignal
 
-    map_iter,bgps,mapstr,fits_smooth=fits_smooth,i=i,niter=niter,dofits=dofits,_extra=_extra
+    map_iter,bgps,mapstr,fits_smooth=fits_smooth,i=i,niter=niter,dofits=dofits,scale_acb=scale_acb,_extra=_extra
     if niter[i] gt 0 then bgps.noise = nantozero( bgps.ac_bolos - first_sky - pca_atmo - bgps.astrosignal ) $ 
         else  bgps.noise = nantozero( bgps.ac_bolos - first_sky - bgps.astrosignal )
     if keyword_set(do_weight) then begin

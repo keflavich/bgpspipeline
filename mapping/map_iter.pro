@@ -1,5 +1,5 @@
 pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
-    deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,$
+    deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,scale_acb=scale_acb,$
     fits_out=fits_out,dofits=dofits,raw_scaling=raw_scaling,_extra=_extra
 
     if n_e(deconvolve) eq 0 then deconvolve=0
@@ -15,6 +15,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
     outmap = mapstr.outmap
 
     if keyword_set(raw_scaling) then bgps.scale_coeffs = relsens_cal(bgps.raw,bgps.raw,scans_info=bgps.scans_info,scalearr=scalearr) $
+        else if keyword_set(scale_acb) then bgps.scale_coeffs = relsens_cal(bgps.ac_bolos,bgps.ac_bolos,scans_info=bgps.scans_info,scalearr=scalearr) $
         else bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
     bgps.scalearr = scalearr
 
