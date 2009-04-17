@@ -1,6 +1,6 @@
 pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
     deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,$
-    fits_out=fits_out,dofits=dofits,_extra=_extra
+    fits_out=fits_out,dofits=dofits,raw_scaling=raw_scaling,_extra=_extra
 
     if n_e(deconvolve) eq 0 then deconvolve=0
     if n_e(fits_model) eq 0 then fits_model=1
@@ -14,7 +14,8 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
     fxaddpar,hdr,"n_pca"  ,niter[i],"number of PCA components subtracted"
     outmap = mapstr.outmap
 
-    bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
+    if keyword_set(raw_scaling) then bgps.scale_coeffs = relsens_cal(bgps.raw,bgps.raw,scans_info=bgps.scans_info,scalearr=scalearr) $
+        else bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
     bgps.scalearr = scalearr
 
     mapstr.astromap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal*scalearr,$
