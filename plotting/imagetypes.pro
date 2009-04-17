@@ -32,6 +32,7 @@ bplot=(b[miny:maxy]-mean(b[miny:maxy]))*60
 set_plot,'ps'
 device,filename=getenv('HOME')+'/paper_figures/image_types.ps',/encapsulated,xsize=7,ysize=7,/inches
 !p.multi=[0,2,2]
+negative = 1
 imdisp,map[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.05,$
     ticklen=.001,true=1,erase=0,negative=negative,_extra=_extra
 imdisp,noisemap[minx:maxx,miny:maxy],/axis,xrange=[max(lplot),min(lplot)],yrange=[min(bplot),max(bplot)],range=[minz,maxz],margin=.05,$
