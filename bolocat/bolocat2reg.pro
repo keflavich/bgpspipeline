@@ -38,7 +38,7 @@ pro bolocat2reg,bgps,regfile,asperpix=asperpix
         printf,outf,bgps[i].glon,bgps[i].glat,bgps[i].mommajpix*asperpix,bgps[i].momminpix*asperpix,bgps[i].posang/!dtor,bgps[i].cloudnum,$
               format='("ellipse(",F10.6,1H,,F10.6,1H,,F9.5,2H",,F9.5,2H",,F8.4,1H),"# text={",A,"}")'
         printf,outf,bgps[i].glon_max,bgps[i].glat_max,$
-              format='("point(",F10.6,1H,,F10.6") # point=x")'
+              format='("point(",F10.6,1H,,F10.6,") # point=x")'
           ; the nH formatting code is to output commas
           ; posang is assumed to be the angle from galactic coordinates
     endfor
