@@ -276,7 +276,7 @@ of \bgpsarea\ square degrees of the Galactic Plane with 130 in the 1st quadrant,
 31 in the 2nd, and 6 in the 3rd.  The BGPS represents
 the first large area, systematic survey of the Northern Galactic Plane in the
 millimeter continuum without pre-selected targets.  The survey has detected
-\ncores\ clumps to a limiting non-uniform 1-$\sig$ noise level in the range \bgpsdepthlow\ and
+\ncores\ clumps to a limiting non-uniform 1-$\sigma$ noise level in the range \bgpsdepthlow\ and
 \bgpsdepthhigh\ mJy/beam RMS.  We present maps of 97 contiguous square degrees from
 $\lon=-10.5$ to $\lon=86.5$ and $b=\pm0.5$ with a resolution of $\sim$35\arcsec, as
 well as regions in IC1396, $\lon=111$ (NGC7538), W3/4/5, and Gem OB1.  The most
@@ -297,8 +297,8 @@ discussed.
 This paper serves as a companion and guide to the public data release through
 NASA's Infrared Processing and Analysis Center (IPAC).  These images represent
 an important finder chart for future observations with ALMA and a
-long-wavelength spectral band complementary to imminent submillimeter surveys
-with SCUBA-2 and Herschel-SPIRE.
+long-wavelength spectral band complementary to ATLASGAL and imminent
+submillimeter surveys with SCUBA-2 and Herschel-SPIRE.
 
 \end{abstract}
 
@@ -322,7 +322,7 @@ sources, masers, or radio continuum emission. In particular, they can locate
 molecular clumps before stars form, providing vital information on the initial
 conditions of star formation.  These surveys can also provide valuable
 constraints on the physical properties of the clumps, especially masses and
-mean densities.
+mean densities, in conjunction with distance information.
 
 Galaxy-wide surveys are essential for measuring the impacts of the
 environment on clump properties and star formation activity.
@@ -354,7 +354,7 @@ the term `core' to refer to a very dense region destined to form an individual
 star or small multiple star systems and the term `clump' to refer to a region
 likely to form a group or cluster of stars. While clumps forming massive
 clusters may be denser than cores forming low mass stars [ref Mueller? (Neal,
-John, Jonathan)], in general, clumps are larger and less dense. Clumps can be
+John, Jonathan)], in general, clumps are larger and have a lower mean density. Clumps can be
 traced with line emission from molecules such as \ammonia, \form, CS, HCN, etc.
 Spectral lines also provide excellent diagnostics of line-of-sight motions,
 temperatures, and densities.  However, the interpretation of these gas tracers
@@ -387,7 +387,7 @@ lifetime \citep{holland99,difrancesco08}, but never completed a
 contiguous survey of the galactic plane.  The Bolocam instrument has been
 used on the 10.4-m Caltech Submiliimeter Observatory (CSO) to map nearby large
 molecular clouds at 1.1 mm and identify hundreds of cores \citep{enoch06}.
-Others have used MAMBO on the 30-m IRAM telescope at 1.2 mm to map
+MAMBO on the 30-m IRAM telescope has been used at 1.2 mm to map
 more distant regions of more massive star formation \citep{motte07}.
 None of these surveys covered a significant fraction of the Galactic plane.
 
@@ -412,12 +412,13 @@ from the northern hemisphere and uses a somewhat longer wavelength, allowing
 comparison of properties in the region of overlap with the ATLASGAL survey.
 At 870 \micron, $h\nu/k = 16.5$ K, compared to 13.1 K at 1.1 mm.  Because
 starless clumps may be quite cold ($\td \approx 10$ K), the uncertainty in mass
-caused by uncertain temperature is slightly less at 1.1 mm.  For example, the
-mass estimate if the actual $\td = 20$ K, rather than 10 K, would decrease by a
-factor of 3.3 at 870 \micron\ versus a factor of 2.9 at 1.1 mm. In addition,
+caused by uncertain temperature is slightly less at 1.1 mm.  For example, 
+if the actual $\td = 20$ K, rather than 10 K, the mass estimate would decrease by a
+factor of 3.3 at 870 \micron\ versus a factor of 2.9 at 1.1 mm. 
+
+In addition,
 the Bolocam bandpass excludes the CO \jj{2}{1} line, which can be a significant
 contaminant on top of the dust continuum emission.
-
 
 We have used the 144-element Bolocam focal plane array, mounted at the
 Cassegrain focus of the CSO, to survey over \bgpsarea\
@@ -426,12 +427,13 @@ mm in the dust continuum.  Figure \ref{fig:Coverage} shows the
 coverage of the \bgps.  Maps of the entire BGPS are presented in
 Figure \ref{fig:BGPSMontage}.  We have detected \ncores\ clumps in the
 surveyed fields, providing an unbiased sample of clumps suitable for
-multi-wavelength and high-resolution studies with existing telescopes
-and future facilities.  At the distances that we are observing these
-objects, we are likely observing aggregates of star forming cores
-found in a larger molecular cloud environment, which we will refer to
-as clumps \citep{williams00}.  The clump catalog is described in a
-companion paper \citep{rosolowsky09}.
+multi-wavelength and high-resolution studies with existing telescopes and
+future facilities.  At the distances that we are likely to be observing these
+objects (assuming the majority are at distances greater than 2kpc....
+because?), we are likely observing aggregates of star forming cores found in a
+larger molecular cloud environment, which we will refer to as clumps
+\citep{williams00}.  The clump catalog is described in a companion paper
+\citep{rosolowsky09}.
 
 The outline of the paper is as follows. Section \ref{sec:Observations}
 describes the instrument and the observations.  Section
@@ -474,7 +476,8 @@ implications of the emission revealed by the BGPS.
 %condensations.}{fig:mass_limits}{1.0}
 %
 \Figure{coverage_moll} {The coverage of the BGPS.  The background
-greyscale is IRAS 100 \mum.  
+greyscale is IRAS 100 \mum.  [James, team: is there a better figure 
+option?]
 %The Bolocam coverage is shown with white
 %solid lines in the top two panels and black in the bottom three.
 %Major regions of Galactic star formation are labeled.  The coverage of
@@ -505,22 +508,25 @@ greyscale is IRAS 100 \mum.
 \setcounter{subfig}{1}
 \renewcommand{\thefigure}{\arabic{figure}\alph{subfig}}
 
+\addtocounter{figure}{0}
 %\begin{sidewaysfigure}[h]
 \begin{figure}
+    \label{fig:BGPSMontage}
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
-      \caption{$\lon=-10.5$ to $\lon=19.5$ Units are Jy/Beam.  The brightest
-	sources, e.g. Sgr B2, Sgr A, and sources near $\lon=10$ and
-	$\lon=13$, appear to be saturated, but this is only a display
-	artifact.  The noise is more pronounced from $\lon=-7$ to $\lon=-2$
+      \caption{$\lon=-10.5$ to $\lon=19.5$ Units are Jy/Beam. 
+%      The brightest
+%	sources, e.g. Sgr B2, Sgr A, and sources near $\lon=10$ and
+%	$\lon=13$, appear to be saturated, but this is only a display
+%	artifact.
+        The noise is more pronounced from $\lon=-7$ to $\lon=-2$
 	because this region was observed less.}
     \end{center}
-    \label{fig:BGPSMontage}
   \end{minipage}
 \end{figure}
   
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
 \begin{figure}
@@ -536,7 +542,7 @@ greyscale is IRAS 100 \mum.
   \end{minipage}
 \end{figure}
 
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
 \begin{figure}
@@ -549,7 +555,7 @@ greyscale is IRAS 100 \mum.
   \end{minipage}
 \end{figure}
 
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
 \begin{figure}
@@ -563,7 +569,7 @@ greyscale is IRAS 100 \mum.
 \end{figure}
 %  \vspace{-4in}
 
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
 \begin{figure}
@@ -573,7 +579,7 @@ greyscale is IRAS 100 \mum.
   The NGC 7538 complex is in the upper-left.}
 \end{figure}
 
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
 \begin{figure}
@@ -1379,7 +1385,7 @@ artifacts were encountered.
   \end{minipage}
 \end{figure}
 
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
   
@@ -1399,7 +1405,7 @@ artifacts were encountered.
   \end{minipage}
 \end{figure}
 
-\addtocounter{figure}{-1}
+\addtocounter{figure}{0}
 \addtocounter{subfig}{1}
 
 \begin{figure}
@@ -1441,7 +1447,7 @@ artifacts were encountered.
 
   \label{fig:Flagger}
 
-  \addtocounter{figure}{-1} 
+  \addtocounter{figure}{0} 
   \addtocounter{subfig}{1}
   
   \begin{minipage}{6.5in}

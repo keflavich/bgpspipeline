@@ -38,6 +38,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         rth : rtf ,$
         xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],[-1.0 * rtf[*,0]*sin(rtf[*,1]+angle)]] $
     } ; to match ra/dec, ra increases to left signs all flipped (See apply_distortion_map_radec)
+      ; nominal.xy is in ROTATED FRAME
 
     meas = { $
         rth : fltarr(nbolos,2)    ,$
@@ -101,7 +102,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing 
+        meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
         meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
