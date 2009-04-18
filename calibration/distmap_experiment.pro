@@ -80,7 +80,9 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
     extast,hdr[*,0,0],astr
-    ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
+    ra_cen = median(bgps.ra_bore)
+    dec_cen = median(bgps.dec_bore)
+    ad2xy,ra_cen,dec_cen,astr,xcen,ycen
     meas.xcen=xcen
     meas.ycen=ycen
 
@@ -100,6 +102,10 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
         loadct,0
     endif
 
+    refmap = total(allmap,3)
+    fpref = centroid_map(convolve(refmap,refmap,/correl))
+    xcen = fpref[4]
+    ycen = fpref[5]
 
     xmin = 0                  ;floor(xcen-10)
     xmax = n_e(allmap[*,0,0])-1 ;ceil(xcen+10)
@@ -109,13 +115,15 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
-        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
-        fitmapcube[xmin:xmax,ymin:ymax,i] = fitmap
+;        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
+;        fitmapcube[xmin:xmax,ymin:ymax,i] = fitmap
+        corr = convolve(allmap[*,*,i],refmap,/correl) 
+        fitpars = centroid_map(corr,perror=perror,fitmap=fitmap,pixsize=pixsize)
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
-        meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
+        meas.xyoffs[i,0] =  (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
+        meas.xyoffs[i,1] =  (fitpars[5]-(ycen-ymin))*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
 ;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
@@ -175,20 +183,30 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
     endif
     !p.multi=0
 
+    shiftmap = allmap
+    for i=0,nbolos-1 do begin
+        shiftmap[*,*,i] = fshift(allmap[*,*,i],meas.xyoffs[i,0],meas.xyoffs[i,1])
+    endfor
+
 
 ;    atv,allmap[*,*,0]-shift(boremap,[nominal.xy[0,1],nominal.xy[1,1]])
     array_params = [7.7,0,bgps.arrang[0]]
     bolo_params2 = bolo_params
     bolo_params2[1,bolo_indices] = meas.rth[*,1]/!dtor
     bolo_params2[2,bolo_indices] = meas.rth[*,0]
-    bolo_params2[2,bolo_indices] = sqrt((meas.xy[*,0]*nominal.dec_conversion)^2+meas.xy[*,1]^2)
-    bolo_params2[1,bolo_indices] = (atan(-meas.xy[*,1],meas.xy[*,0]*nominal.dec_conversion)-nominal.angle)/!dtor
+    
+    xy2 = nominal.xy 
+    xy2[*,0] -= (meas.xyoffs[*,0])
+    xy2[*,1] -= (meas.xyoffs[*,1])
+    bolo_params2[2,bolo_indices] = sqrt((xy2[*,0]*nominal.dec_conversion)^2+xy2[*,1]^2)
+    bolo_params2[1,bolo_indices] = (atan(-xy2[*,1],xy2[*,0]*nominal.dec_conversion)-nominal.angle)/!dtor
     ra_new = bgps.ra_bore
     dec_new = bgps.dec_bore
     apply_distortion_map_radec,ra_new,dec_new,bgps.rotang,array_params,bgps.posang,bolo_params=bolo_params2[*,bolo_indices]
     newmap = map_eachbolo(ra_new,dec_new,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
+    atv,total(newmap,3)
 
 
 
