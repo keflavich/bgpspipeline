@@ -182,7 +182,7 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
     bolo_params[2,bolo_indices] = meas.rth[*,0]
     ra_new = bgps.ra_bore
     dec_new = bgps.dec_bore
-    apply_distortion_map_radec,ra_new,dec_new,bgps.rotang,array_params,bolo_params=bolo_params
+    apply_distortion_map_radec,ra_new,dec_new,bgps.rotang,array_params,bgps.posang,bolo_params=bolo_params
     newmap = map_eachbolo(ra_new,dec_new,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
