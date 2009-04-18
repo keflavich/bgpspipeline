@@ -49,7 +49,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     bolo_indices = bgps.bolo_indices
     nbolos = n_e(bolo_indices)
 
-    angle = (-median(bgps.rotang) + median(bgps.posang) + median(bgps.arrang)) * !dtor
+    angle = (-median([bgps.rotang]) + median([bgps.posang]) + median([bgps.arrang])) * !dtor
     dec_conversion =  cos(bgps.source_dec*!dtor)
 
     ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
