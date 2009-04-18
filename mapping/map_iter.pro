@@ -45,7 +45,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
     mapstr.noisemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.noise,weight=bgps.weight,scans_info=bgps.scans_info,wtmap=mapstr.wt_map,_extra=_extra) 
     print,"Mean(noisemap): ",total(mapstr.noisemap,/nan)/float(total(finite(mapstr.noisemap)))," RMS(noisemap): ",stddev(mapstr.noisemap,/nan)," sum of noisemap^2: ",total(mapstr.noisemap^2,/nan)," with "+strc(n_e(mapstr.noisemap))+" d.o.f."
     print,"Mean(noise): ",total(bgps.noise,/nan)/float(total(finite(bgps.noise)))," RMS(noise): ",stddev(bgps.noise,/nan)," sum of noise^2: ",total(bgps.noise^2,/nan)," with "+strc(dof)+" d.o.f."
-    if dofits then writefits,outmap+'_noisemap'+string(i,format='(I2.2)')+'.fits',mapstr.noisemap,hdr
+    if dofits then writefits,outmap+'_residualmap'+string(i,format='(I2.2)')+'.fits',mapstr.noisemap,hdr
 
     if (i eq 0 and bgps.n_obs gt 1) or keyword_set(force_flag) then begin
         bgps.flags = mad_flagger(bgps.astrosignal,mapstr.ts,bgps.flags,nsig=5,glitchloc=glitchloc) 
