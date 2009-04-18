@@ -123,8 +123,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_bpars[0,*] *= bolo_params[0,*]
             all_ra = [[all_ra],[ra_map[*,wh_scan_full]]]
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
-            all_ra_b = [[all_ra_b],[ra_bore[wh_scan_full]]]
-            all_dec_b = [[all_dec_b],[dec_bore[wh_scan_full]]]
+            all_ra_b = [all_ra_b,ra_bore[wh_scan_full]]
+            all_dec_b = [all_dec_b,dec_bore[wh_scan_full]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
             all_posang = [all_posang,posang]

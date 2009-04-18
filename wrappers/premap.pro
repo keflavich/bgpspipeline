@@ -16,7 +16,7 @@
 ;   iter0savename (outmap+"_preiter.sav")
 ;   pixsize (7.2) - pixel size in arcseconds
 ;   mvperjy (specified in header) - calibration coefficients (e.g. [1,0,0])
-pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
+pro premap,filelist,outmap,niter=niter,$
         pointing_model=pointing_model,$
         minbaseline=minbaseline,$
         deconvolve=deconvolve, $
@@ -38,13 +38,6 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
     if n_e(iter0savename) eq 0 then iter0savename=outmap+"_preiter.sav" 
     if ~keyword_set(pixsize) then pixsize=7.2 ;arcseconds
 
-
-    if keyword_set(workingdir) then cd,workingdir else begin
-        spawn,'pwd',workingdir
-        print,"WARNING: you have not specified a working directory.  Using current directory "+workingdir+"by default."
-;        print,"WARNING: you have not specified a working directory.  Use .con to continue using the current directory",workingdir
-;        stop
-    endelse
     time_s,"ALL PREPROC ... output is "+outmap+"  ",t1
     if keyword_set(fromsave) then begin
         restore,filelist
