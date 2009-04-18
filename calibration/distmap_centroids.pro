@@ -1,4 +1,28 @@
 ; centroiding portion of distmap
+;
+; something is clearly wrong, because this does not produce self-consistent results
+; First, I rotate the nominal array positions to their positions on the sky, following precisely 
+; apply_distortion_map_radec.  This includes a parity flip in the Y axis (not the x axis!  Damned
+; if I know why....) and the declination projection stretching.
+;
+; Next, map each bolometer separately, using the nominal pointing and beam locations.
+;
+; Then centroid each single-bolometer map to acquire an x,y position and a beamsize.
+;
+; The pointing center (source_ra,source_dec) is subtracted from the x,y positions to 
+; get an x,y offset.  This x,y offset is subtracted from the nominal positions rotated into
+; the sky frame.
+;
+; Finally, the new positions (nominal-offset) are rotated and destretched back into the 
+; array frame for use in the pipeline.
+; 
+; At least one of these steps is wrong, probably by a sign.  I feel very confident about the 
+; projection-onto-the-sky step because it is cloned directly from the apply_distortion_map code,
+; which has been empirically proved beyond any doubt.
+;
+; The problem is that this seems to work at subtracting out the mean offset, but it does not reduce
+; the spread in bolometer offset.  I don't know how that's possible.  
+;
 pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
     pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,coordsys=coordsys,$
     projection=projection,distcor=distcor,_extra=_extra
@@ -26,7 +50,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     nbolos = n_e(bolo_indices)
 
     angle = (-median(bgps.rotang) + median(bgps.posang) + median(bgps.arrang)) * !dtor
-    dec_conversion = cos(bgps.source_dec*!dtor)
+    dec_conversion = 1; cos(bgps.source_dec*!dtor)
 
     ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
@@ -112,7 +136,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
         meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
         meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
-        meas.xy[i,0] = -nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
+        meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
 ;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
 ;        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
@@ -139,7 +163,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 ;            oplot,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=60
 ;            oplot,[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=240
 ;            arrow,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],/data,color=80,hsize=1
-            oplot,[-nominal.xy[i,0]/bolospacing+xcen,meas.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen,meas.xy[i,1]/bolospacing+ycen],color=150
+            oplot,[nominal.xy[i,0]/bolospacing+xcen,meas.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen,meas.xy[i,1]/bolospacing+ycen],color=150
             oplot,[fitpars[4]+xmin,xcen],[fitpars[5]+ymin,ycen],color=150
 
             ad2xy,median(bgps.ra_map[i,*]),median(bgps.dec_map[i,*]),astr,pointx,pointy
