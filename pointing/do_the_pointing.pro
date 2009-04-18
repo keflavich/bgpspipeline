@@ -11,11 +11,11 @@
 ;               encoded in a length-2 vector
 ;    beam_loc_file - the name of a beam locations file / distortion map file
 pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,fzao=fzao,$
-    badbolos=badbolos,bolo_params=bolo_params,                $
+    badbolos=badbolos,bolo_params=bolo_params,ra_bore=ra_bore,dec_bore=dec_bore,          $
     el=el,az=az,eel=eel,eaz=eaz,noeeleaz=noeeleaz,nobeamloc=nobeamloc,                    $
-    no_offsets=no_offsets,pointing_model=pointing_model,                      $
+    no_offsets=no_offsets,pointing_model=pointing_model,                                  $
     nutate=nutate,aberration=aberration,precess=precess,radec_offsets=radec_offsets,      $
-    logfile=logfile,_extra=_extra
+    logfile=logfile,boresight=boresight,_extra=_extra
 
     latitude=19.82611111D0 
 
@@ -30,6 +30,8 @@ pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,
         pointing_model = [maltoff,mazoff]
     endif
     my_hor2eq,alt,az,jd,ra,dec,lat=latitude,alt=4072,lon=-155.473366,refract=0,precess=1,nutate=1,aberration=1,lst=lst
+    ra_bore = ra
+    dec_bore = dec
 
     ; Apply the ADDITIONAL pointing correction (offset in RA/Dec)
     ; pointoff = array_params[3:4]
@@ -51,7 +53,7 @@ pro do_the_pointing,ra,dec,jd,source_epoch,lst,rotang,array_params,pa,fazo=fazo,
         print,"No distortion map applied."
         ra = ra##(intarr(n_e(bolo_params[1,*]))+1)
         dec = dec##(intarr(n_e(bolo_params[1,*]))+1)
-    endelse
+    endelse 
 
 end
 

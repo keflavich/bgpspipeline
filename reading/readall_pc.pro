@@ -53,7 +53,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         pointing_wrapper_wrapper,filename,beam_loc_file=beam_loc_file,ra_all=ra_map,dec_all=dec_map,$
             badbolos=badbolos,bolo_params=bolo_params,fazo=fazo,fzao=fzao,radec_offsets=radec_offsets,$
             jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,$
-            posang=posang,rotang=rotang,arrang=arrang,_extra=_extra
+            posang=posang,rotang=rotang,arrang=arrang,ra_bore=ra_bore,dec_bore=dec_bore,_extra=_extra
 
         if total(badscans) gt 0 then begin
             printf,logfile,"Scans ",where(badscans)," flagged in file "+filename," because of rotation"
@@ -105,6 +105,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
 ;            median_dec = dec_map[n_e(dec_map)-1]    ;median(dec_temp[unflagged])
             all_ra = ra_map[*,wh_scan_full]
             all_dec = dec_map[*,wh_scan_full]
+            all_ra_b = ra_bore[wh_scan_full]
+            all_dec_b = dec_bore[wh_scan_full]
             all_scans = scans_info_new
             all_posang = posang
             all_rotang = rotang
@@ -121,6 +123,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_bpars[0,*] *= bolo_params[0,*]
             all_ra = [[all_ra],[ra_map[*,wh_scan_full]]]
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
+            all_ra_b = [[all_ra_b],[ra_bore[wh_scan_full]]]
+            all_dec_b = [[all_dec_b],[dec_bore[wh_scan_full]]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
             all_posang = [all_posang,posang]
@@ -186,6 +190,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         wh_scan: wh_scan,$
         ra_map: ra_map,$
         dec_map: dec_map,$
+        ra_bore: all_ra_b,$
+        dec_bore: all_dec_b,$
         bolo_indices: bolo_indices,$
         lst:lst,$
         jd:jd,$

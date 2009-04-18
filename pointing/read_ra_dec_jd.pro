@@ -39,7 +39,7 @@ pro read_ra_dec_jd,filename,ra,dec,jd,source_epoch,lst,rotang,beam_loc,$
     endfor
     rotang = rotangle
     
-    get_fixed_offsets_file,filename,fazo,fzao,_extra=_extra
+    get_fixed_offsets_file,filename,fazo,fzao,_extra=_extra ; this is where RPC files are read
 
     ; hack to deal with the fact that RPC files may have been recorded for dates where the pointing model
     ; was calculated without subtracting fazo/fzao
