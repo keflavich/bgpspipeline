@@ -156,7 +156,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     meas.rth[*,1] = atan(-meas.xy[*,1],meas.xy[*,0]*dec_conversion)-angle
 
     if doplot gt 1 then begin
-        plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=1,title='offsets - bolodist'
+        plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=3,title='offsets - bolodist'
+        xyouts,meas.xyoffs[*,0],meas.xyoffs[*,1],strc(bolo_indices)
         plot,meas.xyoffs[*,0]/bolospacing,meas.xyoffs[*,1]/bolospacing,psym=1,title='offsets - pixels'
         plot,meas.xyoffs[*,0]/bolospacing*pixsize,meas.xyoffs[*,1]/bolospacing*pixsize,psym=1,title='offsets - arcseconds'
         plot,meas.xy[*,0],meas.xy[*,1],psym=1,title='beam locations'
