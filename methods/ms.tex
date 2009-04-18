@@ -102,6 +102,8 @@
 \newcommand{\flux}{flux density}
 \newcommand{\solar}{\ensuremath{\odot}}
 \newcommand{\lon}{\ensuremath{l}}
+\newcommand\jyb{Jy~beam$^{-1}$}
+
 
 \newcommand{\epsi}{\varepsilon}
 
@@ -277,7 +279,7 @@ of \bgpsarea\ square degrees of the Galactic Plane with 130 in the 1st quadrant,
 the first large area, systematic survey of the Northern Galactic Plane in the
 millimeter continuum without pre-selected targets.  The survey has detected
 \ncores\ clumps to a limiting non-uniform 1-$\sigma$ noise level in the range \bgpsdepthlow\ and
-\bgpsdepthhigh\ mJy/beam RMS.  We present maps of 97 contiguous square degrees from
+\bgpsdepthhigh\ m\jyb RMS.  We present maps of 97 contiguous square degrees from
 $\lon=-10.5$ to $\lon=86.5$ and $b=\pm0.5$ with a resolution of $\sim$35\arcsec, as
 well as regions in IC1396, $\lon=111$ (NGC7538), W3/4/5, and Gem OB1.  The most
 striking feature of the maps is the filamentary structure of millimeter emission
@@ -488,13 +490,13 @@ option?]
 % TEST
 % Useful, but not here
 %\begin{figure}
-%  \subfigure[$\lon=-10.5$ to $\lon=19.5$ Units are Jy/Beam.  The brightest
+%  \subfigure[$\lon=-10.5$ to $\lon=19.5$ Units are \jyb.  The brightest
 %	sources, e.g. Sgr B2, Sgr A, and sources near $\lon=10$ and
 %	$\lon=13$, appear to be saturated, but this is only a display
 %	artifact.  The noise is more pronounced from $\lon=-7$ to $\lon=-2$
 %	because this region was observed less.]{\label{fig:BGPSMontage-a}\includegraphics[scale=0.75]{fig1_pg1_bw_inv_bar_label}}\\
 %\pagebreak
-%\subfigure[$\lon=19.5$ to $\lon=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
+%\subfigure[$\lon=19.5$ to $\lon=49.5$.  Units are \jyb .  G34.3+0.15, W
 %	51, W 43, W 49, and M 17 appear to be saturated, but this is
 %	only a display artifact.]
 %{\label{fig:BGPSMontage-b}\includegraphics[scale=0.75]{fig1_pg2_bw_inv_bar_label}}
@@ -515,7 +517,7 @@ option?]
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
-      \caption{$\lon=-10.5$ to $\lon=19.5$ Units are Jy/Beam. 
+      \caption{$\lon=-10.5$ to $\lon=19.5$ Units are \jyb. 
 %      The brightest
 %	sources, e.g. Sgr B2, Sgr A, and sources near $\lon=10$ and
 %	$\lon=13$, appear to be saturated, but this is only a display
@@ -533,7 +535,7 @@ option?]
   \begin{minipage}{6.5in} 
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg2_bw_inv_bar_label} 
-      \caption{$\lon=19.5$ to $\lon=49.5$.  Units are Jy/Beam .  G34.3+0.15, W
+      \caption{$\lon=19.5$ to $\lon=49.5$.  Units are \jyb .  G34.3+0.15, W
 	51, W 43, W 49, and M 17 appear to be saturated, but this is
 	only a display artifact.  The $20 < \ell < 40$ region through the
         4-8 kpc molecular ring and approximately the termination of the galactic
@@ -615,35 +617,37 @@ detail in \citet{haig04} and \citet{glenn03}.
 
 %\subsection{Observations}
 
-The observations described here were acquired during six separate
+The maps presented here were acquired during six separate
 observing sessions at the CSO over the course of two years.  The
 observing epochs are given in Table \ref{tab:Observing}, along with
 corresponding ranges for the zenith opacity $\tau_{225}$ of the CSO
-tipper tau.  Because of the CSO weather multiplexing policy, Bolocam
+tipper tau.  Bolocam
 observations were typically scheduled when $\tau_{225} > 0.06$.
-Between each observing epoch, Bolocam was removed from its mount at
+Between observing epochs, Bolocam was removed from its mount at
 the re-imaged Cassegrain focus and stored warm.  Thus the flux
 calibration and pointing model must be re-computed for each epoch to
 allow for variations in the instrument and optics.  We found that the
 flux calibration did not in fact differ significantly between epochs.
-For the pointing model, we computed a well-constrained version for
-Epoch V and aligned all images to this.
+We observed additional pointing sources during Epoch V and therefore
+used it as the master pointing model.
+
 
 %\subsection{Observing Strategy}
 
 % xraster 120 11280 23 /step_size=162 /equatorial /position_angle=36.753118 /alternate_direction /rot /settling_time = 03
 
-Our basic observing strategy was to raster scan Bolocam by moving the
+[Reword section?] Our basic observing strategy was to raster scan Bolocam by moving the
 primary mirror of the CSO to modulate the astrophysical signal faster
 than fluctuations in atmospheric opacity.  Each field was scanned with
-alternating raster scans along $l$ and $b$.  Starting with Epoch III,
-the fundamental scan unit was a $3\arcdeg \times 1\arcdeg$ block.
-Each block was scanned with 23 scans along lines of constant $b$, and
-67 scans along lines of constant $l$.  In both cases, the spacing
-between adjacent rasters was 162\arcsec.  The total time for such a
-scan was between 39 and 48 minutes.  The data were electronically
-sampled at 10 Hz along the scan direction, slightly higher than the
-Nyquist rate for the scan speed of 120\arcsec\ s$^{-1}$.
+alternating raster scans along $l$ and $b$.  In Epoch I-II, the fundamental
+scan unit was a $1\arcdeg \times 1\arcdeg$ block, scanned 23 times in \lon and
+$b$.  Starting with Epoch III, the fundamental scan unit was changed to a
+$3\arcdeg \times 1\arcdeg$ block for increased mapping efficiency.  Each block
+was scanned with 23 scans along lines of constant $b$, and 67 scans along lines
+of constant $l$.  In both cases, the spacing between adjacent rasters was
+162\arcsec.  The total time for such a scan was between 39 and 48 minutes.  The
+data were electronically sampled at 10 Hz along the scan direction, slightly
+higher than the Nyquist rate for the scan speed of 120\arcsec\ s$^{-1}$.
 
 
 In order to fill in the instanteously undersampled focal plane, we
@@ -651,9 +655,9 @@ began using in Epoch II a field rotator to mechanically align the
 focal plane at an optimal orientation along the scan direction to
 improve the sampling orthogonal to the scan direction.  This is shown
 in Figure \ref{fig:Array}.  Achieving good sampling is complicated by
-a number of missing pixels.  A simulation was performed to determine
+a number of missing bolometers.  A simulation was performed to determine
 the optimal angle to rotate the array with respect to the scan
-direction to account for the beam spacing and missing pixels.  During
+direction to account for the beam spacing and missing bolometers.  During
 the turnaround following a raster, the field rotator is adjusted to
 this optimum angle.
 %CHECK
@@ -716,15 +720,17 @@ The data were reduced with a custom pipeline written specifically for the BGPS.
 A key element of the reduction is the iterative estimation of the
 atmospheric fluctuations and the astrophysical signal.  The
 atmospheric model is developed from a set of principal components of
-the bolometer signal time series under the assumption that the bulk of
-the correlated signal is atmospheric.  The iterative estimation
+the bolometer signal time series under the assumption that the bulk of the
+correlated signal is atmospheric (under this assumption, astrophysical extended
+structures are treated as atmospheric noise).  The iterative estimation
 process then helps to restore correlated flux due to astrophysical
 emission (Section \ref{sec:Mapping}).
 
 The Bolocam observations are sensitive to structure between 35\arcsec\ and
 about 200\arcsec\ (half the array field of view, see figure
 \ref{fig:PCA_filter}).  An indicative analysis of the spatial filter function
-of the iterative mapping scheme is given in \citet{enoch06}.  The data were
+of the iterative mapping scheme is given in \citet{enoch06}, and we present a detailed analysis
+of the filter function in our survey in figure \ref{fig:PCA_filter}.  The data were
 sampled onto a uniform 7\farcs2 grid.  Flux density calibrations were performed
 using observations of Mars, Uranus, and Neptune, and they are accurate to
 $\sim$20\%.  The flux calibration is described in section \ref{sec:FluxCalibration}.
@@ -736,16 +742,19 @@ $\sim$20\%.  The flux calibration is described in section \ref{sec:FluxCalibrati
 %individually and aligned to a `master' field that has been tied to
 %pointing calibrators. 
 Noise properties across the survey are not completely uniform, but the
-measured $1\sigma$ level is $\approx43\pm7$ mJy/beam within the
+measured $1\sigma$ level is $\approx43\pm7$ m\jyb within the
 $b=\pm.5$ portion of the plane in the 1st quadrant.
 %After the pipeline mapping, the fields were combined using the COMBINE
 %command in IRAF with WCS offsets.
 
-The absolute pointing accuracy of the survey has been measured to be
-$\sim$6\arcsec\ RMS (figure \ref{fig:PointingModel}.  The Epoch V pointing model
-was used to make pointing reference fields which were then median combined
-using IRAF to make a higher S/N reference field with somewhat reduced pointing
-errors (Section \ref{sec:Astrometry}).
+A separate model was constructed for each epoch, but epoch V was used as the
+primary pointing calibration and is shown in figure \ref{fig:PointingModel}.
+In epoch V and VI, pointing sources were observed more frequently to obtain a
+better-constrained master pointing model. The absolute pointing accuracy was
+$\sim6\arcsec$ RMS.  The Epoch V pointing model was used to make pointing
+reference fields which were then median combined using IRAF to make a higher
+S/N reference field with somewhat reduced pointing errors (Section
+\ref{sec:Astrometry}).
 
 % A single $3^\circ \times
 % 1^\circ$ observation of each region was registered to the pointing calibrators
@@ -773,7 +782,7 @@ to scan astrophysical sources (Section \ref{sec:Noise}).
 \section{Flux Density and Surface Brightness Calibration}
 \label{sec:FluxCalibration}
 
-The absolute flux calibration is obtained from observations of Mars
+The absolute flux calibration is derived from observations of Mars
 and Uranus
 % no good observations, per AG
 %and Neptune 
@@ -796,7 +805,8 @@ where $S$ is the bolometer responsivity ([V/W]), $\eta$ is the system
 optical efficiency, $A$ is the effective telescope collecting area,
 $\Delta \nu$ is the bandwidth, and $\tau$ is the line-of-sight,
 in-band atmosphere opacity.  Under the assumption that the only power
-variation on the detectors is due to the power from the atmosphere,
+variation on the detectors is due to the power from the atmosphere (i.e.
+that astronomical sources are faint relative to the atmosphere),
 which may be parameterized by $\tau$, ${\cal S}$ is a single-valued
 function of $\tau$.  We have used the mean bolometer resistance as a
 proxy for $\tau$, since the bolometer resistance is a single-valued
@@ -815,8 +825,9 @@ the detector response with optical loading.
 %%A fit of Equation \ref{eq:Calibration} 
 %
 
-A fit to the observed values for the primary calibrators was performed
-for the each epoch separately.
+A fit to the observed values (measured potential difference vs. known flux
+density) for the primary calibrators was performed for the each epoch
+separately.
 %CHECK
 The agreement between epochs was good, so a single combined
 calibration was used for all data.
@@ -835,13 +846,16 @@ The above flux density calibration only accounts for the average
 calibration of bolometer Volts to Janskys.  It is also necessary to
 account for the variation of bolometer response across the focal
 plane.  We do this by monitoring the response to the atmosphere
-emission in all bolometers.  Since the atmosphere is common to all
-detectors, any changes in response are due to the intrinsic properties
-of the detectors.  The change in relative response with loading for a
-typical detector is shown in Figure \ref{fig:CalibrationCurves}.  The
-actual application of the the method to the time series of the
-bolometer data is shown in Figure \ref{fig:Flatfield}, and is
-discussed further in Section \ref{sec:Mapping}.
+emission in all bolometers (astrophysical signal is negligible except at SgrB2).  Since the
+atmosphere is common to all detectors [Anyone - why is the atmosphere common across 7.5'
+at the mm?  Brief discussion of atmosphere physics would be helpful], any changes in response are due to the
+intrinsic properties of the detectors.  The change in relative response with
+loading for a typical detector is shown in Figure \ref{fig:CalibrationCurves}.
+The actual application of the method to the time series of the bolometer
+data is shown in Figure \ref{fig:Flatfield}, and is discussed further in
+Section \ref{sec:Mapping}.
+
+[move this?] In figure \ref{fig:Flatfield}, each step of the iterative cleaning process is illustrated.
 
 The instrument beam size (PSF) is measured using the planets Uranus
 and Neptune which are nearly point sources for Bolocam.
@@ -860,9 +874,18 @@ of \TBD.
 
 \subsection{Comparison to Other Surveys}
 \label{sec:motte}
+\bf{Claudia's comments:}
+In general, this section could use some reorganizing such that it sets out why
+this comparison field was chosen first (best available data?), describes any
+relevant differences in the datasets (eg filter bandpasses, CO possibly in
+MAMBO filter), describes how the comparison was done, and then represents the
+results.  It seems out of order at the moment.  A reference for CO
+contamination causing detectable contamination (at 850um, not 1mm) is
+Hatchell, J., \& Dunham, M.~M.\ 2009, arXiv:0904.1163 
 
-Comparison of the accuracy of the Bolocam flux density calibration
-with the SCUBA 850 \mum\ results is complicated by the unknown effect
+
+Comparison of the BGPS flux density calibration
+with SCUBA 850 \mum\ results is complicated by the unknown effect
 of the dust spectral index.  However, there are several large-area
 surveys with the MAMBO instrument at 1.2 mm with which we can compare.
 Figure \ref{fig:CygnusComparison} shows the comparison of fluxes
@@ -871,22 +894,24 @@ extracted from our map in the Cygnus Arm with those of
 
 The figures of the Cygnus-X region presented by \citet{motte07}, obtained at a
 central wavelength of 1.2 mm using the 30 meter IRAM telescope, appear nearly
-identical to the 1.1 mm Bolocam images.  The BGPS mapping strategy, larger
-beam, and field of view provides better recovery of the large scale structure
-of the dust continuum emission, but inferior angular resolution.  The MAMBO
-filter is wider than the Bolocam filter and includes the CO 2-1 line.
-Nevertheless, there is excellent agreement between the structure revealed by
-the two data sets.
+identical to the 1.1 mm Bolocam images.  The MAMBO filter is wider than the
+Bolocam filter and includes the CO 2-1 line.  Nevertheless, there is excellent
+qualitative agreement between the structure revealed by the two data sets on size
+scales to which both are sensitive. 
 
-The Bolocam and M07 data sets have flux calibration consistent within about
-20\%.  However, direct comparison with the fluxes listed in M07 is difficult
+[John - may want to remove N46 and other extended sources from comparison.  This 
+paragraph needs cleanup]
+Direct comparison with the fluxes listed in M07 is difficult
 due to the factor of three difference in the size of the beams used.  For
 example, the the brightest source in the Cyg-X region is DR 21.  While M07
-quote a peak flux density per beam of 4.2 Jy/beam for the brightest feature in
-the DR 21 complex (their peak N46) and 17.9 Jy/beam in a 0.19 x 0.14 pc box,
-BGPS measures a peak flux of 17.5 Jy/beam (the beam being roughly 35\arcsec\ in
+quote a peak flux density per beam of 4.2 \jyb for the brightest feature in
+the DR 21 complex (their peak N46) and 17.9 Jy in a 0.19 x 0.14 pc box,
+BGPS measures a peak flux of 17.5 \jyb (the beam being roughly 35\arcsec\ in
 diameter).  Fluxes are best compared using sources that appear compact as
-observed with the beam of the IRAM 30 meter telescope.
+observed with the beam of the IRAM 30 meter telescope. Although we list comparisons
+for non-compact sources, our flux calibratio comparison was made using compact sources.
+The Bolocam and M07 data sets have flux calibration consistent within about
+20\%.  
 
 We have convolved the \citet{motte07} fits files\footnote{{\tt
 ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a Gaussian
@@ -896,45 +921,45 @@ measured fluxes with those from the BGPS.  The results are shown in Figure
 
 
 \Table
-{llllll}
+{lllllll}
 {Comparison of \citet{motte07} IRAM measurements to BGPS measurements
 in the Cygnus X region.  The IRAM data has been convolved to the BGPS beam
-to make the flux density measurements.
+to make the flux density measurements. [John - what does `scaled' mean?]
 %Note:  The \citet{motte07} integration box is given in terms of pc. 
 %The assumed distance must be about 1.7 kpc \citep{schneider2006}    % no, it's 1.7kpc stated explicitly
 }
 {
 %Source  &   BGPS           &  Motte \\
-%        &   peak mJy/beam  &  mJy in box (see Motte+ Table 1)
-Motte Source &  Motte Table 1   &  Motte scaled  & BGPS  &  Comments \\
-      Number &  integrated flux &  Jy/bm         & Jy/bm &           \\
+%        &   peak m\jyb  &  mJy in box (see Motte+ Table 1)
+Motte Source &  Motte Table 1   &  Motte scaled  & BGPS  & Ratio &  Comments \\
+      Number &  integrated flux &  \jyb          & \jyb  &       &           \\
 }
 {tab:CygnusComparison}
 {
-3  &    1.59 [0.11x0.09] & 2.61      &  2.30  &  DR 17                               \\
-11 &    0.34 [0.11x0.06] & 0.48      &  0.50  &  West SW of DR21                     \\
-12 &    1.63 [0.11x0.09] & 2.60      &  2.20  &    "                                 \\
-16 &    0.55 [0.12x0.12] & 0.82      &  0.72  &    "                                 \\
-26 &    0.34 [0.20x0.10] & 0.48      &  0.44  &    "                                 \\
-29 &    0.54 [0.25x0.13] & 1.10      &  0.62  &    "                                 \\
-30 &   10.54 [0.15x0.10] &13.5       &  9.80  &  W75(N)                              \\
-44 &    8.43 [0.14x0.11] &14.5       & 12.7   &  DR21 (OH)                           \\
-46 &   17.90 [0.08x0.03] &18.4       & 15.8   &  DR21 f-f, maser (H2O)               \\
-48 &    3.72 [0.17x0.11] & 9.4       &  7.8   &  DR21 (OH)-S                         \\
-51 &    2.37 [0.24x0.03] & 5.5       &  4.1   &  DR21 FIR2                           \\
-53 &    1.60 [0.14x0.09] & 4.3       &  2.7   &  North of DR21  FIR3                 \\
-56 &    0.60 [0.12x0.08] & 0.81      &  0.75  &  SE of DR21 47                       \\
-58 &    2.73 [0.23x0.19] & 2.40      &  1.64  &  IRAS 20375+4109                     \\
-59 &    0.37 [0.12x0.05] & 1.3       &  0.93  &  East of IRAS 20375+4109             \\
-60 &    0.56 [0.16x0.13] & 1.00      &  0.78  &  East of IRAS 20375+4109             \\
-61 &    0.23 [0.12x0.09] & 0.60      &  0.49  &  MSX 81.5168+0.01926                 \\
-62 &    0.50 [0.18x0.12] & 1.23      &  0.80  &  between 63 \& IRAS 20375+4109       \\
-63 &    1.09 [0.08x0.05] & 1.60      &  1.50  &  DR22                                \\
-65 &    0.78 [0.16x0.12] & 1.15      &  1.10  &                                      \\
-66 &    0.25 [0.15x0.06] & 0.63      &  0.76  &                                      \\
-68 &    0.84 [0.10x0.10] & 1.01      &  0.94  &                                      \\
-69 &    1.28 [0.47x0.18] & 1.12      &  1.20  &                                      \\
-72 &    0.54 [0.28x0.13] & 0.58      &  0.47  &                                      \\
+3  &    1.59 [0.11x0.09] & 2.61      &  2.30  & & DR 17                               \\
+11 &    0.34 [0.11x0.06] & 0.48      &  0.50  & & West SW of DR21                     \\
+12 &    1.63 [0.11x0.09] & 2.60      &  2.20  & &   "                                 \\
+16 &    0.55 [0.12x0.12] & 0.82      &  0.72  & &   "                                 \\
+26 &    0.34 [0.20x0.10] & 0.48      &  0.44  & &   "                                 \\
+29 &    0.54 [0.25x0.13] & 1.10      &  0.62  & &   "                                 \\
+30 &   10.54 [0.15x0.10] &13.5       &  9.80  & & W75(N)                              \\
+44 &    8.43 [0.14x0.11] &14.5       & 12.7   & & DR21 (OH)                           \\
+46 &   17.90 [0.08x0.03] &18.4       & 15.8   & & DR21 f-f, maser (H2O)               \\
+48 &    3.72 [0.17x0.11] & 9.4       &  7.8   & & DR21 (OH)-S                         \\
+51 &    2.37 [0.24x0.03] & 5.5       &  4.1   & & DR21 FIR2                           \\
+53 &    1.60 [0.14x0.09] & 4.3       &  2.7   & & North of DR21  FIR3                 \\
+56 &    0.60 [0.12x0.08] & 0.81      &  0.75  & & SE of DR21 47                       \\
+58 &    2.73 [0.23x0.19] & 2.40      &  1.64  & & IRAS 20375+4109                     \\
+59 &    0.37 [0.12x0.05] & 1.3       &  0.93  & & East of IRAS 20375+4109             \\
+60 &    0.56 [0.16x0.13] & 1.00      &  0.78  & & East of IRAS 20375+4109             \\
+61 &    0.23 [0.12x0.09] & 0.60      &  0.49  & & MSX 81.5168+0.01926                 \\
+62 &    0.50 [0.18x0.12] & 1.23      &  0.80  & & between 63 \& IRAS 20375+4109       \\
+63 &    1.09 [0.08x0.05] & 1.60      &  1.50  & & DR22                                \\
+65 &    0.78 [0.16x0.12] & 1.15      &  1.10  & &                                     \\
+66 &    0.25 [0.15x0.06] & 0.63      &  0.76  & &                                     \\
+68 &    0.84 [0.10x0.10] & 1.01      &  0.94  & &                                     \\
+69 &    1.28 [0.47x0.18] & 1.12      &  1.20  & &                                     \\
+72 &    0.54 [0.28x0.13] & 0.58      &  0.47  & &                                     \\
 }
 
 \FigureTwo{fluxcal_errorbars}{calib_vs_dc}
@@ -944,8 +969,9 @@ Motte Source &  Motte Table 1   &  Motte scaled  & BGPS  &  Comments \\
 proxy for atmospheric loading.  Red points are observations of Mars and black
 of Uranus.  The black line is a 2nd-order fit with 0,0 forced (no response if no
 measurable potential difference) .  Right: Scaling of the relative
-response to the atmosphere for a single detector compared to the array
-median.}{fig:CalibrationCurves}{1.0}
+response to the atmosphere for a single detector compared to the array median.
+Outliers are from noisy scans that are strongly
+downweighted.}{fig:CalibrationCurves}{1.0}
 
 % 6
 \Figure{relsens_cal}{An illustration of the relative sensitivity
@@ -966,7 +992,7 @@ this paper. }{fig:CygnusComparison}{1.0}
 \colhead{Source} & \colhead{Contribution}
 }
 \startdata
-\label{tab:ErrorBudget}
+\label{tab:ErrorBudget} % categorize - which is systematic and which is random
 Pointing error uncertainty & 2\% \\
 Calibration curve (Eq. \ref{eq:Calibration}) uncertainty & $<5\%$ \\  % formal statistical error is probably less than real effect...?
 PCA flux reduction uncertainty & 4\% \\   % is this an uncertainty?  Or systematic loss?
@@ -983,79 +1009,76 @@ Total & 7\% (random) + 5\% (systematic)
 \subsection{Absolute Reference Sources and Pointing Model}
 
 We constructed an absolute reference system for the BGPS by observing
-bright quasars and blazars near the Galactic Plane.  The distribution
-of sources over the sky is shown in Figure
+bright quasars and blazars near the Galactic Plane [with small raster maps?].  The distribution
+of pointing sources over the sky is shown in Figure
 \ref{fig:PointingCalibrators} and the list is given in Appendix
 \ref{app:PointingCalibrators}.
 
 Pointing observations were performed approximately once every two
-hours over the night.   The
+hours over each night.   The
 elevation offsets showed a deviation from zero which was empirically
 well-modeled by a quadratic function of elevation and a linear
 function of azimuth.  No systematic deviation was observed for the
 azimuth offsets.  
 
-Because the Galactic Plane appears over much of the sky, the pointing
-model necessarily encompasses a large range of elevation and azimuth.
-Nevertheless, an RMS scatter of $\sim 6\arcsec$ for the model over the
+% Because the Galactic Plane appears over much of the sky, the pointing
+% model necessarily encompasses a large range of elevation and azimuth.
+An RMS scatter of $\sim 6\arcsec$ for the model over the
 entire observed range was achieved, with the scatter somewhat worse at the
-highest ZA.  A separate model was constructed for each epoch, but epoch V was
-used as the primary pointing calibration and is shown in figure
-\ref{fig:PointingModel}.
-
+highest ZA.  
 Further details of the pointing calculation are given in Appendix
 \ref{app:PointingCalculation}.
 
 \subsection{Pixel Positions in the FOV}
 
 In addition to the model for the pointing center, it is necessary to
-empirically determine actual projected pattern of the array on the
+empirically determine the actual projected pattern of the array on the
 sky, and measure the offset angle between the focal plane and the sky
 coordinate system.  This is done by making observations which track
 all detectors across a bright source (e.g. a planet) and making maps from each
 bolometer individually. 
 
-In our first release, these positions are made using the nominal positions
-without correction for optical distortion.  This results in a slightly blurred
-beam (35.6\farcs instead of 31.2\farcs).  Because this distortion is
-asymmetric, it can also result in a small pointing offset at the field edges
-where only bolometers with large offsets record data.  However, this effect is
-strongly mitigated by the low number of hits at field edges - this data is
-generally flagged out.  The residual offset is within the overall pointing
-model error, but caution should be used when measuring locations at the field
-edges.
+[I think this section needs to be checked on more.... I don't know what to say about it yet -Adam]
+In our first data release, the projected positions of the detectors on the sky
+are made using the nominal positions without correction for optical distortion.
+This results in a slightly blurred beam (35\farcs6 instead of 31\farcs2).
+Because this distortion is asymmetric, it can also result in a small pointing
+offset at the field edges where only bolometers with large offsets record data.
+However, this effect is strongly mitigated by the low number of hits at field
+edges - this data is generally flagged out.  The residual offset is within the
+overall pointing model error, but caution should be used when measuring
+locations at the field edges. [ Note - I haven't been able to measure this yet.  It's only marginally
+possible]
 
-A mean focus offset for the secondary is determined once per observing
+A mean focus offset for the secondary was determined once per observing
 run.  An elevation-dependent correction is applied via a
 CSO-determined look-up table between raster scans.  We did not see any
 evidence that more frequent focus checks improve the quality of the
-PSF.
+PSF. [Observers - what checks were done?]
 
 \subsection{Relative Alignment and Mosaicing}
 
-Relative alignment between different observations of the same field
-was performed by finding the peak of the cross-correlation between
-images and a pointing master selected from the epoch with the
-best-constrained pointing model for that field. (In almost all cases,
-this was from Epoch V.)  Each observation was initially mapped
-individually, then all observations of a given field were
-cross-correlated with a selected master image of that field. The
-cross-correlation peak was fit with a gaussian and the difference
-between the gaussian peak and the image center was used as the pixel
-offset. 
-%The offsets were recorded and written to the
-%timestreams. 
-Finally, all observations of a field were merged into a single
-timestream with pointing offsets applied to create the field mosaic.
+Relative alignment between different observations of the same field was
+performed by finding the peak of the cross-correlation between images and a
+pointing master constructed  from observations taken in the epoch with the
+best-constrained pointing model for that field (in most cases, this was from
+Epoch V, though in some cases Epoch VI was used).  Each observation was
+initially mapped individually, then all observations in the pointing epoch were
+median-combined to create a reference field.  Each observation was then
+cross-correlated with the reference image for that field. The cross-correlation
+peak was fit with a gaussian and the difference between the gaussian peak and
+the image center was used as the pixel offset.  Finally, all observations of a
+field were merged into a single timestream with pointing offsets applied to
+create the field mosaic.
 
-This method of alignment avoids the ambiguities inherent in using
-extracted sources to align fields, as the Bolocam sources are rarely
-point-like.  It further avoids the pointing smearing and loss of peak
-flux density which would result if the the maps were coadded using the
-pointing model alone, where each individual observation would be
-coadded with the 6\arcsec\ RMS uncertainty of the model.  The
-relative alignment using the correlation maps is typically accurate to
- $<1\arcsec$.
+This method of alignment avoids the ambiguities inherent in using extracted
+sources to align fields, as the BGPS sources are rarely point-like.  It further
+avoids the pointing smearing and loss of peak flux density which would result
+if the the maps of individual observations were coadded using the pointing
+model alone, where each individual observation would be coadded with the
+6\arcsec\ RMS uncertainty of the model.  The relative alignment using the
+correlation maps is accurate to $<1\arcsec$ [I think this should be the
+Gaussian width of the cross-correlation fit?] where there is adequate signal.
 
 In low s/n fields, specifically \lon=65 to 75, there was not enough signal to
 acquire a pointing offset using cross-correlation.  In these fields the
@@ -1493,7 +1516,7 @@ contribute to the overall noise.}{fig:GlitchDistribution}{1.0}
     \end{center}
   \end{minipage}
   \caption{Selected images to illustrate the PCA process.  The displays are in
-  Galactic coordinates with a color range from -.1 to 1.0 Jy/beam.
+  Galactic coordinates with a color range from -.1 to 1.0 \jyb.
   {\it Top 4 rows}: a grid of maps of each of the first 20 PCA components displayed at
   the same scale.  It is clear that NCG 7538, the object imaged, has emission
   in each component.  There are varying levels of noise in each component, with
