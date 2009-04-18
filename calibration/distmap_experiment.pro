@@ -75,7 +75,7 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
     boremap = map_eachbolo(bgps.ra_bore ## (fltarr(nbolos)+1),bgps.dec_bore ## (fltarr(nbolos)+1),$
         bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
-        blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
+        blank_map=blank_map,hdr=hdrbore,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
@@ -178,11 +178,14 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
 ;    atv,allmap[*,*,0]-shift(boremap,[nominal.xy[0,1],nominal.xy[1,1]])
     array_params = [7.7,0,bgps.arrang[0]]
-    bolo_params[1,bolo_indices] = meas.rth[*,1]
-    bolo_params[2,bolo_indices] = meas.rth[*,0]
+    bolo_params2 = bolo_params
+    bolo_params2[1,bolo_indices] = meas.rth[*,1]/!dtor
+    bolo_params2[2,bolo_indices] = meas.rth[*,0]
+    bolo_params2[2,bolo_indices] = sqrt((meas.xy[*,0]*nominal.dec_conversion)^2+meas.xy[*,1]^2)
+    bolo_params2[1,bolo_indices] = (atan(-meas.xy[*,1],meas.xy[*,0]*nominal.dec_conversion)-nominal.angle)/!dtor
     ra_new = bgps.ra_bore
     dec_new = bgps.dec_bore
-    apply_distortion_map_radec,ra_new,dec_new,bgps.rotang,array_params,bgps.posang,bolo_params=bolo_params
+    apply_distortion_map_radec,ra_new,dec_new,bgps.rotang,array_params,bgps.posang,bolo_params=bolo_params2[*,bolo_indices]
     newmap = map_eachbolo(ra_new,dec_new,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
@@ -191,5 +194,15 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
     if keyword_set(interactive) then stop
     stop
+    plot,bolo_params[2,*]*cos(bolo_params[1,*]*!dtor),bolo_params[2,*]*sin(bolo_params[1,*]*!dtor),psym=1
+    oplot,bolo_params2[2,*]*cos(bolo_params2[1,*]*!dtor),bolo_params2[2,*]*sin(bolo_params2[1,*]*!dtor),psym=1,color=250
+        plot,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),psym=7,xrange=[-7,7],yrange=[-7,7]
+        plot,meas.rth[*,0]*cos(meas.rth[*,1]),meas.rth[*,0]*sin(meas.rth[*,1]),psym=7,xrange=[-7,7],yrange=[-7,7]
+        xyouts,nominal.rth[*,0]*cos(nominal.rth[*,1]),nominal.rth[*,0]*sin(nominal.rth[*,1]),strc(meas.bolo_indices)
+        xyouts,nominal.xy[*,0],nominal.xy[*,1],strc(meas.bolo_indices)
+; ...        xyouts,-3600/38.5*(bgps.ra_map[*,0]-median(bgps.ra_map[*,0])),(bgps.dec_map[*,0]-median(bgps.dec_map[*,0]))*3600/38.5,strc(meas.bolo_indices)
+        xyouts,meas.rth[*,0]*cos(meas.rth[*,1]),meas.rth[*,0]*sin(meas.rth[*,1]),strc(meas.bolo_indices),color=250
+        oplot,[0,nominal.rth[0,0]*cos(nominal.rth[0,1])],[0,nominal.rth[0,0]*sin(nominal.rth[0,1])]
+        oplot,[0,meas.rth[0,0]*cos(meas.rth[0,1])],[0,meas.rth[0,0]*sin(meas.rth[0,1])],color=250
 
 end
