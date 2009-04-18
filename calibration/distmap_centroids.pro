@@ -112,7 +112,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
         meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
         meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
-        meas.xy[i,0] = nominal.xy[i,0] + meas.xyoffs[i,0]  ; something is twisted
+        meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] + meas.xyoffs[i,1]  
 ;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
 ;        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
