@@ -4,18 +4,19 @@
 ; you can get the map array back by passing the 'allmap' parameter
 pro distmap,filename,outfile,allmap=allmap,fitmap=fitmap,check=check,fromsave=fromsave,doplot=doplot,$
     fixscale=fixscale,fixgrid=fixgrid,doatv=doatv,out_fits_shifted=out_fits_shifted,flagbolos=flagbolos,$
-    nofit=nofit,fixcenter=fixcenter,_extra=_extra
+    nofit=nofit,fixcenter=fixcenter,distcor=distcor,_extra=_extra
 
     if n_e(out_fits_shifted) eq 0 then out_fits_shifted=1
     if n_e(fixscale) eq 0 then fixscale=1
     if n_e(nofit) eq 0 then nofit=1
     if n_e(flagbolos) eq 0 then flagbolos=1
+    if n_e(distcor) eq 0 then distcor=0
 
     total_bolos = 144 
 
     if keyword_set(fromsave) then restore,outfile+".sav" else begin
         distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,allmap=allmap,fitmap=fitmap,$
-            meas=meas,nominal=nominal,coordsys='radec',projection='TAN',distcor=0,_extra=_extra
+            meas=meas,nominal=nominal,coordsys='radec',projection='TAN',distcor=distcor,_extra=_extra
     endelse
 
     ;BEGIN FLAGGING BAD BOLOS
