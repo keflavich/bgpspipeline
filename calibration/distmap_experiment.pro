@@ -35,6 +35,8 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
                     [rtf[*,0]*sin(rtf[*,1])]]
     rot_mat = [[cos(angle),-sin(angle)],$
                [sin(angle),cos(angle)]]
+    unrot_mat = [[cos(angle),sin(angle)],$
+               [-sin(angle),cos(angle)]]
     xysky = (xy_boloframe # rot_mat) * ([1/dec_conversion,-1] ## (fltarr(nbolos)+1))
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
@@ -202,8 +204,9 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
     bolo_params2[2,bolo_indices] = meas.rth[*,0]
     
     xy2 = nominal.xy 
-    xy2[*,0] += (meas.xyoffs[*,0])
-    xy2[*,1] -= (meas.xyoffs[*,1])
+    xy2[*,0] -= (meas.xyoffs[*,0]) ; subtract x offset
+    xy2[*,1] += (meas.xyoffs[*,1]) ; add y offset
+    xy2 = xy2 # unrot_mat
     bolo_params2[2,bolo_indices] = sqrt((xy2[*,0]*nominal.dec_conversion)^2+xy2[*,1]^2)
     bolo_params2[1,bolo_indices] = (atan(-xy2[*,1],xy2[*,0]*nominal.dec_conversion)-nominal.angle)/!dtor
     ra_new = bgps.ra_bore

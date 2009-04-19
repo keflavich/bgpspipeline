@@ -56,9 +56,9 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
     xy_boloframe = [[rtf[*,0]*cos(rtf[*,1])],$
                     [rtf[*,0]*sin(rtf[*,1])]]
-    rot_mat = [[cos(angle),sin(angle)],$
-               [-sin(angle),cos(angle)]]
-    xysky = (xy_boloframe # rot_mat) * [1/dec_conversion,1] ## (fltarr(nbolos)+1)
+    rot_mat = [[cos(angle),-sin(angle)],$
+               [sin(angle),cos(angle)]]
+    xysky = (xy_boloframe # rot_mat) * [1/dec_conversion,-1] ## (fltarr(nbolos)+1)
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
@@ -97,17 +97,22 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
-    extast,hdr[*,0,0],astr
-    ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
-    meas.xcen=xcen
-    meas.ycen=ycen
+;    extast,hdr[*,0,0],astr
+;    ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
+;    meas.xcen=xcen
+;    meas.ycen=ycen
+;
+;    ; HACK
+;    if xcen gt n_e(allmap[*,0,0]) or ycen gt n_e(allmap[0,*,0]) then begin
+;        xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
+;        ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
+;                                ; 3/20/09 - I'm pretty sure there's no such error
+;    endif
 
-    ; HACK
-    if xcen gt n_e(allmap[*,0,0]) or ycen gt n_e(allmap[0,*,0]) then begin
-        xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
-        ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
-                                ; 3/20/09 - I'm pretty sure there's no such error
-    endif
+    refmap = total(allmap,3)
+    fpref = centroid_map(convolve(refmap,refmap,/correl))
+    xcen = fpref[4]
+    ycen = fpref[5]
 
     fitmapcube = allmap*0
 
@@ -129,15 +134,19 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
-        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
-        fitmapcube[xmin:xmax,ymin:ymax,i] = fitmap
+;        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
+;        fitmapcube[xmin:xmax,ymin:ymax,i] = fitmap
+        corr = convolve(allmap[*,*,i],refmap,/correl) 
+        fitpars = centroid_map(corr,perror=perror,fitmap=fitmap,pixsize=pixsize)
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xyoffs[i,0] = (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
-        meas.xyoffs[i,1] = (fitpars[5]-(ycen-ymin))*bolospacing 
+        xdiff[i] = fitpars[4]-(xcen-xmin)
+        ydiff[i] = fitpars[5]-(ycen-ymin)
+        meas.xyoffs[i,0] =  xdiff*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
+        meas.xyoffs[i,1] =  ydiff*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
-        meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
+        meas.xy[i,1] = nominal.xy[i,1] + meas.xyoffs[i,1]  
 ;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
 ;        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
         meas.angle[i] = fitpars[6]
