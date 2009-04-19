@@ -1,5 +1,5 @@
 
-pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvperjy=mvperjy
+pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvperjy=mvperjy,maptype=maptype
     m = readfits(filename,hdr)
 
     if n_e(pixsize) eq 0 then pixsize = 7.2
@@ -13,6 +13,7 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
         if stregex(filename,"_weight") ne -1 then maptype="weight"
         if stregex(filename,"_flag") ne -1 then maptype="flag"
         if stregex(filename,"_model") ne -1 then maptype="model"
+        if stregex(filename,"_smooth") ne -1 then maptype="smooth"
     endif
 
     if maptype eq "nhits" then bunit=".1s hits"      $
