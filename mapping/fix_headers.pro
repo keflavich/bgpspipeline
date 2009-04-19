@@ -32,7 +32,7 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
     fxaddpar,hdr,"calib_2",mvperjy[2]," 2nd coefficient for flux cal"
     fxaddpar,hdr,"BGPSITER",50,"Iteration number"
     fxaddpar,hdr,"bgpsnpca",13,"number of PCA components subtracted"
-    fxaddpar,hdr,"BGPSVERS",strc(version),"BGPS Processing Version Number"
+    fxaddpar,hdr,"BGPSVERS",version,"BGPS Processing Version Number"
     fxaddpar,hdr,"WAVELENG",1.12,"mm (avoids CO 2-1)"
     fxaddpar,hdr,"COMMENT","FITS (Flexible Image Transport System) format is defined in 'Astronomy"
     fxaddpar,hdr,"COMMENT","and Astrophysics', volume 376, page 359; bibcode 2001A&A...376..359H"
