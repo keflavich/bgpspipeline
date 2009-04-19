@@ -44,4 +44,6 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
     fxaddpar,hdr,"COMMENT","Flag counts are in the flagmap file"
     fxaddpar,hdr,"COMMENT","Deconvolved model is in the model file"
 
+    writefits,filename,m,hdr
+
 end
