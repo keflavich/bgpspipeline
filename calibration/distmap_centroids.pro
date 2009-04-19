@@ -8,6 +8,8 @@
 ; Next, map each bolometer separately, using the nominal pointing and beam locations.
 ;
 ; Then centroid each single-bolometer map to acquire an x,y position and a beamsize.
+;    On 4/18, switched to cross-correlation offset: in principle more reliable, plus
+;    the center-point from which to calculate the offset is non-arbitrary
 ;
 ; The pointing center (source_ra,source_dec) is subtracted from the x,y positions to 
 ; get an x,y offset.  This x,y offset is subtracted from the nominal positions rotated into
@@ -43,7 +45,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ; also, should automatically account for rotation
 
     for i=0,5 do begin
-        clean_iter_struct,bgps,mapstr,niter=intarr(10)+13,i=i,deconvolve=0,_extra=_extra
+        clean_iter_struct,bgps,mapstr,niter=intarr(10)+13,i=i,deconvolve=0,new_astro=new_astro,_extra=_extra
     endfor
 
     bolo_indices = bgps.bolo_indices
@@ -92,7 +94,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 ;    if total(bgps.flags) gt 0 then new_astro[where(bgps.flags)] = 0
 
     ; makes a data cube with one map for each bolometer
-    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
+    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,bgps.astrosignal+new_astro,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
@@ -131,6 +133,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ymin = 0                  ;floor(ycen-10)
     ymax = n_e(allmap[0,*,0])-1 ;ceil(ycen+10)
 
+    xdiff = fltarr(nbolos)
+    ydiff = fltarr(nbolos)
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
@@ -143,8 +147,8 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
         xdiff[i] = fitpars[4]-(xcen-xmin)
         ydiff[i] = fitpars[5]-(ycen-ymin)
-        meas.xyoffs[i,0] =  xdiff*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
-        meas.xyoffs[i,1] =  ydiff*bolospacing 
+        meas.xyoffs[i,0] =  xdiff[i]*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
+        meas.xyoffs[i,1] =  ydiff[i]*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] + meas.xyoffs[i,1]  
 ;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
@@ -207,6 +211,17 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     close,fitparfile
     free_lun,fitparfile 
+
+    shiftmap = allmap
+    for i=0,nbolos-1 do begin
+        shiftmap[*,*,i] = fshift(allmap[*,*,i],-xdiff[i],-ydiff[i])
+    endfor
+    smpar = centroid_map(total(shiftmap,3)/nbolos)
+    print,"Ideal planet gaussian widths:",smpar(2)*11,smpar(3)*11,"  mean: ",(smpar(2)+smpar(3))*11.0/2," amplitude:",smpar[1]
+
+    pipemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal+new_astro,wtmap=1,weight=1)
+    pmpar = centroid_map(pipemap)
+    print,"No-beamloc planet gaussian widths:",pmpar(2)*11,pmpar(3)*11,"  mean: ",(pmpar(2)+pmpar(3))*11.0/2," amplitude:",pmpar[1]
 
     fitmap=fitmapcube
 
