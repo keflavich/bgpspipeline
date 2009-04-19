@@ -7,12 +7,12 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
     if n_e(mvperjy) eq 0 then mvperjy=[ -3.26472e-15,0.398740,3.32002]
     if n_e(version) eq 0 then version = '1.0'
     if n_e(maptype) eq 0 then begin
-        if stregex(filename,"_map") then maptype="map"
-        if stregex(filename,"_noise") then maptype="residual"
-        if stregex(filename,"_nhits") then maptype="nhits"
-        if stregex(filename,"_weight") then maptype="weight"
-        if stregex(filename,"_flag") then maptype="flag"
-        if stregex(filename,"_model") then maptype="model"
+        if stregex(filename,"_map") ne -1 then maptype="map"
+        if stregex(filename,"_noise") ne -1 then maptype="residual"
+        if stregex(filename,"_nhits") ne -1 then maptype="nhits"
+        if stregex(filename,"_weight") ne -1 then maptype="weight"
+        if stregex(filename,"_flag") ne -1 then maptype="flag"
+        if stregex(filename,"_model") ne -1 then maptype="model"
     endif
 
     sxdelpar,hdr,'WL'
