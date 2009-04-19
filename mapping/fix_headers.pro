@@ -15,6 +15,10 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
         if stregex(filename,"_model") ne -1 then maptype="model"
     endif
 
+    if maptype eq "nhits" then bunit=".1s hits"      $
+    else if maptype eq "flag" then bunit="n_flagged" $
+    else bunit="Jy/Beam"
+
     sxdelpar,hdr,'WL'
     sxdelpar,hdr,'ITERNUM'
     sxdelpar,hdr,'N_PCA'
@@ -22,7 +26,7 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
 
     fxaddpar,hdr,"PROTITLE","Bolocam Galactic Plane Survey","PI: John Bally, University of Colorado"
     fxaddpar,hdr,"MAPTYPE",maptype
-    fxaddpar,hdr,"BUNIT","Jy/Beam"
+    fxaddpar,hdr,"BUNIT",bunit,"Units in map"
     fxaddpar,hdr,"BMAJ",beamsize/3600.
     fxaddpar,hdr,"BMIN",beamsize/3600.
     fxaddpar,hdr,"BPA",0
