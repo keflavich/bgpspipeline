@@ -15,12 +15,12 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
     if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
     premap,thefiles,outfile,bgps=bgps,mapstr=mapstr,/noflat,pointing_model=0,distcor=distcor,$
-        mvperjy=[1,0,0],fits_out=[5],projection=projection,coordsys=coordsys,_extra=_extra
+        mvperjy=[1,0,0],fits_out=[5],projection=projection,coordsys=coordsys,pixsize=11,_extra=_extra
     ; removed nobeamloc 4/10/09 - necessary in order to co-add images
     ; also, should automatically account for rotation
 
-    for i=0,5 do begin
-        clean_iter_struct,bgps,mapstr,niter=intarr(10)+13,i=i,deconvolve=0,_extra=_extra
+    for i=0,2 do begin
+        clean_iter_struct,bgps,mapstr,new_astro=new_astro,niter=intarr(10)+13,i=i,deconvolve=0,_extra=_extra
     endfor
 
     bolo_indices = bgps.bolo_indices
@@ -33,9 +33,9 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
     rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
     xy_boloframe = [[rtf[*,0]*cos(rtf[*,1])],$
                     [rtf[*,0]*sin(rtf[*,1])]]
-    rot_mat = [[cos(angle),sin(angle)],$
-               [-sin(angle),cos(angle)]]
-    xysky = (xy_boloframe # rot_mat) * [1/dec_conversion,1] ## (fltarr(nbolos)+1)
+    rot_mat = [[cos(angle),-sin(angle)],$
+               [sin(angle),cos(angle)]]
+    xysky = (xy_boloframe # rot_mat) * ([1/dec_conversion,-1] ## (fltarr(nbolos)+1))
     nominal = { $
         radius : reform(bolo_params[2,*]) ,$
         theta :  reform(bolo_params[1,*])*!dtor ,$
@@ -69,12 +69,14 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 ;    if total(bgps.flags) gt 0 then new_astro[where(bgps.flags)] = 0
 
     ; makes a data cube with one map for each bolometer
-    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
+    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,bgps.astrosignal+new_astro,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
+    
+    pipemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal+new_astro,wtmap=1,weight=1)
 
     boremap = map_eachbolo(bgps.ra_bore ## (fltarr(nbolos)+1),bgps.dec_bore ## (fltarr(nbolos)+1),$
-        bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
+        bgps.astrosignal+new_astro,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdrbore,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
@@ -112,6 +114,8 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
     ymin = 0                  ;floor(ycen-10)
     ymax = n_e(allmap[0,*,0])-1 ;ceil(ycen+10)
 
+    xdiff = fltarr(nbolos)
+    ydiff = fltarr(nbolos)
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
@@ -122,8 +126,10 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
-        meas.xyoffs[i,0] =  (fitpars[4]-(xcen-xmin))*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
-        meas.xyoffs[i,1] =  (fitpars[5]-(ycen-ymin))*bolospacing 
+        xdiff[i] = fitpars[4]-(xcen-xmin)
+        ydiff[i] = fitpars[5]-(ycen-ymin)
+        meas.xyoffs[i,0] =  xdiff*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
+        meas.xyoffs[i,1] =  ydiff*bolospacing 
         meas.xy[i,0] = nominal.xy[i,0] - meas.xyoffs[i,0]  ; something is twisted
         meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
 ;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
@@ -185,25 +191,25 @@ pro distmap_experiment,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,
 
     shiftmap = allmap
     for i=0,nbolos-1 do begin
-        shiftmap[*,*,i] = fshift(allmap[*,*,i],meas.xyoffs[i,0],meas.xyoffs[i,1])
+        shiftmap[*,*,i] = fshift(allmap[*,*,i],-xdiff[i],-ydiff[i])
     endfor
 
 
 ;    atv,allmap[*,*,0]-shift(boremap,[nominal.xy[0,1],nominal.xy[1,1]])
-    array_params = [7.7,0,bgps.arrang[0]]
+    array_params = [7.7,31.2,bgps.arrang[0]]
     bolo_params2 = bolo_params
     bolo_params2[1,bolo_indices] = meas.rth[*,1]/!dtor
     bolo_params2[2,bolo_indices] = meas.rth[*,0]
     
     xy2 = nominal.xy 
-    xy2[*,0] -= (meas.xyoffs[*,0])
+    xy2[*,0] += (meas.xyoffs[*,0])
     xy2[*,1] -= (meas.xyoffs[*,1])
     bolo_params2[2,bolo_indices] = sqrt((xy2[*,0]*nominal.dec_conversion)^2+xy2[*,1]^2)
     bolo_params2[1,bolo_indices] = (atan(-xy2[*,1],xy2[*,0]*nominal.dec_conversion)-nominal.angle)/!dtor
     ra_new = bgps.ra_bore
     dec_new = bgps.dec_bore
     apply_distortion_map_radec,ra_new,dec_new,bgps.rotang,array_params,bgps.posang,bolo_params=bolo_params2[*,bolo_indices]
-    newmap = map_eachbolo(ra_new,dec_new,bgps.astrosignal,bgps.scans_info,pixsize=pixsize,$
+    newmap = map_eachbolo(ra_new,dec_new,bgps.astrosignal+new_astro,bgps.scans_info,pixsize=pixsize,$
         blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
     atv,total(newmap,3)
