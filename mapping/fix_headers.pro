@@ -24,7 +24,8 @@ pro fix_headers,filename,version=version,pixsize=pixsize,beamsize=beamsize,mvper
     sxdelpar,hdr,'N_PCA'
     sxdelpar,hdr,'COMMENT'
 
-    fxaddpar,hdr,"PROTITLE","Bolocam Galactic Plane Survey","PI: John Bally, University of Colorado"
+    fxaddpar,hdr,"PROTITLE","Bolocam Galactic Plane Survey"
+    fxaddpar,hdr,"CONTACT","John Bally","john.bally@colorado.edu"
     fxaddpar,hdr,"MAPTYPE",maptype
     fxaddpar,hdr,"BUNIT",bunit,"Units in map"
     fxaddpar,hdr,"BMAJ",beamsize/3600.
