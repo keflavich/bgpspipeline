@@ -874,65 +874,91 @@ of \TBD.
 
 \subsection{Comparison to Other Surveys}
 \label{sec:motte}
-\bf{Claudia's comments:}
-In general, this section could use some reorganizing such that it sets out why
-this comparison field was chosen first (best available data?), describes any
-relevant differences in the datasets (eg filter bandpasses, CO possibly in
-MAMBO filter), describes how the comparison was done, and then represents the
-results.  It seems out of order at the moment.  A reference for CO
-contamination causing detectable contamination (at 850um, not 1mm) is
-Hatchell, J., \& Dunham, M.~M.\ 2009, arXiv:0904.1163 
 
 
-Comparison of the BGPS flux density calibration
-with SCUBA 850 \mum\ results is complicated by the unknown effect
-of the dust spectral index.  However, there are several large-area
-surveys with the MAMBO instrument at 1.2 mm with which we can compare.
-Figure \ref{fig:CygnusComparison} shows the comparison of fluxes
-extracted from our map in the Cygnus Arm with those of
-\citet{motte07} (M07).
+Comparison of the BGPS flux density calibration with SCUBA 850 \mum\
+or ATLASGAL 870 \mum\ results is complicated by the poorly determined
+variations in the dust spectral index produced by emissivity variations.
+However, there are several large-area surveys with the IRAM 30 meter
+telescope at 1.2 mm which can be used for comparison with BGPS to
+check overall image quality, pointing, and flux calibration.  The study
+of the Cygnus-X region by \citet{motte07} presents one of the largest
+fields in the Galactic plane that has been mapped with MABO which overlaps
+with the Bolocam survey fields.
 
-The figures of the Cygnus-X region presented by \citet{motte07}, obtained at a
-central wavelength of 1.2 mm using the 30 meter IRAM telescope, appear nearly
-identical to the 1.1 mm Bolocam images.  The MAMBO filter is wider than the
-Bolocam filter and includes the CO 2-1 line.  Nevertheless, there is excellent
-qualitative agreement between the structure revealed by the two data sets on size
-scales to which both are sensitive. 
+The Motte Cygnus-X study used both the 37 element MAMBO and 117 channel
+MAMBO-2 instrument on the IRAM 30-meter diameter telescope on Pico Veleta
+in Spain.   The FWHM beam size for the observations was 11\arcsec .
+The effective passband of the images presented by Motte et al.
+is about 70 GHz centered at 240 GHz and thus includes the bright
+J = 2--1 CO transition.
 
-[John - may want to remove N46 and other extended sources from comparison.  This 
-paragraph needs cleanup]
-Direct comparison with the fluxes listed in M07 is difficult
-due to the factor of three difference in the size of the beams used.  For
-example, the the brightest source in the Cyg-X region is DR 21.  While M07
-quote a peak flux density per beam of 4.2 \jyb for the brightest feature in
-the DR 21 complex (their peak N46) and 17.9 Jy in a 0.19 x 0.14 pc box,
-BGPS measures a peak flux of 17.5 \jyb (the beam being roughly 35\arcsec\ in
-diameter).  Fluxes are best compared using sources that appear compact as
-observed with the beam of the IRAM 30 meter telescope. Although we list comparisons
-for non-compact sources, our flux calibratio comparison was made using compact sources.
-The Bolocam and M07 data sets have flux calibration consistent within about
-20\%.  
+The structure of the emission in the Cygnus-X region presented by
+\citet{motte07} appear nearly identical to the 1.1 mm Bolocam images
+of the same field despite the inclusion of the CO line, the slightly
+longer (by about 10\%) longer effective wavelength, and different beam
+sizes.   The peak positions also agree to within the errors of the
+BGPS survey discussed in this paper.
+
+Direct comparison with the fluxes listed in Motte et al. requires
+consideration of the factor of three difference in the size of the beams.
+For example, the the brightest source in the Cyg-X region is DR 21.
+While Motte et al. quote a peak flux density per beam of 4.2 \jyb for
+the brightest feature in the DR 21 complex (their peak N46) and 17.9 Jy
+in a $\sim$ 17\arcsec\ by 23\arcsec box (0.19 x 0.14 pc at an assumed
+distance of 1.7 kpc; see Motte et al. Table 1 in their Appendix).
+BGPS measures a peak flux of 17.5 \jyb in an effective beam roughly
+35\arcsec\ in diameter, indicating that the relative calibration is
+similar on the brightest source in common to both surveys.   However,
+DR 21 is an extended source.  Fluxes are best compared using sources
+that appear compact as observed with the beam of the IRAM 30 meter
+telescope.
 
 We have convolved the \citet{motte07} fits files\footnote{{\tt
 ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a Gaussian
 kernel that generates an approximately 35\arcsec\ beam, and compared the
-measured fluxes with those from the BGPS.  The results are shown in Figure
-\ref{fig:CygnusComparison}.
+measured fluxes with those from the BGPS.  Additionally, the data values
+in Motte et al. are in units of Jankys per pixel, with each pixel subtending
+a 4\arcsec\ by 4\arcsec\ area on the sky.  In contrast, the data values
+in BGPS are in units of Janskys per beam where the beam is 31\arcsec\
+in diameter.   The conversion of units required multiplication of the
+convolved images by factor of 8.
+
+The Motte et al. images were convolved with IRAF task
+GAUSS using a 3.5 pixel convolution kernel to synthesize maps with an
+effective FWHM beam diameter of 35\arcsec ;  the BGPS maps have effective
+beam diameter 4\arcsec\ larger than the CSO beam diameter of 31\arcsec\
+because of the smearing effects of optical distortion at the edges of the
+Bolocam array.  This distortion has not been removed from the Version 1.0
+images.  The Bolocam flux calibration is based on the measurement of
+primary calibrators using the central pixels of the array which are not
+effected by distortion.   The results are shown  in Figure
+\ref{fig:CygnusComparison} and tabulated in Table 2.  This figure and
+the table shows that BGPS and \citet{motte07} clumps have fluxes
+consistent within about 20\% after convolution to a 35\arcsec\ beam and
+scaling to Jy/beam.
+
+The average Motte et al. fluxes are larger than the BGPS fluxes by a factor
+of 1.23 despite the longer wavelength.  Contamination by the bright
+CO J = 2-1 line may account for a few percent of the excess
+detected flux by MAMBO.    For a dust spectral index of $-3.5$, the
+MAMBO measurements should have detected a flux that is about 35\% lower
+than what was seen by BGPS.    If this is a typical spectral index for
+the sample of clumps, then the Motte et al. flux calibration may be as
+much as 45\% higher than the BGPS fluxes.
 
 
 \Table
 {lllllll}
-{Comparison of \citet{motte07} IRAM measurements to BGPS measurements
-in the Cygnus X region.  The IRAM data has been convolved to the BGPS beam
-to make the flux density measurements. [John - what does `scaled' mean?]
-%Note:  The \citet{motte07} integration box is given in terms of pc. 
-%The assumed distance must be about 1.7 kpc \citep{schneider2006}    % no, it's 1.7kpc stated explicitly
+{Comparison of \citet{motte07} IRAM and BGPS measurements
+in the Cygnus X region.  The IRAM data has been convolved
+to the BGPS beam and scaled so the units are in Jy/beam.
 }
 {
 %Source  &   BGPS           &  Motte \\
 %        &   peak m\jyb  &  mJy in box (see Motte+ Table 1)
 Motte Source &  Motte Table 1   &  Motte scaled  & BGPS  & Ratio &  Comments \\
-      Number &  integrated flux &  \jyb          & \jyb  &       &           \\
+     Number &  integrated flux &  \jyb          & \jyb  &       &           \\
 }
 {tab:CygnusComparison}
 {
@@ -961,6 +987,14 @@ Motte Source &  Motte Table 1   &  Motte scaled  & BGPS  & Ratio &  Comments \\
 69 &    1.28 [0.47x0.18] & 1.12      &  1.20  & &                                     \\
 72 &    0.54 [0.28x0.13] & 0.58      &  0.47  & &                                     \\
 }
+% 7
+\Figure{cygnus_flux_comparison}{A comparison of the fluxes extracted
+in the same aperture from the \citet{motte07} MAMBO map and the Bolocam map of
+this paper. }{fig:CygnusComparison}{1.0}
+
+
+
+
 
 \FigureTwo{fluxcal_errorbars}{calib_vs_dc}
 %{rel_flux_cal_050303_ob3_to_050405_o66}
