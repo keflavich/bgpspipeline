@@ -27,11 +27,12 @@
 ;
 pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
     pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,coordsys=coordsys,$
-    projection=projection,distcor=distcor,_extra=_extra
+    projection=projection,distcor=distcor,npca=npca,_extra=_extra
 
     if ~keyword_set(doplot) then doplot=0
     if n_e(coordsys) eq 0 then coordsys='radec'
     if n_e(projection) eq 0 then projection='TAN'
+    if n_e(npca) eq 0 then npca=3
 
 
     ; larger pixel size selected for mapping to reduce blank pixels
@@ -45,7 +46,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     ; also, should automatically account for rotation
 
     for i=0,5 do begin
-        clean_iter_struct,bgps,mapstr,niter=intarr(10)+13,i=i,deconvolve=0,new_astro=new_astro,_extra=_extra
+        clean_iter_struct,bgps,mapstr,niter=intarr(10)+npca,i=i,deconvolve=0,new_astro=new_astro,_extra=_extra
     endfor
 
     bolo_indices = bgps.bolo_indices
@@ -99,7 +100,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
         jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
 
     bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
-;    extast,hdr[*,0,0],astr
+    extast,hdr[*,0,0],astr
 ;    ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
 ;    meas.xcen=xcen
 ;    meas.ycen=ycen
@@ -221,7 +222,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 
     pipemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal+new_astro,wtmap=1,weight=1)
     pmpar = centroid_map(pipemap,fitmap=pmfitmap,pixsize=pixsize,/dontconv)
-    print,"No-beamloc planet gaussian fwhm:",pmpar(2)*2.35*11,pmpar(3)*2.35*11,"  mean: ",(pmpar(2)+pmpar(3))*2.35*11.0/2," amplitude:",pmpar[1]
+    print,"No-beamloc planet gaussian fwhm:",pmpar(2)*2.35*7.2,pmpar(3)*2.35*7.2,"  mean: ",(pmpar(2)+pmpar(3))*2.35*7.2/2," amplitude:",pmpar[1]
 
     fitmap=fitmapcube
 
