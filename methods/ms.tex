@@ -387,7 +387,7 @@ Bolometer Array (SCUBA) on the 15-m James Clerk Maxwell Telescope
 mapped many significant regions in the galactic plane over its 8 year
 lifetime \citep{holland99,difrancesco08}, but never completed a
 contiguous survey of the galactic plane.  The Bolocam instrument has been
-used on the 10.4-m Caltech Submiliimeter Observatory (CSO) to map nearby large
+used on the 10.4-m Caltech Submillimeter Observatory (CSO) to map nearby large
 molecular clouds at 1.1 mm and identify hundreds of cores \citep{enoch06}.
 MAMBO on the 30-m IRAM telescope has been used at 1.2 mm to map
 more distant regions of more massive star formation \citep{motte07}.
@@ -513,7 +513,7 @@ option?]
 \addtocounter{figure}{0}
 %\begin{sidewaysfigure}[h]
 \begin{figure}
-    \label{fig:BGPSMontage}
+  \label{fig:BGPSMontage}
   \begin{minipage}{6.5in}
     \begin{center}
       \includegraphics[scale=0.9]{fig1_pg1_bw_inv_bar_label}
@@ -672,14 +672,15 @@ is reduced to $\sim40\%$.
 \Figure{bolocam_bandpass}{The Bolocam 1.1 mm bandpass.  Bright molecular
 emission lines are shown at their rest frequencies.  Note that the Bolocam
 passband rejects $>90\%$ of the $^{12}$CO flux, leaving our continuum
-measurements largely uncontaminated.  SO and CH$_3$OH lines are probably the
-dominant contributors to line flux in the passband.  \citet{nummelin1998} found
+measurements largely uncontaminated.  SO$_2$ and CH$_3$OH lines are likely 
+strong contributors to line flux in the passband.  \citet{nummelin1998} found
 that 22\% of the flux density in one pointing towards Sgr B2 was from lines,
 and \citet{yoshida2005} reported $>40\%$ in Orion A from line emission over the
 260-328 GHz band. Other lines lying in the Bolocam passband include CS($5\to4$)
 and ($6\to5$) (245 and 293 GHz), HCN($3\to2$) (265 GHz) and HCO$^+(3\to2)$ (267
-GHz).  A follow-up project will attempt to determine the contribution of lines
-to the BGPS flux density measurements.}
+GHz).  } 
+% A follow-up project will attempt to determine the contribution of lines
+% to the BGPS flux density measurements.}
 {fig:Bandpass}{1.0}
 
 \Table
@@ -728,9 +729,9 @@ emission (Section \ref{sec:Mapping}).
 
 The Bolocam observations are sensitive to structure between 35\arcsec\ and
 about 200\arcsec\ (half the array field of view, see figure
-\ref{fig:PCA_filter}).  An indicative analysis of the spatial filter function
+\ref{fig:PCA_Filter}).  An indicative analysis of the spatial filter function
 of the iterative mapping scheme is given in \citet{enoch06}, and we present a detailed analysis
-of the filter function in our survey in figure \ref{fig:PCA_filter}.  The data were
+of the filter function in our survey in figure \ref{fig:PCA_Filter}.  The data were
 sampled onto a uniform 7\farcs2 grid.  Flux density calibrations were performed
 using observations of Mars, Uranus, and Neptune, and they are accurate to
 $\sim$20\%.  The flux calibration is described in section \ref{sec:FluxCalibration}.
@@ -1660,7 +1661,7 @@ on performing photometry imposed by the data reduction.
 
 The BGPS maps are the convolution of the (nearly Gaussian)
 primary beam $G(\xad)$ and an effective high-pass
-spatial filter $F(\xad)$ (figure \ref{fig:PCA_filter}),
+spatial filter $F(\xad)$ (figure \ref{fig:PCA_Filter}),
 \[
 M'(\xad) = (G(\xad) \otimes F(\xad)) \otimes M(\xad)
 \]
@@ -1795,9 +1796,11 @@ release includes
 \section{Analysis}
 \label{sec:Analysis}
 
-\bf{Claudia suggested that this section be removed or changed to an `advertisement' section
+{\bf Claudia suggested that this section be removed or changed to an `advertisement' section
 where we indicate what follow-up work needs to be done - seems reasonable, since this
 is mostly junk pilfered from the `letter'.  However, we need to keep the last sentence around...}
+
+TEST: \ref{fig:BGPSMontage}
 
 The BGPS is the first millimeter survey of a substantial fraction
 of the Galactic Plane, providing an unbiased look at the high-density
