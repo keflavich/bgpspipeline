@@ -19,8 +19,8 @@ pro set_env,compy=compy
         setenv,'RPCDIR=/data/bgps/raw'
     endif else if compy eq 'eta' then begin
         setenv,'PIPELINE_ROOT=/Users/adam/work/bolocam/AGidl/bgps_pipeline'
-        setenv,'WORKINGDIR=/Volumes/milkyway/adam_work'
-        setenv,'WORKINGDIR2=/Volumes/milkyway/adam_work'
+        setenv,'WORKINGDIR=/Volumes/disk2/adam_work'
+        setenv,'WORKINGDIR2=/Volumes/disk2/adam_work'
 ;        setenv,'SLICED=/Volumes/milkyway/sliced'
 ;        setenv,'SLICED_POLY=/Volumes/milkyway/sliced_polychrome'
         setenv,'SLICED=/Volumes/disk2/data/bgps/raw/sliced'

@@ -112,7 +112,7 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
 ;    endif
 
     refmap = total(allmap,3)
-    fpref = centroid_map(convolve(refmap,refmap,/correl))
+    fpref = centroid_map(convolve(refmap,refmap,/correl),/dontconv)
     xcen = fpref[4]
     ycen = fpref[5]
 
@@ -138,10 +138,10 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     for i=0,n_e(allmap[0,0,*])-1 do begin
 
         ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
-;        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize)
+;        fitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize,/dontconv)
 ;        fitmapcube[xmin:xmax,ymin:ymax,i] = fitmap
         corr = convolve(allmap[*,*,i],refmap,/correl) 
-        fitpars = centroid_map(corr,perror=perror,fitmap=fitmap,pixsize=pixsize)
+        fitpars = centroid_map(corr,perror=perror,fitmap=fitmap,pixsize=pixsize,/dontconv)
 
         meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
         meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
@@ -216,12 +216,12 @@ pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,a
     for i=0,nbolos-1 do begin
         shiftmap[*,*,i] = fshift(allmap[*,*,i],-xdiff[i],-ydiff[i])
     endfor
-    smpar = centroid_map(total(shiftmap,3)/nbolos)
-    print,"Ideal planet gaussian widths:",smpar(2)*11,smpar(3)*11,"  mean: ",(smpar(2)+smpar(3))*11.0/2," amplitude:",smpar[1]
+    smpar = centroid_map(total(shiftmap,3),fitmap=smfitmap,pixsize=pixsize,/dontconv)
+    print,"Ideal planet gaussian fwhm:",smpar(2)*2.35*11,smpar(3)*2.35*11,"  mean: ",(smpar(2)+smpar(3))*2.35*11.0/2," amplitude:",smpar[1]
 
     pipemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal+new_astro,wtmap=1,weight=1)
-    pmpar = centroid_map(pipemap)
-    print,"No-beamloc planet gaussian widths:",pmpar(2)*11,pmpar(3)*11,"  mean: ",(pmpar(2)+pmpar(3))*11.0/2," amplitude:",pmpar[1]
+    pmpar = centroid_map(pipemap,fitmap=pmfitmap,pixsize=pixsize,/dontconv)
+    print,"No-beamloc planet gaussian fwhm:",pmpar(2)*2.35*11,pmpar(3)*2.35*11,"  mean: ",(pmpar(2)+pmpar(3))*2.35*11.0/2," amplitude:",pmpar[1]
 
     fitmap=fitmapcube
 

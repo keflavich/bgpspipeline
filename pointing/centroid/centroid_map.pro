@@ -1,5 +1,6 @@
 
-function centroid_map,map,fitmap=fitmap,submap=submap,perror=perror,pixsize=pixsize,measure_errors=measure_errors
+function centroid_map,map,fitmap=fitmap,submap=submap,perror=perror,$
+    dontconv=dontconv,pixsize=pixsize,measure_errors=measure_errors
 
     if ~keyword_set(pixsize) then pixsize=7.2
     fwhm = 31.2/pixsize & hwhm = fwhm / 2.
