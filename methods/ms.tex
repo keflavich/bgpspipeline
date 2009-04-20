@@ -280,7 +280,7 @@ the first large area, systematic survey of the Northern Galactic Plane in the
 millimeter continuum without pre-selected targets.  The survey has detected
 \ncores\ clumps to a limiting non-uniform 1-$\sigma$ noise level in the range \bgpsdepthlow\ and
 \bgpsdepthhigh\ m\jyb RMS.  We present maps of 97 contiguous square degrees from
-$\lon=-10.5$ to $\lon=86.5$ and $b=\pm0.5$ with a resolution of $\sim$35\arcsec, as
+$\lon=-10.5$ to $\lon=86.5$ and $b=\pm0.5$ with a resolution of $\sim$\bcamfwhm, as
 well as regions in IC1396, $\lon=111$ (NGC7538), W3/4/5, and Gem OB1.  The most
 striking feature of the maps is the filamentary structure of millimeter emission
 throughout the Galaxy.
@@ -727,7 +727,7 @@ structures are treated as atmospheric noise).  The iterative estimation
 process then helps to restore correlated flux due to astrophysical
 emission (Section \ref{sec:Mapping}).
 
-The Bolocam observations are sensitive to structure between 35\arcsec\ and
+The Bolocam observations are sensitive to structure between \bcamfwhm\ and
 about 200\arcsec\ (half the array field of view, see figure
 \ref{fig:PCA_Filter}).  An indicative analysis of the spatial filter function
 of the iterative mapping scheme is given in \citet{enoch06}, and we present a detailed analysis
@@ -909,7 +909,7 @@ the brightest feature in the DR 21 complex (their peak N46) and 17.9 Jy
 in a $\sim$ 17\arcsec\ by 23\arcsec box (0.19 x 0.14 pc at an assumed
 distance of 1.7 kpc; see Motte et al. Table 1 in their Appendix).
 BGPS measures a peak flux of 17.5 \jyb in an effective beam roughly
-35\arcsec\ in diameter, indicating that the relative calibration is
+\bcamfwhm\ in diameter, indicating that the relative calibration is
 similar on the brightest source in common to both surveys.   However,
 DR 21 is an extended source.  Fluxes are best compared using sources
 that appear compact as observed with the beam of the IRAM 30 meter
@@ -917,7 +917,7 @@ telescope.
 
 We have convolved the \citet{motte07} fits files\footnote{{\tt
 ftp://cdsarc.u-strasbg.fr/pub/cats/J/A+A/476/1243/fits/}} with a Gaussian
-kernel that generates an approximately 35\arcsec\ beam, and compared the
+kernel that generates an approximately \bcamfwhm\ beam, and compared the
 measured fluxes with those from the BGPS.  Additionally, the data values
 in Motte et al. are in units of Jankys per pixel, with each pixel subtending
 a 4\arcsec\ by 4\arcsec\ area on the sky.  In contrast, the data values
@@ -927,7 +927,7 @@ convolved images by factor of 8.
 
 The Motte et al. images were convolved with IRAF task
 GAUSS using a 3.5 pixel convolution kernel to synthesize maps with an
-effective FWHM beam diameter of 35\arcsec ;  the BGPS maps have effective
+effective FWHM beam diameter of \bcamfwhm ;  the BGPS maps have effective
 beam diameter 4\arcsec\ larger than the CSO beam diameter of 31\arcsec\
 because of the smearing effects of optical distortion at the edges of the
 Bolocam array.  This distortion has not been removed from the Version 1.0
@@ -936,7 +936,7 @@ primary calibrators using the central pixels of the array which are not
 effected by distortion.   The results are shown  in Figure
 \ref{fig:CygnusComparison} and tabulated in Table 2.  This figure and
 the table shows that BGPS and \citet{motte07} clumps have fluxes
-consistent within about 20\% after convolution to a 35\arcsec\ beam and
+consistent within about 20\% after convolution to a \bcamfwhm\ beam and
 scaling to Jy/beam.
 
 The average Motte et al. fluxes are larger than the BGPS fluxes by a factor
@@ -1723,7 +1723,7 @@ astrophysical source should ever be smaller than the kernel.
 deconvolution kernel for 13 PCA components subtracted.  It is clear that the
 larger deconvolution kernels generate spurious signal at smaller scales, but
 the flux recovery is very close to 1 at the beam size
-(35\arcsec)}{fig:PCA_Filter}{1.0}
+(\bcamfwhm)}{fig:PCA_Filter}{1.0}
 
 \Figure{aper_phot_hpf_beam}{[James - figure needs clarification] The effect of performing aperture
 photometry on a point source of unit flux observed with the effective
