@@ -1,0 +1,71 @@
+RAW NCDF FILE HEADERS:
+sample_interval                     [scalar]                 :  sampling rate of 'time' variable data (timestream data) in Hz
+bolo                                [bolodim,charlen]        :  bolometer names
+ac_bolos                            [time,bolodim]           :  alternating current readout - digitized version of data, the real timestream data for each bolo
+dc_bolos                            [time,bolodim]           :  direct current readout, used for absolute flux calibration because calibration is sensitive to DC level
+flags                               [time,bolodim]           :  timestream of flags to tell which data points are bad and should be ignored
+ac_bias                             [time,hex]               :  ?
+dc_bias                             [time,hex]               :  ?
+ref_acbias                          [time]                   :  ?
+ref_dcbias                          [time]                   :  ?
+rgrt                                [time]                   :  ?
+chop_enc                            [time]                   :  ?
+acq_das                             [time]                   :  ?
+trck_das                            [time]                   :  tells when the telescope was tracking - format?
+obs_number_das                      [time]                   :  ?
+rot_enab                            [time]                   :  ?
+rotating                            [time]                   :  ?
+rot_lim                             [time]                   :  ?
+obsnumber                           [onehertz]               :  ?
+rotangle                            [onehertz]               :  rotation angle sampled at a rate of one hertz.  Ick.  When upsampled in code, does not necessarily match the [time] length as a result - be careful when using, but necessary whenever rotator was enabled
+source_ra                           [onehertz]               :  ?? fiducial field center RA?
+source_dec                          [onehertz]               :  ?? fiducial field center DEC?
+source_epoch                        [onehertz]               :  ?? coordinate epoch of source_ra, source_dec?
+source_name                         [onehertz, char_len]     :  ?? field center source name?
+tau                                 [onehertz]               :  ?? optical depth...?
+tau350                              [onehertz]               :  ?? optical depth from CSO 350um Tau-meter?
+temperature                         [onehertz]               :  ? temperature measured at....
+humidity                            [onehertz]               :  ? humidity measured at...
+pressure                            [onehertz]               :  ? pressure measured at...
+wind_speed                          [onehertz]               :  ? windspeed measured at...
+chop_throw                          [onehertz]               :  ?
+chop_theta                          [onehertz]               :  ?
+chop_freq                           [onehertz]               :  ?
+pointing_file_name                  [onehertz, char_len]     : ???
+secondary_mirror_mode               [onehertz]               :  ?
+secondary_mirror_x_position         [onehertz]               :  ?
+secondary_mirror_y_position         [onehertz]               :  ?
+secondary_mirror_y_offset           [onehertz]               :  ?
+secondary_mirror_focus_position     [onehertz]               :  ?
+secondary_mirror_focus_offset       [onehertz]               :  ?
+ut                                  [time]                   :  universal time at each sampling point (in hours)
+ra                                  [time]                   :  right ascenscion at each sampling point.  CORRECTED FOR?  MEASURED HOW?  REPORTED BY WHAT?
+dec                                 [time]                   :  declination at each sampling point.  CORRECTED FOR?  MEASURED HOW?  REPORTED BY WHAT?
+lst                                 [time]                   :  local sidereal time at each sampling point (in hours)
+jd                                  [time]                   :  MODIFIED julian date (only day - go to UT for times).  Off by .5 day: increments at noon instead of midnight
+pa                                  [time]                   :  position angle of array on sky.... with respect to?  May be essential when applying distortion maps (beam locations files), but this is unclear because it has been claimed that PA is not needed but AG's code doesn't work without it
+x_offset                            [time]                   :  ?
+y_offset                            [time]                   :  ?
+az                                  [time]                   :  azimuth of telescope - how does this differ from RA/Dec besides lst/latitude conversion?
+el                                  [time]                   :  elevation of telescope - how does this differ from RA/Dec besides lst/latitude conversion?
+eaz                                 [time]                   :  error OFFSET in azimuth - ESSENTIAL!  I don't know what it is, but if it isn't added (correctly!) to the position vector, sources get stretched. Difference between what antenna computer told telescope to do and what it actually did.  Motors can't quite keep up with commanded positions.
+eel                                 [time]                   :  error OFFSET in elevation
+trck_tel                            [time]                   :  ?
+acq_tel                             [time]                   :  ?
+scan_tel                            [time]                   :  ?
+tran_tel                            [time]                   :  ?
+cele_tel                            [time]                   :  ?
+equat_offset_tel                    [time]                   :  ?
+chopping_tel                        [time]                   :  ?
+on_beam_tel                         [time]                   :  ?
+
+PROCESSED NCDF FILES: 
+pixel_offsets                       [scan, bolodim, two, two]:  ?
+rmsnoise                            [scan, bolodim]          :  ?
+scanspeed                           [scalar]                 :  ?
+scans_info                          [scan, two]              :  scan start/end time indices for each scan (applies to downsampled timestreams)
+precise_scans_offset                [two]                    :  ?
+beam_locations                      [bolodim, bolo_param]    :  beam locations inserted from a properly formatted beam locations file.  The beam locations are derived from distortion maps calculated from oversampled mapping of planets
+array_params                        [array_param]            :  5 parameters : platescale in arcsec per mm, beamsize FWHM in arcsec, fiducial array angle in degrees, x and y boresight offset in inches.  x and y in this case have been assumed to be azimuth/zenith angle, and they are corrections to the offsets that are applied from the telescope pointing software's reported az/el that are NOT included in the ncdf files.  The data was never completely merged, apparently
+bolo_params                         [bolodim, bolo_param]    :  bolo_params from a bolo_params file.  Includes flags for bad bolometers (bad is zero, good is 1), and bolometer locations specified in polar coordinates relative to the array center.  Same information as beam_locations, but is not measured - is probably 'fiducial'
+rel_resp                            [bolodim]                :  ?

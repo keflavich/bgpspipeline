@@ -1,0 +1,9 @@
+
+
+Flag list:
+    anything greater than 0 in the 'flags' array is a BAD VALUE
+    1 - default.  set by a lot of things
+    2 - glitch, set by deglitcher [deglitch.pro]
+    3 - PSD bad bolo [psd_flag_and_clean.pro]
+
+all flagged values will also be set in the data array to !values.f_nan, but at various points they are changed to zero so that the points are ignored instead of forcing everything to become nan

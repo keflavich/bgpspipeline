@@ -1,0 +1,41 @@
+; apply_distortion_map
+; reads a beam distortion file - must pass in one of these!
+; beam_loc_files have the format bolonum,distance,angle,RMS
+; rotang is the rotation angle of the whole array on the sky; presumably
+; it is the rotation angle between the reference line on Bolocam and the
+; horizontal (the horizon)
+; the distance is in units of 38 arcseconds, but alt and az are in units
+; of degrees, hence the correction
+; it is assumed that the reference line is w.r.t. the horizon rather than
+; the vertical, so the shift in alt is the sine of the given angle and the
+; shift in az is the cosine
+; ALT and AZ are also output parameters (they are modified by the procedure)
+pro apply_distortion_map_altaz,alt,az,rotang,array_params,pa=pa,beam_loc_file=beam_loc_file,badbolos=badbolos,bolo_params=bolo_params,$
+    no_fid_arr_ang=no_fid_arr_ang,no_pa=no_pa,add_pa=add_pa,pa0=pa0,medpa=medpa,maxpa=maxpa,minpa=minpa,$  
+    _extra=_extra$
+    fid_arr_ang = array_params[2]
+    if size(beam_loc_file,/type) eq 7 then begin 
+        readcol,beam_loc_file,bl_num,bl_dist,bl_ang,bl_rms,/silent
+        badbolos = where(bl_rms eq 0.0)
+        print,"Distortion mapping found these bad bolos: ",badbolos
+        bolo_params[2,*] = bl_dist
+        bolo_params[1,*] = bl_ang
+    endif else begin
+        bl_dist = reform(bolo_params[2,*])
+        bl_ang  = reform(bolo_params[1,*])
+    endelse
+    nbolos = n_e(bl_ang)
+    ntime = n_e(alt)
+    ; need to correct for position angle because the fiducial angle is just the angle of the array with the telescope,
+    ; but there is a position angle between the telescope and the sky.  The weird thing is that it doesn't change with
+    ; time: if you add the position angle in timestream, it goes crazy!
+    angle = (bl_ang) # replicate(1,ntime) - replicate(1,nbolos) # rotang  ;;;;ROTANG IS THE WRONG SIZE!!!!!
+    ; this entire if-statement blog is entirely for debugging
+    bl_dist *= 5.*7.7/3600.   ; bolometer spacing on array is nominally 38 arcseconds
+;   so apparently ra + cos(angle), dec - sin(angle) works if angle = boloang + fid_arr_ang + pa[0]....
+    new_alt =   replicate(1,nbolos) # alt    + bl_dist # replicate(1,ntime) * sin(angle*!dtor)
+    new_az =    replicate(1,nbolos) # az     - bl_dist # replicate(1,ntime) * cos(angle*!dtor)
+    alt = new_alt
+    az  = new_az
+end
+

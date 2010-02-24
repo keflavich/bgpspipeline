@@ -1,0 +1,5 @@
+platescale_("/mm)      7.651
+beamsize_("FWHM)      30.0
+fid_arr_ang(deg)      84.00
+x_bore_off(inches)     0.00
+y_bore_off(inches)     0.00

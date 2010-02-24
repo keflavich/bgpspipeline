@@ -1,0 +1,37 @@
+#   Definition of coefficientts:
+#   start/end mjd are the start/end modified Julian date of a given pointing model
+#   the 'a' coefficients are for the AZIMUTH OFFSET, the b coefficients are for the ZENITH ANGLE OFFSET
+#   a0/b0 are constants (e.g. the mean)
+#   [ab][12] are the 1st and 2nd coefficients of Azimuth.  They have been fiated to zero for most of
+#   the past year or three.
+#   [ab][34] are the 1st and 2nd coefficients of Zenith Angle.
+#   A 'pointing model' is therefore something like this:
+#   azoff = a0 + a3*alt + a4*alt^2
+#   altoff = b0 + b3*alt + b4*alt^2
+#
+#   It is important that the start_mjd/end_mjd be in ascending order
+#
+#   XX WARNING: LATER THAN JULY 2007 DEFAULTS TO JULY 2007 WHICH WILL PROBABLY RESULT IN ERRORS!
+#   XX I don't have a September 2007 model yet.
+#   Correction: NO model is applied for Sep 2007 b/c the pointing should be good as is
+#
+#   start_mjd      end_mjd               a0              a1            a2              a3             a4                 b0             b1             b2             b3                b4       realdate
+      53522.5      53582.5       -9.2413685             0.0           0.0   -0.0066354359  -0.0015110883          7.0392221            0.0            0.0   -0.053635657    -0.00047042481       20050601
+      53614.5      53643.5        84.969583             0.0           0.0      -2.4339154    0.016300937          126.00164            0.0            0.0     -2.4424431       0.015455417       20050901
+      53887.5      53947.5        9.5305281             0.0           0.0    -0.053191181  -0.0029300592         0.13425019            0.0            0.0     0.48160040     -0.0092814256       20060601
+      53979.5      54008.5       -98.980381             0.0           0.0      0.65354164   -0.012414466          52.841380            0.0            0.0      1.6705743      -0.020893018       20060901
+      54101.5      54252.5       -99.078392             0.0           0.0        0.105270   -0.005943491          86.896333            0.0            0.0     0.54257415      -0.011919129       20070101
+      54252.5      54288         -103.03831             0.0           0.0      0.20972540  -0.0060336987          100.74491            0.0            0.0   0.0099012827     -0.0033331895       20070601
+#      54288        54313         -99.078392             0.0           0.0      0.10527000  -0.0059434911          86.896333            0.0            0.0     0.54257415      -0.011919129       20070707
+      54288        54313         -98.803883             0.0           0.0      0.11810246  -0.0051207995          91.720516            0.0            0.0     0.18953269      -0.0078189793       20070707
+#      54313        54500         -99.078392             0.0           0.0      0.10527000  -0.0059434911          86.896333            0.0            0.0     0.54257415      -0.011919129       20070707
+      54313        54500                 0              0.0           0.0               0              0                  0            0.0            0.0              0                 0       20070907
+
+
+#mjd2date,53522.5 ,y,m,d & print,y,m,d
+#mjd2date,53614.5 ,y,m,d & print,y,m,d
+#mjd2date,53887.5 ,y,m,d & print,y,m,d
+#mjd2date,53979.5 ,y,m,d & print,y,m,d
+#mjd2date,54101.5 ,y,m,d & print,y,m,d
+#mjd2date,54252.5 ,y,m,d & print,y,m,d
+#mjd2date,54288   ,y,m,d & print,y,m,d

@@ -1,0 +1,243 @@
+; centroiding portion of distmap
+;
+; something is clearly wrong, because this does not produce self-consistent results
+; First, I rotate the nominal array positions to their positions on the sky, following precisely 
+; apply_distortion_map_radec.  This includes a parity flip in the Y axis (not the x axis!  Damned
+; if I know why....) and the declination projection stretching.
+;
+; Next, map each bolometer separately, using the nominal pointing and beam locations.
+;
+; Then centroid each single-bolometer map to acquire an x,y position and a beamsize.
+;    On 4/18, switched to cross-correlation offset: in principle more reliable, plus
+;    the center-point from which to calculate the offset is non-arbitrary
+;
+; The pointing center (source_ra,source_dec) is subtracted from the x,y positions to 
+; get an x,y offset.  This x,y offset is subtracted from the nominal positions rotated into
+; the sky frame.
+;
+; Finally, the new positions (nominal-offset) are rotated and destretched back into the 
+; array frame for use in the pipeline.
+; 
+; At least one of these steps is wrong, probably by a sign.  I feel very confident about the 
+; projection-onto-the-sky step because it is cloned directly from the apply_distortion_map code,
+; which has been empirically proved beyond any doubt.
+;
+; The problem is that this seems to work at subtracting out the mean offset, but it does not reduce
+; the spread in bolometer offset.  I don't know how that's possible.  
+;
+pro distmap_centroids,filename,outfile,doplot=doplot,doatv=doatv,fitmap=fitmap,allmap=allmap,$
+    pixsize=pixsize,meas=meas,nominal=nominal,interactive=interactive,coordsys=coordsys,$
+    projection=projection,distcor=distcor,npca=npca,_extra=_extra
+
+    if ~keyword_set(doplot) then doplot=0
+    if n_e(coordsys) eq 0 then coordsys='radec'
+    if n_e(projection) eq 0 then projection='TAN'
+    if n_e(npca) eq 0 then npca=3
+
+
+    ; larger pixel size selected for mapping to reduce blank pixels
+    ; should be 11 pixels because that's how much the array was moved
+    if ~keyword_set(pixsize) then pixsize=11.0
+
+    if size(filename,/type) eq 7 then thefiles = [filename] else thefiles=filename
+    premap,thefiles,outfile,bgps=bgps,mapstr=mapstr,/noflat,pointing_model=0,distcor=distcor,$
+        mvperjy=[1,0,0],fits_out=[5],projection=projection,coordsys=coordsys,_extra=_extra
+    ; removed nobeamloc 4/10/09 - necessary in order to co-add images
+    ; also, should automatically account for rotation
+
+    for i=0,5 do begin
+        clean_iter_struct,bgps,mapstr,niter=intarr(10)+npca,i=i,deconvolve=0,atmos_remainder=atmos_remainder,new_astro=new_astro,_extra=_extra
+    endfor
+
+    bolo_indices = bgps.bolo_indices
+    nbolos = n_e(bolo_indices)
+
+    angle = (-median([bgps.rotang]) + median([bgps.posang]) + median([bgps.arrang])) * !dtor
+    dec_conversion =  cos(bgps.source_dec*!dtor)
+
+    ncdf_varget_scale,thefiles[0],'bolo_params',bolo_params
+    rtf = [[reform([bolo_params[2,bolo_indices]])],[reform(bolo_params[1,bolo_indices]*!dtor)]]
+    xy_boloframe = [[rtf[*,0]*cos(rtf[*,1])],$
+                    [rtf[*,0]*sin(rtf[*,1])]]
+    rot_mat = [[cos(angle),-sin(angle)],$
+               [sin(angle),cos(angle)]]
+    xysky = (xy_boloframe # rot_mat) * [1/dec_conversion,-1] ## (fltarr(nbolos)+1)
+    nominal = { $
+        radius : reform(bolo_params[2,*]) ,$
+        theta :  reform(bolo_params[1,*])*!dtor ,$
+        angle:angle,$
+        dec_conversion:dec_conversion,$
+        rth : rtf ,$
+        xyrot : xy_boloframe # $
+                 rot_mat, $
+        xy : [[rtf[*,0]*cos(rtf[*,1]+angle)/dec_conversion],$
+              [-1.0 * rtf[*,0]*sin(rtf[*,1]+angle)]],$
+        xynom : xy_boloframe $
+    } ; to match ra/dec, ra increases to left... signs all flipped (See apply_distortion_map_radec)
+
+    meas = { $
+        rth : fltarr(nbolos,2)    ,$
+        xy  : fltarr(nbolos,2)    ,$
+        xyarr : fltarr(nbolos,2)  ,$
+        xyoffs  : fltarr(nbolos,2),$
+        xysize: fltarr(nbolos,2)  ,$
+        chi2: fltarr(nbolos)      ,$
+        err: fltarr(nbolos)       ,$
+        angle: fltarr(nbolos)     ,$
+        ampl: fltarr(nbolos)      ,$
+        backgr: fltarr(nbolos)    ,$
+        xcen: 0.0 ,$
+        ycen: 0.0 ,$
+        bolo_indices: bolo_indices $
+    }
+
+    ; some pca subtraction is necessary to clean up the image for fitting
+;    pca_subtract,bgps.ac_bolos,21,uncorr_part=new_astro
+;    if total(bgps.flags) gt 0 then new_astro[where(bgps.flags)] = 0
+
+    ; makes a data cube with one map for each bolometer
+    allmap = map_eachbolo(bgps.ra_map,bgps.dec_map,bgps.astrosignal+new_astro,bgps.scans_info,pixsize=pixsize,$
+        blank_map=blank_map,hdr=hdr,coordsys=coordsys,projection=projection,$
+        jd=bgps.jd,lst=bgps.lst,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
+
+    bolospacing = pixsize/38.5  ; arcseconds per pixel / arcseconds per bolospacing
+    extast,hdr[*,0,0],astr
+;    ad2xy,bgps.source_ra*15,bgps.source_dec,astr,xcen,ycen
+;    meas.xcen=xcen
+;    meas.ycen=ycen
+;
+;    ; HACK
+;    if xcen gt n_e(allmap[*,0,0]) or ycen gt n_e(allmap[0,*,0]) then begin
+;        xcen = n_e(allmap[*,0,0])/2. ; assumes the center of the map is the pointing center.  This may be off by +/- .5 pixels
+;        ycen = n_e(allmap[0,*,0])/2. ; because of the frustrating error where not all bolometers have the same map size
+;                                ; 3/20/09 - I'm pretty sure there's no such error
+;    endif
+
+    refmap = total(allmap,3)
+    fpref = centroid_map(convolve(refmap,refmap,/correl),/dontconv)
+    xcen = fpref[4]
+    ycen = fpref[5]
+
+    fitmapcube = allmap*0
+
+    if doplot gt 1 then begin
+        !p.multi=[0,3,3]
+        set_plot,'ps'
+        device,filename=outfile+"_boloplots.ps",/color,bits_per_pixel=16,xsize=16,ysize=16,/inches
+        loadct,0
+    endif
+
+    openw,fitparfile,outfile+"_bolofits.txt",/get_lun
+    printf,fitparfile,"Bolometer number","background","amplitude","sigma_x","sigma_y","xcen","ycen","angle",format='(8A20)'
+
+    xmin = 0                  ;floor(xcen-10)
+    xmax = n_e(allmap[*,0,0])-1 ;ceil(xcen+10)
+    ymin = 0                  ;floor(ycen-10)
+    ymax = n_e(allmap[0,*,0])-1 ;ceil(ycen+10)
+
+    xdiff = fltarr(nbolos)
+    ydiff = fltarr(nbolos)
+    for i=0,n_e(allmap[0,0,*])-1 do begin
+
+        ; centroid: background, amplitude, xwidth, ywidth, xcenter, ycenter, angle
+;        fitmapcube[xmin:xmax,ymin:ymax,i] = fitmap
+        corr = convolve(allmap[*,*,i],refmap,/correl) 
+        fitpars = centroid_map(corr,perror=perror,fitmap=fitmap,pixsize=pixsize,/dontconv)
+        gfitpars = centroid_map(allmap[xmin:xmax,ymin:ymax,i],perror=perror,fitmap=fitmap,pixsize=pixsize,/dontconv)
+
+        meas.chi2[i] = total((allmap[*,*,i]-fitmap)^2)/n_e(fitmap)
+        meas.err[i] = sqrt(perror[4]^2+perror[5]^2)*bolospacing
+        xdiff[i] = fitpars[4]-(xcen-xmin)
+        ydiff[i] = fitpars[5]-(ycen-ymin)
+        meas.xyoffs[i,0] =  xdiff[i]*bolospacing  ; XYOFFS ARE IN ROTATED PLANE
+        meas.xyoffs[i,1] =  ydiff[i]*bolospacing 
+        meas.xy[i,0] = nominal.xy[i,0] + meas.xyoffs[i,0]  ; something is twisted
+        meas.xy[i,1] = nominal.xy[i,1] - meas.xyoffs[i,1]  
+;        meas.xyoffs[*,0] -= (meas.xyoffs[0,0]) ; assume bolometer 0 is correct - it is our reference
+;        meas.xyoffs[*,1] -= (meas.xyoffs[0,1])
+        meas.angle[i] = fitpars[6]
+        meas.xysize[i,0] = max(gfitpars[2:3])*bolospacing
+        meas.xysize[i,1] = min(gfitpars[2:3])*bolospacing
+        meas.ampl[i] =     gfitpars[1]
+        meas.backgr[i] =   gfitpars[0]
+
+
+        ; convert back to the format used in the beam locations files (assumes no
+        ; projection and no rotation)
+        meas.rth[i,0] = sqrt((meas.xy[i,0]*dec_conversion)^2+meas.xy[i,1]^2)
+        meas.rth[i,1] = atan(-meas.xy[i,1],meas.xy[i,0]*dec_conversion)-angle
+        meas.xyarr[i,0] = meas.rth[i,0] * cos(meas.rth[i,1])
+        meas.xyarr[i,1] = meas.rth[i,0] * sin(meas.rth[i,1])
+
+        printf,fitparfile,bolo_indices[i],gfitpars[0:1],meas.xysize[i,*],meas.xyarr[i,*],gfitpars[6],format='(8F20)'
+
+        if keyword_set(doatv) and doplot lt 2 then begin ; plotting
+            atv,allmap[*,*,i]
+            atvxyouts,[gfitpars[4]],[gfitpars[5]],strc(bolo_indices[i]),charsize=4,color='red'
+            atv_plot1ellipse,gfitpars[2],gfitpars[3],gfitpars[4],gfitpars[5],gfitpars[6],color=250
+        endif
+
+        if doplot gt 1 then begin
+            loadct,0,/silent
+            imdisp,asinh(reform(allmap[*,*,i])),erase=0,title=strc(bolo_indices[i]),/axis
+            loadct,39,/silent
+            tvellipse,gfitpars[2],gfitpars[3],gfitpars[4]+xmin,gfitpars[5]+ymin,gfitpars[6],color=250,/data,thick=1
+            tvellipse,gfitpars[2]*2.35,gfitpars[3]*2.35,gfitpars[4]+xmin,gfitpars[5]+ymin,gfitpars[6],color=250,/data,thick=1
+            oplot,[xcen],[ycen],psym=7,color=225,symsize=1
+;            oplot,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=60
+;            oplot,[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],psym=1,symsize=1,color=240
+;            arrow,[nominal.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen],[meas.xy[i,0]/bolospacing+xcen],[meas.xy[i,1]/bolospacing+ycen],/data,color=80,hsize=1
+            oplot,[nominal.xy[i,0]/bolospacing+xcen,meas.xy[i,0]/bolospacing+xcen],[nominal.xy[i,1]/bolospacing+ycen,meas.xy[i,1]/bolospacing+ycen],color=150
+            oplot,[fitpars[4]+xmin,xcen],[fitpars[5]+ymin,ycen],color=150
+
+            ad2xy,median(bgps.ra_map[i,*]),median(bgps.dec_map[i,*]),astr,pointx,pointy
+            oplot,[pointx],[pointy],psym=1,color=60,symsize=1,thick=.5
+
+; pretty sure this is wrong            oplot,[-nominal.xy[i,0]/bolospacing+xcen],[-nominal.xy[i,1]/bolospacing+ycen],psym=7,color=225,symsize=.25
+        endif
+
+    endfor
+    
+
+    if doplot gt 1 then begin
+        plot,meas.xyoffs[*,0],meas.xyoffs[*,1],psym=3,title='offsets - bolodist'
+        xyouts,meas.xyoffs[*,0],meas.xyoffs[*,1],strc(bolo_indices)
+        plot,meas.xyoffs[*,0]/bolospacing,meas.xyoffs[*,1]/bolospacing,psym=1,title='offsets - pixels'
+        plot,meas.xyoffs[*,0]/bolospacing*pixsize,meas.xyoffs[*,1]/bolospacing*pixsize,psym=1,title='offsets - arcseconds'
+        plot,meas.xy[*,0],meas.xy[*,1],psym=1,title='beam locations'
+        oplot,nominal.xy[*,0],nominal.xy[*,1],psym=7,color=250
+        if keyword_set(distcor) then begin
+            readcol,distcor,corr_bolonum,corr_dist,corr_angle,corr_rms,/silent
+            plot,meas.rth[*,0]*cos(meas.rth[*,1])-(corr_dist*cos(corr_angle*!dtor))[bolo_indices],$
+                 meas.rth[*,0]*sin(meas.rth[*,1])-(corr_dist*sin(corr_angle*!dtor))[bolo_indices],psym=1,title='offset from corrected'
+        endif
+        device,/close_file
+        set_plot,'x'
+    endif
+    !p.multi=0
+
+    close,fitparfile
+    free_lun,fitparfile 
+
+    shiftmap = allmap
+    for i=0,nbolos-1 do begin
+        shiftmap[*,*,i] = fshift(allmap[*,*,i],-xdiff[i],-ydiff[i])
+    endfor
+    smpar = centroid_map(total(shiftmap,3),fitmap=smfitmap,pixsize=pixsize,/dontconv)
+    print,"Ideal planet gaussian fwhm:",smpar(2)*2.35*11,smpar(3)*2.35*11,"  mean: ",(smpar(2)+smpar(3))*2.35*11.0/2," amplitude:",smpar[1]
+
+    pipemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal+new_astro,wtmap=1,weight=1)
+    pmpar = centroid_map(pipemap,fitmap=pmfitmap,pixsize=pixsize,/dontconv)
+    print,"No-beamloc planet gaussian fwhm:",pmpar(2)*2.35*7.2,pmpar(3)*2.35*7.2,"  mean: ",(pmpar(2)+pmpar(3))*2.35*7.2/2," amplitude:",pmpar[1]
+
+    p = [1.0,1.0,0.0,0.0,0.0,0.0]
+    p = mpfitfun('rotscale_func',meas.rth,nominal.rth,meas.rth*0+1,p,yfit=bestfit,/quiet)
+    print,"Scale fit parameters. Angle:",p[5]/!dtor," offsets (pixels): ",p[3:4]
+
+    print,""
+
+    save,filename=outfile+".sav"
+
+    if keyword_set(interactive) then stop
+
+end

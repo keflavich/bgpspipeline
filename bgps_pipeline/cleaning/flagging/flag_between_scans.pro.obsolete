@@ -1,0 +1,22 @@
+; flag_between_scans
+; just like it sounds, sets all values between scans to NAN
+; and returns flags of 1 for all between-scan values
+; in 062508 version of pipeline, has been REPLACED with readall_pc just ignoring
+; the between scanes data
+function flag_between_scans,timestream,scans_info,flags=flags
+    timestream_copy = timestream ; DONT EDIT THE TIMESTREAM!  Geeze, why isn't this default behavior?
+    nscans = n_e(scans_info[0,*])
+    timelen = n_e(timestream_copy[0,*])
+    timewid = n_e(timestream_copy[*,0])
+    
+    for s=0,nscans-1 do begin
+        if s eq 0 then lb = 0 else lb = scans_info[1,s-1]+1
+        if s eq nscans-1 then ub = timelen-1 else ub = scans_info[0,s]-1
+        timestream_copy[0:timewid-1,lb:ub] = !values.f_nan
+        flags[0:timewid-1,lb:ub] = 1
+    endfor
+
+    return,timestream_copy
+end
+
+

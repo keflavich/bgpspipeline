@@ -1,0 +1,32 @@
+; do_flagging is the old flagging wrapper
+; NOT USED in current version of iterator (6/24/08)
+; all of the relevant keyword arguments are passed via _extra to calculate_flags
+pro do_flagging,filelist,do_psd=do_psd,_extra=ex
+    for i=0,n_elements(filelist)-1 do begin
+        filename = filelist[i]
+        print,"Flagging file ",filename
+        read_ncdf_vars, filename, ac_bolos=acb, flags=flags, bolo_params=bp
+        bp[0,3] = 0 ; 3 is a known bad bolometer that does not normally get flagged out
+        bp[0,10] = 0 ; 10 is a known bad bolometer that does not normally get flagged out
+        bp[0,55] = 0 ; 55 is an extraordinarily noisy bolometer
+
+        flags = calculate_flags(acb,bp=bp,flags=flags,badbolos=badbolos,_extra=ex)
+        bp[0,badbolos] = 0
+
+        if keyword_set(do_psd) then begin
+            ncdf_varget_scale,filename,'psd_avebolo',psd_avebolo
+            ncdf_varget_scale,filename,'psd_avescan',psd_avescan
+            ncdf_varget_scale,filename,'scans_info',scans_info
+            x = psd_calc_flags(psd_avebolo=psd_avebolo,psd_avescan=psd_avescan,bad_scans=bad_scans,bad_bolos=bad_bolos)
+            flags = badscans_to_flags(flags,scans_info,bad_scans)
+            if size(bad_bolos,/n_dim) ne 0 then bp[bad_bolos] = 0
+        endif
+
+        ;print,"Bad bolometers: ",badbolos
+        ;print,"Good bolometers: ",where(total(flags[*,*,0],2) gt 0)
+
+        ncdf_varput_scale, filename, 'flags',    flags
+        ncdf_varput_scale, filename, 'bolo_params', bp
+    endfor
+end
+

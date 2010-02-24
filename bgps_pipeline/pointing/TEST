@@ -1,0 +1,4 @@
+mem_iter_pc,'/scratch/sliced/l024/070717_o15_raw_ds5.nc','l24_070717_o15_00',/dosave,iter0savename='test_l24_070717.sav',niter=[13,13],dorotang=0,doposang=0    
+mem_iter_pc,'/scratch/sliced/l024/070717_o15_raw_ds5.nc','l24_070717_o15_10',/dosave,iter0savename='test_l24_070717.sav',niter=[13,13],dorotang=1,doposang=0   
+mem_iter_pc,'/scratch/sliced/l024/070717_o15_raw_ds5.nc','l24_070717_o15_01',/dosave,iter0savename='test_l24_070717.sav',niter=[13,13],dorotang=0,doposang=1   
+mem_iter_pc,'/scratch/sliced/l024/070717_o15_raw_ds5.nc','l24_070717_o15_11',/dosave,iter0savename='test_l24_070717.sav',niter=[13,13],dorotang=1,doposang=1   
