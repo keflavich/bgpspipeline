@@ -3,7 +3,7 @@
 ; measure_flux,'v0.7_l111_13pca_deconv_21.6_sim_sim_sources.sav','v0.7_l111_13pca_deconv_21.6_sim_map20.fits','v0.7_l111_13pca_deconv_21.6_sim_initial.fits'
 ; measure_flux,'v1.0.2_ic1396_13pca_deconv_sim_sim_sources.sav','v1.0.2_ic1396_13pca_deconv_sim_map20.fits','v1.0.2_ic1396_13pca_deconv_sim_initial.fits'
 pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=flux_input,$
-    doplot=doplot,overplot=overplot,dostop=dostop,xax=xax,yax=yax,domedian=domedian,_extra=_extra
+    doplot=doplot,overplot=overplot,dostop=dostop,xax=xax,yax=yax,_extra=_extra
 
     map=readfits(fitsfile)
     simmap=readfits(simmapfile)
@@ -27,13 +27,8 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
     for i=0,n_e(unique)-1 do begin
         ind = xsort[low:unique[i]]
         low = unique[i]
-        if ~keyword_set(domedian) then begin
-            fluxrecov_uniq[i] = max(flux_recov[ind])
-            throwaway = min(abs(flux_recov[ind]-max(flux_recov[ind])),wheremedian)
-        endif else begin
-            fluxrecov_uniq[i] = median(flux_recov[ind])
-            throwaway = min(abs(flux_recov[ind]-median(flux_recov[ind])),wheremedian)
-        endelse
+        fluxrecov_uniq[i] = median(flux_recov[ind])
+        throwaway = min(abs(flux_recov[ind]-median(flux_recov[ind])),wheremedian)
         fluxinput_uniq[i] = (flux_input[ind])[wheremedian]
     endfor
 

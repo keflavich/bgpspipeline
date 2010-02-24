@@ -1,6 +1,0 @@
-; For the case of the rotator not working
-platescale_("/mm)      7.7
-beamsize_("FWHM)      31.2
-fid_arr_ang(deg)     70.70
-x_bore_off(inches)     0.0
-y_bore_off(inches)     0.0

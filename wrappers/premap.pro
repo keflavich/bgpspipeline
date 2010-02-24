@@ -16,7 +16,7 @@
 ;   iter0savename (outmap+"_preiter.sav")
 ;   pixsize (7.2) - pixel size in arcseconds
 ;   mvperjy (specified in header) - calibration coefficients (e.g. [1,0,0])
-pro premap,filelist,outmap,niter=niter,$
+pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
         pointing_model=pointing_model,$
         minbaseline=minbaseline,$
         deconvolve=deconvolve, $
@@ -38,14 +38,19 @@ pro premap,filelist,outmap,niter=niter,$
     if n_e(iter0savename) eq 0 then iter0savename=outmap+"_preiter.sav" 
     if ~keyword_set(pixsize) then pixsize=7.2 ;arcseconds
 
+
+    if keyword_set(workingdir) then cd,workingdir else begin
+        spawn,'pwd',workingdir
+        print,"WARNING: you have not specified a working directory.  Using current directory "+workingdir+"by default."
+;        print,"WARNING: you have not specified a working directory.  Use .con to continue using the current directory",workingdir
+;        stop
+    endelse
     time_s,"ALL PREPROC ... output is "+outmap+"  ",t1
     if keyword_set(fromsave) then begin
         restore,filelist
         mapstr.outmap = outmap
     endif else begin
-        if size(filelist,/dim) gt 1 then begin
-            thefiles = filelist
-        endif else if strmid(filelist,strlen(filelist)-2,strlen(filelist)) eq 'nc' $
+        if strmid(filelist,strlen(filelist)-2,strlen(filelist)) eq 'nc' $
             or strmatch(filelist,'*.nc_preclean') then begin
                 thefiles = [filelist] 
                 singlefile = 1
@@ -121,8 +126,7 @@ pro premap,filelist,outmap,niter=niter,$
         ts = prepare_map(bgps.ra_map,bgps.dec_map,pixsize=pixsize,blank_map=blank_map,phi0=0,theta0=0,hdr=hdr,$
             smoothmap=smoothmap,lst=bgps.lst,jd=bgps.jd,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
         add_to_header,hdr,bgps.lst,bgps.fazo,bgps.fzao,bgps.jd,bgps.mvperjy,thefiles[0],pixsize,bgps.radec_offsets,$
-            pointing_model=pointing_model,singlefile=singlefile,meandc=mean(bgps.dc_bolos),stddc=stddev(bgps.dc_bolos),$
-            filenames=bgps.filenames
+            pointing_model=pointing_model,singlefile=singlefile,meandc=mean(bgps.dc_bolos),stddc=stddev(bgps.dc_bolos)
         blank_map_size = size(blank_map,/dim)
         wt_map   = blank_map
         wt_map[min(ts):max(ts)] = wt_map[min(ts):max(ts)] + histogram(ts)  ; this is a clever trick that adds 

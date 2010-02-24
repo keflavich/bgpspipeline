@@ -1,4 +1,4 @@
-restore,'/usb/scratch1/l111/v1.0.2_l111_13pca_postiter.sav'
+restore,'/usb/scratch1/l111/v1.0_l111_13pca_postiter.sav'
 
 for i=1,20 do begin
     pca_subtract,bgps.raw-bgps.astrosignal,i,lower_n=i-1,uncorr_part=new_astro,corr_part=pca_atmo 
@@ -13,7 +13,7 @@ for i=1,20 do begin
     writefits,'/usb/scratch1/PCA/l111_pca'+string(i,format='(I02)')+'_sim.fits',map,mapstr.hdr
 endfor
 
-restore,'/usb/scratch1/l111/v1.0.2_l111_13pca_preiter.sav'
+restore,'/usb/scratch1/l111/v1.0_l111_13pca_preiter.sav'
 
 for i=1,20 do begin
     pca_subtract,bgps.raw,i,lower_n=i-1,uncorr_part=new_astro,corr_part=pca_atmo 

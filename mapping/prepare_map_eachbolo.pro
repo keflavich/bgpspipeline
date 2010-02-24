@@ -3,7 +3,7 @@
 function prepare_map_eachbolo,ra,dec,scans_info=scans_info,pixsize=pixsize,galactic=galactic,$
         projection=projection,blank_map=blank_map,hdr=hdr,_extra=_extra
 
-    ts = prepare_map(ra,dec,pixsize=pixsize,blank_map=blank_map,hdr=hdr,/silent,projection=projection,_extra=_extra)
+    ts = prepare_map(ra,dec,pixsize=pixsize,blank_map=blank_map,hdr=hdr,/silent,_extra=_extra)
     for i=0,n_e(ra[*,0])-1 do begin
         
         if i gt 0 then begin

@@ -4,7 +4,7 @@ pro write_imshifts,infile
     readcol,infile,ncfile,raoff,decoff,format='(A21,F20,F20,F20,F20,F20)',comment="#"
     
     for i=0,n_e(ncfile)-1 do begin
-        spawn,'find '+getenv('SLICED')+'* -name '+ncfile[i]+' | grep \/sliced | grep -v preclean | grep _raw_ds5.nc ',fn
+        spawn,'find /scratch/sliced* -name '+ncfile[i]+' | grep \/sliced | grep -v preclean | grep _raw_ds5.nc ',fn
         for j=0,n_e(fn)-1 do begin 
 ;            if fn eq "" then print,"Filename was originally ",ncfile[i]
             print,"Writing offsets to "+fn[j],raoff[i],decoff[i]," (ncfile was ",ncfile[i],")"

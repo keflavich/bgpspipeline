@@ -1,12 +1,12 @@
             
 pro get_fixed_offsets_file, ncfile,  fazo, fzao, writetofile=writetofile, rpc_dir=rpc_dir 
-    if ~keyword_set(rpc_dir) then rpc_dir = getenv('RPCDIR')  ;Milkyway default RPC directory
+    if ~keyword_set(rpc_dir) then rpc_dir = '/data/bgps/raw'  ;Milkyway default RPC directory
     if file_test(ncfile) and strmid(ncfile,strlen(ncfile)-3,3) eq '.nc' then ncdf_varget_scale,ncfile,'ut',ut else begin
         prefix = strmid(ncfile,0,strpos(ncfile,'/',/reverse_search))
         tempstr=stregex(ncfile,'([a-z0-9\._-]*)/([a-z_]*)([0-9]{6}_o[b0-9][0-9])',/extract,/subexpr)
         targetname = tempstr[1] ;strmid(prefix,strpos(prefix,'/',/reverse_search)+1,strlen(prefix)-strpos(prefix,'/',/reverse_search))
         obname = tempstr[3] ;strmid(ncfile,strpos(ncfile,'/',/reverse_search)+1,10)
-        ncfile_new = getenv('SLICED_POLY')+'/'+targetname+"/"+obname+"_raw.nc"
+        ncfile_new = '/scratch/sliced_polychrome/'+targetname+"/"+obname+"_raw.nc"
         if file_test(ncfile_new) then ncdf_varget_scale,ncfile_new,"ut",ut $
             else begin
                 fazo=0

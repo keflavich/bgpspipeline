@@ -11,7 +11,7 @@
 
 pro individual_obs,infilename,prefix,find_prefix=find_prefix,npca=npca,workingdir=workingdir,_extra=_extra
 if ~keyword_set(npca) and size(npca,/n_d) ne 1 then npca = [3]
-if ~keyword_set(workingdir) then workingdir=getenv('WORKINGDIR')
+if ~keyword_set(workingdir) then workingdir='/scratch/adam_work/'
 ;if ~keyword_set(prefix) then find_prefix = 1 else find_prefix = 0
 	
 readcol,infilename,filelist,format='A80',comment="#"

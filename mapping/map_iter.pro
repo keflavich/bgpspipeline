@@ -1,6 +1,4 @@
-pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
-    deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,scale_acb=scale_acb,$
-    fits_out=fits_out,dofits=dofits,raw_scaling=raw_scaling,_extra=_extra
+pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=deconvolve,i=i,niter=niter,model_sig=model_sig,fits_out=fits_out,dofits=dofits,_extra=_extra
 
     if n_e(deconvolve) eq 0 then deconvolve=0
     if n_e(fits_model) eq 0 then fits_model=1
@@ -14,10 +12,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
     fxaddpar,hdr,"n_pca"  ,niter[i],"number of PCA components subtracted"
     outmap = mapstr.outmap
 
-    if keyword_set(raw_scaling) then bgps.scale_coeffs = relsens_cal(bgps.raw,bgps.raw,scans_info=bgps.scans_info,scalearr=scalearr) $
-        else if keyword_set(scale_acb) then bgps.scale_coeffs = relsens_cal(bgps.ac_bolos,bgps.ac_bolos,scans_info=bgps.scans_info,scalearr=scalearr) $
-        else bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
-    bgps.scalearr = scalearr
+    bgps.scale_coeffs = relsens_cal(bgps.atmosphere,bgps.atmosphere,scans_info=bgps.scans_info,scalearr=scalearr)
 
     mapstr.astromap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.astrosignal*scalearr,$
         weight=bgps.weight/scalearr,scans_info=bgps.scans_info,wtmap=mapstr.wt_map,_extra=_extra)
@@ -45,7 +40,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,$
     mapstr.noisemap = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.noise,weight=bgps.weight,scans_info=bgps.scans_info,wtmap=mapstr.wt_map,_extra=_extra) 
     print,"Mean(noisemap): ",total(mapstr.noisemap,/nan)/float(total(finite(mapstr.noisemap)))," RMS(noisemap): ",stddev(mapstr.noisemap,/nan)," sum of noisemap^2: ",total(mapstr.noisemap^2,/nan)," with "+strc(n_e(mapstr.noisemap))+" d.o.f."
     print,"Mean(noise): ",total(bgps.noise,/nan)/float(total(finite(bgps.noise)))," RMS(noise): ",stddev(bgps.noise,/nan)," sum of noise^2: ",total(bgps.noise^2,/nan)," with "+strc(dof)+" d.o.f."
-    if dofits then writefits,outmap+'_residualmap'+string(i,format='(I2.2)')+'.fits',mapstr.noisemap,hdr
+    if dofits then writefits,outmap+'_noisemap'+string(i,format='(I2.2)')+'.fits',mapstr.noisemap,hdr
 
     if (i eq 0 and bgps.n_obs gt 1) or keyword_set(force_flag) then begin
         bgps.flags = mad_flagger(bgps.astrosignal,mapstr.ts,bgps.flags,nsig=5,glitchloc=glitchloc) 

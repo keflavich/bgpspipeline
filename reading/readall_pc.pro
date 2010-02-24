@@ -21,6 +21,11 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
     if keyword_set(mvperjy) then mvperjy_temp=mvperjy else mvperjy_temp = 0
     if ~keyword_set(bolo_indices) then bolo_indices = indgen(144)
     if ~keyword_set(logfile) then begin OPENW, logfile, '/dev/tty', /GET_LUN, /MORE  & close_log=1 & endif else close_log=0
+;    median_ra = 0
+;    median_dec = 0
+    ; as per james' request, the hack has been reinstated 9/19/08. ARRR!
+    ;    Got rid of the damned hack! 10/24/08.  Ninjas win!
+;    beam_loc_file = '/home/milkyway/student/drosback/bolocam_cvs/pipeline/cleaning/parameters/beam_locations_jul05.txt' ; HACK!  Such a hack...
     for i=0,n_e(filelist)-1 do begin
         filename = filelist[i]
         print,"Reading file ",filename
@@ -33,12 +38,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             radec_offsets=radec_offsets,beam_loc=beam_loc,source_ra=source_ra,source_dec=source_dec
     
         if n_e(mvperjy_temp) eq 3 then mvperjy = mvperjy_temp ; allows keyword to be set to override read_ncdf_vars
-        if size(distcor,/type) eq 7 then begin ; if distcor is a string specifying a beam locations file...
-            readcol,distcor,bolonum,bolodist,boloang,err,comment="#;",format="(I, F, F, F)",/silent
-            bolo_params[1,*] = boloang
-            bolo_params[2,*] = bolodist
-            bolo_params[0,where(bolodist+boloang+err eq 0)] = 0
-        endif else if total(beam_loc[0,*]) gt 0 and keyword_set(distcor) then begin
+        if total(beam_loc[0,*]) gt 0 and keyword_set(distcor) then begin
             print,"Using distortion correction written to beam_locations"
             bolo_params[1,*] = beam_loc[1,*]
             bolo_params[2,*] = beam_loc[0,*]
@@ -52,8 +52,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         ; for coadds, but I needed them for debugging single observations)
         pointing_wrapper_wrapper,filename,beam_loc_file=beam_loc_file,ra_all=ra_map,dec_all=dec_map,$
             badbolos=badbolos,bolo_params=bolo_params,fazo=fazo,fzao=fzao,radec_offsets=radec_offsets,$
-            jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,$
-            posang=posang,rotang=rotang,arrang=arrang,ra_bore=ra_bore,dec_bore=dec_bore,_extra=_extra
+            jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,_extra=_extra
 
         if total(badscans) gt 0 then begin
             printf,logfile,"Scans ",where(badscans)," flagged in file "+filename," because of rotation"
@@ -105,15 +104,9 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
 ;            median_dec = dec_map[n_e(dec_map)-1]    ;median(dec_temp[unflagged])
             all_ra = ra_map[*,wh_scan_full]
             all_dec = dec_map[*,wh_scan_full]
-            all_ra_b = ra_bore[wh_scan_full]
-            all_dec_b = dec_bore[wh_scan_full]
             all_scans = scans_info_new
-            all_posang = posang
-            all_rotang = rotang
-            all_arrang = arrang
             if n_e(raw) eq n_e(ac_bolos) then all_raw = raw[*,wh_scan_full]
             si = sample_interval
-            filenames = filename
         endif else begin
             ts_length = n_e(all_acb[0,*])
             all_acb = [[all_acb],[ac_bolos[*,wh_scan_full]]]
@@ -123,14 +116,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_bpars[0,*] *= bolo_params[0,*]
             all_ra = [[all_ra],[ra_map[*,wh_scan_full]]]
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
-            all_ra_b = [all_ra_b,ra_bore[wh_scan_full]]
-            all_dec_b = [all_dec_b,dec_bore[wh_scan_full]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
-            all_posang = [all_posang,posang]
-            all_rotang = [all_rotang,rotang]
-            all_arrang = [all_arrang,arrang]
-            filenames = [[filenames],[filename]]
             if n_e(all_raw) gt 0 then all_raw = [[all_raw],[raw[*,wh_scan_full]]]
             if sample_interval ne si then message,"Input files have different sample intervals.  That's not cool."
         endelse
@@ -190,8 +177,6 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         wh_scan: wh_scan,$
         ra_map: ra_map,$
         dec_map: dec_map,$
-        ra_bore: all_ra_b,$
-        dec_bore: all_dec_b,$
         bolo_indices: bolo_indices,$
         lst:lst,$
         jd:jd,$
@@ -202,13 +187,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         weight: ac_bolos*0+1,$
         n_obs: n_e(filelist), $
         scale_coeffs: fltarr(n_e(scans_info[0,*]),n_e(goodbolos)) + 1, $
-        scalearr: ac_bolos*0+1,$
         source_ra: source_ra[0],$
         source_dec: source_dec[0],$ 
-        filenames: filenames,$
-        arrang: all_arrang,$
-        posang: all_posang,$
-        rotang: all_rotang,$
         badscans: badscans $
         }
 

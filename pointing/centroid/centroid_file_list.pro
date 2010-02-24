@@ -25,7 +25,7 @@ pro centroid_file_list,filelist,outfile,objra=objra,objdec=objdec,source_name=so
         "alt","az","alt_off(as)","az_off(as)","FZAO","FAZO",$
         "lst","jd",'xerr','yerr','obsname',format='("#",A99,A20,18A18,A15)'
 
-    fwhm = 31.2/7.2 & hwhm = fwhm / 2.
+    fwhm = 31.2/7. & hwhm = fwhm / 2.
     psf = psf_gaussian(npix=19,ndim=2,fwhm=hwhm,/norm)
 
     nfiles=n_e(thefiles)
@@ -108,7 +108,7 @@ pro centroid_file_list,filelist,outfile,objra=objra,objdec=objdec,source_name=so
         ss.lst[i] = fxpar(header,'lst')
         ss.jd[i] = fxpar(header,'jd')
         tempstr = stregex(ss.filename[i],'[a-z0-9\._-]*/[a-z_]*[0-9]{6}_o[b0-9][0-9]',/extract)
-        if file_test(ncfile) ne 1 then ncfile = getenv('SLICED_POLY') + stregex(tempstr,'[a-z0-9\._-]*/',/extract) + stregex(tempstr,'[0-9]{6}_o[b0-9][0-9]',/extract) + '_raw_nods.nc'
+        if file_test(ncfile) ne 1 then ncfile = '/scratch/sliced_polychrome/' + stregex(tempstr,'[a-z0-9\._-]*/',/extract) + stregex(tempstr,'[0-9]{6}_o[b0-9][0-9]',/extract) + '_raw_nods.nc'
         if file_test(ncfile) ne 1 then ncfile = strmid(ncfile,0,strlen(ncfile)-7) + "ds1.nc"
         if file_test(ncfile) ne 1 then begin   ; that is really an error, but what if?  Usually this happens if a file has been moved to bad/
             printf,outf,"#"+ss.filename[i]+"  no raw file for jd/lst"
