@@ -18,7 +18,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
         nx = floor(xsize / (srcsize * separator ))
         ny = floor(ysize / (srcsize * separator ))
         nsources = nx * ny
-        xcen = edgebuffer + findgen(nx) # (fltarr(ny)+1) * (srcsize*separator) + findgen(nx)*srcsize
+        xcen = edgebuffer + findgen(nx) # (fltarr(ny)+1) * (srcsize*separator) + findgen(nx)*srcsize # replicate(1.0,ny)
         ycen = edgebuffer + (fltarr(nx)+1) # findgen(ny) * (srcsize*separator)
         xwidth = fltarr(nsources)+srcsize
         ywidth = fltarr(nsources)+srcsize

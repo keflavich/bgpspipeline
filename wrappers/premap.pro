@@ -64,7 +64,7 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
         print,""
         bolo_indices = indgen(144)                                 ; for flagging purposes, need to backtrack to find out
         readall_pc,thefiles,bgps_struct=bgps,pointing_model=pointing_model,$
-            bolo_indices=bolo_indices,_extra=_extra
+            bolo_indices=bolo_indices,mvperjy=mvperjy,_extra=_extra
         time_e,t0,prtmsg="Read files in "
 
         ; FLAGGING and PSD CALCULATION
