@@ -2,26 +2,39 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     pixsize=pixsize,widthspread=widthspread,simmap=simmap,$
     randomsim=randomsim,uniformsim=uniformsim,maxamp=maxamp,minamp=minamp,$
     linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom,$
-    minsrc=minsrc,maxsrc=maxsrc,separator=separator
+    minsrc=minsrc,maxsrc=maxsrc,separator=separator,srcsize=srcsize,$
+    logspacing=logspacing,edgebuffer=edgebuffer
 
     if n_e(meanamp) eq 0 then meanamp=1
     if n_e(spreadamp) eq 0 then spreadamp=1
     if n_e(pixsize) eq 0 then pixsize=7.2
-    xsize = n_e(blank_map[*,0])
-    ysize = n_e(blank_map[0,*])
+    if n_e(edgebuffer) eq 0 then edgebuffer = 30
+    xsize = n_e(blank_map[*,0]) - 2*edgebuffer
+    ysize = n_e(blank_map[0,*]) - 2*edgebuffer
 
     if keyword_set(uniformsim) then begin
-        srcsize = 31.2/pixsize/sqrt(8*alog(2))
-        nx = floor(xsize / (srcsize * 10 ))
-        ny = floor(ysize / (srcsize * 10 ))
+        if ~keyword_set(srcsize) then srcsize = 33.0/pixsize/sqrt(8*alog(2))
+        if ~keyword_set(separator) then separator=10.0
+        nx = floor(xsize / (srcsize * separator ))
+        ny = floor(ysize / (srcsize * separator ))
         nsources = nx * ny
-        xcen = findgen(nx) # (fltarr(ny)+1) * (srcsize*10)
-        ycen = (fltarr(nx)+1) # findgen(ny) * (srcsize*10)
+        xcen = edgebuffer + findgen(nx) # (fltarr(ny)+1) * (srcsize*separator) + findgen(nx)*srcsize
+        ycen = edgebuffer + (fltarr(nx)+1) # findgen(ny) * (srcsize*separator)
         xwidth = fltarr(nsources)+srcsize
         ywidth = fltarr(nsources)+srcsize
-        if keyword_set(fluxrange) then $
-            amplitudes=((fltarr(nx)+1)) # ((findgen(ny)+1)*(fluxrange[1]-fluxrange[0])/nx) $
-            else amplitudes = fltarr(nsources)+meanamp / !dpi
+        if keyword_set(fluxrange) then begin
+            amplitudes=((fltarr(nx)+1)) # ((findgen(ny)+1)*(fluxrange[1]-fluxrange[0])/nx) 
+        endif else if keyword_set(minamp) and keyword_set(maxamp) then begin
+            if keyword_set(logspacing) then begin
+                logmax = alog10(maxamp)
+                logmin = alog10(minamp)
+                amplitudes = 10^(findgen(nsources)*(logmax-logmin)/float(nsources)+logmin)
+            endif else begin
+                amplitudes = findgen(nsources)*(maxamp-minamp)/float(nsources)+minamp
+            endelse
+        endif else begin
+            amplitudes = fltarr(nsources)+meanamp / !dpi
+        endelse
 ;            amplitudes=((findgen(nx)+1)*(fluxrange[1]-fluxrange[0])/nx) # (fltarr(ny)+1) $
         angles = fltarr(nsources)
 
@@ -57,8 +70,8 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
         maxsrc = max(xsrcsize)
         ny = floor(ysize / ((maxsrc) * separator ))
         nsources = nx * ny
-        xcen = (total(xsrcsize*separator,/cumulative)+minsrc) # (fltarr(ny)+1)  + (fltarr(nx)+1) # (findgen(ny)*maxsrc/3)
-        ycen = (fltarr(nx)+1) # (findgen(ny)+1) * maxsrc*separator  
+        xcen = edgebuffer + (total(xsrcsize*separator,/cumulative)+minsrc) # (fltarr(ny)+1)  + (fltarr(nx)+1) # (findgen(ny)*maxsrc/3)
+        ycen = edgebuffer + (fltarr(nx)+1) # (findgen(ny)+1) * maxsrc*separator  
         xwidth = xsrcsize # (fltarr(ny)+1)
         ywidth = xsrcsize # (fltarr(ny)+1)
         amplitudes = (fltarr(nx)+1) # (1+findgen(ny)) * .2   ; 200 millijansky steps

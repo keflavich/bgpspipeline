@@ -1,8 +1,9 @@
-function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse
-    xl = floor(max([0,xcen-xsize]))
-    xu = floor(min([n_e(map[*,0])-1,xcen+xsize]))
-    yl = floor(max([0,ycen-ysize]))
-    yu = floor(min([n_e(map[0,*])-1,ycen+ysize]))
+function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse,drange=drange
+    if ~keyword_set(drange) then drange = 1.0 ; how big a circle? drange=1 -> radius=2sigma
+    xl = floor(max([0,xcen-xsize*drange]))
+    xu = floor(min([n_e(map[*,0])-1,xcen+xsize*drange]))
+    yl = floor(max([0,ycen-ysize*drange]))
+    yu = floor(min([n_e(map[0,*])-1,ycen+ysize*drange]))
 
     box = map[xl:xu,yl:yu]
     if keyword_set(ellipse) then begin
@@ -10,7 +11,8 @@ function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse
         distmap = dist(mapsize[0],mapsize[1])
         xdist = shift(distmap[*,0],xcen-xl) # (fltarr(mapsize[1])+1)
         ydist = (fltarr(mapsize[0])+1) # shift(distmap[0,*],ycen-yl) 
-        mask = ((xdist/xsize)^2+(ydist/ysize)^2) lt 1
+        rad = sqrt((xdist/xsize)^2+(ydist/ysize)^2)
+        mask = rad lt drange
         sumbox = box * mask
     endif else begin
         sumbox = box

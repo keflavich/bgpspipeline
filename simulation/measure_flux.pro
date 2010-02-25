@@ -3,7 +3,9 @@
 ; measure_flux,'v0.7_l111_13pca_deconv_21.6_sim_sim_sources.sav','v0.7_l111_13pca_deconv_21.6_sim_map20.fits','v0.7_l111_13pca_deconv_21.6_sim_initial.fits'
 ; measure_flux,'v1.0.2_ic1396_13pca_deconv_sim_sim_sources.sav','v1.0.2_ic1396_13pca_deconv_sim_map20.fits','v1.0.2_ic1396_13pca_deconv_sim_initial.fits'
 pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=flux_input,$
-    doplot=doplot,overplot=overplot,dostop=dostop,xax=xax,yax=yax,_extra=_extra
+    doplot=doplot,overplot=overplot,dostop=dostop,xax=xax,yax=yax,drange=drange,_extra=_extra
+
+    if ~keyword_set(drange) then drange = 2.0 ; go out to 2 sigma RADIUS by default
 
     map=readfits(fitsfile)
     simmap=readfits(simmapfile)
@@ -14,8 +16,8 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
     flux_recov = dblarr(numsrc)
 
     for i=0,numsrc-1 do begin
-        flux_recov[i] = measure_box(map,xcen[i],ycen[i],xwidth[i],ywidth[i],/ellipse)
-        flux_input[i] = measure_box(simmap,xcen[i],ycen[i],xwidth[i],ywidth[i],/ellipse)
+        flux_recov[i] = measure_box(map,xcen[i],ycen[i],xwidth[i],ywidth[i],/ellipse,drange=drange)
+        flux_input[i] = measure_box(simmap,xcen[i],ycen[i],xwidth[i],ywidth[i],/ellipse,drange=drange)
     endfor
 
     xsort = sort(xwidth)

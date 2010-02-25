@@ -50,7 +50,9 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
         restore,filelist
         mapstr.outmap = outmap
     endif else begin
-        if strmid(filelist,strlen(filelist)-2,strlen(filelist)) eq 'nc' $
+        if size(filelist,/dim) gt 1 then begin
+            thefiles = filelist
+        endif else if strmid(filelist,strlen(filelist)-2,strlen(filelist)) eq 'nc' $
             or strmatch(filelist,'*.nc_preclean') then begin
                 thefiles = [filelist] 
                 singlefile = 1

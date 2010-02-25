@@ -19,8 +19,8 @@ function add_source,blank_map,xcen,ycen,xsize,ysize,amplitude,angle
     if xcen ge xtop or ycen ge ytop then return,0
     if xsize lt 1 or ysize lt 1 then return,0
 
-    nx = max([floor(abs(xsize*cos(angle)-ysize*sin(angle))),floor(xsize)])*12
-    ny = max([floor(abs(xsize*sin(angle)+ysize*cos(angle))),floor(ysize)])*12
+    nx = max([floor(abs(xsize*cos(angle)-ysize*sin(angle))),floor(xsize)])*20.0
+    ny = max([floor(abs(xsize*sin(angle)+ysize*cos(angle))),floor(ysize)])*20.0
 
 ;    xxcen = xcen * cos(angle) - ycen * sin(angle)
 ;    yycen = xcen * sin(angle) + ycen * cos(angle)
