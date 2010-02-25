@@ -42,6 +42,9 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
             plot,xax,yax,psym=1,_extra=_extra
     endif
 
+    outfile = strjoin(strsplit(savefile,'sources',/regex,/extract,/preserve_null),'measurements')
+    save,filename=outfile
+
     if keyword_set(dostop) then stop
 
 end

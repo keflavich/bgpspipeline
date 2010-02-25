@@ -1,7 +1,8 @@
 function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,$
     pixsize=pixsize,widthspread=widthspread,simmap=simmap,$
-    randomsim=randomsim,uniformsim=uniformsim,maxamp=maxamp,$
-    linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom
+    randomsim=randomsim,uniformsim=uniformsim,maxamp=maxamp,minamp=minamp,$
+    linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom,$
+    minsrc=minsrc,maxsrc=maxsrc,separator=separator
 
     if n_e(meanamp) eq 0 then meanamp=1
     if n_e(spreadamp) eq 0 then spreadamp=1
@@ -48,19 +49,20 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
 
         print,"Filling map with a uniform set of ",nsources," sources"
     endif else if keyword_set(linearsim) then begin
-        maxsrc = 150/pixsize
-        minsrc = 31.2/pixsize/2.35 
-        separator = 5
+        if ~keyword_set(maxsrc) then maxsrc = 150/pixsize
+        if ~keyword_set(minsrc) then minsrc = 31.2/pixsize/2.35 
+        if ~keyword_set(separator) then separator = 5
         nx = floor(xsize / ((maxsrc+minsrc)/2 * separator ))
-        xsrcsize = (findgen(nx)+1)/nx*maxsrc
+        xsrcsize = (findgen(nx))/nx*maxsrc+minsrc
         maxsrc = max(xsrcsize)
-        ny = floor(ysize / ((maxsrc) * 3 ))
+        ny = floor(ysize / ((maxsrc) * separator ))
         nsources = nx * ny
         xcen = (total(xsrcsize*separator,/cumulative)+minsrc) # (fltarr(ny)+1)  + (fltarr(nx)+1) # (findgen(ny)*maxsrc/3)
-        ycen = (fltarr(nx)+1) # (findgen(ny)+1) * maxsrc*3  
+        ycen = (fltarr(nx)+1) # (findgen(ny)+1) * maxsrc*separator  
         xwidth = xsrcsize # (fltarr(ny)+1)
         ywidth = xsrcsize # (fltarr(ny)+1)
         amplitudes = (fltarr(nx)+1) # (1+findgen(ny)) * .2   ; 200 millijansky steps
+        if keyword_set(maxamp) and keyword_set(minamp) then amplitudes = (replicate(1.0,nx)) # (findgen(ny)/(ny-1)*(maxamp-minamp)+minamp)
         angles = fltarr(nsources)
         if (max(xcen) ge xsize) or (max(ycen) ge ysize) then begin
             print,"Some sources were unacceptable."

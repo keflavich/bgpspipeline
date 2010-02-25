@@ -1,3 +1,20 @@
+; simulations 2010
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=100.0
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_sim_initial.fits'
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=100.0,minsrc=31.2/2.35/7.2,maxsrc=60/2.35/7.2,separator=10.0
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_initial.fits'
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_verybright_points',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=2000.0,minsrc=31.2/2.35/7.2,maxsrc=50/2.35/7.2,separator=20.0
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_verybright_points_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_verybright_points_sim_sim_measurements.sav'
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_verybright_spread_points',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=2000.0,minsrc=31.2/2.35/7.2,maxsrc=50/2.35/7.2,separator=20.0
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_verybright_spread_points_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_verybright_spread_points_sim_sim_measurements.sav'
+device,decompose=0
+loadct,39
+plot,amplitudes[where(xwidth eq size_uniq[0])],(flux_recov/flux_input)[where(xwidth eq size_uniq[0])],psym=4,/ys,yrange=[0.5,1.1]
+for i=1L,7L do begin & oplot,amplitudes[where(xwidth eq size_uniq[i])],(flux_recov/flux_input)[where(xwidth eq size_uniq[i])],psym=4,color=255/6.*i & endfor
+
+
 ; polysub tests
 mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o1',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=1,/deconvolve,deconv_fwhm=21.6
 mem_iter,'/usb/scratch1/l357/v1.0.2_l357_13pca_preiter.sav','/usb/scratch1/l357/v1.0.2_l357_13pca_o2',workingdir='/scratch/adam_work',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=2,/deconvolve,deconv_fwhm=21.6
