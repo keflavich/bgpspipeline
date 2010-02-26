@@ -17,15 +17,15 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             jd=jd,radec_offsets=radec_offsets,pointing_model=pointing_model,bgps_struct=bgps_struct,distcor=distcor,$
             mars=mars,_extra=_extra
     
-; 9/5/08 changed to read from file    if ~keyword_set(mvperjy) then mvperjy = [-0.00333379,-2.92617,6.97269]
+    ; 9/5/08 changed to read from file    if ~keyword_set(mvperjy) then mvperjy = [-0.00333379,-2.92617,6.97269]
     if keyword_set(mvperjy) then mvperjy_temp=mvperjy else mvperjy_temp = 0
     if ~keyword_set(bolo_indices) then bolo_indices = indgen(144)
     if ~keyword_set(logfile) then begin OPENW, logfile, '/dev/tty', /GET_LUN, /MORE  & close_log=1 & endif else close_log=0
-;    median_ra = 0
-;    median_dec = 0
+    ;    median_ra = 0
+    ;    median_dec = 0
     ; as per james' request, the hack has been reinstated 9/19/08. ARRR!
     ;    Got rid of the damned hack! 10/24/08.  Ninjas win!
-;    beam_loc_file = '/home/milkyway/student/drosback/bolocam_cvs/pipeline/cleaning/parameters/beam_locations_jul05.txt' ; HACK!  Such a hack...
+    ;    beam_loc_file = '/home/milkyway/student/drosback/bolocam_cvs/pipeline/cleaning/parameters/beam_locations_jul05.txt' ; HACK!  Such a hack...
     for i=0,n_e(filelist)-1 do begin
         filename = filelist[i]
         print,"Reading file ",filename
@@ -52,7 +52,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         ; for coadds, but I needed them for debugging single observations)
         pointing_wrapper_wrapper,filename,beam_loc_file=beam_loc_file,ra_all=ra_map,dec_all=dec_map,$
             badbolos=badbolos,bolo_params=bolo_params,fazo=fazo,fzao=fzao,radec_offsets=radec_offsets,$
-            jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,_extra=_extra
+            jd=jd,logfile=logfile,badscans=badscans,pointing_model=pointing_model,$
+            posang=posang,rotang=rotang,arrang=arrang,ra_bore=ra_bore,dec_bore=dec_bore,_extra=_extra
 
         if total(badscans) gt 0 then begin
             printf,logfile,"Scans ",where(badscans)," flagged in file "+filename," because of rotation"
@@ -100,13 +101,18 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_bpars[0,*] = bytarr(n_e(all_bpars[0,*])) 
             all_bpars[0,goodbolos] = 1
 
-;            median_ra  = ra_map[n_e(ra_map)-1]      ;median(ra_temp[unflagged])
-;            median_dec = dec_map[n_e(dec_map)-1]    ;median(dec_temp[unflagged])
+        ;            median_ra  = ra_map[n_e(ra_map)-1]      ;median(ra_temp[unflagged])
+        ;            median_dec = dec_map[n_e(dec_map)-1]    ;median(dec_temp[unflagged])
             all_ra = ra_map[*,wh_scan_full]
             all_dec = dec_map[*,wh_scan_full]
             all_scans = scans_info_new
+            all_posang = posang[wh_scan_full]
+            all_rotang = rotang[wh_scan_full]
+            all_arrang = arrang[wh_scan_full]
             if n_e(raw) eq n_e(ac_bolos) then all_raw = raw[*,wh_scan_full]
             si = sample_interval
+            all_jd = jd[wh_scan_full]
+            filenames = filename
         endif else begin
             ts_length = n_e(all_acb[0,*])
             all_acb = [[all_acb],[ac_bolos[*,wh_scan_full]]]
@@ -118,6 +124,11 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             all_dec = [[all_dec],[dec_map[*,wh_scan_full]]]
                  ; all_scans[ts_length] should be the zeroth index of scans_info_new
             all_scans = [[all_scans],[scans_info_new+ts_length]]  ; follows pattern of scans_info_new set above: first element of new ones is 1+last element of previous
+            all_posang = [all_posang,posang[wh_scan_full]]
+            all_rotang = [all_rotang,rotang[wh_scan_full]]
+            all_arrang = [all_arrang,arrang[wh_scan_full]]
+            all_jd     = [all_jd,jd[wh_scan_full]]
+            filenames = [[filenames],[filename]]
             if n_e(all_raw) gt 0 then all_raw = [[all_raw],[raw[*,wh_scan_full]]]
             if sample_interval ne si then message,"Input files have different sample intervals.  That's not cool."
         endelse
@@ -130,8 +141,11 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
     ac_bolos = all_acb[goodbolos,*] / (mvperjy[0] + dc_bolos*(mvperjy[1]) + dc_bolos^2 * mvperjy[2]) * 1000. ; flux calibration
     if keyword_set(mars) then begin
         print,"TREATING AS A MARS OBSERVATION"
-        ac_bolos = -101.0*dc_bolos
-    endif
+        ac_bolos = (-101.0*dc_bolos+101.0*median(dc_bolos)) / (mvperjy[0] + dc_bolos*(mvperjy[1]) + dc_bolos^2 * mvperjy[2]) * 1000. ; flux calibration
+    endif else begin
+        ; flux calibration is done on this line (1000 converts V to mV):
+        ac_bolos = all_acb[goodbolos,*] / (mvperjy[0] + dc_bolos*(mvperjy[1]) + dc_bolos^2 * mvperjy[2]) * 1000. ; flux calibration
+    endelse
     flags = all_flags[goodbolos,*]
     bolo_params = all_bpars[*,goodbolos]
     ra_map = all_ra[goodbolos,*]
@@ -153,7 +167,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
 ;    endfor
     wh_scan = wh_scan_full
 
-    printf,logfile,"Good bolos: ",goodbolos,format="(A20,144I6)"
+    printf,logfile,string(n_e(goodbolos),format="(I3)")+" Good bolos: ",goodbolos,format="(A20,144I6)"
 
     if close_log then begin
         close,logfile
@@ -179,18 +193,21 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         dec_map: dec_map,$
         bolo_indices: bolo_indices,$
         lst:lst,$
-        jd:jd,$
+        jd:all_jd,$
         fazo:fazo,$
         fzao:fzao,$
         wt2d:fltarr(n_e(scans_info[0,*]),n_e(ac_bolos[*,0])),$
         var2d:fltarr(n_e(scans_info[0,*]),n_e(ac_bolos[*,0])),$
-        weight: ac_bolos*0+1,$
+        weight: ac_bolos*0+1.0,$
         n_obs: n_e(filelist), $
         scale_coeffs: fltarr(n_e(scans_info[0,*]),n_e(goodbolos)) + 1, $
         source_ra: source_ra[0],$
         source_dec: source_dec[0],$ 
+        filenames: filenames,$
+        arrang: all_arrang,$
+        posang: all_posang,$
+        rotang: all_rotang,$
         badscans: badscans $
         }
 
 end
-
