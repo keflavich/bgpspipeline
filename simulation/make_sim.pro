@@ -3,7 +3,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     randomsim=randomsim,uniformsim=uniformsim,maxamp=maxamp,minamp=minamp,$
     linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom,$
     minsrc=minsrc,maxsrc=maxsrc,separator=separator,srcsize=srcsize,$
-    logspacing=logspacing,edgebuffer=edgebuffer
+    logspacing=logspacing,edgebuffer=edgebuffe,smallmap=smallmap
 
     if n_e(meanamp) eq 0 then meanamp=1
     if n_e(spreadamp) eq 0 then spreadamp=1
@@ -111,6 +111,14 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
 
         angles = randomu(f,nsources,/uniform)*2*!pi
         print,"Filling map with a random set of ",nsources," sources"
+    endif else if keyword_set(smallmap) then begin
+        xcen = xsize/2.
+        ycen = ysize/2.
+        amplitudes = meanamp
+        xwidth = srcsize
+        ywidth = srcsize
+        angles = 0
+        nsources = 1
     endif
 
     simmap = blank_map

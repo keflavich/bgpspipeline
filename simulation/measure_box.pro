@@ -1,4 +1,5 @@
-function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse,drange=drange
+function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse,drange=drange,aperture=aperture
+    ; all units in pixels!
     if ~keyword_set(drange) then drange = 1.0 ; how big a circle? drange=1 -> radius=2sigma
     xl = floor(max([0,xcen-xsize*drange]))
     xu = floor(min([n_e(map[*,0])-1,xcen+xsize*drange]))
@@ -11,8 +12,13 @@ function measure_box,map,xcen,ycen,xsize,ysize,ellipse=ellipse,drange=drange
         distmap = dist(mapsize[0],mapsize[1])
         xdist = shift(distmap[*,0],xcen-xl) # (fltarr(mapsize[1])+1)
         ydist = (fltarr(mapsize[0])+1) # shift(distmap[0,*],ycen-yl) 
-        rad = sqrt((xdist/xsize)^2+(ydist/ysize)^2)
-        mask = rad lt drange
+        if keyword_set(aperture) then begin
+            rad = sqrt((xdist)^2+(ydist)^2)
+            mask = rad lt aperture
+        endif else begin
+            rad = sqrt((xdist/xsize)^2+(ydist/ysize)^2)
+            mask = rad lt drange
+        endelse
         sumbox = box * mask
     endif else begin
         sumbox = box
