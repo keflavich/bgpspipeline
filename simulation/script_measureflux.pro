@@ -53,6 +53,20 @@ plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",cha
 oplot,xax2,yax2,thick=3,color=250
 oplot,xax3,yax3,thick=3,color=200
 device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/singleimage_fluxrecov_sourcesize.ps',/encapsulated,bits=16,/color
+smallmap_sim,flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov20,aperture=20,amplitudes=replicate(1,50),sizes=(findgen(50)/49.*477.+33.)
+smallmap_sim,flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov40,aperture=40,amplitudes=replicate(1,50),sizes=(findgen(50)/49.*477.+33.)
+smallmap_sim,flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov60,aperture=60,amplitudes=replicate(1,50),sizes=(findgen(50)/49.*477.+33.)
+smallmap_sim,flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov80,aperture=80,amplitudes=replicate(1,50),sizes=(findgen(50)/49.*477.+33.)
+sizes=(findgen(50)/49.*477.+33.)
+plot,sizes,flux_recov20,psym=1,color=0,xtitle="!6Object FWHM (arsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+oplot,sizes,flux_recov40,psym=2,color=100
+oplot,sizes,flux_recov60,psym=4,color=250
+oplot,sizes,flux_recov80,psym=5,color=150
+legend,['20"','40"','60"','80"'],psym=[1,2,4,5],color=[0,100,250,150],/right,charsize=1.5,charthick=2,thick=3 ;,/right
+device,/close_file
+
 set_plot,'x'
 
 end

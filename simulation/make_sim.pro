@@ -112,8 +112,8 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
         angles = randomu(f,nsources,/uniform)*2*!pi
         print,"Filling map with a random set of ",nsources," sources"
     endif else if keyword_set(smallmap) then begin
-        xcen = xsize/2.
-        ycen = ysize/2.
+        xcen = xsize/2. + edgebuffer
+        ycen = ysize/2. + edgebuffer
         amplitudes = meanamp
         xwidth = srcsize
         ywidth = srcsize

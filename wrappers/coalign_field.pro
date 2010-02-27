@@ -7,7 +7,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
         premap=premap,sliced_dir=sliced_dir,ref_field=ref_field,infile=infile,$
         checkpointing=checkpointing,npca=npca,prefix=prefix,refim=refim,$
         niter=niter,_extra=_extra
-    if ~keyword_set(scratchdir) then scratchdir = '/scratch/adam_work'
+    if ~keyword_set(scratchdir) then scratchdir = getenv('WORKINGDIR')
     if n_e(premap) eq 0 then premap=1
     if n_e(checkpointing) eq 0 then checkpointing=0
     if ~keyword_set(sliced_dir) then sliced_dir='sliced'
@@ -15,8 +15,8 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
     if ~keyword_set(npca) then npca=[13,13]
     if ~keyword_set(niter) then niter=intarr(10)+13
     if ~keyword_set(prefix) then prefix=""
-    if ~keyword_set(infile) then infile='/scratch/'+sliced_dir+'/'+field_name+'/'+field_name+'_infile.txt' $
-        else infile='/scratch/sliced/INFILES/'+infile
+    if ~keyword_set(infile) then infile=getenv('SLICED')+'/'+field_name+'/'+field_name+'_infile.txt' $
+        else infile=getenv('SLICED')+'/INFILES/'+infile
     print,"Reading files from ",infile
 
     pca_label = strc(npca[0])
@@ -42,10 +42,10 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
             field_dir+"/"+field_name+'_align_to_'+ref_map+'.txt',$
             _extra=_extra
         write_imshifts,field_dir+'/'+field_name+'_align_to_'+ref_map+'.txt'
-        ref_file = '/scratch/sliced/'+ref_field+'/'+ref_map+'_raw_ds5.nc'
+        ref_file = getenv('SLICED')+ref_field+'/'+ref_map+'_raw_ds5.nc'
         if file_test(ref_file) then ncdf_varput_scale,ref_file,'radec_offsets',[0,0] $
             else begin
-                ref_file = '/scratch/sliced_polychrome/'+ref_field+'/'+ref_map+'_raw_ds5.nc'
+                ref_file = getenv('SLICED_POLYCHROME')+ref_field+'/'+ref_map+'_raw_ds5.nc'
                 if file_test(ref_file) then ncdf_varput_scale,ref_file,'radec_offsets',[0,0] 
             endelse
     endif

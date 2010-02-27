@@ -1,4 +1,13 @@
 ; simulations 2010
+
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*20 
+smallmap_sim,flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=replicate(1,50),sizes=(findgen(50)/49.*477.+33.)
+
+
+coalign_field,'l089','070910_o12',premap=0,deconvolve=1,version='1.0.2',niter=[13],dosave=1,infile="l089_infile.txt",mvperjy=[0,0.304629,4.26398],refim=getenv('REFDIR')+'/l089_ref.fits'
+
+
+
 mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=100.0
 measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_sim_initial.fits'
 mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright_points',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=100.0,minsrc=31.2/2.35/7.2,maxsrc=35/2.35/7.2,separator=10.0
@@ -26,17 +35,30 @@ for i=1L,7L do begin & oplot,amplitudes[where(xwidth eq size_uniq[i])],(flux_rec
 
 mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_14.4',workingdir=getenv('WORKINGDIR')+'',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,deconv_fwhm=14.4,separator=10.0
 
-mem_iter,[getenv('SLICED_POLY')+'/1655p077/070708_ob9_raw_ds1.nc',getenv('SLICED_POLY')+'/1655p077/070708_o10_raw_ds1.nc'],getenv('WORKINGDIR')+'/pointmaps_v1.0/1655p077_070708_ob9-0_13pca',niter=replicate(13,11),/deconvolve,pointing_model=0,mvperjy=[1,0,0],dosave=2
-restore,'/Volumes/disk3/adam_work/pointmaps_v1.0/1655p077_070708_ob9-0_13pca_postiter.sav'
-gfit=centroid_map(mapstr.astromap,fitmap=fitmap)
+mem_iter,[getenv('SLICED_POLY')+'/1655p077/070708_ob9_raw_ds1.nc',getenv('SLICED_POLY')+'/1655p077/070708_o10_raw_ds1.nc'],getenv('WORKINGDIR')+'/pointmaps_v1.0/1655p077_070708_ob9-0_13pca_Jy',niter=replicate(13,11),/deconvolve,pointing_model=0,mvperjy=[0,0.304629,4.26398],dosave=2
+mem_iter,[getenv('SLICED_POLY')+'/1730-130_nrao530/050710_ob5_raw_ds1.nc',getenv('SLICED_POLY')+'/1730-130_nrao530/050710_ob6_raw_ds1.nc'],getenv('WORKINGDIR')+'/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_V',niter=replicate(13,11),/deconvolve,pointing_model=0,mvperjy=[1,0,0],dosave=2
+mem_iter,[getenv('SLICED_POLY')+'/1730-130_nrao530/050710_ob5_raw_ds1.nc',getenv('SLICED_POLY')+'/1730-130_nrao530/050710_ob6_raw_ds1.nc'],getenv('WORKINGDIR')+'/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_Jy',niter=replicate(13,11),/deconvolve,pointing_model=0,mvperjy=[0,0.304629,4.26398],dosave=2
+restore,'/Volumes/disk3/adam_work/pointmaps_v1.0/1655p077_070708_ob9-0_13pca_Jy_postiter.sav'
+guessmap = mapstr.astromap
+guessmap[0:30,*] = 0
+guessmap[120:147,*] = 0
+guessmap[*,0:30] = 0   
+guessmap[*,120:148] = 0
+gfit=centroid_map(guessmap,fitmap=fitmap)
 mapstr.model = fitmap
 bgps.astrosignal = mapstr.model[mapstr.ts]
 bgps.raw = bgps.raw - bgps.astrosignal
 bgps.ac_bolos = bgps.ac_bolos - bgps.astrosignal
 i=0
-save,bgps,mapstr,i,filename='/Volumes/disk3/adam_work/pointmaps_v1.0/1655p077_070708_ob9-0_13pca_mask_simstart.sav'
+save,bgps,mapstr,i,filename='/Volumes/disk3/adam_work/pointmaps_v1.0/1655p077_070708_ob9-0_13pca_Jy_mask_simstart.sav'
 
+restore,getenv('WORKINGDIR')+'/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_Jy_postiter.sav'
+i=0
+save,bgps,mapstr,i,filename=getenv('WORKINGDIR')+'/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_Jy_simstart.sav'
 
+restore,getenv('WORKINGDIR')+'/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_V_postiter.sav'
+i=0
+save,bgps,mapstr,i,filename=getenv('WORKINGDIR')+'/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_V_simstart.sav'
 
 ; polysub tests
 mem_iter,getenv('WORKINGDIR2')+'/l357/v1.0.2_l357_13pca_preiter.sav',getenv('WORKINGDIR2')+'/l357/v1.0.2_l357_13pca_o1',workingdir=getenv('WORKINGDIR')+'',/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,polysub_order=1,/deconvolve,deconv_fwhm=21.6
