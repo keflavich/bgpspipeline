@@ -1,7 +1,7 @@
 ; size assumed to be arcseconds FWHM
 pro smallmap_sim,amprange=amprange,sizerange=sizerange,nsamples=nsamples,amplitudes=amplitudes,sizes=sizes,$
     pixsize=pixsize,remap=remap,aperture=aperture,flux_in=flux_in,flux_out=flux_out,$
-    flux_recov=flux_recov,outfile=outfile,unit=unit
+    flux_recov=flux_recov,outfile=outfile,unit=unit,marspsf=marspsf
 
     if ~keyword_set(unit) then unit="Jy"  ; else could be "V"
     if ~keyword_set(pixsize) then pixsize=7.2
@@ -32,13 +32,14 @@ pro smallmap_sim,amprange=amprange,sizerange=sizerange,nsamples=nsamples,amplitu
 
     for ii=0,(nsamples-1) do begin
         suffix = string(sizes[ii], format="(I03)")+"arc"+string(amplitudes[ii],format="(F06.1)")+unit
+        if keyword_set(marspsf) then suffix = suffix+"_marspsf"
         filelist[ii] = getenv('WORKINGDIR')+'/simulations/smallmap/1730-130_nrao530050710_ob5-6_13pca_'+unit+"_"+suffix
 
         if keyword_set(remap) then begin
             mem_iter,'/Volumes/disk3/adam_work/pointmaps_v1.0/1730-130_nrao530050710_ob5-6_13pca_'+unit+'_simstart.sav',$
                 filelist[ii],workingdir=getenv('WORKINGDIR'),$
                 /fromsave,fits_timestream=0,ts_map=0,niter=replicate(13,11),/deconvolve,/smallmap,/simulate_only,$
-                meanamp=amplitudes[ii],srcsize=sizes[ii]/pixsize/sqrt(8*alog(2))
+                meanamp=amplitudes[ii],srcsize=sizes[ii]/pixsize/sqrt(8*alog(2)),marspsf=marspsf
         endif
 
         inmap  = readfits(filelist[ii]+"_sim_initial.fits",/silent)

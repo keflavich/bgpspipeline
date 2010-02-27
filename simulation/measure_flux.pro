@@ -16,6 +16,7 @@ pro measure_flux,savefile,fitsfile,simmapfile,flux_recov=flux_recov,flux_input=f
 
     map=readfits(fitsfile)
     simmap=readfits(simmapfile)
+    simmap[where(finite(map,/nan))] = !values.f_nan
 
     restore,savefile
     numsrc=n_e(xwidth)

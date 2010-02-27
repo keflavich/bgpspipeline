@@ -67,6 +67,71 @@ oplot,sizes,flux_recov80,psym=5,color=150
 legend,['20"','40"','60"','80"'],psym=[1,2,4,5],color=[0,100,250,150],/right,charsize=1.5,charthick=2,thick=3 ;,/right
 device,/close_file
 
+device,filename=getenv('WORKINGDIR')+'/sim_figures/singleimage_fluxrecov_mars.ps',/encapsulated,bits=16,/color
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov20,amplitudes=findgen(50)*20,/marspsf,aperture=20
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov40,amplitudes=findgen(50)*20,/marspsf,aperture=40
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov60,amplitudes=findgen(50)*20,/marspsf,aperture=60
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov80,amplitudes=findgen(50)*20,/marspsf,aperture=80
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov100,amplitudes=findgen(50)*20,/marspsf,aperture=100
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov120,amplitudes=findgen(50)*20,/marspsf,aperture=120
+amplitudes=findgen(50)*20
+plot,amplitudes,flux_recov10,psym=1,color=0,xtitle="!6Peak Amplitude (Jy)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+oplot,amplitudes,flux_recov20,psym=6,color=50
+oplot,amplitudes,flux_recov40,psym=2,color=100
+oplot,amplitudes,flux_recov60,psym=4,color=250
+oplot,amplitudes,flux_recov80,psym=5,color=150
+oplot,amplitudes,flux_recov100,psym=7,color=200
+oplot,amplitudes,flux_recov120,psym=1,color=75
+legend,['10"','20"','40"','60"','80"','100"','120"'],psym=[1,6,2,4,5,7,1],color=[0,50,100,250,150,200,75],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/singleimage_fluxrecov_faint_mars.ps',/encapsulated,bits=16,/color
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov10,amplitudes=findgen(50)*2,/marspsf,aperture=10
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov20,amplitudes=findgen(50)*2,/marspsf,aperture=20
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov40,amplitudes=findgen(50)*2,/marspsf,aperture=40
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov60,amplitudes=findgen(50)*2,/marspsf,aperture=60
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov80,amplitudes=findgen(50)*2,/marspsf,aperture=80
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov100,amplitudes=findgen(50)*2,/marspsf,aperture=100
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov120,amplitudes=findgen(50)*2,/marspsf,aperture=120
+amplitudes=findgen(50)*2
+plot,amplitudes,flux_recov10,psym=1,color=0,xtitle="!6Peak Amplitude (Jy)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+oplot,amplitudes,flux_recov20,psym=6,color=050
+oplot,amplitudes,flux_recov40,psym=2,color=100
+oplot,amplitudes,flux_recov60,psym=4,color=250
+oplot,amplitudes,flux_recov80,psym=5,color=150
+oplot,amplitudes,flux_recov100,psym=7,color=200
+oplot,amplitudes,flux_recov120,psym=1,color=75
+legend,['10"','20"','40"','60"','80"','100"','120"'],psym=[1,6,2,4,5,7,1],color=[0,50,100,250,150,200,75],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/singleimage_fluxrecov_points.ps',/encapsulated,bits=16,/color
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov10, amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=10
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov20, amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=20
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov40, amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=40
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov60, amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=60
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov80, amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=80
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov100,amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=100
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov120,amplitudes=[findgen(50)*2,findgen(40)*20+10],aperture=120
+amplitudes=[findgen(50)*2,findgen(40)*20+10]
+plot, amplitudes[49:89],flux_recov10[49:89],psym=1,color=0,xtitle="!6Peak Amplitude (Jy)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xrange=[min(amplitudes),max(amplitudes)]
+oplot,amplitudes[49:89],flux_recov20[49:89],psym=6,color=050
+oplot,amplitudes[49:89],flux_recov40[49:89],psym=2,color=100
+oplot,amplitudes[49:89],flux_recov60[49:89],psym=4,color=250
+oplot,amplitudes[49:89],flux_recov80[49:89],psym=5,color=150
+oplot,amplitudes[49:89],flux_recov100[49:89],psym=7,color=200
+oplot,amplitudes[49:89],flux_recov120[49:89],psym=1,color=75
+oplot,amplitudes[0:49],flux_recov10[0:49],psym=3,color=0
+oplot,amplitudes[0:49],flux_recov20[0:49],psym=3,color=050
+oplot,amplitudes[0:49],flux_recov40[0:49],psym=3,color=100
+oplot,amplitudes[0:49],flux_recov60[0:49],psym=3,color=250
+oplot,amplitudes[0:49],flux_recov80[0:49],psym=3,color=150
+oplot,amplitudes[0:49],flux_recov100[0:49],psym=3,color=200
+oplot,amplitudes[0:49],flux_recov120[0:49],psym=3,color=75
+legend,['10"','20"','40"','60"','80"','100"','120"'],psym=[1,6,2,4,5,7,1],color=[0,50,100,250,150,200,75],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+
 set_plot,'x'
 
 end

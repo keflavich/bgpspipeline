@@ -1,10 +1,15 @@
 ; simulations 2010
 
-smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*20 
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1 
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*20,/marspsf,aperture=1
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*2,/marspsf,aperture=20
 smallmap_sim,flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=replicate(1,50),sizes=(findgen(50)/49.*477.+33.)
 
 
-coalign_field,'l089','070910_o12',premap=0,deconvolve=1,version='1.0.2',niter=[13],dosave=1,infile="l089_infile.txt",mvperjy=[0,0.304629,4.26398],refim=getenv('REFDIR')+'/l089_ref.fits'
+coalign_field,'l089','070910_o12',premap=0,deconvolve=1,version='1.0.2',niter=replicate(13,21),dosave=2,infile="l089_infile.txt",mvperjy=[0,0.304629,4.26398],refim=getenv('REFDIR')+'/l089_ref.fits'
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2
+measure_flux,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_map20.fits',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_sim_measurements.sav'
 
 
 

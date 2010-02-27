@@ -3,7 +3,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     randomsim=randomsim,uniformsim=uniformsim,maxamp=maxamp,minamp=minamp,$
     linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom,$
     minsrc=minsrc,maxsrc=maxsrc,separator=separator,srcsize=srcsize,$
-    logspacing=logspacing,edgebuffer=edgebuffe,smallmap=smallmap
+    logspacing=logspacing,edgebuffer=edgebuffe,smallmap=smallmap,marspsf=marspsf
 
     if n_e(meanamp) eq 0 then meanamp=1
     if n_e(spreadamp) eq 0 then spreadamp=1
@@ -62,7 +62,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
 
         print,"Filling map with a uniform set of ",nsources," sources"
     endif else if keyword_set(linearsim) then begin
-        if ~keyword_set(maxsrc) then maxsrc = 150/pixsize
+        if ~keyword_set(maxsrc) then maxsrc = 150/pixsize/2.35
         if ~keyword_set(minsrc) then minsrc = 31.2/pixsize/2.35 
         if ~keyword_set(separator) then separator = 5
         nx = floor(xsize / ((maxsrc+minsrc)/2 * separator ))
@@ -124,7 +124,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     simmap = blank_map
     for i=0,nsources-1 do begin
         if i mod 100 eq 0 then print,"Adding source ",strc(i)," with ",xcen[i],ycen[i],xwidth[i],ywidth[i],amplitudes[i],angles[i]
-        simmap+=add_source(blank_map,xcen[i],ycen[i],xwidth[i],ywidth[i],amplitudes[i],angles[i])
+        simmap+=add_source(blank_map,xcen[i],ycen[i],xwidth[i],ywidth[i],amplitudes[i],angles[i],marspsf=marspsf)
     endfor
 
     save,xcen,ycen,xwidth,ywidth,amplitudes,angles,file=outmap+"_sim_sources.sav"
