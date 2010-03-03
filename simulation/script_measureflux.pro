@@ -39,6 +39,61 @@
 
 set_plot,'ps'
 loadct,39
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_measurements.sav'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_mapcube.sav'
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)"
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  oplot,mapcube[xcen[src],ycen[src],1:niter-1]/mapcube[xcen[src],ycen[src],0],color=50+205*float(s)/n_e(sources) 
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_50arc_l111_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=50/7.2,drange=4,/ellipse)
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=50" aperture)'
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=50/7.2,/ellipse,drange=4)
+  oplot,out[1:n_e(out)-1]/out[0],color=50+205*float(s)/n_e(sources)
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_100arc_l111_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=100/7.2,drange=4,/ellipse)
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=100" aperture)'
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=100/7.2,/ellipse,drange=4)
+  oplot,out[1:n_e(out)-1]/out[0],color=50+205*float(s)/n_e(sources)
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+end
+
+set_plot,'ps'
+loadct,39
 path = getenv('WORKINGDIR2')+'/l111/'
 device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture.ps',/encapsulated,bits=16,/color
 POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
