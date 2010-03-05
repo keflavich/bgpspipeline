@@ -3,7 +3,8 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     randomsim=randomsim,uniformsim=uniformsim,maxamp=maxamp,minamp=minamp,$
     linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom,$
     minsrc=minsrc,maxsrc=maxsrc,separator=separator,srcsize=srcsize,$
-    logspacing=logspacing,edgebuffer=edgebuffe,smallmap=smallmap,marspsf=marspsf
+    logspacing=logspacing,edgebuffer=edgebuffe,smallmap=smallmap,marspsf=marspsf,$
+    psf_smooth=psf_smooth
 
     if n_e(meanamp) eq 0 then meanamp=1
     if n_e(spreadamp) eq 0 then spreadamp=1
@@ -126,6 +127,12 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
         if i mod 100 eq 0 then print,"Adding source ",strc(i)," with ",xcen[i],ycen[i],xwidth[i],ywidth[i],amplitudes[i],angles[i]
         simmap+=add_source(blank_map,xcen[i],ycen[i],xwidth[i],ywidth[i],amplitudes[i],angles[i],marspsf=marspsf)
     endfor
+
+    if keyword_set(psf_smooth) then begin
+        print,"Convolving simmap with PSF (Mars 050911_o22-3)"
+        psf = readfits(getenv('PIPELINE_ROOT')+'/simulation/PSF.fits',/silent)
+        simmap = convolve(simmap,psf)
+    endif
 
     save,xcen,ycen,xwidth,ywidth,amplitudes,angles,file=outmap+"_sim_sources.sav"
 
