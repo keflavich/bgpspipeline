@@ -1,43 +1,4 @@
 
-
-;set_plot,'ps'
-;loadct,39
-;device,filename=getenv('WORKINGDIR')+'/sim_figures/deconvolution_comparison_ic1396.ps',/encapsulated,bits=16,/color
-;path = getenv('WORKINGDIR2')+'/ic1396/'
-;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_initial.fits',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1
-;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_initial.fits',/doplot,/overplot,color=250,thick=3,xax=xax2,yax=yax2
-;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax3,yax=yax3
-;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_initial.fits',/doplot,/overplot,color=100,thick=3,xax=xax4,yax=yax4
-;legend,['7.2"','14.4"','21.6"','31.2"'],psym=[1,1,1,1],color=[100,0,250,150],/right,charsize=1.5,charthick=2,thick=3 ;,/right
-;device,/close_file
-;device,filename=getenv('WORKINGDIR')+'/sim_figures/deconvolution_comparison_nolegend_ic1396.ps',/encapsulated,bits=16,/color
-;plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
-;oplot,xax2,yax2,thick=3,color=250
-;oplot,xax3,yax3,thick=3,color=150
-;oplot,xax4,yax4,thick=3,color=100
-;device,/close_file
-;
-;device,filename=getenv('WORKINGDIR')+'/sim_figures/pca_comparison_ic1396.ps',/encapsulated,bits=16,/color
-;measure_flux,path+'v1.0.2_ic1396_31pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_31pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_31pca_deconv_sim_initial.fits',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1
-;measure_flux,path+'v1.0.2_ic1396_26pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_26pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_26pca_deconv_sim_initial.fits',/doplot,/overplot,color=175,thick=3,xax=xax2,yax=yax2
-;measure_flux,path+'v1.0.2_ic1396_21pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_21pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_21pca_deconv_sim_initial.fits',/doplot,/overplot,color=125,thick=3,xax=xax2,yax=yax2
-;measure_flux,path+'v1.0.2_ic1396_16pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_16pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_16pca_deconv_sim_initial.fits',/doplot,/overplot,color=250,thick=3,xax=xax2,yax=yax2
-;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_initial.fits',/doplot,/overplot,color=225,thick=3,xax=xax3,yax=yax3
-;measure_flux,path+'v1.0.2_ic1396_10pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_10pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_10pca_deconv_sim_initial.fits',/doplot,/overplot,color=200,thick=3,xax=xax4,yax=yax4
-;measure_flux,path+'v1.0.2_ic1396_7pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_7pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_7pca_deconv_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax5,yax=yax5
-;measure_flux,path+'v1.0.2_ic1396_3pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_3pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_3pca_deconv_sim_initial.fits',/doplot,/overplot,color=50,thick=3,xax=xax6,yax=yax6
-;legend,['31','26','21','16','13','10','7','3'],psym=[1,1,1,1,1,1,1,1],color=[0,175,125,250,225,200,150,50],/right,charsize=1.5,charthick=2,thick=3 ;,/right
-;device,/close_file
-;device,filename=getenv('WORKINGDIR')+'/sim_figures/pca_comparison_nolegend_ic1396.ps',/encapsulated,bits=16,/color
-;plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
-;oplot,xax2,yax2,thick=3,color=250
-;oplot,xax3,yax3,thick=3,color=200
-;oplot,xax4,yax4,thick=3,color=150
-;oplot,xax5,yax5,thick=3,color=100
-;oplot,xax6,yax6,thick=3,color=50
-;device,/close_file
-
-
 set_plot,'ps'
 loadct,39
 device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_psf_iteration_peak.ps',/encapsulated,bits=16,/color
@@ -49,12 +10,29 @@ restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_mapc
 uniqamp = amplitudes[uniq(amplitudes)]
 sources = where(amplitudes eq uniqamp[5])
 niter = (size(mapcube,/dim))[2]
-plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)"
+plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)",yrange=[0,1.2],/ys
 for s=1,n_e(sources)-1 do begin 
   src=sources[s] 
   oplot,mapcube[xcen[src],ycen[src],1:niter-1]/mapcube[xcen[src],ycen[src],0],color=50+205*float(s)/n_e(sources) 
 endfor
 legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=0.5,charthick=1,thick=1,/bottom ;,/right
+device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_100arc_l111_psf_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=100/7.2,drange=4,/ellipse)
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=100" aperture)',yrange=[0,1.2],/ys
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=100/7.2,/ellipse,drange=4)
+  oplot,out[1:n_e(out)-1]/out[0],color=50+205*float(s)/n_e(sources)
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
 device,/close_file
 
 end
@@ -70,7 +48,7 @@ restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_mapcube.sav'
 uniqamp = amplitudes[uniq(amplitudes)]
 sources = where(amplitudes eq uniqamp[5])
 niter = (size(mapcube,/dim))[2]
-plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)"
+plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)",yrange=[0,1.2],/ys
 for s=1,n_e(sources)-1 do begin 
   src=sources[s] 
   oplot,mapcube[xcen[src],ycen[src],1:niter-1]/mapcube[xcen[src],ycen[src],0],color=50+205*float(s)/n_e(sources) 
@@ -86,7 +64,7 @@ uniqamp = amplitudes[uniq(amplitudes)]
 sources = where(amplitudes eq uniqamp[5])
 niter = (size(mapcube,/dim))[2]
 out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=50/7.2,drange=4,/ellipse)
-plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=50" aperture)'
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=50" aperture)',yrange=[0,1.2],/ys
 for s=1,n_e(sources)-1 do begin 
   src=sources[s] 
   out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=50/7.2,/ellipse,drange=4)
@@ -103,7 +81,7 @@ uniqamp = amplitudes[uniq(amplitudes)]
 sources = where(amplitudes eq uniqamp[5])
 niter = (size(mapcube,/dim))[2]
 out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=100/7.2,drange=4,/ellipse)
-plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=100" aperture)'
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=100" aperture)',yrange=[0,1.2],/ys
 for s=1,n_e(sources)-1 do begin 
   src=sources[s] 
   out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=100/7.2,/ellipse,drange=4)
@@ -111,6 +89,89 @@ for s=1,n_e(sources)-1 do begin
 endfor
 legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
 device,/close_file
+
+
+end
+
+
+set_plot,'ps'
+loadct,39
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_psf_jitter_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter_sim_sim_measurements.sav'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter_sim_mapcube.sav'
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)",yrange=[0,1.2],/ys
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  oplot,mapcube[xcen[src],ycen[src],1:niter-1]/mapcube[xcen[src],ycen[src],0],color=50+205*float(s)/n_e(sources) 
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=0.5,charthick=1,thick=1,/bottom ;,/right
+device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_100arc_l111_psf_jitter_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=100/7.2,drange=4,/ellipse)
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=100" aperture)',yrange=[0,1.2],/ys
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=100/7.2,/ellipse,drange=4)
+  oplot,out[1:n_e(out)-1]/out[0],color=50+205*float(s)/n_e(sources)
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+end
+
+
+
+
+set_plot,'ps'
+loadct,39
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_psf_bigjitter_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter_sim_sim_measurements.sav'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter_sim_mapcube.sav'
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+plot,mapcube[xcen[0],ycen[0],1:niter-1]/mapcube[xcen[0],ycen[0],0],xtitle="!6Iteration Number",ytitle="!6Recovery Fraction (peak)",yrange=[0,1.2],/ys
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  oplot,mapcube[xcen[src],ycen[src],1:niter-1]/mapcube[xcen[src],ycen[src],0],color=50+205*float(s)/n_e(sources) 
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=0.5,charthick=1,thick=1,/bottom ;,/right
+device,/close_file
+
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_100arc_l111_psf_bigjitter_iteration_peak.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+uniqamp = amplitudes[uniq(amplitudes)]
+sources = where(amplitudes eq uniqamp[5])
+niter = (size(mapcube,/dim))[2]
+out = measure_cube(mapcube,xcen[sources[0]],ycen[sources[0]],xwidth[sources[0]],ywidth[sources[0]],aperture=100/7.2,drange=4,/ellipse)
+plot,out[1:n_e(out)-1]/out[0],xtitle="!6Iteration Number",ytitle='!6Recovery Fraction (r=100" aperture)',yrange=[0,1.2],/ys
+for s=1,n_e(sources)-1 do begin 
+  src=sources[s] 
+  out = measure_cube(mapcube,xcen[src],ycen[src],xwidth[src],ywidth[src],aperture=100/7.2,/ellipse,drange=4)
+  oplot,out[1:n_e(out)-1]/out[0],color=50+205*float(s)/n_e(sources)
+endfor
+legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1)/n_e(sources)],psym=1,/right,charsize=1,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+
+end
 
 set_plot,'ps'
 loadct,39
@@ -368,3 +429,40 @@ oplot,xax6,yax6,thick=3,color=50
 device,/close_file
 
 end
+
+;set_plot,'ps'
+;loadct,39
+;device,filename=getenv('WORKINGDIR')+'/sim_figures/deconvolution_comparison_ic1396.ps',/encapsulated,bits=16,/color
+;path = getenv('WORKINGDIR2')+'/ic1396/'
+;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_initial.fits',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1
+;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_21.6_sim_initial.fits',/doplot,/overplot,color=250,thick=3,xax=xax2,yax=yax2
+;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_31.2_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax3,yax=yax3
+;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_7.2_sim_initial.fits',/doplot,/overplot,color=100,thick=3,xax=xax4,yax=yax4
+;legend,['7.2"','14.4"','21.6"','31.2"'],psym=[1,1,1,1],color=[100,0,250,150],/right,charsize=1.5,charthick=2,thick=3 ;,/right
+;device,/close_file
+;device,filename=getenv('WORKINGDIR')+'/sim_figures/deconvolution_comparison_nolegend_ic1396.ps',/encapsulated,bits=16,/color
+;plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+;oplot,xax2,yax2,thick=3,color=250
+;oplot,xax3,yax3,thick=3,color=150
+;oplot,xax4,yax4,thick=3,color=100
+;device,/close_file
+;
+;device,filename=getenv('WORKINGDIR')+'/sim_figures/pca_comparison_ic1396.ps',/encapsulated,bits=16,/color
+;measure_flux,path+'v1.0.2_ic1396_31pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_31pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_31pca_deconv_sim_initial.fits',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1
+;measure_flux,path+'v1.0.2_ic1396_26pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_26pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_26pca_deconv_sim_initial.fits',/doplot,/overplot,color=175,thick=3,xax=xax2,yax=yax2
+;measure_flux,path+'v1.0.2_ic1396_21pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_21pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_21pca_deconv_sim_initial.fits',/doplot,/overplot,color=125,thick=3,xax=xax2,yax=yax2
+;measure_flux,path+'v1.0.2_ic1396_16pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_16pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_16pca_deconv_sim_initial.fits',/doplot,/overplot,color=250,thick=3,xax=xax2,yax=yax2
+;measure_flux,path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_ic1396_13pca_deconv_14.4_sim_initial.fits',/doplot,/overplot,color=225,thick=3,xax=xax3,yax=yax3
+;measure_flux,path+'v1.0.2_ic1396_10pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_10pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_10pca_deconv_sim_initial.fits',/doplot,/overplot,color=200,thick=3,xax=xax4,yax=yax4
+;measure_flux,path+'v1.0.2_ic1396_7pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_7pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_7pca_deconv_sim_initial.fits',/doplot,/overplot,color=150,thick=3,xax=xax5,yax=yax5
+;measure_flux,path+'v1.0.2_ic1396_3pca_deconv_sim_sim_sources.sav',path+'v1.0.2_ic1396_3pca_deconv_sim_map20.fits',path+'v1.0.2_ic1396_3pca_deconv_sim_initial.fits',/doplot,/overplot,color=50,thick=3,xax=xax6,yax=yax6
+;legend,['31','26','21','16','13','10','7','3'],psym=[1,1,1,1,1,1,1,1],color=[0,175,125,250,225,200,150,50],/right,charsize=1.5,charthick=2,thick=3 ;,/right
+;device,/close_file
+;device,filename=getenv('WORKINGDIR')+'/sim_figures/pca_comparison_nolegend_ic1396.ps',/encapsulated,bits=16,/color
+;plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+;oplot,xax2,yax2,thick=3,color=250
+;oplot,xax3,yax3,thick=3,color=200
+;oplot,xax4,yax4,thick=3,color=150
+;oplot,xax5,yax5,thick=3,color=100
+;oplot,xax6,yax6,thick=3,color=50
+;device,/close_file

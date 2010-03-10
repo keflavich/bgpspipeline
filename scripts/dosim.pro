@@ -1,5 +1,15 @@
 ; simulations 2010
 
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=2
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_measurements.sav'
+
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,/jitter
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_sim_measurements.sav'
+
+end
+
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1 
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*20,/marspsf,aperture=1
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*2,/marspsf,aperture=20
@@ -10,6 +20,15 @@ coalign_field,'l089','070910_o12',premap=0,deconvolve=1,version='1.0.2',niter=re
 mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2
 measure_flux,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_map20.fits',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_initial.fits'
 restore,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_deconv_sim_sim_measurements.sav'
+
+
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=13/2.35/7.2,maxsrc=100/2.35/7.2,/psf_smooth,jitter=2
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_bigjitter_sim_sim_measurements.sav'
+
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=13/2.35/7.2,maxsrc=100/2.35/7.2,/psf_smooth,/jitter
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_jitter_sim_sim_measurements.sav'
 
 mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=13/2.35/7.2,maxsrc=100/2.35/7.2,/psf_smooth
 measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_initial.fits'
@@ -201,9 +220,9 @@ mem_iter,getenv('WORKINGDIR')+'/w5/w5.sav',getenv('WORKINGDIR')+'/w5/v0.7_w5_13p
 
 
 
-.run put_gaussian_in_timestream
-.run centroid_file_list
-.run image_with_centroid
+;.run put_gaussian_in_timestream
+;.run centroid_file_list
+;.run image_with_centroid
 ra_center=0
 ;gaussmap = put_gaussian_in_timestream('test_target_cyg.nc',pixsize=7.,ra_center=ra_center,dec_center=dec_center)  
 
@@ -318,3 +337,4 @@ ac_bolos[0,2240] = 100.
 map=ts_to_map(blank_map_size,ts,ac_bolos[unflagged])
 writefits,'radecmap.fits',map,hdr
 
+end

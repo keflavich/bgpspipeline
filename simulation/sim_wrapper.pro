@@ -1,4 +1,6 @@
-function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel=noiselevel,blanksim=blanksim,_extra=_extra
+function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel=noiselevel,$
+    jitter=jitter,blanksim=blanksim,_extra=_extra
+
     time_s,"",simtime
     mapstr.outmap += "_sim"
     simmap = make_sim(mapstr.blank_map,mapstr.outmap,nsources,pixsize=mapstr.pixsize,_extra=_extra)
@@ -17,6 +19,58 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
         print,""
         noise = randomn(h,n_e(simts),/normal)*noiselevel
         simts += noise
+    endif
+
+    if keyword_set(jitter) then begin
+        print,"Adding jitter to the timestream"
+        nbolos = n_e(bgps.bolo_indices)
+        ntime = n_e(bgps.lst)
+
+        if jitter eq 1 then begin
+            ; the spread are determined empirically from the Mars 050911_o22-3
+            randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*0.5
+            randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*0.8
+        endif else begin
+            randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*2.0
+            randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*2.0
+        endelse
+        print,"Spread of randx,randy:",stddev(randx),stddev(randy)
+
+        print,"Max RA/DEC: ",max(bgps.ra_map),max(bgps.dec_map)
+        print,"Min RA/DEC: ",min(bgps.ra_map),min(bgps.dec_map)
+        bgps.ra_map  = bgps.ra_map  + (randx # replicate(1.0,ntime))
+        bgps.dec_map = bgps.dec_map + (randy # replicate(1.0,ntime))
+        print,"Max RA/DEC: ",max(bgps.ra_map),max(bgps.dec_map)
+        print,"Min RA/DEC: ",min(bgps.ra_map),min(bgps.dec_map)
+
+        pixsize = mapstr.pixsize
+        ts = prepare_map(bgps.ra_map,bgps.dec_map,pixsize=pixsize,blank_map=blank_map,phi0=0,theta0=0,hdr=hdr,$
+            smoothmap=smoothmap,lst=bgps.lst,jd=bgps.jd,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
+        blank_map_size = size(blank_map,/dim)
+        wt_map   = blank_map
+        wt_map[min(ts):max(ts)] = wt_map[min(ts):max(ts)] + histogram(ts)
+        bgps.weight[*] = 1
+        rawmap = ts_to_map(blank_map_size,ts,bgps.ac_bolos,weight=bgps.weight,scans_info=bgps.scans_info,wtmap=wt_map,_extra=_extra)
+        outmap = mapstr.outmap
+
+        mapstr = {$
+            outmap: outmap,$
+            astromap: blank_map,$
+            noisemap: blank_map,$
+            wt_map: wt_map,$
+            blank_map: blank_map,$
+            blank_map_size: blank_map_size,$
+            ts: ts,$
+            hdr: hdr,$
+            model: blank_map,$
+            rawmap: rawmap, $
+            pixsize: pixsize $
+            }
+
+        jittermap = ts_to_map(blank_map_size,ts,simmap[mapstr.ts],weight=bgps.weight,scans_info=bgps.scans_info,wtmap=wt_map,_extra=_extra)
+        writefits,mapstr.outmap+"_jitter.fits",jittermap,mapstr.hdr
+        simmap = jittermap
+
     endif
 
     bgps.ac_bolos[*] = simts
