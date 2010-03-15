@@ -1,9 +1,10 @@
 ; simulations 2010
-smallmap_sim,sizerange=[1,1],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1,jitter=1,/marspsf
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1,jitter=1,/marspsf
+smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1,/marspsf
 
 end
 
-mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=2
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=2
 measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_initial.fits'
 restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_measurements.sav'
 

@@ -14,7 +14,9 @@ if ~keyword_set(npca) and size(npca,/n_d) ne 1 then npca = [3]
 if ~keyword_set(workingdir) then workingdir=getenv('WORKINGDIR')
 ;if ~keyword_set(prefix) then find_prefix = 1 else find_prefix = 0
 	
-readcol,infilename,filelist,format='A80',comment="#"
+if n_e(infilename) gt 1 then filelist=infilename $
+    else if strmid(infilename,strlen(infilename)-3,strlen(infilename)) eq '.nc' then filelist=[infilename] $
+    else readcol,infilename,filelist,format='A80',comment="#"
 for i=0,n_e(filelist)-1 do begin
 	filename = filelist[i]
 	if keyword_set(find_prefix) then begin
@@ -24,8 +26,8 @@ for i=0,n_e(filelist)-1 do begin
 		tprefix = strmid(filename,next_last_slash+1,last_slash-next_last_slash) + prefix
 	endif else tprefix = prefix
 	outname = tprefix+strmid(filename,strpos(filename,'/',/reverse_search)+1,strlen(filename)-3)+"_indiv"+strc(npca[0])+"pca"
-;	print,"Working on file " + filename + " with output " + outname 
-	if stregex(filename,"mars") gt 0 then mars=1 else mars=0
+ 	print,"Individual_obs on file " + filename + " with output " + outname 
+	; this doesn't do anything if stregex(filename,"mars") gt 0 then mars=1 else mars=0
 	mem_iter,filename,outname,workingdir=workingdir,/median_sky,niter=npca,$
             iter0savename=outname+'_save_iter0.sav',_extra=_extra
 endfor
