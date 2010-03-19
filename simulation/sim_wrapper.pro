@@ -30,6 +30,15 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
             ; the spread are determined empirically from the Mars 050911_o22-3
             randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*0.5
             randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*0.8
+        endif else if jitter eq 2 then begin
+            readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_default.txt',bl_num,bl_dist,bl_ang,bl_rms,/silent
+            bolo_params = bgps.bolo_params
+            bolo_params[2,*] = bl_dist*5*7.7/3600.
+            bolo_params[1,*] = bl_ang
+            ; subtract the distortion-correction locations from the "nominal" locations
+            ; in order to do the opposite of a distortion correction
+            randx = bgps.bolo_params[2,bgps.goodbolos] * cos(bgps.bolo_params[1,bgps.goodbolos]*!dtor) - bolo_params[2,bgps.goodbolos] * cos(bolo_params[1,bgps.goodbolos]*!dtor)
+            randy = bgps.bolo_params[2,bgps.goodbolos] * sin(bgps.bolo_params[1,bgps.goodbolos]*!dtor) - bolo_params[2,bgps.goodbolos] * sin(bolo_params[1,bgps.goodbolos]*!dtor)
         endif else begin
             randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*2.0
             randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*2.0

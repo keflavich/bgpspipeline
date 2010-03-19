@@ -37,8 +37,22 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
             raw=raw,sample_interval=sample_interval, scans_info=scans_info,lst=lst,mvperjy=mvperjy,      $
             radec_offsets=radec_offsets,beam_loc=beam_loc,source_ra=source_ra,source_dec=source_dec
     
-        if n_e(mvperjy_temp) eq 3 then mvperjy = mvperjy_temp ; allows keyword to be set to override read_ncdf_vars
-        if total(beam_loc[0,*]) gt 0 and keyword_set(distcor) then begin
+        if n_e(mvperjy_temp) eq 3 then begin
+            mvperjy = mvperjy_temp ; allows keyword to be set to override read_ncdf_vars
+            print,"Using keyword-set mvperjy",mvperjy
+        endif
+        if size(distcor,/type) eq 7 then begin ; if distcor is a string specifying a beam locations file...
+            if distcor eq 'lookup' then begin
+                lookup_distmap,filename,bolonum=bolonum,bolodist=bolodist,boloang=boloang,boloerr=err 
+                print,"Using distortion correction associated with ",filename
+            endif else begin
+                readcol,distcor,bolonum,bolodist,boloang,err,comment="#;",format="(I, F, F, F)",/silent
+                print,"Using distortion correction from ",distcor
+            endelse
+            bolo_params[1,*] = boloang
+            bolo_params[2,*] = bolodist
+            bolo_params[0,where(bolodist+boloang+err eq 0)] = 0
+        endif else if total(beam_loc[0,*]) gt 0 and keyword_set(distcor) then begin
             print,"Using distortion correction written to beam_locations"
             bolo_params[1,*] = beam_loc[1,*]
             bolo_params[2,*] = beam_loc[0,*]

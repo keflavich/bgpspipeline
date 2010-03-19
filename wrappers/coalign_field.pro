@@ -6,10 +6,11 @@
 pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
         premap=premap,sliced_dir=sliced_dir,ref_field=ref_field,infile=infile,$
         checkpointing=checkpointing,npca=npca,prefix=prefix,refim=refim,$
-        niter=niter,version=version,_extra=_extra
+        niter=niter,version=version,pointing_model=pointing_model,_extra=_extra
     if ~keyword_set(scratchdir) then scratchdir = getenv('WORKINGDIR') 
     if n_elements(premap) eq 0 then premap=1
     if n_elements(checkpointing) eq 0 then checkpointing=0
+    if n_elements(pointing_model) eq 0 then pointing_model=1
     if ~keyword_set(sliced_dir) then sliced_dir='sliced'
     if ~keyword_set(ref_field)  then ref_field =field_name
     if ~keyword_set(npca) then npca=[13,13]
@@ -36,7 +37,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
     
     if (premap) then begin
         individual_obs,infile,$
-            scratchdir+'/'+field_name+'/',/fits_smooth,npca=npca,/pointing_model,/no_offsets,_extra=_extra
+            scratchdir+'/'+field_name+'/',/fits_smooth,npca=npca,pointing_model=pointing_model,/no_offsets,_extra=_extra
         spawn,'ls '+field_dir+"/0*"+pca_label+"*_map01.fits > "+field_dir+"/"+field_name+"_fitslist.txt"
     endif
     spawn,'ls '+field_dir+"/0*"+indiv_pca_label+"*_map01.fits > "+field_dir+"/"+field_name+"_fitslist.txt"
@@ -58,12 +59,12 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
 
     if checkpointing then $
         individual_obs,infile,$
-            scratchdir+'/'+field_name+'/lbcorrected',/fits_smooth,npca=npca,/pointing_model,_extra=_extra
+            scratchdir+'/'+field_name+'/lbcorrected',/fits_smooth,npca=npca,pointing_model=pointing_model,_extra=_extra
 
     if no_coadd eq 0 then $
         mem_iter,infile,$
             scratchdir+'/'+field_name+'/'+prefix+field_name+'_'+pca_label+'pca',$
-            workingdir=scratchdir,niter=niter,/fits_smooth,/pointing_model,$
+            workingdir=scratchdir,niter=niter,/fits_smooth,pointing_model=pointing_model,$
             /dosave,version=version,source_name=field_name,$
             fits_timestream=0,ts_map=0,_extra=_extra
         ; iter0savename=scratchdir+'/'+field_name+'/'+field_name+".sav",  ; 2/20/09 removed this line because I want to distinguish versions

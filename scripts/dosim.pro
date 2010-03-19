@@ -1,18 +1,30 @@
+
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_undistcor',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=30.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=3
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_undistcor_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_undistcor_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_undistcor_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_undistcor_sim_sim_measurements.sav'
+
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=30.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=3
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_measurements.sav'
+
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=30.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=1
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_sim_measurements.sav'
+
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=30.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2
+measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_initial.fits'
+restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_measurements.sav'
+
+mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_big',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=15.0,minsrc=300/2.35/7.2,maxsrc=600/2.35/7.2
+
+end
+
 ; simulations 2010
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1,jitter=1,/marspsf
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1,/marspsf
 
 end
 
-mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,jitter=2
-measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_initial.fits'
-restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bigjitter_sim_sim_measurements.sav'
-
-mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2,/jitter
-measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_initial.fits'
-restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_jitter_sim_sim_measurements.sav'
-
-end
 
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=[findgen(50)*2,findgen(40)*20+100],aperture=1 
 smallmap_sim,sizerange=[33,33],flux_out=flux_out,flux_in=flux_in,flux_recov=flux_recov,/remap,amplitudes=findgen(50)*20,/marspsf,aperture=1
@@ -38,11 +50,6 @@ mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WOR
 measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_map50.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_initial.fits'
 restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_psf_smooth_sim_sim_measurements.sav'
 
-mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2
-mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=200/2.35/7.2
-measure_flux,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_map20.fits',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_initial.fits'
-restore,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_measurements.sav'
-
 uniqamp = amplitudes[uniq(amplitudes)]
 ncolors = 255+255*256L+255*256L^2
 set_plot,'x'
@@ -56,7 +63,6 @@ sources = where(amplitudes eq uniqamp[5])
 plot,mapcube[xcen[0],ycen[0],1:21]/mapcube[xcen[0],ycen[0],0] & for s=1,n_e(sources)-1 do begin & src=sources[s] & oplot,mapcube[xcen[src],ycen[src],1:21]/mapcube[xcen[src],ycen[src],0],color=50+205*float(s)/n_e(sources) & endfor
 
 
-mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_big',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=100/2.35/7.2,maxsrc=600/2.35/7.2
 mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_faint',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=0.1,maxamp=1.0,separator=10.0,minsrc=33/2.35/7.2,maxsrc=360/2.35/7.2
 
 mem_iter,getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR')+'/l111/v1.0.2_l111_13pca_deconv_bright',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(21)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=100.0

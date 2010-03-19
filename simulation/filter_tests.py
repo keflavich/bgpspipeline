@@ -28,7 +28,7 @@ myrank = MPI.COMM_WORLD.Get_rank()
 nprocs = MPI.COMM_WORLD.Get_size()
 procnm = MPI.Get_processor_name()
 
-if 1:
+if 0:
     psdi = psds.PSD2(l111i[0].data)
     psdm = psds.PSD2(l111m[0].data)
     psdp = psds.PSD2(l111[0].data)
@@ -62,8 +62,8 @@ if 1:
 
     
 
-if 0: 
-    for ii,rad in enumerate([100]): #,210,240,270,300,330,360,400,500,600,700,800,900,1000]):
+if 1: 
+    for ii,rad in enumerate([100,210,240,270,300,330,360,400,500,600,700,800,900,1000]):
         if (ii % nprocs != myrank):
             continue
         #brfs[rad] = exp(-(rr*7.2)**2/(2.0*(rad/2.35)**2)) / exp(-(rr*7.2)**2/(2.0*(rad/2.35)**2)).sum()
@@ -92,27 +92,27 @@ if 0:
         title('Filtered with %i" Brick Wall' % rad)
         colorbar()
         savefig("%iarc_brickwall_filter_sim.png" % rad)
-        figure(ii); clf()
+        figure(ii+1); clf()
         spectral()
         subplot(221)
-        imshow(img-pipeimg,vmin=-1,vmax=10)
+        imshow(img-pipeimg,vmin=-1,vmax=1)
         title("Input Image - Pipeline Image")
         colorbar()
         subplot(222)
-        imshow(tophatted[:1155,:1151],vmin=-1,vmax=10)
-        title('Smoothed with %i" radius tophat' % rad)
+        imshow(img-pipeimg-brickwalled[:1155,:1151],vmin=-1,vmax=1)
+        title('Input - Pipeline - Airy')
         colorbar()
         subplot(223)
-        imshow(gaussianed[:1155,:1151],vmin=-1,vmax=10)
+        imshow(gaussianed[:1155,:1151],vmin=-1,vmax=1)
         title("Smoothed with %i\" FWHM Gaussian" % rad)
         colorbar()
         subplot(224)
-        imshow(brickwalled[:1155,:1151],vmin=-1,vmax=10)
-        title('Smoothed with %i" Brick Wall' % rad)
+        imshow(brickwalled[:1155,:1151],vmin=-1,vmax=1)
+        title('Smoothed with %i" Airy' % rad)
         colorbar()
         savefig("%iarc_smooth_sim.png" % rad)
 
-if 0:
+if 1:
     subplot(221)
     imshow(img)
     colorbar()
@@ -134,3 +134,4 @@ if 0:
     title("Convolved with 300\" radius 2D sinc (300\" Brick Wall)")
     savefig("smoothing_comparison.png")
     
+show()
