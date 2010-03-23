@@ -53,6 +53,7 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
         print,"Min RA/DEC: ",min(bgps.ra_map),min(bgps.dec_map)
 
         pixsize = mapstr.pixsize
+        old_ts = mapstr.ts
         ts = prepare_map(bgps.ra_map,bgps.dec_map,pixsize=pixsize,blank_map=blank_map,phi0=0,theta0=0,hdr=hdr,$
             smoothmap=smoothmap,lst=bgps.lst,jd=bgps.jd,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
         blank_map_size = size(blank_map,/dim)
@@ -76,7 +77,7 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
             pixsize: pixsize $
             }
 
-        jittermap = ts_to_map(blank_map_size,ts,simmap[mapstr.ts],weight=bgps.weight,scans_info=bgps.scans_info,wtmap=wt_map,_extra=_extra)
+        jittermap = ts_to_map(blank_map_size,ts,simmap[old_ts],weight=bgps.weight,scans_info=bgps.scans_info,wtmap=wt_map,_extra=_extra)
         writefits,mapstr.outmap+"_jitter.fits",jittermap,mapstr.hdr
         simmap = jittermap
 
