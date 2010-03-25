@@ -31,7 +31,7 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
             randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*0.5
             randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*0.8
         endif else if jitter eq 2 then begin
-            readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_default.txt',bl_num,bl_dist,bl_ang,bl_rms,/silent
+            readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_jun05.txt',bl_num,bl_dist,bl_ang,bl_rms,/silent
             bolo_params = bgps.bolo_params
             bolo_params[2,*] = bl_dist*5*7.7/3600.
             bolo_params[1,*] = bl_ang
