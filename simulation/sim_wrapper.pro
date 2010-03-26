@@ -37,8 +37,8 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
             bolo_params[1,*] = bl_ang[bgps.bolo_indices]
             ; subtract the distortion-correction locations from the "nominal" locations
             ; in order to do the opposite of a distortion correction
-            randx = bgps.bolo_params[2,*] * cos(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * cos(bolo_params[1,*]*!dtor)
-            randy = bgps.bolo_params[2,*] * sin(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * sin(bolo_params[1,*]*!dtor)
+            randx = reform( bgps.bolo_params[2,*] * cos(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * cos(bolo_params[1,*]*!dtor) )
+            randy = reform( bgps.bolo_params[2,*] * sin(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * sin(bolo_params[1,*]*!dtor) )
         endif else begin
             randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*2.0
             randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*2.0
