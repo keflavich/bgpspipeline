@@ -31,15 +31,18 @@ function sim_wrapper,bgps,mapstr,nsources,mapcube=mapcube,niter=niter,noiselevel
             randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*0.5
             randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*0.8
         endif else if jitter eq 2 then begin
-            readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_jun05.txt',bl_num,bl_dist,bl_ang,bl_rms,/silent
-            ;readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_default.txt',bl_num,default_bl_dist,default_bl_ang,default_bl_rms,/silent
+            readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_default.txt',bl_num,bl_dist,bl_ang,bl_rms,/silent
+            readcol,getenv('PIPELINE_ROOT')+'/bgps_params/beam_locations_boloparams.txt',bl_num,default_bl_dist,default_bl_ang,default_bl_rms,/silent
             bolo_params = bgps.bolo_params
             bolo_params[2,*] = bl_dist[bgps.bolo_indices]
             bolo_params[1,*] = bl_ang[bgps.bolo_indices]
+            dbolo_params = bgps.bolo_params
+            dbolo_params[2,*] = default_bl_dist[bgps.bolo_indices]
+            dbolo_params[1,*] = default_bl_ang[bgps.bolo_indices]
             ; subtract the distortion-correction locations from the "nominal" locations
             ; in order to do the opposite of a distortion correction
-            randx = reform( bgps.bolo_params[2,*] * cos(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * cos(bolo_params[1,*]*!dtor) )*5*7.7/3600.
-            randy = reform( bgps.bolo_params[2,*] * sin(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * sin(bolo_params[1,*]*!dtor) )*5*7.7/3600.
+            randx = reform( dbolo_params[2,*] * cos(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * cos(bolo_params[1,*]*!dtor) )*5*7.7/3600.
+            randy = reform( dbolo_params[2,*] * sin(bgps.bolo_params[1,*]*!dtor) - bolo_params[2,*] * sin(bolo_params[1,*]*!dtor) )*5*7.7/3600.
         endif else begin
             randx = randomn(systime(/sec),nbolos)  *mapstr.pixsize/3600.*2.0
             randy = randomn(systime(/sec)+1,nbolos)*mapstr.pixsize/3600.*2.0
