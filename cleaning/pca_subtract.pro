@@ -22,12 +22,8 @@ pro pca_subtract,timestream,n_comp,lower_n=lower_n,corr_part=corr_part,uncorr_pa
         if lower_n ne 0 then atmos_efuncs[0:lower_n-1,*]=0
         atmos_efuncs[n_comp:*,*]=0
         efuncs[lower_n:n_comp-1,*] = 0
-        new_source = efuncs ## evects
-        new_astro = new_source
-        new_atmos = atmos_efuncs ## evects
-        corr_part = new_atmos
-        uncorr_part = new_astro
-;    print,"COMPLETED PCA SUBTRACTION"
-    time_e,t0
+        uncorr_part = efuncs ## evects
+        corr_part = atmos_efuncs ## evects
+    if ~keyword_set(quiet) then time_e,t0
 end
 

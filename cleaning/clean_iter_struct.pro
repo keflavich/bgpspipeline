@@ -21,7 +21,7 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
     boloflat=boloflat,fits_timestream=fits_timestream,fits_nopca=fits_nopca,fits_psd=fits_psd,i=i,$
     pca_atmo=pca_atmo,new_astro=new_astro,first_sky=first_sky,atmos_remainder=atmos_remainder,astrosignal_premap=astrosignal_premap,$
     minbaseline=minbaseline,median_sky=median_sky,fits_remainder=fits_remainder,$
-    outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,_extra=_extra
+    outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,plot_all_timestreams=plot_all_timestreams,_extra=_extra
 
     if n_e(do_weight) eq 0 then do_weight=1
     if n_e(fits_timestream) eq 0 and bgps.n_obs eq 1 then fits_timestream=1 else fits_timestream=0
@@ -97,4 +97,29 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
         if max(bgps.flags) gt 0 then bgps.weight[where(bgps.flags)] = 0
         mapstr.wt_map = ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.weight,wtmap=1,weight=1) ; use a normal drizzle
     endelse
+
+    if keyword_set(plot_all_timestreams) then begin
+        set_plot,'ps'
+        for kk=min(plot_all_timestreams),max(plot_all_timestreams) do begin 
+            lb = bgps.scans_info[0,kk]
+            ub = bgps.scans_info[1,kk]
+            for jj=0,3 do begin
+                device,filename=mapstr.outmap+"timestream"+string(kk,format='(I3.3)')+"_plots_"+string(i,format='(I2.2)')+"_bolo"+string(jj,format='(I2.2)')+".ps",/encapsulated,bits=16,/color
+                loadct,39
+                !P.MULTI=[0,1,2]
+                plot,first_sky[jj,lb:ub]
+                oplot,bgps.ac_bolos[jj,lb:ub],color=250
+                oplot,new_astro[jj,lb:ub],color=50
+                oplot,bgps.astrosignal[jj,lb:ub],color=200
+                legend,['ac_bolos','first_sky','new_astro','astrosignal'],linestyle=[0,0,0,0],color=[250,0,50,200],/right,/top ;,/right
+                plot,atmos_remainder[jj,lb:ub],yrange=[-1,3],/yscale
+                oplot,new_astro[jj,lb:ub],color=50
+                oplot,pca_atmo[jj,lb:ub],color=250
+                oplot,bgps.astrosignal[jj,lb:ub],color=200
+                legend,['pca_atmo'],color=[250],/right,/top,linestyle=[0] ;,/right
+                device,/close_file
+            endfor
+        endfor
+        set_plot,'x'
+    endif
 end
