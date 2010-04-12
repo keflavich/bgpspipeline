@@ -112,11 +112,12 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
                 oplot,new_astro[jj,lb:ub],color=50
                 oplot,bgps.astrosignal[jj,lb:ub],color=200
                 legend,['ac_bolos','first_sky','new_astro','astrosignal'],linestyle=[0,0,0,0],color=[250,0,50,200],/right,/top ;,/right
-                plot,atmos_remainder[jj,lb:ub],yrange=[-1,3],/yscale
+                plot,atmos_remainder[jj,lb:ub],yrange=[-1,3],/ys,title="bolo "+string(jj,format='(I2.2)')+" scan "+string(kk,format='(I3.3)')
                 oplot,new_astro[jj,lb:ub],color=50
                 oplot,pca_atmo[jj,lb:ub],color=250
                 oplot,bgps.astrosignal[jj,lb:ub],color=200
-                legend,['pca_atmo'],color=[250],/right,/top,linestyle=[0] ;,/right
+                oplot,bgps.noise[jj,lb:ub],color=175
+                legend,['pca_atmo','atmos_remainder','noise'],color=[250,0,175],/right,/top,linestyle=[0,0,0] ;,/right
                 device,/close_file
             endfor
         endfor

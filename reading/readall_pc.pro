@@ -78,7 +78,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         ; recognize that (bolo_params is treated as the 'master' list of bad bolos
         ; after this point)
         if size(badbolos,/n_d) gt 0 then bolo_params[0,badbolos] = 0
-        goodbolos = where(bolo_params[0,*])
+        goodbolos = where(bolo_params[0,*] eq 1)
 
         ; wh_scan_full is index of where there are scans....
         ; really useful if we want to cut out between-scan stuff for ~25% increase in efficiency
