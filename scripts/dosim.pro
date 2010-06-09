@@ -1,3 +1,22 @@
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_higalmax2',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max4.fits',/deconvolve,maxsrc=2
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_higalmax2',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max4.fits',/deconvolve,maxsrc=2
+end
+; l030 higal input simulation (l089)
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_higalmax4',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max4.fits',/deconvolve,dosave=2
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_higalmax10',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max10.fits',/deconvolve,dosave=2
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_higalmax20',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max20.fits',/deconvolve,dosave=2
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_higalmax50',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max50.fits',/deconvolve,dosave=2
+mem_iter,getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_postiter.sav',getenv('WORKINGDIR')+'/l089/v1.0.2_l089_13pca_higalmax50sm2',workingdir=getenv('WORKINGDIR'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth2_max50.fits',/deconvolve,dosave=2
+
+end
+; l030 higal input simulation (l111)
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_higalmax4',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max4.fits',/deconvolve
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_higalmax10',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max10.fits',/deconvolve
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_higalmax20',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max20.fits',/deconvolve
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_higalmax50',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,input_image=getenv('WORKINGDIR')+'/l089/simimage_l30_170um_higal_crop_smooth_max50.fits',/deconvolve
+
+end
+
 mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_smallfaintundistcor',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=0.1,maxamp=1.0,separator=30.0,minsrc=33/2.35/7.2,maxsrc=40/2.35/7.2,jitter=2
 measure_flux,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_smallfaintundistcor_sim_sim_sources.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_smallfaintundistcor_sim_map50.fits',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_smallfaintundistcor_sim_initial.fits'
 restore,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_smallfaintundistcor_sim_sim_measurements.sav'
@@ -26,7 +45,7 @@ mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WO
 measure_flux,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_sim_map50.fits',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_sim_initial.fits'
 restore,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_sim_sim_measurements.sav'
 
-mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_big',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=15.0,minsrc=300/2.35/7.2,maxsrc=600/2.35/7.2
+mem_iter,getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_postiter.sav',getenv('WORKINGDIR2')+'/l111/v1.0.2_l111_13pca_deconv_big',workingdir=getenv('WORKINGDIR2'),/fromsave,fits_timestream=0,ts_map=0,niter=intarr(51)+13,/simulate_only,/linearsim,/deconvolve,minamp=1.0,maxamp=10.0,separator=10.0,minsrc=300/2.35/7.2,maxsrc=600/2.35/7.2
 
 end
 

@@ -47,7 +47,7 @@ pro map_iter,bgps,mapstr,smoothmap=smoothmap,fits_smooth=fits_smooth,deconvolve=
         bgps.glitchloc=glitchloc ; why can't procedures write information to structs?
         print,"NUMBER OF FLAGGED POINTS: ", total(bgps.flags gt 0), " OUT OF ",n_e(bgps.flags)," FRACTION: ",total(bgps.flags gt 0)/float(n_e(bgps.flags))
     endif
-    if i eq 0 then writefits,outmap+'_flagmap.fits',ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.flags,weight=1,wtmap=1),hdr
+    if i eq 0 and dofits then writefits,outmap+'_flagmap.fits',ts_to_map(mapstr.blank_map_size,mapstr.ts,bgps.flags,weight=1,wtmap=1),hdr
 
     bgps.astrosignal = mapstr.model[mapstr.ts]
 

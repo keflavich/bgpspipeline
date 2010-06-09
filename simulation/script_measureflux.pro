@@ -1,4 +1,74 @@
 
+
+set_plot,'ps'
+loadct,39
+path = getenv('WORKINGDIR2')+'/l111/'
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture_B.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_20arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=20/7.2   ,psym=1,color=0,background=-1
+measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_40arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax2,yax=yax2,aperture=40/7.2   ,/overplot,color=100,psym=2
+measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_60arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax3,yax=yax3,aperture=60/7.2   ,/overplot,color=250,psym=4
+measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_80arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax4,yax=yax4,aperture=80/7.2   ,/overplot,color=150,psym=5
+measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_100arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax5,yax=yax5,aperture=100/7.2 ,/overplot,color=50,psym=6
+legend,['20"','40"','60"','80"','100"'],psym=[1,2,4,5,6],color=[0,100,250,150,50],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture_B_lines.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+oplot,xax2,yax2,thick=3,color=250
+oplot,xax3,yax3,thick=3,color=200
+device,/close_file
+
+set_plot,'ps'
+loadct,39
+path = getenv('WORKINGDIR2')+'/l111/'
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_20arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=20/7.2   ,psym=1,color=0,background=-1
+measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_5arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=5/7.2   ,psym=1,color=0,/overplot
+measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_40arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax2,yax=yax2,aperture=40/7.2   ,/overplot,color=100,psym=2
+measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_60arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax3,yax=yax3,aperture=60/7.2   ,/overplot,color=250,psym=4
+measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_80arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax4,yax=yax4,aperture=80/7.2   ,/overplot,color=150,psym=5
+measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_100arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax5,yax=yax5,aperture=100/7.2 ,/overplot,color=50,psym=6
+legend,['5"','20"','40"','60"','80"','100"'],psym=[1,1,2,4,5,6],color=[0,0,100,250,150,50],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture_lines.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+oplot,xax2,yax2,thick=3,color=250
+oplot,xax3,yax3,thick=3,color=200
+device,/close_file
+
+set_plot,'ps'
+loadct,39
+path = getenv('WORKINGDIR2')+'/l111/'
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_big_sourcesize_aperture.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+!p.background=255
+measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_20arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=20/7.2   ,psym=1,color=0,background=-1
+measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_40arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax2,yax=yax2,aperture=40/7.2   ,/overplot,color=100,psym=2
+measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_60arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax3,yax=yax3,aperture=60/7.2   ,/overplot,color=250,psym=4
+measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_80arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax4,yax=yax4,aperture=80/7.2   ,/overplot,color=150,psym=5
+measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_100arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax5,yax=yax5,aperture=100/7.2 ,/overplot,color=50,psym=6
+legend,['20"','40"','60"','80"','100"'],psym=[1,2,4,5,6],color=[0,100,250,150,50],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
+device,/close_file
+device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_big_aperture_lines.ps',/encapsulated,bits=16,/color
+POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
+!p.noerase=1
+plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
+oplot,xax2,yax2,thick=3,color=250
+oplot,xax3,yax3,thick=3,color=200
+device,/close_file
+
+end
+
 set_plot,'ps'
 loadct,39
 device,filename=getenv('WORKINGDIR')+'/sim_figures/singleimage_fluxrecov_mars_jitter.ps',/encapsulated,bits=16,/color
@@ -204,74 +274,6 @@ legend,strc(xwidth[sources]*7.2*2.35),color=[0,50+205*(findgen(n_e(sources)-1)+1
 device,/close_file
 
 end
-
-set_plot,'ps'
-loadct,39
-path = getenv('WORKINGDIR2')+'/l111/'
-device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture.ps',/encapsulated,bits=16,/color
-POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
-!p.noerase=1
-!p.background=255
-measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_20arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=20/7.2   ,psym=1,color=0,background=-1
-measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_40arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax2,yax=yax2,aperture=40/7.2   ,/overplot,color=100,psym=2
-measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_60arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax3,yax=yax3,aperture=60/7.2   ,/overplot,color=250,psym=4
-measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_80arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax4,yax=yax4,aperture=80/7.2   ,/overplot,color=150,psym=5
-measure_flux,path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_14.4_sim_map20.fits',path+'v1.0.2_l111_13pca_deconv_14.4_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_14.4_sim_sim_measurements_100arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax5,yax=yax5,aperture=100/7.2 ,/overplot,color=50,psym=6
-legend,['20"','40"','60"','80"','100"'],psym=[1,2,4,5,6],color=[0,100,250,150,50],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
-device,/close_file
-device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture_lines.ps',/encapsulated,bits=16,/color
-POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
-!p.noerase=1
-plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
-oplot,xax2,yax2,thick=3,color=250
-oplot,xax3,yax3,thick=3,color=200
-device,/close_file
-
-set_plot,'ps'
-loadct,39
-path = getenv('WORKINGDIR2')+'/l111/'
-device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_big_sourcesize_aperture.ps',/encapsulated,bits=16,/color
-POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
-!p.noerase=1
-!p.background=255
-measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_20arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=20/7.2   ,psym=1,color=0,background=-1
-measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_40arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax2,yax=yax2,aperture=40/7.2   ,/overplot,color=100,psym=2
-measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_60arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax3,yax=yax3,aperture=60/7.2   ,/overplot,color=250,psym=4
-measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_80arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax4,yax=yax4,aperture=80/7.2   ,/overplot,color=150,psym=5
-measure_flux,path+'v1.0.2_l111_13pca_deconv_big_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_big_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_big_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_big_sim_sim_measurements_100arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax5,yax=yax5,aperture=100/7.2 ,/overplot,color=50,psym=6
-legend,['20"','40"','60"','80"','100"'],psym=[1,2,4,5,6],color=[0,100,250,150,50],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
-device,/close_file
-device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_big_aperture_lines.ps',/encapsulated,bits=16,/color
-POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
-!p.noerase=1
-plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
-oplot,xax2,yax2,thick=3,color=250
-oplot,xax3,yax3,thick=3,color=200
-device,/close_file
-
-
-set_plot,'ps'
-loadct,39
-path = getenv('WORKINGDIR2')+'/l111/'
-device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture_B.ps',/encapsulated,bits=16,/color
-POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
-!p.noerase=1
-!p.background=255
-measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_20arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax1,yax=yax1,aperture=20/7.2   ,psym=1,color=0,background=-1
-measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_40arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax2,yax=yax2,aperture=40/7.2   ,/overplot,color=100,psym=2
-measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_60arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax3,yax=yax3,aperture=60/7.2   ,/overplot,color=250,psym=4
-measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_80arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax4,yax=yax4,aperture=80/7.2   ,/overplot,color=150,psym=5
-measure_flux,path+'v1.0.2_l111_13pca_deconv_sim_sim_sources.sav',path+'v1.0.2_l111_13pca_deconv_sim_map50.fits',path+'v1.0.2_l111_13pca_deconv_sim_initial.fits',outfile=path+'v1.0.2_l111_13pca_deconv_sim_sim_measurements_100arc.sav',/doplot,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3,xax=xax5,yax=yax5,aperture=100/7.2 ,/overplot,color=50,psym=6
-legend,['20"','40"','60"','80"','100"'],psym=[1,2,4,5,6],color=[0,100,250,150,50],/right,charsize=1.5,charthick=2,thick=3,/bottom ;,/right
-device,/close_file
-device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l111_sourcesize_aperture_B_lines.ps',/encapsulated,bits=16,/color
-POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 
-!p.noerase=1
-plot,xax1,yax1,xtitle="!6Object FWHM (arcsec)",ytitle="!6Recovered Fraction",charsize=1.5,charthick=2,xthick=2,ythick=2,thick=3
-oplot,xax2,yax2,thick=3,color=250
-oplot,xax3,yax3,thick=3,color=200
-device,/close_file
-
 path = getenv('WORKINGDIR2')+'/l089/'
 device,filename=getenv('WORKINGDIR')+'/sim_figures/fluxrecov_l089_sourcesize_aperture.ps',/encapsulated,bits=16,/color
 POLYFILL, [1,1,0,0,1], [1,0,0,1,1], /NORMAL, COLOR=255 

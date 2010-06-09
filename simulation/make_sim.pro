@@ -4,7 +4,7 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
     linearsim=linearsim,fluxrange=fluxrange,uniformrandom=uniformrandom,$
     minsrc=minsrc,maxsrc=maxsrc,separator=separator,srcsize=srcsize,$
     logspacing=logspacing,edgebuffer=edgebuffe,smallmap=smallmap,marspsf=marspsf,$
-    psf_smooth=psf_smooth
+    psf_smooth=psf_smooth,input_image=input_image
 
     if n_e(meanamp) eq 0 then meanamp=1
     if n_e(spreadamp) eq 0 then spreadamp=1
@@ -120,6 +120,23 @@ function make_sim,blank_map,outmap,nsources,meanamp=meanamp,spreadamp=spreadamp,
         ywidth = srcsize
         angles = 0
         nsources = 1
+    endif else if keyword_set(input_image) then begin
+        simmap = blank_map
+        img = readfits(input_image)
+        if keyword_set(maxsrc) then begin
+            img = img/max(img) * maxsrc
+            print,"Set image maximum to ",max(img)
+        endif
+        imgsz = size(img,/dim)
+        blanksz = size(blank_map,/dim)
+        if total(imgsz eq blanksz) ne 2 then begin
+            print,"Image doesn't match input!  Cropping! Input: ",imgsz," Pipeline: ",blanksz
+            if imgsz[0] gt blanksz[0] then xhi = blanksz[0]-1 else xhi = imgsz[0]-1
+            if imgsz[1] gt blanksz[1] then yhi = blanksz[1]-1 else yhi = imgsz[1]-1
+            simmap[0:xhi,0:yhi] = img[0:xhi,0:yhi] 
+            nsources = 0
+        endif else simmap = img
+        return,simmap
     endif
 
     simmap = blank_map
