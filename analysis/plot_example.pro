@@ -1,6 +1,11 @@
 ; example:
 ; restore,'/usb/scratch1/l357/v1.0.2_l357_13pca_postiter.sav'
 ; plot_example,bgps,mapstr
+;
+; or
+; restore,getenv('WORKINGDIR')+'/super_gc/v1.0.2_super_gc_13pca_postiter.sav'
+; plot_example,bgps,mapstr
+; plot_relsens,bgps,mapstr
 pro plot_example,bgps,mapstr
 
     set_plot,'ps'
@@ -156,11 +161,11 @@ pro plot_relsens,bgps,mapstr
     set_plot,'x'
 
 
-    stop
+    ;stop
 
-    ; also should plot before/after boloflat for each bolo
-    plot,total(polysubbed[*,lb:ub],2)/total(polysubbed[*,lb:ub])
-    oplot,total(boloflatted[*,lb:ub],2)/total(boloflatted[*,lb:ub])
+    ; ; also should plot before/after boloflat for each bolo
+    ; plot,total(polysubbed[*,lb:ub],2)/total(polysubbed[*,lb:ub])
+    ; oplot,total(boloflatted[*,lb:ub],2)/total(boloflatted[*,lb:ub])
 
 end
 
