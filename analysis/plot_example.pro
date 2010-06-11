@@ -6,6 +6,11 @@
 ; restore,getenv('WORKINGDIR')+'/super_gc/v1.0.2_super_gc_13pca_postiter.sav'
 ; plot_example,bgps,mapstr
 ; plot_relsens,bgps,mapstr
+;
+; for the relsens figure generated June 10, 2010:
+; restore,getenv('WORKINGDIR')+'/super_gc/v1.0.2_super_gc_13pca_postiter.sav'
+; plot_relsens,bgps,mapstr,scannumber=1571
+; (want a longer timestream)
 pro plot_example,bgps,mapstr
 
     set_plot,'ps'
@@ -41,13 +46,13 @@ pro plot_example,bgps,mapstr
 ;    ymax = max([ymax,reform(boloflatted[0,lb:ub])])
     !p.multi=[0,1,4]
     multiplot
-    plot,bgps.raw[0,lb:ub],/xs,linestyle=0,yrange=yrange,xthick=2,ythick=2,thick=3,ystyle=1,ytickname=replicate(' ',20) ;,title='!6Raw'
+    plot,bgps.raw[0,lb:ub],/xs,psym=10,yrange=yrange,xthick=2,ythick=2,thick=3,ystyle=1,ytickname=replicate(' ',20) ;,title='!6Raw'
     multiplot
-    plot,delined[0,lb:ub],/xs,linestyle=0,yrange=yrange,xthick=2,ythick=2,thick=3,ystyle=1,ytickname=replicate(' ',20)  ;,title='!6Delined'
+    plot,delined[0,lb:ub],/xs,psym=10,yrange=yrange,xthick=2,ythick=2,thick=3,ystyle=1,ytickname=replicate(' ',20)  ;,title='!6Delined'
     multiplot
-    plot,expsub[0,lb:ub],/xs,linestyle=0,yrange=yrange,xthick=2,ythick=2,thick=3,ystyle=1,ytickname=replicate(' ',20) ;,title='!6Exponent subtraction'
+    plot,expsub[0,lb:ub],/xs,psym=10,yrange=yrange,xthick=2,ythick=2,thick=3,ystyle=1,ytickname=replicate(' ',20) ;,title='!6Exponent subtraction'
     multiplot
-    plot,polysubbed[0,lb:ub],/xs,/ys,linestyle=0,yrange=yrange,xthick=2,ythick=2,thick=3,ytitle="!6Amplitude (Jy)",xtickformat='(I)'  ;,title='!6Polynomial subtraction'
+    plot,polysubbed[0,lb:ub],/xs,/ys,psym=10,yrange=yrange,xthick=2,ythick=2,thick=3,ytitle="!6Amplitude (Jy)",xtickformat='(I)'  ;,title='!6Polynomial subtraction'
     ;multiplot,/reset
 
     device,/close_file
@@ -57,7 +62,7 @@ pro plot_example,bgps,mapstr
     yrange=[ymin,ymax]
 
     ; in principle, bgps.ac_bolos and polysubbed should be identical at this point....
-;    plot,bgps.ac_bolos[0,lb:ub],linestyle=0,title='!6Before iterative cleaning',yrange=yrange,xthick=2,ythick=2,thick=3
+;    plot,bgps.ac_bolos[0,lb:ub],psym=10,title='!6Before iterative cleaning',yrange=yrange,xthick=2,ythick=2,thick=3
 
     bgps.astrosignal[*] = 0
 ;    bgps.atmosphere = bgps.ac_bolos - bgps.astrosignal 
@@ -92,10 +97,10 @@ pro plot_example,bgps,mapstr
         !p.multi=[0,1,4]
 
         multiplot
-        plot,bgps.ac_bolos[0,lb:ub],linestyle=0,/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytickname=replicate(' ',20)  ;,title='!6Before iterative cleaning (black) astrosignal (red) difference (green)'
-        oplot,bgps.astrosignal[0,lb:ub],color=250,thick=3
+        plot,bgps.ac_bolos[0,lb:ub],psym=10,/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytickname=replicate(' ',20)  ;,title='!6Before iterative cleaning (black) astrosignal (red) difference (green)'
+        oplot,bgps.astrosignal[0,lb:ub],psym=10,color=250,thick=3
         bgps.atmosphere = bgps.ac_bolos - bgps.astrosignal 
-        oplot,bgps.atmosphere[0,lb:ub],color=150,thick=3
+        oplot,bgps.atmosphere[0,lb:ub],psym=10,color=150,thick=3
 
         if i eq 0 then begin
             atmos_remainder = sky_subtraction_wrapper(bgps.atmosphere,minlen=0,bolo_params=bgps.bolo_params,$
@@ -106,15 +111,15 @@ pro plot_example,bgps,mapstr
         endif
 
         multiplot
-        plot,atmos_remainder[0,lb:ub],/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytickname=replicate(' ',20)  ;,title="Median atmosphere (red) remainder (black) (Iter "+strc(i)+")"
-        oplot,first_sky[0,lb:ub],linestyle=0,color=250,thick=3
-        oplot,bgps.atmosphere[0,lb:ub],color=150,thick=3
+        plot,atmos_remainder[0,lb:ub],psym=10,/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytickname=replicate(' ',20)  ;,title="Median atmosphere (red) remainder (black) (Iter "+strc(i)+")"
+        oplot,first_sky[0,lb:ub],psym=10,color=250,thick=3
+        oplot,bgps.atmosphere[0,lb:ub],psym=10,color=150,thick=3
 
         multiplot
-        plot,new_astro[0,lb:ub],/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytickname=replicate(' ',20)  ;,title="Astrophysical signal (red - total, black - Iter "+strc(i)+")"
-        oplot,astrosignal_premap[0,lb:ub],color=250,thick=3
+        plot,new_astro[0,lb:ub],psym=10,/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytickname=replicate(' ',20)  ;,title="Astrophysical signal (red - total, black - Iter "+strc(i)+")"
+        oplot,astrosignal_premap[0,lb:ub],psym=10,color=250,thick=3
         multiplot
-        plot,(pca_atmo+first_sky)[0,lb:ub],/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytitle="!6Amplitude (Jy)",xtickformat='(I)'  ;,title="Atmosphere (PCA + median, Iter "+strc(i)+")"
+        plot,(pca_atmo+first_sky)[0,lb:ub],psym=10,/xs,/ys,yrange=yrange,xthick=2,ythick=2,thick=3,ytitle="!6Amplitude (Jy)",xtickformat='(I)'  ;,title="Atmosphere (PCA + median, Iter "+strc(i)+")"
         ;multiplot,/reset
 
         device,/close_file
@@ -131,15 +136,16 @@ pro plot_example,bgps,mapstr
     ;device,/close_file
 
 end
-pro plot_relsens,bgps,mapstr
+pro plot_relsens,bgps,mapstr,scannumber=scannumber
 
     set_plot,'ps'
     device,filename='relsens_cal.ps',/color,/encapsulated
     
     !p.multi=[0,1,2]
 
-    lb=bgps.scans_info[0,0]
-    ub=bgps.scans_info[1,0]
+    if ~keyword_set(scannumber) then scannumber = 0 
+    lb=bgps.scans_info[0,scannumber]
+    ub=bgps.scans_info[1,scannumber]
 
     yrange=[min(bgps.ac_bolos[0:2,lb:ub]),max(bgps.ac_bolos[0:2,lb:ub])]
 
@@ -147,13 +153,13 @@ pro plot_relsens,bgps,mapstr
 
     multiplot
     plot,xax,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,xthick=2,ythick=2,thick=3,/xs,/ys,ytickname=replicate(' ',20)  ;bgps.ac_bolos[0,lb:ub]
-    oplot,xax,bgps.ac_bolos[1,lb:ub],color=250,thick=3
-    oplot,xax,bgps.ac_bolos[2,lb:ub],color=150,thick=3
+    oplot,xax,bgps.ac_bolos[1,lb:ub],psym=10,color=250,thick=3
+    oplot,xax,bgps.ac_bolos[2,lb:ub],psym=10,color=150,thick=3
 
     multiplot
     plot,xax,median(bgps.ac_bolos[*,lb:ub],dimension=1),yrange=yrange,xthick=2,ythick=2,thick=3,/xs,/ys,ytitle="!6Amplitude (Jy)",xtitle="!6Time (s)",xtickformat='(I)'  ;bgps.ac_bolos[0,lb:ub]*bgps.scale_coeffs[0,0]
-    oplot,xax,bgps.ac_bolos[1,lb:ub]*bgps.scale_coeffs[0,1],color=250,thick=3
-    oplot,xax,bgps.ac_bolos[2,lb:ub]*bgps.scale_coeffs[0,2],color=150,thick=3
+    oplot,xax,bgps.ac_bolos[1,lb:ub]*bgps.scale_coeffs[0,1],psym=10,color=250,thick=3
+    oplot,xax,bgps.ac_bolos[2,lb:ub]*bgps.scale_coeffs[0,2],psym=10,color=150,thick=3
     ;multiplot,/reset
 
     device,/close_file

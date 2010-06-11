@@ -6,7 +6,7 @@
 pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfile,errbar=errbar,beamsize=beamsize,_extra=_extra
 
     readcol,infile,filename,planet,meandc,stddc,volts,ampl,err,voltsDflux,errDflux,amplDflux,flux,jd,xwidth,ywidth,$
-        format="(A80,A20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20)",comment="#",/silent
+        format="(A80,A20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20,F20)",comment="#"
 
     if keyword_set(plotfile) then begin
         set_plot,'ps'
@@ -36,7 +36,7 @@ pro plot_dcfluxes,infile,overplot=overplot,inter=inter,olde=olde,plotfile=plotfi
         endif else begin
             plot,[meandcfit[whuranus],0],[amplDfluxfit[whuranus],0],psym=1,xtitle="!6Mean DC voltage",ytitle="!6Volts/Jy",_extra=_extra
     ;        plot,meandcfit[whnotmars],amplDfluxfit[whnotmars],psym=1,_extra=_extra 
-            oplot,meandcfit[whmars],amplDfluxfit[whmars],psym=2,color=250,_extra=_extra 
+            oplot,meandcfit[whmars],amplDfluxfit[whmars],psym=2,_extra=_extra 
     ;        oplot,meandcfit[whneptune],amplDfluxfit[whneptune],psym=7,color=100,_extra=_extra 
         endelse
     endelse
