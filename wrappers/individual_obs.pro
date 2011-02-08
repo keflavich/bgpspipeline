@@ -9,10 +9,12 @@
 ; a prefix can be automatically found as the directory directly containing the file,
 ; but a user-specific prefix that comes first MUST be specified
 
-pro individual_obs,infilename,prefix,find_prefix=find_prefix,npca=npca,workingdir=workingdir,_extra=_extra
+pro individual_obs,infilename,prefix,find_prefix=find_prefix,npca=npca,workingdir=workingdir,$
+    indiv_suffix=indiv_suffix,_extra=_extra
 if ~keyword_set(npca) and size(npca,/n_d) ne 1 then npca = [3]
 if ~keyword_set(workingdir) then workingdir=getenv('WORKINGDIR')
 ;if ~keyword_set(prefix) then find_prefix = 1 else find_prefix = 0
+if ~keyword_set(indiv_suffix) then indiv_suffix=""
 	
 if n_e(infilename) gt 1 then filelist=infilename $
     else if strmid(infilename,strlen(infilename)-3,strlen(infilename)) eq '.nc' then filelist=[infilename] $
@@ -23,9 +25,9 @@ for i=0,n_e(filelist)-1 do begin
 		last_slash = strpos(filename,'/',/reverse_search)
 		substring1 = strmid(filename,0,last_slash)
 		next_last_slash = strpos(substring1,'/',/reverse_search)
-		tprefix = strmid(filename,next_last_slash+1,last_slash-next_last_slash) + prefix
+		tprefix = prefix + strmid(filename,next_last_slash+1,last_slash-next_last_slash) 
 	endif else tprefix = prefix
-	outname = tprefix+strmid(filename,strpos(filename,'/',/reverse_search)+1,strlen(filename)-3)+"_indiv"+strc(npca[0])+"pca"
+	outname = tprefix+strmid(filename,strpos(filename,'/',/reverse_search)+1,strlen(filename)-3)+"_indiv"+strc(npca[0])+"pca"+indiv_suffix
  	print,"Individual_obs on file " + filename + " with output " + outname 
 	; this doesn't do anything if stregex(filename,"mars") gt 0 then mars=1 else mars=0
 	mem_iter,filename,outname,workingdir=workingdir,/median_sky,niter=npca,$
