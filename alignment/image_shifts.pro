@@ -6,15 +6,19 @@
 ; check_shift - calls a STOP statement in the middle of pixshift
 ;               so that you can see what pixshift is doing
 ; shift_out - filename of output file with corrected coordinates 
-pro image_shifts,masterimage,imagein,fileout , check_shift = check_shift,$
-        shift_out=shift_out,maxoff=maxoff,_extra=_extra
+pro image_shifts,masterimage,imagein,fileout=fileout , check_shift = check_shift,$
+        shift_out=shift_out,match_out=match_out,maxoff=maxoff,_extra=_extra
 
+    if n_elements(fileout) eq 0 then fileout = '/dev/tty'
     openw,outf,fileout,/get_lun
 
     ; read in the file list if it is a file list and not a fits file
     if stregex(imagein,'\.fits') eq -1 then begin
-        readcol,imagein,filelist,comment="#",format="A80",/silent
+        readcol,imagein,filelist,comment="#",format="A",/silent
     endif else filelist=[imagein]
+
+    if not file_test(masterimage) then message,'Could not find master image '+masterimage
+    if not file_test(imagein) then message,'Could not find image to align '+imagein
 
     master = mrdfits(masterimage, 0, hdr)
     heuler,hdr,/galactic
@@ -34,10 +38,12 @@ pro image_shifts,masterimage,imagein,fileout , check_shift = check_shift,$
     euler,lcen,bcen,racen,deccen,2
 
     ; formatted header for the output file
-    printf,outf,"#","Filename","dra","ddec","dra_err(fitting)","ddec_err(fitting)","Stamp_residual",format='(A1,A20,5A20)'
+    printf,outf,"#","Filename","dra","ddec","dra_err(fitting)","ddec_err(fitting)","Stamp_residual",format='(A1,A28,5A20)'
 
-    for i=0,n_e(filelist)-1 do begin
+    for i=0,n_elements(filelist)-1 do begin
         fname = filelist[i]
+
+        print,'Aligning ',fname,' to ',masterimage
 
         ; modified pixshifts so that the reading happens here 
         image = readfits(fname, hdimage, /silent)
@@ -74,25 +80,49 @@ pro image_shifts,masterimage,imagein,fileout , check_shift = check_shift,$
 ;old output        printf,outf,fname,-dx*astr.cd[0,0],-dy*astr.cd[1,1],format='(A80,F20.6,F20.6)'
 
         ; if you're aligning an image without an NCDF name in it, there will be no filename output
-        ncname = stregex(fname,'[0-9]{6}_o[b0-9][0-9]_raw_ds5.nc',/extract)
-        printf,outf,ncname,dra,ddec,cel_errarr[0],cel_errarr[1],stamp_residual_fraction,format='(A21,5G20.6)'
+        ncname = stregex(fname,'[0-9]{6}_o[b0-9][0-9](_raw)?_ds[15](_flagged)?.nc',/extract)
+        printf,outf,ncname,dra,ddec,cel_errarr[0],cel_errarr[1],stamp_residual_fraction,format='(A29,5G20.6)'
 
 
         if keyword_set(shift_out) then begin
-            image = readfits(fname, hdimage, /silent)
+            newim = readfits(fname, hdimage, /silent)
+            heuler,hdimage,/galactic
+            master = mrdfits(masterimage, 0, hdr)
+            heuler,hdr,/galactic
+            hastrom, newim, hdimage, hdimage, missing = !values.f_nan
             sxaddpar, hdimage, 'CRPIX1', sxpar(hdimage, 'CRPIX1')-dx
             sxaddpar, hdimage, 'CRPIX2', sxpar(hdimage, 'CRPIX2')-dy
+
         
             ;oldcode now split filename in order to write output to new file
             ;oldcode fileout=strsplit(fileout,'.fits',/extract,/regex)+'_test_aligned.fits'
             
             ;now write out new fits file
-            if n_e(filelist) gt 1 then begin ; if looping through a list, then output each one with a fixed prefix
-                writefits,shift_out+fname,image,hdimage
+            if n_elements(filelist) gt 1 then begin ; if looping through a list, then output each one with a fixed prefix
+                writefits,shift_out+fname,newim,hdimage
                 print,'Wrote ',shift_out+fname
             endif else begin
-                writefits,shift_out,image,hdimage
+                writefits,shift_out,newim,hdimage
                 print,'Wrote ',shift_out
+            endelse
+        endif
+
+        if keyword_set(match_out) then begin
+            matchim = readfits(fname, hdimage, /silent)
+            heuler,hdimage,/galactic
+            master = mrdfits(masterimage, 0, hdr)
+            heuler,hdr,/galactic
+            sxaddpar, hdimage, 'CRPIX1', sxpar(hdimage, 'CRPIX1')-dx
+            sxaddpar, hdimage, 'CRPIX2', sxpar(hdimage, 'CRPIX2')-dy
+            hastrom, matchim, hdimage, hdr, missing = !values.f_nan
+
+
+            if n_elements(filelist) gt 1 then begin ; if looping through a list, then output each one with a fixed prefix
+                writefits,match_out+fname,matchim,hdimage
+                print,'Wrote ',match_out+fname
+            endif else begin
+                writefits,match_out,matchim,hdimage
+                print,'Wrote ',match_out
             endelse
         endif
 
