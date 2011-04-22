@@ -45,7 +45,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
     if coalign then begin
         image_shifts,refim,$
             field_dir+"/"+field_name+'_fitslist.txt',$
-            field_dir+"/"+field_name+'_align_to_'+ref_map+'.txt',$
+            fileout=field_dir+"/"+field_name+'_align_to_'+ref_map+'.txt',$
             _extra=_extra
         write_imshifts,field_dir+'/'+field_name+'_align_to_'+ref_map+'.txt'
         ref_file = getenv('SLICED')+ref_field+'/'+ref_map+'_raw_ds5.nc'
