@@ -13,7 +13,7 @@
 ; offset_timestream = a constant to add to the ac_bolos timestream in order to force
 ; a correlated component (attempt to get around PCA picking out nonexistent correlations)
 
-pro make_artificial_timestreams, map, header, bgps=bgps, mapstr=mapstr, stepsize=stepsize, $
+pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, stepsize=stepsize, $
     beam_loc_file=beam_loc_file, scan_angle=scan_angle, sample_interval=sample_interval,$
     scanspeed=scanspeed, ts=ts, ra_all=ra_all, dec_all=dec_all, astrosignal=astrosignal, $
     array_angle=array_angle,bolo_spacing=bolo_spacing,start_position=start_position,$
@@ -197,7 +197,7 @@ pro make_artificial_timestreams, map, header, bgps=bgps, mapstr=mapstr, stepsize
     needed_once_struct = { $
         }
 
-    bgps_struct = { $
+    bgps = { $
         scans_info: scans_info ,$
         ac_bolos: astrosignal+offset_timestream,$
         dc_bolos: astrosignal,$
