@@ -219,7 +219,7 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
         var2d:fltarr(n_e(scans_info[0,*]),n_e(astrosignal[*,0])),$
         weight: astrosignal*0.0+1.0,$
         n_obs: 1, $
-        scale_coeffs: replicate(1.0,144), $
+        scale_coeffs: replicate(1.0,144) ## replicate(1.0,nscans),$
         scalearr: astrosignal*0.0+1.0, $
         badscans: -1, $
         source_ra: median(ra),$
@@ -241,7 +241,7 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
     if n_e(iter0savename) eq 0 then iter0savename=outmap+"_preiter.sav" 
     if dosave gt 0 then begin
         print,"V1.0: Saving bgps_struct and mapstr in ",iter0savename
-        save,bgps_struct,mapstr,filename=iter0savename,/verbose
+        save,bgps,mapstr,filename=iter0savename,/verbose
         writefits,outmap+"_nhitsmap.fits",nhitsmap,header
         writefits,outmap+"_inputmap.fits",map,header
     endif
