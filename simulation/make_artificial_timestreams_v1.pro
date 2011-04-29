@@ -73,6 +73,7 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
         nsamples = floor( scanlen_pix / sample_spacing )
         nscans   = floor( (mapsize[1] - scanheight_pix - 2*y0 ) / (2*stepsize/pixsize) )
         print," with ",nsamples," samples per scan and ",nscans," scans"
+        if nscans le 2 then message,"Warning/ERROR: Too few scans."
         xarr = findgen(nsamples) * cos(scan_angle*!dtor) * sample_spacing + x0
         yarr = findgen(nsamples) * sin(scan_angle*!dtor) * sample_spacing + y0
         scans_info = [0,nsamples-1]
