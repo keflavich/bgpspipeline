@@ -10,11 +10,11 @@ for ii=0,0 do begin
   fakemap = psf/max(psf) + randomn(seed,size(psf,/dim)) / signal_to_noise
   hdr=['SIMPLE  = T','BITPIX  = -32','NAXIS   = 2','NAXIS1  = 960','NAXIS2  = 960','CDELT1  = 0.00033333','CDELT2  = 0.00033333','CRPIX1  = 480','CRPIX2  = 480','CRVAL1  = 0.0','CRVAL2  = 0.0','CTYPE1  = GLON-CAR','CTYPE2  = GLAT-CAR','END']
 
-  array_angle = 45;ii*10
+  array_angle = 0;ii*10
 
   make_artificial_timestreams_v1,fakemap,hdr,ts=ts,astrosignal=astrosignal,bgps=bgps,mapstr=mapstr,$
     outmap=outdir+'airy_test_superres_ds1_sn'+string(signal_to_noise,format="(I03)"),$
-    /dosave,stepsize=15;, array_angle=array_angle,stepsize=15,sample_interval=0.02
+    /dosave,array_angle=array_angle,stepsize=15;,sample_interval=0.1
 
   mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
     fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[12],plot_bolos=[12],plot_weights=1,$

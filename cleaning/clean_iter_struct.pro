@@ -100,25 +100,47 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
 
     if keyword_set(plot_all_timestreams) then begin
         set_plot,'ps'
-        for kk=min(plot_all_timestreams),max(plot_all_timestreams) do begin 
-            lb = bgps.scans_info[0,kk]
-            ub = bgps.scans_info[1,kk]
-            for jj=0,3 do begin
-                device,filename=mapstr.outmap+"timestream"+string(kk,format='(I3.3)')+"_plots_"+string(i,format='(I2.2)')+"_bolo"+string(jj,format='(I2.2)')+".ps",/encapsulated,bits=16,/color
-                loadct,39
-                !P.MULTI=[0,1,2]
-                plot,first_sky[jj,lb:ub]
-                oplot,bgps.ac_bolos[jj,lb:ub],color=250
-                oplot,new_astro[jj,lb:ub],color=50
-                oplot,bgps.astrosignal[jj,lb:ub],color=200
-                legend,['ac_bolos','first_sky','new_astro','astrosignal'],linestyle=[0,0,0,0],color=[250,0,50,200],/right,/top ;,/right
-                plot,atmos_remainder[jj,lb:ub],yrange=[-1,3],/ys,title="bolo "+string(jj,format='(I2.2)')+" scan "+string(kk,format='(I3.3)')
-                oplot,new_astro[jj,lb:ub],color=50
-                oplot,pca_atmo[jj,lb:ub],color=250
-                oplot,bgps.astrosignal[jj,lb:ub],color=200
-                oplot,bgps.noise[jj,lb:ub],color=175
-                legend,['pca_atmo','atmos_remainder','noise'],color=[250,0,175],/right,/top,linestyle=[0,0,0] ;,/right
-                device,/close_file
+        !p.charsize=1
+        if n_elements(plot_bolos) eq 0 then plot_bolos=[0,1,2,3]
+        print,"Plotting scans ",string(plot_all_timestreams,/print)," and bolos ",string(plot_bolos,/print)
+        for kk=0,n_elements(plot_all_timestreams)-1 do begin 
+            tsnum = plot_all_timestreams[kk]
+            lb = bgps.scans_info[0,tsnum]
+            ub = bgps.scans_info[1,tsnum]
+            for jj=0,n_e(plot_bolos)-1 do begin
+                bp = plot_bolos[jj]
+                if total(finite(first_sky[bp,lb:ub])) gt 0 then begin
+                    device,filename=mapstr.outmap+"timestream"+string(tsnum,format='(I3.3)')+"_plots_"+string(i,format='(I2.2)')+"_bolo"+string(bp,format='(I2.2)')+".ps",/encapsulated,bits=16,/color
+                    loadct,39,/silent
+                    !P.MULTI=[0,1,2]
+                    minmaxarr = [first_sky[bp,lb:ub],new_astro[bp,lb:ub],bgps.astrosignal[bp,lb:ub]]
+                    if keyword_set(sim_input_ts) then minmaxarr = [minmaxarr,sim_input_ts[bp,lb:ub]] 
+                    ymin=min(minmaxarr,/nan)
+                    ymax=max(minmaxarr,/nan)
+                    plot,first_sky[bp,lb:ub],yrange=[ymin,ymax],ystyle=1,xstyle=1,thick=1.2
+                    oplot,new_astro[bp,lb:ub],color=50,thick=1.2
+                    oplot,bgps.astrosignal[bp,lb:ub],color=200,thick=0.8
+                    if keyword_set(sim_input_ts) then oplot,sim_input_ts[bp,lb:ub],thick=2
+                    ; really unnecessary because mean != 0 ;oplot,scalebolos[bp,lb:ub],color=75,thick=0.5
+                    ;oplot,astrosignal_before[bp,lb:ub],color=225
+                    legend,['first_sky','new_astro','astrosignal'],linestyle=[0,0,0],color=[0,50,200],charsize=0.5,position=[0.01,0.55],/normal ;,/right,/top
+                    minmaxarr1 = [bgps.noise[bp,lb:ub],atmos_remainder[bp,lb:ub],new_astro[bp,lb:ub],bgps.astrosignal[bp,lb:ub]]
+                    if keyword_set(sim_input_ts) then minmaxarr1 = [minmaxarr1,sim_input_ts[bp,lb:ub]] 
+                    ymin1=max([min(minmaxarr1,/nan),ymin],/nan)
+                    ymax1=min([max(minmaxarr1,/nan),ymax],/nan)
+                    plot,atmos_remainder[bp,lb:ub],yrange=[ymin1,ymax1],ystyle=1,title="bolo "+string(bp,format='(I2.2)')+" scan "+string(tsnum,format='(I3.3)')+" iter "+string(i,format='(I2.2)'),xstyle=1,thick=0.4
+                    if niter[i] gt 0 then oplot,pca_atmo[bp,lb:ub],color=250,thick=0.5
+                    if ~keyword_set(no_polysub) then oplot,polymodel[bp,lb:ub],color=175,linestyle=1 ,thick=0.8
+                    if n_elements(expmodel) gt 1 then oplot,expmodel[bp,lb:ub],color=150,linestyle=2 ,thick=0.8
+                    oplot,bgps.astrosignal[bp,lb:ub],color=200,thick=1.2
+                    oplot,bgps.noise[bp,lb:ub],color=100,thick=0.9
+                    oplot,new_astro[bp,lb:ub],color=50,thick=0.8
+                    if keyword_set(sim_input_ts) then oplot,sim_input_ts[bp,lb:ub],thick=2
+                    ;oplot,astrosignal_before[bp,lb:ub],color=225
+                    legend,['atmos_remainder','pca_atmo','polymodel','expmodel','noise'],color=[0,250,175,150,100],linestyle=[0,0,1,2,0],charsize=0.5,position=[0.8,0.55],/normal ;,/right,/top
+                    device,/close_file
+                    !p.multi[*] = 0
+                endif
             endfor
         endfor
         set_plot,'x'
