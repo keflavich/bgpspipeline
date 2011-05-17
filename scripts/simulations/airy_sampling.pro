@@ -6,6 +6,7 @@ for ii=0,0 do begin
 
   signal_to_noise = snlist[ii]
 
+  message,"Shouldn't this use psf_airy since it's called airy_sampling?"
   psf=psf_gaussian(npix=160*6,fwhm=31.2/7.2*6.0,ndim=2) 
   fakemap = psf/max(psf) + randomn(seed,size(psf,/dim)) / signal_to_noise
   hdr=['SIMPLE  = T','BITPIX  = -32','NAXIS   = 2','NAXIS1  = 960','NAXIS2  = 960','CDELT1  = 0.00033333','CDELT2  = 0.00033333','CRPIX1  = 480','CRPIX2  = 480','CRVAL1  = 0.0','CRVAL2  = 0.0','CTYPE1  = GLON-CAR','CTYPE2  = GLAT-CAR','END']

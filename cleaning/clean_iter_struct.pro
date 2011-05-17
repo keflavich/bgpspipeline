@@ -130,14 +130,14 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
                     ymax1=min([max(minmaxarr1,/nan),ymax],/nan)
                     plot,atmos_remainder[bp,lb:ub],yrange=[ymin1,ymax1],ystyle=1,title="bolo "+string(bp,format='(I2.2)')+" scan "+string(tsnum,format='(I3.3)')+" iter "+string(i,format='(I2.2)'),xstyle=1,thick=0.4
                     if niter[i] gt 0 then oplot,pca_atmo[bp,lb:ub],color=250,thick=0.5
-                    if ~keyword_set(no_polysub) then oplot,polymodel[bp,lb:ub],color=175,linestyle=1 ,thick=0.8
+                    ; polymodel does not exist if ~keyword_set(no_polysub) then oplot,polymodel[bp,lb:ub],color=175,linestyle=1 ,thick=0.8
                     if n_elements(expmodel) gt 1 then oplot,expmodel[bp,lb:ub],color=150,linestyle=2 ,thick=0.8
                     oplot,bgps.astrosignal[bp,lb:ub],color=200,thick=1.2
                     oplot,bgps.noise[bp,lb:ub],color=100,thick=0.9
                     oplot,new_astro[bp,lb:ub],color=50,thick=0.8
                     if keyword_set(sim_input_ts) then oplot,sim_input_ts[bp,lb:ub],thick=2
                     ;oplot,astrosignal_before[bp,lb:ub],color=225
-                    legend,['atmos_remainder','pca_atmo','polymodel','expmodel','noise'],color=[0,250,175,150,100],linestyle=[0,0,1,2,0],charsize=0.5,position=[0.8,0.55],/normal ;,/right,/top
+                    legend,['atmos_remainder','pca_atmo','expmodel','noise'],color=[0,250,150,100],linestyle=[0,0,2,0],charsize=0.5,position=[0.8,0.55],/normal ;,/right,/top
                     device,/close_file
                     !p.multi[*] = 0
                 endif
