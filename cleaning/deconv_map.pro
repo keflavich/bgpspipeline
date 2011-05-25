@@ -20,7 +20,7 @@ smoothmap_small[0:mapsize[0]-1,0:mapsize[1]-1] = smoothmap
 whnfin = where(finite(map) eq 0,nnan)
 ; make NAN points average of their neighbors
 if keyword_set(smoothmap_small) then begin 
-    if nnan gt 0 map[whnfin] = smoothmap_small[whnfin]
+    if nnan gt 0 then map[whnfin] = smoothmap_small[whnfin]
 ;    whzero = where(map eq 0)
 ;    if ~(whzero[0] eq -1) then map[whzero] = smoothmap_small[whzero]
 endif else if nnan gt 0 then begin
