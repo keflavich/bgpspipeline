@@ -17,13 +17,13 @@ smoothmap_small = fltarr(xdim,ydim)
 smoothmap_small[0:mapsize[0]-1,0:mapsize[1]-1] = smoothmap
 
 ; First, get rid of nan's.
-whnfin = where(finite(map) eq 0)
+whnfin = where(finite(map) eq 0,nnan)
 ; make NAN points average of their neighbors
 if keyword_set(smoothmap_small) then begin 
-    map[whnfin] = smoothmap_small[whnfin]
+    if nnan gt 0 map[whnfin] = smoothmap_small[whnfin]
 ;    whzero = where(map eq 0)
 ;    if ~(whzero[0] eq -1) then map[whzero] = smoothmap_small[whzero]
-endif else if ~(whnfin[0] eq -1) then begin
+endif else if nnan gt 0 then begin
     map[whnfin] = 0.
     smoothmap_small = convolve(map,psf_gaussian(npix=19,ndim=2,fwhm=2.0,/norm)) ; note different kernel size...
     map[whnfin] = smoothmap_small[whnfin]
