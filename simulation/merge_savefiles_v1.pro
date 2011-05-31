@@ -21,6 +21,7 @@ pro merge_savefiles_v1,infile1,infile2,outmap=outmap,iter0savename=iter0savename
     jd = bgps.jd
     nhitsmap = mapstr.nhitsmap
     ts = mapstr.ts
+    scale_coeffs = bgps.scale_coeffs
     restore,infile2,/verbose
     astrosignal = [[astrosignal],[bgps.astrosignal]]
     scalearr = [[scalearr],[bgps.scalearr]]
@@ -34,6 +35,7 @@ pro merge_savefiles_v1,infile1,infile2,outmap=outmap,iter0savename=iter0savename
     dec_map = [[dec_map],[bgps.dec_map]]
     rotang = [rotang,bgps.rotang]
     arrang = [[arrang],[bgps.arrang]]
+    scale_coeffs = [scale_coeffs,bgps.scale_coeffs]
     lst = [lst,bgps.lst]
     jd = [jd,bgps.jd]
     nhitsmap += mapstr.nhitsmap
@@ -81,7 +83,7 @@ pro merge_savefiles_v1,infile1,infile2,outmap=outmap,iter0savename=iter0savename
         var2d:var2d,$
         weight: weight,$
         n_obs: 2, $
-        scale_coeffs: bgps.scale_coeffs, $
+        scale_coeffs: scale_coeffs, $
         scalearr: scalearr, $
         badscans: -1, $
         scanspeed: bgps.scanspeed, $
