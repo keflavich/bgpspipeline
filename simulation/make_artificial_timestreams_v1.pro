@@ -67,23 +67,34 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
     if n_elements(start_position) eq 0 then begin
         x0 = array_halfwidth_pix
         y0 = array_halfwidth_pix
-        scanlen_pix = abs( (mapsize[0]-2*x0)/cos(scan_angle*!dtor) )
-        scanheight_pix = (scanlen_pix*sin(scan_angle*!dtor))
         sample_spacing = (scanspeed*scanrate)/pixsize
+        if scan_angle le 45 then begin
+          scanlength_pix = sqrt( (mapsize[0]-2*x0)^2 + ( (mapsize[0]-2*x0)*tan(scan_angle*!dtor) )^2 ) 
+          scanxlen_pix = scanlength_pix*cos(scan_angle*!dtor)
+          scanylen_pix = scanlength_pix*sin(scan_angle*!dtor)
+          nsamples = floor( scanlength_pix / sample_spacing )
+          nscans   = floor( (mapsize[1] - scanylen_pix - 2*y0 ) / (2*stepsize/pixsize) )
+          step_direction = "y"
+        endif else begin
+          scanlength_pix = sqrt( (mapsize[1]-2*y0)^2 + ( (mapsize[1]-2*y0)/tan(scan_angle*!dtor) )^2 ) 
+          scanxlen_pix = scanlength_pix*cos(scan_angle*!dtor)
+          scanylen_pix = scanlength_pix*sin(scan_angle*!dtor)
+          nsamples = floor( scanlength_pix / sample_spacing )
+          nscans   = floor( (mapsize[0] - scanxlen_pix - 2*x0 ) / (2*stepsize/pixsize) )
         nsamples = floor( scanlen_pix / sample_spacing )
         nscans   = floor( (mapsize[1] - scanheight_pix - 2*y0 ) / (2*stepsize/pixsize) )
+        if nscans lt 1 then message,"Warning/ERROR: Too few scans."
         print," with ",nsamples," samples per scan and ",nscans," scans"
-        if nscans le 2 then message,"Warning/ERROR: Too few scans."
         xarr = findgen(nsamples) * cos(scan_angle*!dtor) * sample_spacing + x0
         yarr = findgen(nsamples) * sin(scan_angle*!dtor) * sample_spacing + y0
         scans_info = [0,nsamples-1]
         for ii=1,nscans-1 do begin 
             if ii mod 2 eq 0 then begin
-                xarr = [xarr,findgen(nsamples) * cos(scan_angle*!dtor) * sample_spacing + x0]
-                yarr = [yarr,findgen(nsamples) * sin(scan_angle*!dtor) * sample_spacing + 2*stepsize/pixsize*ii + y0]
+                xarr = [xarr,findgen(nsamples) * cos(scan_angle*!dtor) * sample_spacing + 2*stepsize/pixsize*ii*(step_direction eq "x") + x0]
+                yarr = [yarr,findgen(nsamples) * sin(scan_angle*!dtor) * sample_spacing + 2*stepsize/pixsize*ii*(step_direction eq "y") + y0]
             endif else begin
-                xarr = [xarr,(nsamples-1-findgen(nsamples)) * cos(scan_angle*!dtor) * sample_spacing + x0]
-                yarr = [yarr,(nsamples-1-findgen(nsamples)) * sin(scan_angle*!dtor) * sample_spacing + 2*stepsize/pixsize*ii + y0]
+                xarr = [xarr,(nsamples-1-findgen(nsamples)) * cos(scan_angle*!dtor) * sample_spacing + 2*stepsize/pixsize*ii*(step_direction eq "x") + x0]
+                yarr = [yarr,(nsamples-1-findgen(nsamples)) * sin(scan_angle*!dtor) * sample_spacing + 2*stepsize/pixsize*ii*(step_direction eq "y") + y0]
             endelse
             scans_info = [[scans_info],[nsamples*ii,nsamples*(ii+1)-1]]
         endfor
