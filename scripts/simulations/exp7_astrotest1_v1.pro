@@ -60,7 +60,7 @@ for kk = 0,3 do begin
         "_atmotest_amp"+string(1.0,format='(E07.1)')+"_sky"+string(ii,format='(I02)')+$
         "_seed"+string(jj,format="(I02)")+"_peak"+string(peakamp,format="(F06.2)")+"_nosmooth"
       make_artificial_timestreams_v1,fakemap,hdr,ts=ts,astrosignal=astrosignal,bgps=bgps,mapstr=mapstr,$
-        scan_angle=00,needed_once_struct=needed_once_struct,$
+        scan_angle=00,$
         outmap=outmap_prefix+"_scandir1",$
         /dosave, array_angle=array_angle,stepsize=120,sample_interval=0.02
       fake_atmosphere_ds1 = make_atmosphere(bgps.ac_bolos,samplerate=bgps.sample_interval,$
@@ -68,13 +68,12 @@ for kk = 0,3 do begin
       input_ts_ds1 = bgps.ac_bolos
       bgps.ac_bolos += fake_atmosphere_ds1
       save,bgps,mapstr,filename=mapstr.outmap+"_preiter.sav",/verbose
-      save,needed_once_struct,filename=mapstr.outmap+"_neededonce.sav",/verbose
       mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
         fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
         fits_timestream=0,return_reconv=1,sim_input_ts=input_ts_ds1,/rescale
 
       make_artificial_timestreams_v1,fakemap,hdr,ts=ts,astrosignal=astrosignal,bgps=bgps,mapstr=mapstr,$
-        scan_angle=90,needed_once_struct=needed_once_struct,$
+        scan_angle=90,$
         outmap=outmap_prefix+"_scandir2",$
         /dosave, array_angle=array_angle,stepsize=120,sample_interval=0.02
       fake_atmosphere_ds1 = make_atmosphere(bgps.ac_bolos,samplerate=bgps.sample_interval,$
@@ -82,12 +81,11 @@ for kk = 0,3 do begin
       input_ts_ds1 = bgps.ac_bolos
       bgps.ac_bolos += fake_atmosphere_ds1
       save,bgps,mapstr,filename=mapstr.outmap+"_preiter.sav",/verbose
-      save,needed_once_struct,filename=mapstr.outmap+"_neededonce.sav",/verbose
       mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
         fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
         fits_timestream=0,return_reconv=1,sim_input_ts=input_ts_ds1,/rescale
     
-      merge_savefiles,outmap_prefix+"_scandir1_preiter.sav",outmap_prefix+"_scandir2_preiter.sav",outmap=outmap_prefix,bgps=bgps,mapstr=mapstr,needed_once_struct=needed_once_struct
+      merge_savefiles_v1,outmap_prefix+"_scandir1_preiter.sav",outmap_prefix+"_scandir2_preiter.sav",outmap=outmap_prefix,bgps=bgps,mapstr=mapstr
     
       mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
         fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
@@ -118,7 +116,7 @@ for kk = 0,3 do begin
         "_seed"+string(jj,format="(I02)")+"_peak"+string(peakamp,format="(F06.2)")+"_smooth"
 
       make_artificial_timestreams_v1,fakemap,hdr,ts=ts,astrosignal=astrosignal,bgps=bgps,mapstr=mapstr,$
-        scan_angle=00,needed_once_struct=needed_once_struct,$
+        scan_angle=00,$
         outmap=outmap_prefix+"_scandir1",$
         /dosave, array_angle=array_angle,stepsize=120,sample_interval=0.02
       fake_atmosphere_ds1 = make_atmosphere(bgps.ac_bolos,samplerate=bgps.sample_interval,$
@@ -126,10 +124,9 @@ for kk = 0,3 do begin
       input_ts_ds1 = bgps.ac_bolos
       bgps.ac_bolos += fake_atmosphere_ds1
       save,bgps,mapstr,filename=mapstr.outmap+"_preiter.sav",/verbose
-      save,needed_once_struct,filename=mapstr.outmap+"_neededonce.sav",/verbose
 
       make_artificial_timestreams_v1,fakemap,hdr,ts=ts,astrosignal=astrosignal,bgps=bgps,mapstr=mapstr,$
-        scan_angle=90,needed_once_struct=needed_once_struct,$
+        scan_angle=90,$
         outmap=outmap_prefix+"_scandir2",$
         /dosave, array_angle=array_angle,stepsize=120,sample_interval=0.02
       fake_atmosphere_ds1 = make_atmosphere(bgps.ac_bolos,samplerate=bgps.sample_interval,$
@@ -137,9 +134,8 @@ for kk = 0,3 do begin
       input_ts_ds1 = bgps.ac_bolos
       bgps.ac_bolos += fake_atmosphere_ds1
       save,bgps,mapstr,filename=mapstr.outmap+"_preiter.sav",/verbose
-      save,needed_once_struct,filename=mapstr.outmap+"_neededonce.sav",/verbose
 
-      merge_savefiles,outmap_prefix+"_scandir1_preiter.sav",outmap_prefix+"_scandir2_preiter.sav",outmap=outmap_prefix,bgps=bgps,mapstr=mapstr,needed_once_struct=needed_once_struct
+      merge_savefiles_v1,outmap_prefix+"_scandir1_preiter.sav",outmap_prefix+"_scandir2_preiter.sav",outmap=outmap_prefix,bgps=bgps,mapstr=mapstr
     
       mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
         fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
