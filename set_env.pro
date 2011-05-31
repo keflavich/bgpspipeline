@@ -36,6 +36,14 @@ pro set_env,compy=compy
         setenv,'WORKINGDIR2=/Users/adam/work/bolocam/adam_work'
         setenv,'SLICED=/Users/adam/work/bolocam/scratch/sliced'
         setenv,'SLICED_POLY=/Users/adam/work/bolocam/scratch/sliced'
+        setenv,'RPCDIR=/not/set' 
+    endif else if compy eq 'arlsrv2' then begin
+        setenv,'PIPELINE_ROOT=/arlstorage/home/student/ginsbura/bgpspipeline_svn/bgps_pipeline/'
+        setenv,'WORKINGDIR=/arlstorage/data/student/ginsbura'
+        setenv,'WORKINGDIR2=/arlstorage/data/student/ginsbura'
+        setenv,'SLICED=/arlstorage/data/student/ginsbura/BGPS/sliced'
+        setenv,'SLICED_POLY=/arlstorage/data/student/ginsbura/BGPS/sliced'
+        setenv,'REFDIR=/not/set'
         setenv,'RPCDIR=/not/set'
     endif else begin
         setenv,'PIPELINE_ROOT=/Users/adam/work/bolocam/bgps_pipeline'
