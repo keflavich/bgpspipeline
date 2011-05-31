@@ -71,7 +71,7 @@ pro merge_savefiles_v1,infile1,infile2,outmap=outmap,iter0savename=iter0savename
         ;mapped_astrosignal: ac_bolos*0.0,$
         atmosphere: astrosignal*0.0,$
         atmo_one: astrosignal,$
-        glitchloc: 0,$ ; as of 1/27/2011, removed to save memory byte(flags*0), $
+        glitchloc: byte(astrosignal*0),$ ; as of 1/27/2011, removed to save memory byte(flags*0), $
         sample_interval: bgps.sample_interval,$
         flags: byte(astrosignal*0),$
         bolo_params: bgps.bolo_params,$
