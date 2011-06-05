@@ -21,7 +21,8 @@ pro clean_iter_struct,bgps,mapstr,niter=niter,$
     boloflat=boloflat,fits_timestream=fits_timestream,fits_nopca=fits_nopca,fits_psd=fits_psd,i=i,$
     pca_atmo=pca_atmo,new_astro=new_astro,first_sky=first_sky,atmos_remainder=atmos_remainder,astrosignal_premap=astrosignal_premap,$
     minbaseline=minbaseline,median_sky=median_sky,fits_remainder=fits_remainder,$
-    outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,plot_all_timestreams=plot_all_timestreams,_extra=_extra
+    outmap=outmap,do_weight=do_weight,no_polysub=no_polysub,plot_all_timestreams=plot_all_timestreams,$
+    plot_bolos=plot_bolos,_extra=_extra
 
     if n_e(do_weight) eq 0 then do_weight=1
     if n_e(fits_timestream) eq 0 and bgps.n_obs eq 1 then fits_timestream=1 else fits_timestream=0
