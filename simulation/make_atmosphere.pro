@@ -1,11 +1,13 @@
-function make_atmosphere, timestream, amplitude=amplitude, $
+function make_atmosphere, timestream, bolo_params, amplitude=amplitude, $
   samplerate=samplerate, relative_scale_rms=relative_scale_rms,$
   individual_bolonoise_rms=individual_bolonoise_rms,dofilter=dofilter,$
-  relative_scales=relative_scales,fix_bolo_0=fix_bolo_0
+  relative_scales=relative_scales,offset_plane=offset_plane,fix_bolo_0=fix_bolo_0,seed=seed
 
     ; distribution: y = 10.0^6*x^(-1.78)
     ; N(x) = { 10.0^6*x^(-1.78)   | x < 0.4 Hz
     ;        { 10.0^4*x^(-0.57)   | x > 0.4 Hz
+
+    if n_elements(seed) eq 0 then seed=systime(/sec)
 
     ds1rate = 0.02
     if n_elements(samplerate) eq 0 then samplerate = 0.1 ; bolocam defaults
@@ -20,8 +22,11 @@ function make_atmosphere, timestream, amplitude=amplitude, $
     ds1sz = [sz[0],sz[1]*dsfactor]
     insize = ds1sz[1]
     outsize = long(ds1sz[1]) / long(dsfactor)
-    gnoise = randomn(seed,insize,/normal) 
-    gnoise1 = randomn(seed+1,insize,/normal) 
+    ; rescale the noise - should have a mean of 1, not 0, and std determine in pyflagger (see below, 12/13/11)
+    gnoise = randomn(seed+0,insize,/normal)*1.20 + 1.0 
+    gnoise1 = randomn(seed+1,insize,/normal)*1.20 + 1.0
+    randsign1 = sign(randomn(seed+2,insize,/normal))
+    randsign2 = sign(randomn(seed+3,insize,/normal))
     ;xarr = (findgen(insize/2)) / (insize) / ds1rate / 2.0
     freq = fft_mkfreq(ds1rate, insize)
     ;pspec = 1e4*xarr^(-1.78) * (xarr lt 0.4) + 3e4*xarr^(-0.57) * (xarr ge 0.4)
@@ -35,7 +40,20 @@ function make_atmosphere, timestream, amplitude=amplitude, $
     ; there is a very high delta function in the timestream?.... hmmmm
     ; either way, the point is that the amplitude should be reset, not used as-is
     ; you can reproduct this using pyflagger with f.broken_powerfit(defaultplot=True)
-    pspec = 1e4*abs(freq^(-2.0)) * (abs(freq) lt 2) + 2.5e3*(abs(freq) ge 2)
+    ;pspec = 1e4*abs(freq^(-2.0)) * (abs(freq) lt 2) + 2.5e3*(abs(freq) ge 2)
+    ; 12/13/2011  pyflagger 050706_o53_raw_ds2.nc_indiv13pca_postiter.sav --compute_powerfit
+    pspec1 = 10^12.21*abs(freq)^1.04 * (abs(freq) lt 0.02)
+    pspec2 = 10^5.70*abs(freq)^(-2.52) * (abs(freq) lt 2) * (abs(freq) gt 0.02)
+    pspec3 = 10^5.34*abs(freq)^(-1.30)*(abs(freq) ge 2)
+    pspec = pspec1+pspec2+pspec3
+    ; the UNDO below only applies to astrosignal, NOT ac_bolos
+    ; UNDO! On 12/13/2011, modified to be log-linear (i.e. an exponential) since there was apparently too much high-frequency noise
+    ; UNDO! it's not clear that this will fix that issue, though...
+    ; UNDO! I now use this pyflagger command in l=30:
+    ; UNDO! pyflagger 050706_o53_raw_ds2.nc_indiv13pca_postiter.sav --compute_expfit
+    ; UNDO! to compute the best fit...
+    ; UNDO! THERE IS STILL A DISCREPANCY AT LOW FREQUENCIES!  ac_bolos is high-pass filtered!
+    ; UNDO! pspec = 1e5*10^(-0.5*abs(freq))*(abs(freq) lt 2.5) + 5623.4*(abs(freq) ge 2)
     pspec[0] = pspec[1] ; DC component is non-zero, but also not infinite
 
     ;realvals = fltarr(insize)
@@ -44,7 +62,9 @@ function make_atmosphere, timestream, amplitude=amplitude, $
     ;complexvals_old = complex(sqrt(realvals)*gnoise1,gnoise*sqrt(realvals))
     ;atmold = fft(complexvals_old,-1)
 
-    complexvals = complex(sqrt(pspec)*gnoise1,gnoise*sqrt(pspec))
+    ; the abs() means that the noise no longer follows a normal distribution perfectly
+    ; HOWEVER, I empirically showed that it matches the data reasonably
+    complexvals = complex(sqrt(pspec*abs(gnoise1))*randsign1,sqrt(abs(gnoise)*pspec)*randsign2)
 
     ; filter noise in the same way that the data is filtered
     if dsfactor gt 1 and dofilter then begin
@@ -70,7 +90,29 @@ function make_atmosphere, timestream, amplitude=amplitude, $
     if fix_bolo_0 then relative_scales[0] = 1.0
     
     atmosphere = relative_scales # one_atmosphere 
-    if n_elements(amplitude) eq 1 then atmosphere = atmosphere / mean(atmosphere) * amplitude
+    if n_elements(amplitude) eq 1 then atmosphere = atmosphere / (max(atmosphere) - min(atmosphere)) * amplitude
+
+    IF keyword_set(offset_plane) THEN BEGIN
+      nbolos = sz[0]
+      offset = fltarr(sz)
+      xbolos = bolo_params[2,*] * cos( (bolo_params[1,*] / 360.) * 2*!PI ) ; define the x loc for each bolo
+      ybolos = bolo_params[2,*] * sin( (bolo_params[1,*] / 360.) * 2*!PI ) ; define the x loc for each bolo
+            
+      ; generate the fit parameters for each step in the timestream
+      xco = amplitude*randomn(seed+4, sz[1]) ; set the x-slopes
+      yco = amplitude*randomn(seed+5, sz[1]) ; set the y-slopes
+      
+      FOR i=0, sz[1]-1 DO BEGIN
+        
+        ; for each step in the timestream, calculate the offset for each bolometer
+        z = plane2d(xbolos, ybolos, [0,xco[i], 0, yco[i], 0])
+        offset[*,i] = z
+
+      ENDFOR
+
+      atmosphere += offset
+
+    ENDIF ; offset_plane
 
     if individual_bolonoise_rms gt 0 then begin
       bnoise = randomn(seed+3,sz,/normal)*individual_bolonoise_rms 
