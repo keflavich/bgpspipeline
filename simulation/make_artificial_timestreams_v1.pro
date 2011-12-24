@@ -34,6 +34,8 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
     mapsize = size(map,/dim)
     map = float(map)
 
+    message,"Creating map of size "+string(mapsize,format='(I4,"x",I4)',/print),/info
+
     ds1rate = 0.02
     dsfactor = sample_interval/ds1rate
     if dsfactor gt 1 and keyword_set(dofilter) then begin
@@ -120,6 +122,11 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
     time_e,t1
 
     ts = round(xind) + mapsize[0] * round(yind)
+    if step_direction eq "y" then begin
+      ts_scanfind = round(xind) + mapsize[0] * round(yind)
+    endif else begin
+      ts_scanfind = round(yind) + mapsize[1] * round(xind)
+    endelse
 
     if n_elements(badbolos) gt 0 then begin
         bolo_params[2,badbolos] = 0
@@ -131,8 +138,10 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
     nhitsmap = finite(map)*0
     nhitsmap[min(ts):max(ts)] = nhitsmap[min(ts):max(ts)] + histogram(ts)  
 
-    if cdelt_out ne pixsize then begin
-      pixsize_ratio = pixsize / cdelt_out
+    pixsize_ratio = pixsize / cdelt_out
+    ; apparently 7.2 != 7.2, so I need to impose some tolerance here
+    if abs(pixsize_ratio - 1) gt 1e-4 then begin
+      print,"Reshaping map to match pixel sizes.  pixsize_ratio=",pixsize_ratio
       new_header = header
       sxaddpar,new_header,'CDELT1',-1*cdelt_out
       sxaddpar,new_header,'CDELT2',cdelt_out
@@ -153,6 +162,11 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
       extast,header,astr,header_type
       ad2xy,ra_all,dec_all,astr,xind,yind
       ts = round(xind) + mapsize[0] * round(yind)
+      if step_direction eq "y" then begin
+        ts_scanfind = round(xind) + mapsize[0] * round(yind)
+      endif else begin
+        ts_scanfind = round(yind) + mapsize[1] * round(xind)
+      endelse
     endif
 
     if dofilter then begin
@@ -174,20 +188,29 @@ pro make_artificial_timestreams_v1, map, header, bgps=bgps, mapstr=mapstr, steps
         data_out_ft = fft(data_out,-1)
         astrosignal = float(fft(data_out_ft * (filt_ds_deconv##(replicate(1.d,nbolos))), 1))
         ts = congrid(ts,nbolos,outsize,interp=0)
+        ts_scanfind = congrid(ts_scanfind,nbolos,outsize,interp=0)
         ra_all = congrid(ra_all,nbolos,outsize,interp=0)
         dec_all = congrid(dec_all,nbolos,outsize,interp=0)
         xarr = congrid(xarr,outsize,interp=0)
         yarr = congrid(yarr,outsize,interp=0)
         ra = congrid(ra,outsize,interp=0)
         dec = congrid(dec,outsize,interp=0)
-        scans_info = [ceil(scans_info[0,*]/5),floor(scans_info[1,*]/5-1)]
-        si1 = [where( (ts[0,1:outsize-1]-ts[0,0:outsize-2]) gt ceil(scanspeed*sample_interval/pixsize), ns ), outsize-1]
+        scans_info = [ceil(scans_info[0,*]/5),floor(scans_info[1,*]/5-1),scans_info[2,*]]
+        si1 = [where( (ts_scanfind[0,1:outsize-1]-ts_scanfind[0,0:outsize-2]) gt ceil(scanspeed*sample_interval/pixsize), ns ), outsize-1]
         if ns ne nscans-1 then message,'ERROR: scans improperly identified'
         si0 = [0,si1[0:nscans-2]+1]
-        scans_info = transpose([[si0],[si1]])
+        scans_info = transpose([[si0],[si1],[reform(scans_info[2,*])]])
         nhitsmap = finite(map)*0
         nhitsmap[min(ts):max(ts)] = nhitsmap[min(ts):max(ts)] + histogram(ts)  
         if scans_info[1,nscans-1] eq outsize then stop
+    endif else begin
+        if total(size(map,/dim) eq mapsize) ne 2 then message,"Error: map size does not match input and it was NOT resized"
+    endelse
+
+    nhitsmap = finite(map)*0
+    nhitsmap[min(ts):max(ts)] = nhitsmap[min(ts):max(ts)] + histogram(ts)  
+
+    if total(size(nhitsmap,/dim) eq size(map,/dim)) ne 2 then message,"Error: nhitsmap is invalid."
     endif
 
     mapstr = {$
