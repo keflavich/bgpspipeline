@@ -1,4 +1,4 @@
-pro rdhd, hd, structure = structure, cmat = cmat, ms = ms, fast = fast, $
+pro rdhd, hd_in, structure = structure, cmat = cmat, ms = ms, fast = fast, $
           vector = vector, full = full
 ;+
 ; NAME:
@@ -23,7 +23,7 @@ pro rdhd, hd, structure = structure, cmat = cmat, ms = ms, fast = fast, $
 ;   VECTOR - Set this keyword to indicate a single spectrum is being
 ;              processed.  RDHD was originally designed for DATA
 ;              cubes.
-;   FULL - Calculate the coordinate matrices with this keyword set.
+;   FULL - Calculate the coorqqdinate matrices with this keyword set.
 ; OUTPUTS:
 ;
 ;
@@ -69,6 +69,9 @@ pro rdhd, hd, structure = structure, cmat = cmat, ms = ms, fast = fast, $
 ;                <eros@cosmic>
 ;
 ;-
+
+
+  hd = degls(hd_in)
 
   if keyword_set(vector) then begin
     rdhd_sp, hd, structure = structure, ms = ms
@@ -156,13 +159,16 @@ pro rdhd, hd, structure = structure, cmat = cmat, ms = ms, fast = fast, $
       endelse
     endelse
 
-    getrot, hd, rotation, cdv
+    getrot, hd, rotation, cdv, /silent
 
     if naxis3 gt 1 then begin
 ; First, regenerate the astrometry structure to include the THIRD
 ; DIMENSION!!!
+      cd3 = sxpar(hd, 'CDELT3')
+      if cd3 eq 0.0 then cd3 = sxpar(hd, 'CD3_3')*$
+                               ((strcompress(sxpar(hd, 'CUNIT3'), /rem) eq 'km/s') ? 1d3 : 1)
       astrom2 = {CD:astrom.cd, $
-                 CDELT:[astrom.cdelt, sxpar(hd, 'CDELT3')], $
+                 CDELT:[astrom.cdelt, cd3], $
                  CRPIX:[astrom.crpix, sxpar(hd, 'CRPIX3')], $
                  CRVAL:[astrom.crval, sxpar(hd, 'CRVAL3')], $
                  CTYPE:[astrom.ctype, sxpar(hd, 'CTYPE3')], $
@@ -172,7 +178,7 @@ pro rdhd, hd, structure = structure, cmat = cmat, ms = ms, fast = fast, $
       astrom = astrom2
       velvec = (findgen(naxis3)+1-astrom.crpix[2])*$
                astrom.cdelt[2]+astrom.crval[2]
-      cdv = [cdv, sxpar(hd, 'CDELT3')]
+      cdv = [cdv, cd3]
     endif else begin
       velvec = 0 
       dim = 2

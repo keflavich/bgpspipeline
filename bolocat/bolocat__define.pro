@@ -17,8 +17,6 @@ pro bolocat__define
        dec:0d0, $ ; Declination (by header astrometry)
        glon:0d0, $ ; Galactic Longitude 
        glat:0d0, $ ; Galactic Latitude
-       xmax:0.0, $ ; X-location of max in cloud
-       ymax:0.0, $ ; Y-location of max in cloud
        glon_max:0d0, $ ; Gal .long of max in cloud
        glat_max:0d0, $ ; Gal lat of max in cloud
        flux:0d0, $ ; Total flux in the object. Requires BUNIT, BMAJ and
@@ -33,11 +31,14 @@ pro bolocat__define
        momypix_err:0.0, $ ; error in 2nd moment, y-direction
        mommajpix:0.0, $ ; 2nd Moment along the major axis of the object
        momminpix:0.0, $ ; 2nd moment along the minor axis of the object
+       mommaj_as:0.0, $ ; 2nd Moment along the major axis of the object
+       mommin_as:0.0, $ ; 2nd moment along the minor axis of the object
        posang:0.0, $ ; Position angle IN THE ORIGINAL DATA!
        rad_pix:0.0, $ ; Radius measured in pixels 
        rad_pix_nodc:0.0, $ ; Radius measured in pixels, no deconvolution
        rad_as:0.0, $  ; Radius in arcseconds
        rad_as_nodc:0.0, $ ; Radius in arcsec, no deconvolution
+       concen:0.0, $ ; Concentration parameter
        rms:0.0, $ ; Median error value
        max:0.0, $ ; Maximum data value over all included pixels.
        ppbeam:1.0, $ ; Pixels per beam used in flux calculation
@@ -52,14 +53,27 @@ pro bolocat__define
        pk_s2n:0.0, $ ; Peak S/N value
        mn_s2n:0.0, $ ; Median S/N value
        flux_obj:0.0, $ ; Flux of object determined in an aperture based on its derived size.  
-         flux_obj_err:0.0, $
-         flux_40:0.0, $         ; Flux in 40" aperture
-         eflux_40:0.0, $
-         flux_80:0.0, $         ; Flux in 80" aperture
-         eflux_80:0.0, $
-         flux_120:0.0, $        ; Flux in 120" aperture
-         eflux_120:0.0 $
-
+       flux_obj_err:0.0, $
+       flux_40:0.0, $           ; Flux in 40" aperture
+       eflux_40:0.0, $
+       flux_40_nobg:0.0, $           ; Flux in 40" aperture w/no bgs
+       eflux_40_nobg:0.0, $
+       flux_80:0.0, $           ; Flux in 80" aperture
+       eflux_80:0.0, $
+       flux_80_nobg:0.0, $           ; Flux in 80" aperture
+       eflux_80_nobg:0.0, $
+       flux_120:0.0, $          ; Flux in 120" aperture
+       eflux_120:0.0, $
+       flux_120_nobg:0.0, $          ; Flux in 120" aperture
+       eflux_120_nobg:0.0, $
+       gauss_amp:0.0, $  ; Gaussian amplitude
+       gauss_maj:0.0, $  ; Gaussian fit major axis
+       gauss_min:0.0, $  ; Gaussian fit minor axis
+       gauss_xc:0.0, $ ; Gaussian fit x centroid
+       gauss_yc:0.0, $ ; Gaussian fit y centroid
+       gauss_pa:0.0, $ ; Gaussian fit position angle
+       gauss_flux:0.0, $; Gaussian fit integrated flux density
+       gauss_chisq:0.0 $ ; Chisq of gaussian fit
          }
 
          return

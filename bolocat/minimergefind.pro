@@ -31,9 +31,10 @@ function minimergefind, minicube, primary_kernel, kernels $
 ; Begin refinement
 
   blankedcube = minicube*cloudmask
+  lastsolo = minvalue
   repeat begin
     testvalue = sqrt(minvalue*maxvalue)
-    if minvalue lt 0 then testvalue = (minvalue+maxvalue)*0.5
+    if minvalue lt 0 or testvalue ne testvalue then testvalue = (minvalue+maxvalue)*0.5
     l = label_region(blankedcube ge testvalue, all_neighbors = all_neighbors, /ulong)
     primary_asgn = l[primary_kernel]
     asgns = l[samecloud]
@@ -41,8 +42,9 @@ function minimergefind, minicube, primary_kernel, kernels $
     if ct eq 1 then begin
       maxvalue = testvalue 
       lastsolo = testvalue
-    endif else minvalue = testvalue
-
+    endif else begin
+      minvalue = testvalue
+    endelse
   endrep until abs(maxvalue-minvalue) lt (tolerance*mld) > 1e-6
 ; This finds a value not necessarily in the data cube.  We need to
 ; find the lowest contour _IN THE CLUMP_ that lassos only the clump.  Alas

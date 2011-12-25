@@ -75,9 +75,11 @@ for oo=0,0 do begin ; relative sensitivity RMS
 
           array_angle = 45
 
-          outmap_prefix = outdir+'exp12_ds2_astrosky_arrang'+string(array_angle,format='(I02)')+ $
+          filename_prefix = 'exp12_v1_ds2_astrosky_arrang'+string(array_angle,format='(I02)')+ $
             "_atmotest_amp"+string(atmo_amplitudes[nn],format='(E07.1)')+"_sky"+string(ii,format='(I02)')+$
             "_seed"+string(jj,format="(I02)")+"_peak"+string(peakamp,format="(F06.2)")+"_smooth"
+
+          outmap_prefix = outdir+filename_prefix
 
           ;fakemap = fakesky*expweight
           ;psd,fakesky_sm,wavnumsm,smbefore,/view
@@ -96,6 +98,7 @@ for oo=0,0 do begin ; relative sensitivity RMS
               amplitude=atmo_amplitudes[nn],individual_bolonoise_rms=noise,relative_scale_rms=rel_rms[oo],relative_scales=relative_scales_ds2,seed=seed1)
             input_ts_ds2 = bgps.ac_bolos
             bgps.ac_bolos += fake_atmosphere_ds2
+            stop
             save,bgps,mapstr,needed_once_struct,filename=mapstr.outmap+"_preiter.sav",/verbose
             mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
               fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
@@ -185,6 +188,10 @@ for oo=0,0 do begin ; relative sensitivity RMS
           endfor
           printf,outf,outstr
 
+          v2dir = repstr(outdir,"_v1","")
+          v2fn = repstr(filename_prefix,'_v1','')
+          compare_images,emptyplaceholder,prefix2=v2dir+v2fn,prefix1=outmap,suffix2="_map20.fits",suffix1="_map20.fits",$
+               output_name=outdir+"compare_exp12_v1v2",in1='v1',in2='v2',/samescale,wcsaperture=" ",cuts='0.5,1.00'
 
           time_e,t0,prtmsg='####### Ending simulation with atmo amplitude number '+string(nn)+' peak number '+string(kk)+' power law number '+string(ii)+' seed number '+string(jj)+" and rms "+string(oo)
         endfor

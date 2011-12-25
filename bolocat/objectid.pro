@@ -2,7 +2,10 @@ function objectid, data, all_neighbors = all_neighbors, $
                    minpix = minpix, CLIP = clipflag, WATERSHED = watershed, $
                    thresh = thresh, error = error_map, expand = expand, $
                    delta = delta, absdelta = absdelta, $
-                   absthresh = absthresh, absexpand = absexpand, round = round
+                   absthresh = absthresh, absexpand = absexpand, $
+                   round = round, sp_minpix = sp_minpix, $
+                   id_minpix = id_minpix, original = original
+                   
 ;+
 ; NAME:
 ;     OBJECTID
@@ -56,20 +59,26 @@ function objectid, data, all_neighbors = all_neighbors, $
 ;-
   
   if n_elements(minpix) eq 0 then minpix = 10
+  if n_elements(sp_minpix) eq 0 then sp_minpix = minpix
+  if n_elements(id_minpix) eq 0 then id_minpix = minpix
   if n_elements(thresh) eq 0 then thresh = 3
   if n_elements(expand) eq 0 then expand = 2
+
   if n_elements(delta) eq 0 then delta = 2.0
   if n_elements(round) eq 0 then round = 2
   CLIP = 1b
 
   nparam = max([n_elements(minpix), n_elements(thresh), $
-                n_elements(expand), n_elements(delta)]) 
+                n_elements(expand), n_elements(delta), n_elements(round) ]) 
   if nparam gt 1 then begin
     minpix = n_elements(minpix) eq 1 ? rebin([minpix], nparam) : minpix
+    sp_minpix = n_elements(sp_minpix) eq 1 ? rebin([sp_minpix], nparam) : sp_minpix
+    id_minpix = n_elements(id_minpix) eq 1 ? rebin([id_minpix], nparam) : id_minpix
     thresh = n_elements(thresh) eq 1 ? rebin([thresh], nparam) : thresh
     expand = n_elements(expand) eq 1 ? rebin([expand], nparam) : expand
     delta = n_elements(delta) eq 1 ? rebin([delta], nparam) : delta
     absdelta = n_elements(absdelta) eq 1 ? rebin([absdelta], nparam) : absdelta
+    round = n_elements(round) eq 1 ? rebin([round], nparam) : round
   endif
 
   sz = size(data)
@@ -78,22 +87,32 @@ function objectid, data, all_neighbors = all_neighbors, $
   if n_elements(error_map) eq 0 then $ 
     error_map = fltarr(sz[1], sz[2])+mad(data)
 
-  if keyword_set(absdelta) then begin
+  if n_elements(absthresh) gt 0 or  n_elements(absexpand) gt 0 then begin
     error_map = 1.0+fltarr(sz[1], sz[2])
-    if keyword_set(absthresh) then thresh = absthresh else thresh = mad(data)*thresh
+    if n_elements(absthresh) gt 0 then thresh = absthresh else $
+      thresh = mad(data)*thresh
 
-    if keyword_set(absexpand) then expand = absexpand else expand = mad(DatA)*expand
+    if n_elements(absexpand) gt 0 then expand = absexpand else $
+      expand = mad(DatA)*expand
   endif 
 
 ; MAP TO SIGNIFICANCE SPACE
   signif_map = data/error_map
-; STRAIGHT CONTOUR CLIP
+  bs = 0.025
+  h = histogram(signif_map, min = -10, max = 10, binsize = bs)
+  xvals = findgen(n_elements(h))*(bs)+bs/2-10
+  a = [max(h), 0, mad(signif_map)]
+  yfit = mpfitpeak(xvals, h, a, estimates = a, nterms = 3,  parinfo = pinfo)
+  mode = a[1]
+  message, 'Mode of significance map:  '+decimals(a[1], 2), /con
+;  signif_map = (signif_map - mode)
 
+; STRAIGHT CONTOUR CLIP
   if keyword_set(CLIPFLAG) then begin
     clip = signif_map gt thresh
     l = label_region(clip, all_neighbors = all_neighbors, /ulong)
     h = histogram(l, min = 1)
-    goodobj = where(h gt minpix, ct)
+    goodobj = where(h gt id_minpix, ct)
     if ct eq 0 then return, 0UL
     outmask = byte(clip*0)
     for k = 0, ct-1 do outmask[where(l eq goodobj[k]+1)] = 1b
@@ -101,7 +120,7 @@ function objectid, data, all_neighbors = all_neighbors, $
     outmask = dilate_mask(outmask, constraint = (signif_map gt expand), $
                           all_neighbors = all_neighbors)
 ; Experimental rounding of mask
-    relt = 3
+    relt = round
     elt = shift(dist(2*relt+1, 2*relt+1), relt, relt) le relt
     outmask = morph_close(outmask, elt)
     objects = label_region(outmask, all_neighbors = all_neighbors, /ulong)
@@ -115,15 +134,16 @@ function objectid, data, all_neighbors = all_neighbors, $
 
     for i = 0, n_elements(thresh)-1 do begin 
       clip = signif_map gt thresh[i]
-
-      relt = round
+      
+      relt = round[i]
       elt = shift(dist(2*relt+1, 2*relt+1), relt, relt) le relt
       clip = morph_open(clip, elt)
       l = label_region(clip, all_neighbors = all_neighbors, /ulong)
       if total(l gt 0) eq 0 then continue
       h = histogram(l, min = 1)
       
-      goodobj = where(h gt minpix[i], ct)
+      goodobj = where(h gt id_minpix[i], ct)
+      message,"In watershed decomposition, "+strcompress(ct)+" objects found above threshold "+strcompress(thresh[i]),/con
       if ct eq 0 then continue
 ; speed up here?
       outmask = byte(clip*0)
@@ -131,58 +151,78 @@ function objectid, data, all_neighbors = all_neighbors, $
       
       outmask = dilate_mask(outmask, constraint = (signif_map gt expand[i]), $
                             all_neighbors = all_neighbors)
+
       outmask = morph_close(outmask, elt)
-      
       objects = label_region(outmask, all_neighbors = all_neighbors, /ulong)
       
       l = label_region(objects, all_neighbors = all_neighbors, /ulong)
+
       if total(l gt 0) eq 0 then continue
       h = histogram(l, min = 1)
-      goodobj = where(h gt minpix[i], ct)
+      goodobj = where(h gt id_minpix[i], ct)
       if ct eq 0 then continue
 
       for k = 0, ct-1 do outmask[where(l eq goodobj[k]+1)] = 1b
       
       ind = where(outmask eq 0)
-      
-      if keyword_set(absdelta) then begin 
+      if n_elements((absdelta)) gt 0 then begin 
         masked_map = data
         masked_map[ind] = !values.f_nan
-        sigma = mad(data)
+;        sigma = mad(data)
+        sigma = 1
       endif else begin
         masked_map = signif_map
         masked_map[ind] = !values.f_nan
         sigma = 1
       endelse
+
+
+
       sz = size(masked_map)
-      
 ; Apply a small random dither to prevent peaks with exactly the same
 ; value being undiscovered.
-      dither = 1e-3*(randomn(seed, sz[1], sz[2]))
-      
+      dither = 0*(randomn(seed, sz[1], sz[2]))
       kset = alllocmax(masked_map+dither, $
                           friends = 5)
-      if keyword_set(absdelta) then d = absdelta[i] else d = delta[i]
-      
+;      kernels = kset
+      if n_elements(absdelta) gt 0 then d = absdelta[i] else d = delta[i]
       kernels = (n_elements(kernels) eq 0) ? $
                 decimate_kernels(kset, masked_map+dither, $
-                                 minpix = minpix[i], $
-                                 delta = d, sigma = sigma) : $
+                                 minpix = sp_minpix[i], $
+                                 delta = d, sigma = sigma, $
+                                 all_neighbors = all_neighbors) : $
                 [kernels, decimate_kernels(kset, masked_map+dither, $
-                                 minpix = minpix[i], $
-                                 delta = d, sigma = sigma)]
+                                 minpix = sp_minpix[i], $
+                                 delta = d, sigma = sigma, $
+                                           all_neighbors = all_neighbors)]
       mask = mask or outmask
+      help,kernels
     endfor
     if n_elements(kernels) eq 0 then return, 0UL
     kernels = kernels[uniq(kernels, sort(kernels))]
     if total(mask) gt 0 then begin
       masked_map = make_array(size = size(signif_map))+!values.f_nan
-      masked_map[where(mask)] = signif_map[where(mask)]
+      masked_map[where(mask)] = original[where(mask)]
       objects = seeded_watershed(masked_map, kernels)
-    endif
+    endif else message,"No objects found via watershed decomposition.",/con
   endif 
-  if n_elements(absdelta) gt 0 then $ 
-    error_map = fltarr(sz[1], sz[2])+mad(data)
+
+  h = histogram(objects, min = 1, bin = 1)
+  reject = where(h lt max(minpix), ct)
+  if ct gt 0 then begin
+    for i = 0, ct-1 do begin
+      rejected = where(objects eq reject[i]+1, ctrej)
+      if ctrej gt 0 then objects[rejected] = 0
+    endfor
+    uniq = objects[uniq(objects, sort(objects))]
+ ; Uniq[i] >= [i] so this should be doable in place!
+    for i = 0L, n_elements(uniq)-1 do objects[where(objects eq uniq[i])] = i
+  endif
+
+  ;print,"mmmmm(objects)",mmmmm(objects),rejected
+
+;  if n_elements(absdelta) gt 0 then $ 
+;    error_map = fltarr(sz[1], sz[2])+mad(data)
 
   return, objects
 end

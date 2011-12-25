@@ -78,7 +78,6 @@ function kdist, l, b, v, near = near, far = far, $
 
   if (not keyword_set(near)) then dist = fardist else dist = neardist
 
-
   return, abs(dist)
 end
 

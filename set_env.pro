@@ -18,7 +18,7 @@ pro set_env,compy=compy
         setenv,'V12=/data/bgps/releases/v1.0/v1.0.2'
         setenv,'RPCDIR=/data/bgps/raw'
     endif else if compy eq 'eta' then begin
-        if ~getenv('PIPELINE_ROOT') then setenv,'PIPELINE_ROOT=/Users/adam/work/bgps_pipeline'
+        if ~getenv('PIPELINE_ROOT') then setenv,'PIPELINE_ROOT=/Users/adam/work/v1.0_bgps_pipeline'
         setenv,'WORKINGDIR=/Volumes/disk3/adam_work'
         setenv,'WORKINGDIR2=/Volumes/disk3/adam_work'
 ;        setenv,'SLICED=/Volumes/milkyway/sliced'
@@ -31,12 +31,19 @@ pro set_env,compy=compy
         setenv,'V12=/Volumes/disk2/releases/v1.0/v1.0.2'
         setenv,'RPCDIR=/Volumes/disk2/data/bgps/raw/'
     endif else if compy eq 'adam-macbook.local' then begin
-        setenv,'PIPELINE_ROOT=/Users/adam/work/bolocam/bgps_pipeline'
+        if ~getenv('PIPELINE_ROOT') then setenv,'PIPELINE_ROOT=/Users/adam/work/bolocam/bgps_pipeline'
         setenv,'WORKINGDIR=/Users/adam/work/bolocam/adam_work'
         setenv,'WORKINGDIR2=/Users/adam/work/bolocam/adam_work'
         setenv,'SLICED=/Users/adam/work/bolocam/scratch/sliced'
         setenv,'SLICED_POLY=/Users/adam/work/bolocam/scratch/sliced'
         setenv,'RPCDIR=/not/set' 
+    endif else if compy eq 'dor.local' then begin
+        if ~getenv('PIPELINE_ROOT') then setenv,'PIPELINE_ROOT=/Users/adam/work/v1.0_bgps_pipeline'
+        setenv,'WORKINGDIR=/Users/adam/work/bolocam/adam_work'
+        setenv,'WORKINGDIR2=/Users/adam/work/bolocam/adam_work'
+        setenv,'SLICED=/Users/adam/work/bolocam/scratch/sliced'
+        setenv,'SLICED_POLY=/Users/adam/work/bolocam/scratch/sliced'
+        setenv,'RPCDIR=/not/set'
     endif else if compy eq 'arlsrv2' then begin
         setenv,'PIPELINE_ROOT=/arlstorage/home/student/ginsbura/bgpspipeline_svn/bgps_pipeline/'
         setenv,'WORKINGDIR=/arlstorage/data/student/ginsbura'

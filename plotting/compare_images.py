@@ -173,10 +173,10 @@ def diffplot(im1, im2, name1, name2, fignum, figname=None, nzeros=1e5,
         vmin,vmax = None,None
     # kwargs overrides
     if kwargs.has_key('vmin'):
-        vmin = kwargs['vmin']
+        if kwargs['vmin'] is not None: vmin = kwargs['vmin']
         del kwargs['vmin']
     if kwargs.has_key('vmax'):
-        vmax = kwargs['vmax']
+        if kwargs['vmax'] is not None: vmax = kwargs['vmax']
         del kwargs['vmax']
 
     subplot(222)

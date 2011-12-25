@@ -12,7 +12,7 @@ pro plot_inscale_outscale,inscale,outscale,outmap=outmap,rms=rms,nsig=nsig
     help,inscale,outscale
     set_plot,'ps'
     !p.multi[*] = 0
-    device,filename=outmap+"_invsout_scales.ps",/encapsulated,bits=24,/color,/decomposed
+    device,filename=outmap+"_invsout_scales.ps",/encapsulated,bits=24,/color
     loadct,0,/silent
     plot,inscale,outscale,psym=7,xstyle=1,ystyle=1,xrange=[1-nsig*rms,1+nsig*rms],yrange=[1-nsig*rms,1+nsig*rms],xtitle="!6Input Gain",ytitle="!6Pipeline Recovered Gain",xthick=2,ythick=2
     oplot,[1-nsig*rms,1+nsig*rms],[1-nsig*rms,1+nsig*rms],color=cgcolor('red')
@@ -21,7 +21,7 @@ pro plot_inscale_outscale,inscale,outscale,outmap=outmap,rms=rms,nsig=nsig
     ;print,"rp: ",rp,"log10(rp): ",alog10(rp)
     device,/close_file
 
-    device,filename=outmap+"_invsout_diffhist.ps",/encapsulated,bits=24,/color,/decomposed
+    device,filename=outmap+"_invsout_diffhist.ps",/encapsulated,bits=24,/color
     loadct,0,/silent
     bin = abs(max(outscale-inscale)-min(outscale-inscale))/10.
     print,"mmmmm(outscale-inscale): ",mmmmm(outscale-inscale),"bin: ",bin

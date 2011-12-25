@@ -26,14 +26,16 @@ function pa_moment, x, y, t, major = major, minor = minor
 ;
 ;-
 
+  if total(t) eq 0 then return,0
+
   major = 0
   minor = 0
-  x0 = total(t*x)/total(t)
-  y0 = total(t*y)/total(t)
+  x0 = total(t*x, /nan)/total(t, /nan)
+  y0 = total(t*y, /nan)/total(t, /nan)
   wt = t
-  mat = 1./(total(wt))*$
-        [[total(wt*(x-x0)^2), total(wt*(x-x0)*(y-y0))], $
-         [total(wt*(x-x0)*(y-y0)), total(wt*(y-y0)^2)]]
+  mat = 1./(total(wt, /nan))*$
+        [[total(wt*(x-x0)^2, /nan), total(wt*(x-x0)*(y-y0), /nan)], $
+         [total(wt*(x-x0)*(y-y0), /nan), total(wt*(y-y0)^2, /nan)]]
   if determ(mat, /check) eq 0 then return, !values.f_nan
   evals = hqr(elmhes(mat))
   if (total(transpose(mat) eq mat) eq 4 and mat[1, 0] eq 0) then $

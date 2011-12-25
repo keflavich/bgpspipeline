@@ -79,7 +79,7 @@ function decimate_kernels, k_in,  cube, ALL_NEIGHBORS = all_neighbors, $
 ; If there aren't enough pixels associated with the kernel it's bad. 
       if npixels lt minpix then valid_kernel[order[i]] = 0
       if npixels lt minpix then area_rejects = area_rejects+1
-
+      
 ; If it's not high enough above the merge level, then it's bad.
       if (kernel_value[order[i]]-merge_level)/sigma lt delta then begin
         delta_rejects = delta_rejects+1

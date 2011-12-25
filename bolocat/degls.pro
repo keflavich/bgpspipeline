@@ -8,7 +8,7 @@ function degls, hd
     if glshit ge 0 then begin
       type = strmid(type, 0, glshit)+'SFL'
       sxaddpar, hdout, 'CTYPE'+s[k-1], type
-    endif
+    endif 
   endfor
 
 

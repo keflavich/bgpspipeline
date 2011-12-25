@@ -28,8 +28,8 @@ function seeded_watershed, data, kernels, levels = levels, $
   
 ;  stop
 ; Reject unconnected pixels
-;  ind = where(object gt n_elements(kernels), ct)
-;  if ct gt 0 then object[ind] = 0
+  ind = where(object gt n_elements(kernels), ct)
+  if ct gt 0 then object[ind] = 0
 
   return, object
 end

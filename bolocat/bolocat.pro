@@ -5,7 +5,10 @@ pro bolocat, filein, props = props, zero2nan = zero2nan, obj = obj, $
              absthresh = absthresh, absdelta = absdelta, $
              absexpand = absexpand, grs_dir = grs_dir, errgen = errgen, $
              error = error, minbeam = minbeam, $
-             residual = residual, round = round, corect = corect
+             residual = residual, round = round, corect = corect, $
+             sp_minpix = sp_minpix, id_minpix = id_minpix, $
+             idmap = idmap, smoothmap = smoothmap, beamuc = beamuc, $
+             labelmask_in=labelmask_in
 ;+
 ; NAME:
 ;    BOLOCAT
@@ -16,7 +19,7 @@ pro bolocat, filein, props = props, zero2nan = zero2nan, obj = obj, $
 ;    BOLOCAT, filename, props = props [, /zero2nan, obj = obj, 
 ;             /watershed, /clip, delta = delta, /all_neighbors
 ;             thresh = thresh, expand = expand, minpix
-;             = minpix
+;             = minpix, labelmask_in=labelmask_in
 ;
 ; INPUTS:
 ;    FILENAME -- Name of the file to process.
@@ -52,6 +55,9 @@ pro bolocat, filein, props = props, zero2nan = zero2nan, obj = obj, $
 ;    ERROR -- An array the same size as the data image containing an
 ;             estimate of the standard deviation at every point.
 ;    ROUND -- Size of rounding element (radius).  Set to zero for no rounding.
+;    BEAMUC -- FRACTIONAL beam size uncertainty.
+;    labelmask_in -- An input labelmask from which source properties will be derived.
+;              This prevents objectid from being called
 ;
 ; OUTPUTS:
 ;   PROPS -- An array of structures with each element corresponding to
@@ -82,11 +88,10 @@ pro bolocat, filein, props = props, zero2nan = zero2nan, obj = obj, $
   if n_elements(watershed) eq 0 and n_elements(clip) eq 0 then $
      watershed = 1b
 
-
+; Assume no uncertainty in the beam size
+  if n_elements(beamuc) eq 0 then beamuc = 0.0
 
   data = mrdfits(filein, 0, hd)
-  ; read in errormap if it is a string (hopefully .fits)
-  if keyword_set(error) and size(error,/type) eq 7 then error = mrdfits(error,0,ehd)
 
 ; If blanked data are set to 0 move them to NaNs
   if keyword_set(zero2nan) then begin 
@@ -127,7 +132,7 @@ pro bolocat, filein, props = props, zero2nan = zero2nan, obj = obj, $
       sxaddpar, hd, 'BMAJ', 31.2/3600.
       sxaddpar, hd, 'BMIN', 31.2/3600.
       sxaddpar, hd, 'BPA', 0.0
-      getrot, hd, rot, cdv
+      getrot, hd, rot, cdv, /silent
       ppbeam = abs((31.2/3600.)^2/(cdv[0]*cdv[1])*$
                    2*!pi/(8*alog(2)))      
       sxaddpar, hd, 'PPBEAM', ppbeam
@@ -143,44 +148,66 @@ pro bolocat, filein, props = props, zero2nan = zero2nan, obj = obj, $
   endif 
 
 ; Call object identification /segementation routine
-  obj = objectid(data, error = error, watershed = watershed, delta = delta, $
-                 all_neighbors = all_neighbors, thresh = thresh, $
-                 expand = expand, minpix = minpix, absdelta = absdelta, $
-                 absthresh = absthresh, absexpand = absexpand, $
-                 round = round)
-  if n_elements(obj) ne n_elements(data) then return
+  if n_elements(idmap) eq n_elements(data) then map = idmap else map = data
 
+  ; Allow the label mask to be specified instead of derived
+  if n_elements(labelmask_in) gt 0 then obj = labelmask_in else begin
+      obj = objectid(map, error = error, watershed = watershed, delta = delta, $
+                     all_neighbors = all_neighbors, thresh = thresh, $
+                     expand = expand, minpix = minpix, absdelta = absdelta, $
+                     absthresh = absthresh, absexpand = absexpand, $
+                     round = round, sp_minpix = sp_minpix, $
+                     id_minpix = id_minpix, original = data)
+  endelse
+
+  if n_elements(obj) ne n_elements(data) then begin
+    message,"Size of labelmask ("+string(n_elements(obj))+") and input data ("+string(n_elements(data))+") are different.",/con
+    return
+  endif
+  if max(obj) gt 0 then begin
 ; Call catalog routine
-  props = propgen(data, hd, obj, error)
-  corect = n_elements(props) 
+    props = propgen(data, hd, obj, error, smoothmap = smoothmap)
+    corect = n_elements(props) 
 ; Do photometry in annuli (apertures are in diameters)
-  props.flux_40 = object_photometry(data, hd, error, props, 40.0, $
-                                   fluxerr = fe40)
-  props.eflux_40 = fe40
-  props.flux_80 = object_photometry(data, hd, error, props, 80.0, $
-                                   fluxerr = fe80)
-  props.eflux_80 = fe80
-  props.flux_120 = object_photometry(data, hd, error, props, 120.0, $
-                                    fluxerr = fe120)
-  props.eflux_120 = fe120
-
-  props.flux_obj = object_photometry(data, hd, error, props, props.rad_as_nodc*2, fluxerr = feobj)
-  props.flux_obj_err = feobj
+    props.flux_40 = object_photometry(data, hd, error, props, 40.0, $
+                                      fluxerr = fe40)
+    props.eflux_40 = sqrt((fe40)^2+4*beamuc^2*(props.flux_40)^2)
+    
+    props.flux_40_nobg = object_photometry(data, hd, error, props, 40.0, $
+                                           fluxerr = fe40, /nobg)
+    props.eflux_40_nobg = sqrt((fe40)^2+4*beamuc^2*(props.flux_40_nobg)^2)
+    
+    props.flux_80 = object_photometry(data, hd, error, props, 80.0, $
+                                      fluxerr = fe80)
+    props.eflux_80 = sqrt((fe80)^2+4*beamuc^2*(props.flux_80)^2)
+    props.flux_120 = object_photometry(data, hd, error, props, 120.0, $
+                                       fluxerr = fe120)
+    props.eflux_120 = sqrt((fe120)^2+4*beamuc^2*(props.flux_120)^2)
+    props.flux_80_nobg = object_photometry(data, hd, error, props, 80.0, $
+                                      fluxerr = fe80, /nobg)
+    props.eflux_80_nobg = sqrt((fe80)^2+4*beamuc^2*(props.flux_80_nobg)^2)
+    props.flux_120_nobg = object_photometry(data, hd, error, props, 120.0, $
+                                       fluxerr = fe120, /nobg)
+    props.eflux_120_nobg = sqrt((fe120)^2+4*beamuc^2*(props.flux_120_nobg)^2)
+    
+    props.flux_obj = object_photometry(data, hd, error, props, props.rad_as_nodc*2, fluxerr = feobj)
+    props.flux_obj_err = feobj
 ; Fill in basic properties that were used in the analysis
 ; Array compatibility?
-  props.exp_thresh = expand[0]
-  props.delta = delta[0]
-  props.threshold = thresh[0]
-  props.minpix = minpix[0]
-  props.decomp_alg = (keyword_set(watershed)) ? 'WATERSHED' : 'CLIP'
-  props.filename = filein
-
-
+    props.exp_thresh = expand[0]
+    props.delta = delta[0]
+    props.threshold = thresh[0]
+    props.minpix = minpix[0]
+    props.decomp_alg = (keyword_set(watershed)) ? 'WATERSHED' : 'CLIP'
+    props.filename = filein
+    
+  endif else corect = 0
 
   if keyword_set(grs) then begin
 ; Tag each core with a GRS spectrum if available and desired
     grslookup, props, hd, obj = obj, data = data, grs_dir = grs_dir
   endif
 
+  help,props,/struct
   return
 end
