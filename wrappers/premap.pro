@@ -39,12 +39,12 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
     if ~keyword_set(pixsize) then pixsize=7.2 ;arcseconds
 
 
-    if keyword_set(workingdir) then cd,workingdir else begin
-        spawn,'pwd',workingdir
-        print,"WARNING: you have not specified a working directory.  Using current directory "+workingdir+"by default."
-;        print,"WARNING: you have not specified a working directory.  Use .con to continue using the current directory",workingdir
-;        stop
-    endelse
+; this code does nothing    if keyword_set(workingdir) then cd,workingdir else begin
+; this code does nothing        spawn,'pwd',workingdir
+; this code does nothing        print,"WARNING: you have not specified a working directory.  Using current directory "+workingdir+"by default."
+; this code does nothing;        print,"WARNING: you have not specified a working directory.  Use .con to continue using the current directory",workingdir
+; this code does nothing;        stop
+; this code does nothing    endelse
     time_s,"ALL PREPROC ... output is "+outmap+"  ",t1
     if keyword_set(fromsave) then begin
         restore,filelist

@@ -136,7 +136,11 @@ def diffplot(im1, im2, name1, name2, fignum, figname=None, nzeros=1e5,
       pearsonr,ppearsonr = stats.pearsonr(concatenate([im1[gtc],zeros(nzeros)]),concatenate([im2[gtc],zeros(nzeros)]))
       corrcoefs.append((pearsonr,ppearsonr))
 
-      print Pi,linefit(im1[gtc],im2[gtc],guess=[1.1,0])," pearson: ",pearsonr,ppearsonr
+      try: 
+          lf = linefit(im1[gtc],im2[gtc],guess=[1.1,0])
+      except ZeroDivisionError:
+          lf = " linefit failed because it's stupid "
+      print Pi,lf," pearson: ",pearsonr,ppearsonr
 
     figure(fignum,figsize=[12,12]); clf()
 

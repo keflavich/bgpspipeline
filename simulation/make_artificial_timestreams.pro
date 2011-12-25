@@ -150,8 +150,8 @@ pro make_artificial_timestreams, map, header, bgps=bgps, mapstr=mapstr, stepsize
       sxaddpar,new_header,'NAXIS2',mapsize[1]/pixsize_ratio
       pixsize = cdelt_out
 
-      writefits,outmap+"_nhitsmap_fullres.fits",nhitsmap,header
-      writefits,outmap+"_inputmap_fullres.fits",map,header
+      check_fits,double(map),header,/update
+      writefits,outmap+"_inputmap_fullres.fits",double(map),header
 
       newsize = size(map,/dim) * pixsize_ratio
       hcongrid,map,header,new_map,new_header,newsize[0],newsize[1],/half
@@ -275,7 +275,9 @@ pro make_artificial_timestreams, map, header, bgps=bgps, mapstr=mapstr, stepsize
     if dosave gt 0 then begin
         print,"V1.0: Saving bgps_struct and mapstr in ",iter0savename
         save,bgps,mapstr,filename=iter0savename,/verbose
+        check_fits,nhitsmap,header,/update
         writefits,outmap+"_nhitsmap.fits",nhitsmap,header
+        check_fits,double(map),header,/update
         writefits,outmap+"_inputmap.fits",double(map),header
     endif
 

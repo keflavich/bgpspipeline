@@ -84,7 +84,7 @@ for oo=0,0 do begin ; relative sensitivity RMS
           ;fakemap = fakesky*expweight
           ;psd,fakesky_sm,wavnumsm,smbefore,/view
           fakemap = fakesky_sm + ptsrcs_conv
-          hdr=['SIMPLE  = T','BITPIX  = -64','NAXIS   = 2','NAXIS1  = 512','NAXIS2  = 512','CDELT1  = 0.002','CDELT2  = 0.002','CRPIX1  = 256','CRPIX2  = 256','CRVAL1  = 0.0','CRVAL2  = 0.0','CTYPE1  = GLON-CAR','CTYPE2  = GLAT-CAR','BUNIT   = "Jy/Beam"',"BMAJ    = 0.0091666","BMIN    = 0.00916666","BPA     = 0",'END']
+          hdr=['SIMPLE  = T','BITPIX  = -64','NAXIS   = 2','NAXIS1  = 512','NAXIS2  = 512','CDELT1  = 0.002','CDELT2  = 0.002','CRPIX1  = 256','CRPIX2  = 256','CRVAL1  = 0.0','CRVAL2  = 0.0','CTYPE1  = GLON-CAR','CTYPE2  = GLAT-CAR','BUNIT   = "Jy/Beam"',"BMAJ    = 0.0091666","BMIN    = 0.00916666","BPA     = 0","END                                                                             "]
           writefits,outmap_prefix+"_pointsource_input.fits",ptsrcs_conv,hdr
           writefits,outmap_prefix+"_diffuse_input.fits",fakesky_sm,hdr
 
@@ -98,12 +98,12 @@ for oo=0,0 do begin ; relative sensitivity RMS
               amplitude=atmo_amplitudes[nn],individual_bolonoise_rms=noise,relative_scale_rms=rel_rms[oo],relative_scales=relative_scales_ds2,seed=seed1)
             input_ts_ds2 = bgps.ac_bolos
             bgps.ac_bolos += fake_atmosphere_ds2
-            stop
             save,bgps,mapstr,needed_once_struct,filename=mapstr.outmap+"_preiter.sav",/verbose
             mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
               fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
               fits_timestream=0,return_reconv=1,sim_input_ts=input_ts_ds2,/rescale,/verbose
             restore,mapstr.outmap+"_postiter.sav",/verbose
+            help,1.0/relative_scales_ds2,bgps.scale_coeffs
             plot_inscale_outscale,1.0/relative_scales_ds2,bgps.scale_coeffs,outmap=mapstr.outmap,rms=rel_rms[oo]
             printf,outf,string(mapstr.outmap,format="(A15)")+string([atmo_amplitudes[nn],rel_rms[oo],correlate(1.0/relative_scales_ds2,bgps.scale_coeffs),correlate(1.0/relative_scales_ds2,bgps.scale_coeffs,/covariance)],format="(4A15)")
             close,unit1
@@ -125,6 +125,7 @@ for oo=0,0 do begin ; relative sensitivity RMS
               fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
               fits_timestream=0,return_reconv=1,sim_input_ts=input_ts_ds2,/rescale,/verbose
             restore,mapstr.outmap+"_postiter.sav",/verbose
+            help,1.0/relative_scales_ds2,bgps.scale_coeffs
             plot_inscale_outscale,1.0/relative_scales_ds2,bgps.scale_coeffs,outmap=mapstr.outmap,rms=rel_rms[oo]
             printf,outf,string(mapstr.outmap,format="(A15)")+string([atmo_amplitudes[nn],rel_rms[oo],correlate(1.0/relative_scales_ds2,bgps.scale_coeffs),correlate(1.0/relative_scales_ds2,bgps.scale_coeffs,/covariance)],format="(4A15)")
             close,unit2
@@ -136,9 +137,10 @@ for oo=0,0 do begin ; relative sensitivity RMS
           
             mem_iter,mapstr.outmap+"_preiter.sav",mapstr.outmap,/fromsave,niter=replicate(13,21),$
               fits_out=[0,1,2,5,10,20],dosave=2,plot_all_timestreams=[3],plot_bolos=[7],plot_weights=1,$
-              fits_timestream=0,return_reconv=1,sim_input_ts=input_ts_ds2,/rescale,/verbose,do_weight=0
+              fits_timestream=0,return_reconv=1,sim_input_ts=input_ts_ds2,/rescale,/verbose
               ;/pre_expsub,/do_deline,/weight_scans,do_weight=0
             restore,mapstr.outmap+"_postiter.sav",/verbose
+            help,1.0/relscales_both,bgps.scale_coeffs
             plot_inscale_outscale,1.0/(relscales_both),bgps.scale_coeffs,outmap=mapstr.outmap,rms=rel_rms[oo]
             printf,outf,string(mapstr.outmap,format=("(A15)"))+string([atmo_amplitudes[nn],rel_rms[oo],correlate(1.0/(relscales_both),bgps.scale_coeffs),correlate(1.0/(relscales_both),bgps.scale_coeffs,/covariance)],format="(4A15)")
             close,unit3
@@ -168,9 +170,9 @@ for oo=0,0 do begin ; relative sensitivity RMS
           bolocat_on_sims,mapstr.outmap+"_map20.fits"
 
           ; do analysis:
-          compare_images,outmap+"_scandir1",cuts='0.02,0.1,0.5',wcsaperture="",point=0,title=title
-          compare_images,outmap+"_scandir2",cuts='0.02,0.1,0.5',wcsaperture="",point=0,title=title
-          compare_images,outmap,cuts='0.02,0.1,0.5',wcsaperture="",point=0,title=title
+          compare_images,outmap+"_scandir1",cuts='0.02,0.1,0.5',wcsaperture='--wcsaperture=0,0,800,1600',point=0,title=title,/samescale,vmin=-1,vmax=5
+          compare_images,outmap+"_scandir2",cuts='0.02,0.1,0.5',wcsaperture='--wcsaperture=0,0,800,1600',point=0,title=title,/samescale,vmin=-1,vmax=5
+          compare_images,outmap,cuts='0.02,0.1,0.5',wcsaperture='--wcsaperture=0,0,800,1600',point=0,title=title,/samescale,vmin=-1,vmax=5
         
           analyze_point_sources, fakemap, outmap+"_map20.fits", sources=sourcesOut_fakesky, outdir=outmap, analyzedSources = analyzedSources, noisemap=outmap+"_noisemap20.fits"
 
@@ -191,7 +193,7 @@ for oo=0,0 do begin ; relative sensitivity RMS
           v2dir = repstr(outdir,"_v1","")
           v2fn = repstr(filename_prefix,'_v1','')
           compare_images,emptyplaceholder,prefix2=v2dir+v2fn,prefix1=outmap,suffix2="_map20.fits",suffix1="_map20.fits",$
-               output_name=outdir+"compare_exp12_v1v2",in1='v1',in2='v2',/samescale,wcsaperture=" ",cuts='0.5,1.00'
+               output_name=outdir+"compare_exp12_v1v2",in1='v1',in2='v2',/samescale,wcsaperture=" ",cuts='3.0'
 
           time_e,t0,prtmsg='####### Ending simulation with atmo amplitude number '+string(nn)+' peak number '+string(kk)+' power law number '+string(ii)+' seed number '+string(jj)+" and rms "+string(oo)
         endfor

@@ -2,7 +2,7 @@
 pro compare_images,outmap,cuts=cuts,suffix1=suffix1,suffix2=suffix2,wcsaperture=wcsaperture,$
   in1=in1,in2=in2,point=point,pdb=pdb,outfile=outfile,title=title,header=header,samescale=samescale,$
   output_name=output_name,prefix1=prefix1,prefix2=prefix2,debug=debug,scalefactor1=scalefactor1,$
-  scalefactor2=scalefactor2
+  scalefactor2=scalefactor2,vmin=vmin,vmax=vmax
 ; thin wrapper of python code
   ; do analysis:
   if keyword_set(pdb) then python='python -m pdb ' else python = 'python '
@@ -33,6 +33,8 @@ pro compare_images,outmap,cuts=cuts,suffix1=suffix1,suffix2=suffix2,wcsaperture=
   if keyword_set(units) then options = options+" --units="+strcompress(units,/remove_all)
   if keyword_set(scalefactor1) then options = options+" --scalefactor1="+strcompress(scalefactor1,/remove_all)
   if keyword_set(scalefactor2) then options = options+" --scalefactor2="+strcompress(scalefactor2,/remove_all)
+  if n_elements(vmin) gt 0 then options = options+" --vmin="+strcompress(vmin,/remove_all)
+  if n_elements(vmax) gt 0 then options = options+" --vmax="+strcompress(vmax,/remove_all)
   print,(command+" "+file1+" "+file2+" "+options)
   spawn,(command+" "+file1+" "+file2+" "+options),outputs
   print,"compare_images output: ",outputs
