@@ -131,10 +131,11 @@ def diffplot(im1, im2, name1, name2, fignum, figname=None, nzeros=1e5,
     gtc,Pc,corrcoefs = [],[],[]
     for cut in cuts:
       gtc = (im1>cut)*(im2>cut) 
-      Pi = polyfit(concatenate([im1[gtc],zeros(nzeros)]),concatenate([im2[gtc],zeros(nzeros)]),1)
-      Pc.append( Pi )
-      pearsonr,ppearsonr = stats.pearsonr(concatenate([im1[gtc],zeros(nzeros)]),concatenate([im2[gtc],zeros(nzeros)]))
-      corrcoefs.append((pearsonr,ppearsonr))
+      if gtc.sum() > 2:
+          Pi = polyfit(concatenate([im1[gtc],zeros(nzeros)]),concatenate([im2[gtc],zeros(nzeros)]),1)
+          Pc.append( Pi )
+          pearsonr,ppearsonr = stats.pearsonr(concatenate([im1[gtc],zeros(nzeros)]),concatenate([im2[gtc],zeros(nzeros)]))
+          corrcoefs.append((pearsonr,ppearsonr))
 
       try: 
           lf = linefit(im1[gtc],im2[gtc],guess=[1.1,0])
@@ -258,7 +259,7 @@ def powerspecplot(im1, im2, name1, name2, savename=None, pixsize=7.2,
     loglog(pixsize/f2,z2,label=name2,color='r')
     if xcorr:
         f3,z3 = agpy.psds.power_spectrum(im1,im2,hanning=hanning)
-        print "Cross-correlated images. z3.sum()=%g" % z3.sum()
+        print "Cross-correlated images. z3.sum()=%g. z1.sum=%g  z2.sum=%g" % (z3.sum(),z1.sum(),z2.sum())
         loglog(pixsize/f3,z3,label="X-corr",color='b')
 
     #leg = legend(loc='best')
@@ -540,6 +541,7 @@ if __name__ == "__main__":
     parser.add_option("--debug",help="Be very verbose / debug mode?",default=False, action='store_true')
     parser.add_option("--oneone","-o",help="Plot the one-one line?  Pass a color name (hex code) or False.  Defaults to yes/gray.",default="#888888")
     parser.add_option("--title","-t",help="Plot title",default="")
+    parser.add_option("--nzeros",help="Number of zeros to include in fit",default=0)
     parser.set_usage("%prog image1.fits image2.fits [options]")
     parser.set_description(
     """Produces a 4-panel image showing a pixel vs. pixel plot (top left), a
@@ -620,6 +622,7 @@ if __name__ == "__main__":
             samescale=options.samescale, vmin=vmin, vmax=vmax,
             scalefactor1=float(options.scalefactor1),
             scalefactor2=float(options.scalefactor2),
+            nzeros=options.nzeros,
             )
 
     if options.datafile:

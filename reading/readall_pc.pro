@@ -36,6 +36,8 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         read_ncdf_vars,filename,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_params=bolo_params, $
             raw=raw,sample_interval=sample_interval, scans_info=scans_info,lst=lst,mvperjy=mvperjy,      $
             radec_offsets=radec_offsets,beam_loc=beam_loc,source_ra=source_ra,source_dec=source_dec
+
+        print,filename," mvperjy: ",mvperjy
     
         if n_e(mvperjy_temp) eq 3 then begin
             mvperjy = mvperjy_temp ; allows keyword to be set to override read_ncdf_vars
@@ -160,6 +162,7 @@ pro readall_pc,filelist,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_par
         ; flux calibration is done on this line (1000 converts V to mV):
         ac_bolos = all_acb[goodbolos,*] / (mvperjy[0] + dc_bolos*(mvperjy[1]) + dc_bolos^2 * mvperjy[2]) * 1000. ; flux calibration
     endelse
+    print,"Calibrated with mvperjy = ",mvperjy
     flags = all_flags[goodbolos,*]
     bolo_params = all_bpars[*,goodbolos]
     ra_map = all_ra[goodbolos,*]

@@ -2,7 +2,7 @@
 pro read_ncdf_vars,filename,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo_params=bolo_params, $
         raw=raw,atmos_model=atmos_model,map_model=map_model,sample_interval=sample_interval,         $
         scans_info=scans_info,lst=lst,noisefilt_weights=noisefilt_weights,mvperjy=mvperjy,           $
-        radec_offsets=radec_offsets,beam_loc=beam_loc,source_ra=source_ra,source_dec=source_dec
+        radec_offsets=radec_offsets,beam_loc=beam_loc,source_ra=source_ra,source_dec=source_dec,scanspeed=scanspeed
 
     f=ncdf_open(filename)
 ;    mapid = ncdf_varid(f,'map_model')
@@ -127,6 +127,11 @@ pro read_ncdf_vars,filename,ac_bolos=ac_bolos,dc_bolos=dc_bolos,flags=flags,bolo
         ;scans_info *= sci_sf
         ;scans_info += sci_offset
     endif else if keyword_set(scans_info) then print,"Error: scans_info not found."
+
+    ssid = ncdf_varid(f,'scanspeed')
+    if ssid gt -1 then begin
+        ncdf_varget,f,ssid,scanspeed
+    endif else if keyword_set(scans_info) then print,"Error: scanspeed not found."
 
 ;    nfwid = ncdf_varid(f,'noisefilt_weights')
 ;    if nfwid gt -1 then begin

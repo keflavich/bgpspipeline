@@ -80,7 +80,7 @@ pro image_shifts,masterimage,imagein,fileout=fileout , check_shift = check_shift
 ;old output        printf,outf,fname,-dx*astr.cd[0,0],-dy*astr.cd[1,1],format='(A80,F20.6,F20.6)'
 
         ; if you're aligning an image without an NCDF name in it, there will be no filename output
-        ncname = stregex(fname,'[0-9]{6}_o[b0-9][0-9](_raw)?_ds[15](_flagged)?.nc',/extract)
+        ncname = stregex(fname,'[0-9]{6}_o[b0-9][0-9](_raw)?_ds[125](_flagged)?.nc',/extract)
         printf,outf,ncname,dra,ddec,cel_errarr[0],cel_errarr[1],stamp_residual_fraction,format='(A29,5G20.6)'
 
 

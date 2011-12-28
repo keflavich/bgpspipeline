@@ -23,6 +23,8 @@ function prepare_map,ra,dec,$
                    altazmap=altazmap,jd=jd,lst=lst,source_ra=source_ra,source_dec=source_dec,nopointing=nopointing,$
                    hdr=hdr, silent=silent, _extra=_extra
     if ~keyword_set(silent) then time_s,'Prepare Map ... ',t0
+    print,""
+    help,output=helptxt & print,helptxt
 
     ; Specify the projection
     ; if ~keyword_set(projection) then projection = 'TAN' ; 'SFL' is another option but since DS9 doesn't accept it I won't.
@@ -86,6 +88,7 @@ function prepare_map,ra,dec,$
 ;    endif
         
     if ~keyword_set(pixsize) then pixelsize = 7.2/3600. else pixelsize = pixsize/3600.
+    time_s,"Preparing a map with pixel size "+string(pixsize)+" using "+string((memory())[0]/1024.0^3)+"GB",t0pix
     if keyword_set(smoothmap) then pixelsize = pixsize/smoothmap/3600.
     make_astr,astr, $
       DELTA = [-pixelsize,pixelsize], $

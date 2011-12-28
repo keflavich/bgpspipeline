@@ -6,7 +6,7 @@ remake_sim = 1
 imagpowers = [-1.5]
 realpowers = imagpowers
 imagscales = imagpowers*0+1
-peaklist = [5.0]
+peaklist = [1.0]
 atmo_amplitudes = [200.0]
 rel_rms = [0.1]
 
@@ -193,7 +193,8 @@ for oo=0,0 do begin ; relative sensitivity RMS
           v2dir = repstr(outdir,"_v1","")
           v2fn = repstr(filename_prefix,'_v1','')
           compare_images,emptyplaceholder,prefix2=v2dir+v2fn,prefix1=outmap,suffix2="_map20.fits",suffix1="_map20.fits",$
-               output_name=outdir+"compare_exp12_v1v2",in1='v1',in2='v2',/samescale,wcsaperture=" ",cuts='3.0'
+               output_name=outdir+"compare_exp12_v1v2",in1='v1',in2='v2',/samescale,wcsaperture=" ",cuts='3.0',vmin=-1,$
+               vmax=5
 
           time_e,t0,prtmsg='####### Ending simulation with atmo amplitude number '+string(nn)+' peak number '+string(kk)+' power law number '+string(ii)+' seed number '+string(jj)+" and rms "+string(oo)
         endfor
