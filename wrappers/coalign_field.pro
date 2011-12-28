@@ -6,7 +6,8 @@
 pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
         premap=premap,sliced_dir=sliced_dir,ref_field=ref_field,infile=infile,$
         checkpointing=checkpointing,npca=npca,prefix=prefix,refim=refim,$
-        niter=niter,dsfactor=dsfactor,version=version,pointing_model=pointing_model,_extra=_extra
+        niter=niter,dsfactor=dsfactor,version=version, $
+        pointing_model=pointing_model,indiv_prefix=indiv_prefix,_extra=_extra
     if ~keyword_set(scratchdir) then scratchdir = getenv('WORKINGDIR') 
     if n_elements(premap) eq 0 then premap=1
     if n_elements(checkpointing) eq 0 then checkpointing=0
@@ -25,6 +26,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
         if ~getenv('INFILES') then infile=getenv('SLICED')+'/INFILES/'+infile $
         else infile = getenv('INFILES')+'/'+infile
     endelse
+    if n_elements(indiv_prefix) eq 0 then indiv_prefix=""
     print,"Reading files from ",infile
 
     pca_label = strc(niter[0])
@@ -43,7 +45,7 @@ pro coalign_field,field_name,ref_map,scratchdir=scratchdir,coalign=coalign,$
     
     if (premap) then begin
         individual_obs,infile,$
-            scratchdir+'/'+field_name+'/',/fits_smooth,npca=npca,pointing_model=pointing_model,/no_offsets,_extra=_extra
+            scratchdir+'/'+field_name+'/'+indiv_prefix,/fits_smooth,npca=npca,pointing_model=pointing_model,/no_offsets,_extra=_extra
         spawn,'ls '+field_dir+"/0*"+pca_label+"*_map01.fits > "+field_dir+"/"+field_name+"_fitslist.txt"
     endif
     spawn,'ls '+field_dir+"/[01]*ds"+strc(dsfactor)+"*"+indiv_pca_label+"*_map"+string(n_elements(npca)-1,format="(I02)")+".fits > "+field_dir+"/"+field_name+"_fitslist_ds"+strc(dsfactor)+".txt"

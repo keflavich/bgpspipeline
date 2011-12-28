@@ -1,7 +1,7 @@
 outdir = getenv('WORKINGDIR')+'/artificial_sims/exp12_v1_simple/'
 file_mkdir,outdir
 outfile = prep_gaussfitstxt(outdir)
-remake_sim = 1
+remake_sim = 0
 
 imagpowers = [-1.5]
 realpowers = imagpowers
@@ -167,7 +167,7 @@ for oo=0,0 do begin ; relative sensitivity RMS
           writefits,outmap+"_simresid00.fits",resid00,hdr
           writefits,outmap+"_simresid20.fits",resid20,hdr
 
-          bolocat_on_sims,mapstr.outmap+"_map20.fits"
+          bolocat_on_sims,outmap+"_map20.fits"
 
           ; do analysis:
           compare_images,outmap+"_scandir1",cuts='0.02,0.1,0.5',wcsaperture='--wcsaperture=0,0,800,1600',point=0,title=title,/samescale,vmin=-1,vmax=5
