@@ -19,7 +19,7 @@
 ;
 ; EQUIVALENT TO: find_pixel_offsets, map_ncdf_reading 
 pro apply_distortion_map_radec,ra,dec,rotang,array_params,pa,beam_loc_file=beam_loc_file,badbolos=badbolos,bolo_params=bolo_params,$
-    _extra=_extra$
+    _extra=_extra
     bolo_spacing = array_params[0] ; "/mm?  nominally 7.7
     fid_arr_ang = array_params[2]
     if size(beam_loc_file,/type) eq 7 then begin ; if the beam location file is passed as a string

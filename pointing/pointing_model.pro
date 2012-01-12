@@ -26,18 +26,24 @@ pro pointing_model,jd,alt,az,fzao=fzao,fazo=fazo,altoff_model=altoff_model,azoff
         return
     endif
 
-    za = 90.-alt
-    azoff_model = (a0 + a3*za + a4*za^2)/3600.
-    altoff_model = -(b0 + b3*za + b4*za^2)/3600.  ; DEGREES - DISTANCE!
-    ; note that altoff_model is negative because the coefficients represent ZA offset
-    ; of course, this is an endless source of confusion
+    ;za = 90.-alt
+    ;azoff_model = (a0 + a3*za + a4*za^2)/3600.
+    ;altoff_model = -(b0 + b3*za + b4*za^2)/3600.  ; DEGREES - DISTANCE!
+    ;; note that altoff_model is negative because the coefficients represent ZA offset
+    ;; and the model is calculated with elevation, not ZA....
+    ;; of course, this is an endless source of confusion
+
+    ; as far as I can tell, I'm computing an alt, not a za, model
+    ; and there should be no need for a sign flip
+    azoff_model = (a0 + a1*az + a2*az^2 + a3*alt + a4*alt^2)/3600.
+    altoff_model = (b0 + b1*az + b2*az^2 + b3*alt + b4*alt^2)/3600.  ; DEGREES - DISTANCE!
 
     ; this code is obsolete - it was the way fazo/fzao were treated in the OP
     if keyword_set(fazo) and keyword_set(fzao) then begin
-        fazo_model = (a0 + a3*(90.-alt) + a4*(90-alt)^2)/3600.
-        fzao_model = (b0 + b3*(90.-alt) + b4*(90-alt)^2)/3600.  ; DEGREES
-        fazo = fazo/3600. - fazo_model ; based off of pcal5, the model should be SUBTRACTED from the original offset
-        fzao = fzao/3600. - fzao_model
+        azo_model = (a0 + a3*(90.-alt) + a4*(90-alt)^2)/3600.
+        zao_model = (b0 + b3*(90.-alt) + b4*(90-alt)^2)/3600.  ; DEGREES
+        fazo = fazo/3600. - azo_model ; based off of pcal5, the model should be SUBTRACTED from the original offset
+        fzao = fzao/3600. - zao_model
     endif
 end
 

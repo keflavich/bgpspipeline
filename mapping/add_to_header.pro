@@ -87,8 +87,8 @@ pro add_to_header,hdr,lst,fazo,fzao,jd,$
     fxaddpar,hdr,"COMMENT","Flag counts are in the flagmap file"
     fxaddpar,hdr,"HISTORY","Dates and observation numbers included: "
     for i=0,n_e(filenames)-1 do begin
-        fxaddpar,hdr,"HISTORY",strmid(filenames[i],stregex(filenames[i],'[0-9]{6}_o[b0-9][0-9]'),10)
-        fxaddpar,hdr,'PTMDLALT',pmdl[0,i]
-        fxaddpar,hdr,'PTMDLAZ',pmdl[1,i]
+        fxaddpar,hdr,"HISTORY",strmid(filenames[i],stregex(filenames[i],'[0-9]{6}_o[b0-9][0-9]'),10)+ " alt/az: "+string(pmdl[*,i],format=('(F7.4,F7.4)'))+" radecoff: "+string(radec_offsets,format=('(F7.4,F7.4)'))
+        ;fxaddpar,hdr,'PTMDLALT',pmdl[0,i]
+        ;fxaddpar,hdr,'PTMDLAZ',pmdl[1,i]
     end
 end 

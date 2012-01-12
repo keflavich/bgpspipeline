@@ -141,7 +141,7 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
         endif
 
         ;dsts = prepare_map(bgps.ra_map,bgps.dec_map,pixsize=pixsize*4,blank_map=blank_map,phi0=0,theta0=0,hdr=hdr,smoothmap=smoothmap,_extra=_extra)
-        help,output=helptxt,/struct & print,helptxt
+        ;help,output=helptxt,/struct & print,helptxt
         ts = prepare_map(bgps.ra_map,bgps.dec_map,pixsize=pixsize,blank_map=blank_map,phi0=0,theta0=0,hdr=hdr,$
             smoothmap=smoothmap,lst=bgps.lst,jd=bgps.jd,source_ra=bgps.source_ra,source_dec=bgps.source_dec,_extra=_extra)
         add_to_header,hdr,bgps.lst,bgps.fazo,bgps.fzao,bgps.jd,bgps.mvperjy,thefiles[0],pixsize,bgps.radec_offsets,$
@@ -153,7 +153,7 @@ pro premap,filelist,outmap,workingdir=workingdir,niter=niter,$
                                                 ; each pixel in the weight map is equal to the number of pixels that
                                                 ; will be mapped to that pixel from the data
 
-        help,output=helptxt,/struct & print,helptxt
+        ;help,output=helptxt,/struct & print,helptxt
         rawmap = ts_to_map(blank_map_size,ts,bgps.ac_bolos,weight=bgps.weight,scans_info=bgps.scans_info,wtmap=wt_map,_extra=_extra)
         writefits,outmap+"_rawmap.fits",rawmap,hdr
         writefits,outmap+"_nhitsmap.fits",wt_map,hdr

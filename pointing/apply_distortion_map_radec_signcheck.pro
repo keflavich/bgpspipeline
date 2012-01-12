@@ -21,7 +21,7 @@
 pro apply_distortion_map_radec_signcheck,ra,dec,rotang,array_params,pa,beam_loc_file=beam_loc_file,badbolos=badbolos,bolo_params=bolo_params,$
     beam_plot=beam_plot,dorotate=dorotate,doposang=doposang,$
     ppa=ppa,mpa=mpa,pra=pra,mra=mra,$
-    _extra=_extra$
+    _extra=_extra
     if n_e(dorotate) eq 1 then if dorotate ne 1 then rotang[*]=0
     if n_e(doposang) eq 1 then if doposang ne 1 then pa[*]=0
     print,"Max PA:",max(pa)," Max rotang:",max(rotang)

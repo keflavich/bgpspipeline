@@ -29,7 +29,7 @@ pro set_env,compy=compy
         setenv,'SLICED_POLY=/Volumes/disk2/sliced_polychrome'
         setenv,'REFDIR=/Volumes/disk2/ref_fields'
         setenv,'V12=/Volumes/disk2/releases/v1.0/v1.0.2'
-        setenv,'RPCDIR=/Volumes/disk2/data/bgps/raw/'
+        setenv,'RPCDIR=/Volumes/Drobo/disk2/data/bgps/raw/'
     endif else if compy eq 'adam-macbook.local' then begin
         if ~getenv('PIPELINE_ROOT') then setenv,'PIPELINE_ROOT=/Users/adam/work/bolocam/bgps_pipeline'
         setenv,'WORKINGDIR=/Users/adam/work/bolocam/adam_work'

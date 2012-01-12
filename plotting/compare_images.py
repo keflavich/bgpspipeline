@@ -10,6 +10,7 @@ from scipy import stats
 import pywcs
 from agpy import print_timing
 from agpy.asinh_norm import AsinhNorm
+import scipy.stats as ss
 
 from mpfit import mpfit
 
@@ -118,13 +119,13 @@ def diffplot(im1, im2, name1, name2, fignum, figname=None, nzeros=1e5,
         rr = sqrt( (xx-apxcen)**2 + (yy-apycen)**2 )
         OK *= (rr<aprad)
         noiseOK = nonan * (rr>aprad) * (rr<noiseaprad)
-        rms1    = "  rms=%5.4g" % (std(im1[noiseOK]))
-        rms2    = "  rms=%5.4g" % (std(im2[noiseOK]))
-        rmsdiff = "  rms=%5.4g" % (std((im1-im2)[noiseOK]))
+        rms1    = "\nrms=%5.4g" % (std(im1[noiseOK]))
+        rms2    = "\nrms=%5.4g" % (std(im2[noiseOK]))
+        rmsdiff = "\nrms=%5.4g" % (std((im1-im2)[noiseOK]))
     else:
-        rms1 = "  rms=%5.4g"  % (mad.MAD(im1[OK]))
-        rms2 = "  rms=%5.4g"  % (mad.MAD(im2[OK]))
-        rmsdiff = "  rms=%5.4g"  % (mad.MAD((im1-im2)[OK]))
+        rms1 = "\nrms=%5.4g"  % (mad.MAD(im1[OK]))
+        rms2 = "\nrms=%5.4g"  % (mad.MAD(im2[OK]))
+        rmsdiff = "\nrms=%5.4g"  % (mad.MAD((im1-im2)[OK]))
     P = polyfit(concatenate([im1[OK],zeros(nzeros)]),concatenate([im2[OK],zeros(nzeros)]),1)
     pr = stats.pearsonr(concatenate([im1[OK],zeros(nzeros)]),concatenate([im2[OK],zeros(nzeros)]))
 
@@ -228,11 +229,16 @@ def diffplot(im1, im2, name1, name2, fignum, figname=None, nzeros=1e5,
         #hist(ratio[OK],bins=linspace(-3,3,21),histtype='stepfilled',alpha=0.5,label='all',normed=True)
 
         for cut in cuts:
-            gtc = (im1>cut)*(im2>cut) 
-            h,l,p = hist(ratio[gtc],bins=linspace(0,3,21),histtype='stepfilled',alpha=0.3, normed=True, label='>%5f' % cut )
+            gtc = (im1>cut)*(im2>cut)*OK 
+            if gtc.sum() == 0: continue
+            gmean,gstd = ss.norm.fit(ratio[gtc])
+            bins = arange(ratio[gtc].min(),min([3,ratio[gtc].max()]),max([0.01,round(gstd*100/4.)/100.]))
+            print "binstep = %f" % (round(gstd*100/4.)/100.)
+            if len(bins) < 5: bins=linspace(0,3,21)
+            h,l,p = hist(ratio[gtc],bins=bins,histtype='stepfilled',alpha=0.3, normed=True, label='>%5f' % cut )
             l1 = (l[1:]+l[:-1])/2. 
-            pars,model,perr,chi = onedgaussfit(l1,h,params=[0,h.max(),1.0,ratio[gtc].std()],fixed=[True,False,False,False])
-            plot(linspace(0,3,201), onedgaussian(linspace(0,3,201),*pars), color=p[0].get_facecolor(), label="$\\mu=%0.2f;\\sigma=%0.2f $" % (pars[-2],pars[-1],) )
+            pars,model,perr,chi = onedgaussfit(l1,h,params=[0,h.max(),l[h.argmax()],ratio[gtc].std()],fixed=[True,False,False,False])
+            plot(linspace(0,3,201), onedgaussian(linspace(0,3,201),0,h.max(),gmean,gstd), color=p[0].get_facecolor(), label="$\\mu=%0.2f;\\sigma=%0.2f $" % (gmean,gstd) )
         legend(loc='best')
 
         if figname is not None: savefig(figname.replace(".png","_hist.png"))

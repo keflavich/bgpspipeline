@@ -1,14 +1,15 @@
 outdir = getenv('WORKINGDIR')+'/artificial_sims/exp12_v1_simple/'
 file_mkdir,outdir
 outfile = prep_gaussfitstxt(outdir)
-remake_sim = 0
+remake_sim = 1
 
 imagpowers = [-1.5]
 realpowers = imagpowers
 imagscales = imagpowers*0+1
 peaklist = [1.0]
 atmo_amplitudes = [200.0]
-rel_rms = [0.1]
+; measured from l=351, the rms is ~0.3 - 0.4.  There is some high skew.
+rel_rms = [0.4]
 
 openw,outf,outfile,/get_lun
 unit1 = outf+1
@@ -195,6 +196,12 @@ for oo=0,0 do begin ; relative sensitivity RMS
           compare_images,emptyplaceholder,prefix2=v2dir+v2fn,prefix1=outmap,suffix2="_map20.fits",suffix1="_map20.fits",$
                output_name=outdir+"compare_exp12_v1v2",in1='v1',in2='v2',/samescale,wcsaperture='--wcsaperture=0,0,1000,1500',cuts='2.0',vmin=-1,$
                vmax=5
+          compare_images,emptyplaceholder,prefix2=v2dir+v2fn,prefix1=outmap,suffix2="_map20.fits",suffix1="_map20.fits",$
+               output_name=outdir+"compare_exp12_v1v2_ap1",in1='v1',in2='v2',/samescale,wcsaperture='--wcsaperture=-0.05,-0.148,150,300',cuts='2.0',vmin=-1,$
+               vmax=5
+          compare_images,emptyplaceholder,prefix2=v2dir+v2fn,prefix1=outmap,suffix2="_map20.fits",suffix1="_map20.fits",$
+               output_name=outdir+"compare_exp12_v1v2_ap2",in1='v1',in2='v2',/samescale,wcsaperture='--wcsaperture=0.1177,0.1331,150,300',cuts='2.0',vmin=-1,$
+               vmax=5,/point
 
           time_e,t0,prtmsg='####### Ending simulation with atmo amplitude number '+string(nn)+' peak number '+string(kk)+' power law number '+string(ii)+' seed number '+string(jj)+" and rms "+string(oo)
         endfor
